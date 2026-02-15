@@ -2,22 +2,22 @@ local Generic = Client.UI.Generic
 local TextPrefab = Generic.GetPrefab("GenericUI_Prefab_Text")
 local V = Vector.Create
 
----@class Feature_Fishing
-local Fishing = Epip.GetFeature("Feature_Fishing")
-local UI = Generic.Create("Feature_Fishing")
+---@class Features.Fishing
+local Fishing = Epip.GetFeature("Features.Fishing")
+local UI = Generic.Create("Features.Fishing")
 Fishing.UI = UI
 UI:Hide()
 
 UI.Elements = {} -- Holds references to various important elements of the UI.
 
-UI._GameState = nil ---@type Feature_Fishing_GameState
-UI._GameObjects = {} ---@type Feature_Fishing_GameObject[]
-UI._GameObjectClass = nil ---@type Feature_Fishing_GameObject
-UI._GameObjectClasses = {} ---@type table<string, Feature_Fishing_GameObject>
-UI._GameObjectStateClass = nil ---@type Feature_Fishing_GameObject_State
+UI._GameState = nil ---@type Features.Fishing.GameState
+UI._GameObjects = {} ---@type Features.Fishing.GameObject[]
+UI._GameObjectClass = nil ---@type Features.Fishing.GameObject
+UI._GameObjectClasses = {} ---@type table<string, Features.Fishing.GameObject>
+UI._GameObjectStateClass = nil ---@type Features.Fishing.GameObject.State
 
 UI.USE_LEGACY_HOOKS = false
-UI.Hooks.GetProgressDrain = UI:AddSubscribableHook("GetProgressDrain") ---@type Event<Feature_Fishing_UI_Hook_GetProgressDrain>
+UI.Hooks.GetProgressDrain = UI:AddSubscribableHook("GetProgressDrain") ---@type Event<Features.Fishing.UI.Hook.GetProgressDrain>
 
 ---------------------------------------------
 -- CONSTANTS
@@ -47,26 +47,26 @@ UI.TUTORIAL_PROGRESS_DRAIN_MULTIPLIER = 0.5
 -- EVENTS/HOOKS
 ---------------------------------------------
 
----@class Feature_Fishing_UI_Hook_GetProgressDrain
+---@class Features.Fishing.UI.Hook.GetProgressDrain
 ---@field Drain integer Hookable.
----@field GameState Feature_Fishing_GameState
+---@field GameState Features.Fishing.GameState
 ---@field Character EclCharacter
----@field Fish Feature_Fishing_Fish
+---@field Fish Features.Fishing.Fish
 
 ---------------------------------------------
 -- CLASSES
 ---------------------------------------------
 
----@class Feature_Fishing_GameState
+---@class Features.Fishing.GameState
 local _GameState = {
     Progress = 0,
-    CurrentFish = nil, ---@type Feature_Fishing_Fish
+    CurrentFish = nil, ---@type Features.Fishing.Fish
     CharacterHandle = nil, ---@type ComponentHandle
 }
 
 ---@param char EclCharacter
----@param fish Feature_Fishing_Fish
----@return Feature_Fishing_GameState
+---@param fish Features.Fishing.Fish
+---@return Features.Fishing.GameState
 function _GameState.Create(char, fish)
     local tbl = {
         Progress = UI.STARTING_PROGRESS,
@@ -87,7 +87,7 @@ function Fishing.GetUI()
     return Fishing.UI
 end
 
----@param ev Feature_Fishing_Event_CharacterStartedFishing
+---@param ev Features.Fishing.Event.CharacterStartedFishing
 function UI.Start(ev)
     if UI._GameState then
         UI:Error("Start", "Instance already in use")
@@ -95,8 +95,8 @@ function UI.Start(ev)
 
     UI._GameState = _GameState.Create(ev.Character, ev.Fish)
 
-    UI.CreateGameObject("Feature_Fishing_GameObject_Bobber", "Bobber", UI.BLOBBER_SIZE)
-    local fish = UI.CreateGameObject("Feature_Fishing_GameObject_Fish", "Fish", UI.FISH_SIZE)
+    UI.CreateGameObject("Features.Fishing.GameObject.Bobber", "Bobber", UI.BLOBBER_SIZE)
+    local fish = UI.CreateGameObject("Features.Fishing.GameObject.Fish", "Fish", UI.FISH_SIZE)
 
     -- TODO move elsewhere
     fish:GetState().Position = 300
@@ -107,10 +107,10 @@ function UI.Start(ev)
     UI.UpdateTutorialText()
     UI:Show()
 
-    GameState.Events.RunningTick:Subscribe(UI._OnTick, nil, "Feature_Fishing_UI_Tick")
+    GameState.Events.RunningTick:Subscribe(UI._OnTick, nil, "Features.Fishing.UI.Tick")
 end
 
----@return Feature_Fishing_GameState
+---@return Features.Fishing.GameState
 function UI.GetGameState()
     return UI._GameState
 end
@@ -151,21 +151,21 @@ function UI.AddProgress(progress)
     end
 end
 
----@param reason Feature_Fishing_MinigameExitReason
+---@param reason Features.Fishing.MinigameExitReason
 function UI.Cleanup(reason)
     local state = UI.GetGameState()
 
     UI._GameState = nil
     UI._GameObjects = {}
 
-    GameState.Events.RunningTick:Unsubscribe("Feature_Fishing_UI_Tick")
+    GameState.Events.RunningTick:Unsubscribe("Features.Fishing.UI.Tick")
 
     UI:Hide()
 
     Fishing.Stop(Character.Get(state.CharacterHandle), state.CurrentFish, reason)
 end
 
----@return Feature_Fishing_GameObject[]
+---@return Features.Fishing.GameObject[]
 function UI.GetGameObjects()
     return UI._GameObjects
 end
@@ -211,7 +211,7 @@ function UI.GetBobberUpperBound()
 end
 
 ---@param className string
----@param class Feature_Fishing_GameObject
+---@param class Features.Fishing.GameObject
 function UI.RegisterGameObject(className, class)
     UI._GameObjectClasses[className] = class
 end

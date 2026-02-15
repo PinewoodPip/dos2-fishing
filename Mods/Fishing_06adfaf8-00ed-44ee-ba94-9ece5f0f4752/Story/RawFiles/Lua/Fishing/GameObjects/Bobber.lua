@@ -1,13 +1,13 @@
 
-local Fishing = Epip.GetFeature("Feature_Fishing")
+local Fishing = Epip.GetFeature("Features.Fishing")
 local UI = Fishing.UI
 
----@class Feature_Fishing_GameObject_Bobber : Feature_Fishing_GameObject
+---@class Features.Fishing.GameObject.Bobber : Features.Fishing.GameObject
 local _Bobber = {
     Type = "Bobber",
 }
 Inherit(_Bobber, UI._GameObjectClass)
-UI.RegisterGameObject("Feature_Fishing_GameObject_Bobber", _Bobber)
+UI.RegisterGameObject("Features.Fishing.GameObject.Bobber", _Bobber)
 
 ---@param deltaTime number In milliseconds.
 function _Bobber:Update(deltaTime)
@@ -36,7 +36,7 @@ function _Bobber:Update(deltaTime)
     end
 end
 
----@param otherObject Feature_Fishing_GameObject
+---@param otherObject Features.Fishing.GameObject
 ---@param deltaTime number In milliseconds.
 function _Bobber:OnCollideWith(otherObject, deltaTime)
     if otherObject.Type == "Fish" then

@@ -2,11 +2,11 @@
 local DefaultTable = DataStructures.Get("DataStructures_DefaultTable")
 local Set = DataStructures.Get("DataStructures_Set")
 
----@class Feature_Fishing : Feature
+---@class Features.Fishing : Feature
 local Fishing = {
-    _Fish = {}, ---@type table<string, Feature_Fishing_Fish>
-    _RegionsByLevel = DefaultTable.Create({}), ---@type DataStructures_DefaultTable<string, Feature_Fishing_Region[]>
-    _RegionsByID = {}, ---@type table<string, Feature_Fishing_Region>
+    _Fish = {}, ---@type table<string, Features.Fishing.Fish>
+    _RegionsByLevel = DefaultTable.Create({}), ---@type DataStructures_DefaultTable<string, Features.Fishing.Region[]>
+    _RegionsByID = {}, ---@type table<string, Features.Fishing.Region>
     _CharactersFishing = Set.Create(), -- Not synchronized across clients!
 
     FISHING_ROD_TEMPLATES = Set.Create({
@@ -228,8 +228,8 @@ local Fishing = {
     DoNotExportTSKs = true,
 
     Events = {
-        CharacterStartedFishing = {}, ---@type Event<Feature_Fishing_Event_CharacterStartedFishing>
-        CharacterStoppedFishing = {}, ---@type Event<Feature_Fishing_Event_CharacterStoppedFishing>
+        CharacterStartedFishing = {}, ---@type Event<Features.Fishing.Event.CharacterStartedFishing>
+        CharacterStoppedFishing = {}, ---@type Event<Features.Fishing.Event.CharacterStoppedFishing>
     },
     Hooks = {
         IsFishingRod = {}, ---@type Event<Feature_Fishin_Hook_IsFishingRod>
@@ -241,36 +241,36 @@ Epip.RegisterFeature("Fishing", Fishing)
 -- EVENTS
 ---------------------------------------------
 
----@class Feature_Fishing_NetMsg_CharacterStartedFishing : NetLib_Message_Character
+---@class Features.Fishing.NetMsg.CharacterStartedFishing : NetLib_Message_Character
 ---@field RegionID string
 ---@field FishID string
 
----@class Feature_Fishing_NetMsg_CharacterStoppedFishing : NetLib_Message_Character
----@field Reason Feature_Fishing_MinigameExitReason
+---@class Features.Fishing.NetMsg.CharacterStoppedFishing : NetLib_Message_Character
+---@field Reason Features.Fishing.MinigameExitReason
 ---@field FishID string
 
----@class Feature_Fishin_Hook_IsFishingRod
+---@class Features.Fishing.Hook.IsFishingRod
 ---@field Character Character
 ---@field Item Item
 ---@field IsFishingRod boolean Hookable. Defaults to false.
 
----@class Feature_Fishing_Event_CharacterStartedFishing
+---@class Features.Fishing.Event.CharacterStartedFishing
 ---@field Character Character
----@field Region Feature_Fishing_Region
----@field Fish Feature_Fishing_Fish
+---@field Region Features.Fishing.Region
+---@field Fish Features.Fishing.Fish
 
----@class Feature_Fishing_Event_CharacterStoppedFishing
+---@class Features.Fishing.Event.CharacterStoppedFishing
 ---@field Character Character
----@field Reason Feature_Fishing_MinigameExitReason
----@field Fish Feature_Fishing_Fish
+---@field Reason Features.Fishing.MinigameExitReason
+---@field Fish Features.Fishing.Fish
 
 ---------------------------------------------
 -- CLASSES
 ---------------------------------------------
 
----@alias Feature_Fishing_MinigameExitReason "Success"|"Failure"|"Cancelled"
+---@alias Features.Fishing.MinigameExitReason "Success"|"Failure"|"Cancelled"
 
----@class Feature_Fishing_Fish : I_Identifiable, I_Describable
+---@class Features.Fishing.Fish : I_Identifiable, I_Describable
 ---@field Icon string? Defaults to the template's icon.
 ---@field TemplateID GUID
 local _Fish = {}
@@ -315,10 +315,10 @@ function _Fish:GetTooltip()
     return tooltip
 end
 
----@class Feature_Fishing_Region : I_Identifiable
+---@class Features.Fishing.Region : I_Identifiable
 ---@field LevelID string
 ---@field Bounds Vector4 X, Y, width, height.
----@field Fish Feature_Fishing_Region_FishEntry[]
+---@field Fish Features.Fishing.Region.FishEntry[]
 ---@field RequiresWater boolean? Defaults to true.
 ---@field Priority integer? Defaults to 0.
 local _Region = {
@@ -326,7 +326,7 @@ local _Region = {
     Priority = 0,
 }
 
----@class Feature_Fishing_Region_FishEntry
+---@class Features.Fishing.Region.FishEntry
 ---@field ID string ID of the fish.
 ---@field Weight number Relative chance for the fish to be picked.
 
@@ -334,7 +334,7 @@ local _Region = {
 -- METHODS
 ---------------------------------------------
 
----@param data Feature_Fishing_Fish
+---@param data Features.Fishing.Fish
 function Fishing.RegisterFish(data)
     if not data.ID then Fishing:Error("RegisterFish", "Data must include ID.") end
     Inherit(data, _Fish)
@@ -344,7 +344,7 @@ function Fishing.RegisterFish(data)
     Fishing._Fish[data.ID] = data
 end
 
----@param data Feature_Fishing_Region
+---@param data Features.Fishing.Region
 function Fishing.RegisterRegion(data)
     if not data.ID then Fishing:Error("RegisterRegion", "Data must include ID.") end
     if #data.Fish == 0 then Fishing:Error("RegisterRegion", "Regions must have at least one fish entry.") end
@@ -355,13 +355,13 @@ function Fishing.RegisterRegion(data)
 end
 
 ---@param levelID string
----@return Feature_Fishing_Region[]
+---@return Features.Fishing.Region[]
 function Fishing.GetRegions(levelID)
     return Fishing._RegionsByLevel[levelID]
 end
 
 ---@param id string
----@return Feature_Fishing_Region?
+---@return Features.Fishing.Region?
 function Fishing.GetRegion(id)
     return Fishing._RegionsByID[id]
 end
@@ -373,22 +373,22 @@ function Fishing.IsFishing(char)
 end
 
 ---@param id string
----@return Feature_Fishing_Fish?
+---@return Features.Fishing.Fish?
 function Fishing.GetFish(id)
     return Fishing._Fish[id]
 end
 
----@return table<string, Feature_Fishing_Fish>
+---@return table<string, Features.Fishing.Fish>
 function Fishing.GetFishes()
     return Fishing._Fish
 end
 
 ---@param pos Vector3D
----@return Feature_Fishing_Region?
+---@return Features.Fishing.Region?
 function Fishing.GetRegionAt(pos)
     local levelID = Entity.GetLevel().LevelDesc.LevelName
     local regions = Fishing.GetRegions(levelID)
-    local region = nil ---@type Feature_Fishing_Region
+    local region = nil ---@type Features.Fishing.Region
 
     for _,levelRegion in ipairs(regions) do
         local bounds = levelRegion.Bounds
@@ -406,8 +406,8 @@ function Fishing.GetRegionAt(pos)
     return region
 end
 
----@param region Feature_Fishing_Region
----@return Feature_Fishing_Fish
+---@param region Features.Fishing.Region
+---@return Features.Fishing.Fish
 function Fishing.GetRandomFish(region)
     local totalWeight = 0
     local fishID

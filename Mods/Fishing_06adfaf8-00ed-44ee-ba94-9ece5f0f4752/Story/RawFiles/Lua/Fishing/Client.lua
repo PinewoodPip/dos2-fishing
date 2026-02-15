@@ -1,20 +1,20 @@
 
 local NotificationUI = Client.UI.Notification
 
----@class Feature_Fishing
-local Fishing = Epip.GetFeature("Feature_Fishing")
+---@class Features.Fishing
+local Fishing = Epip.GetFeature("Features.Fishing")
 local TSK = Fishing.TranslatedStrings
 Fishing.OPEN_LOG_KEYBIND = "EpipEncounters_Fishing_OpenCollectionLog"
 
-Fishing.Hooks.CanStartFishing = Fishing:AddSubscribableHook("CanStartFishing") ---@type Event<Feature_Fishing_Hook_CanStartFishing>
+Fishing.Hooks.CanStartFishing = Fishing:AddSubscribableHook("CanStartFishing") ---@type Event<Features.Fishing.Hook.CanStartFishing>
 
 ---------------------------------------------
 -- EVENTS/HOOKS
 ---------------------------------------------
 
----@class Feature_Fishing_Hook_CanStartFishing
+---@class Features.Fishing.Hook.CanStartFishing
 ---@field Character EclCharacter
----@field Region Feature_Fishing_Region
+---@field Region Features.Fishing.Region
 ---@field CanStartFishing boolean Hookable. Defaults to true.
 ---@field FailureReason string? Will be shown in a notification toast if CanStartFishing is false.
 
@@ -105,8 +105,8 @@ function Fishing.GetTotalFishCaught()
 end
 
 ---@param char EclCharacter
----@param fish Feature_Fishing_Fish TODO rework param
----@param reason Feature_Fishing_MinigameExitReason
+---@param fish Features.Fishing.Fish TODO rework param
+---@param reason Features.Fishing.MinigameExitReason
 function Fishing.Stop(char, fish, reason)
     Fishing._CharactersFishing:Remove(char.Handle)
 
@@ -127,7 +127,7 @@ function Fishing.Stop(char, fish, reason)
     })
 end
 
----@param fish Feature_Fishing_Fish
+---@param fish Features.Fishing.Fish
 function Fishing._OnSuccess(fish)
     local setting = Fishing:GetSettingValue(Fishing.Settings.FishCaught)
 

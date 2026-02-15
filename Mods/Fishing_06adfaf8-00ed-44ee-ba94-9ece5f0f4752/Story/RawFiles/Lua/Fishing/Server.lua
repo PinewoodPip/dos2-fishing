@@ -1,6 +1,6 @@
 
----@class Feature_Fishing
-local Fishing = Epip.GetFeature("Feature_Fishing")
+---@class Features.Fishing
+local Fishing = Epip.GetFeature("Features.Fishing")
 local TSK = Fishing.TranslatedStrings
 
 Fishing.MINIGAME_ANIMATION = "skill_prepare_weapon_01_loop"

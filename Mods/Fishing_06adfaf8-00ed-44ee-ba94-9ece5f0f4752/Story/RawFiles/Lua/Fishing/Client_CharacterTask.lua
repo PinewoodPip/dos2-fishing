@@ -1,8 +1,8 @@
 
----@class Feature_Fishing
-local Fishing = Epip.GetFeature("Feature_Fishing")
+---@class Features.Fishing
+local Fishing = Epip.GetFeature("Features.Fishing")
 
----@class Feature_Fishing_CharacterTask : UserspaceCharacterTaskCallbacks
+---@class Features.Fishing.CharacterTask : UserspaceCharacterTaskCallbacks
 local _Task = {
     _Previewing = false,
     CharacterHandle = nil, ---@type ComponentHandle
@@ -13,7 +13,7 @@ local _Task = {
 Fishing._CharacterTaskClass = _Task
 
 ---@param char EclCharacter
----@return Feature_Fishing_CharacterTask
+---@return Features.Fishing.CharacterTask
 function _Task.Create(char)
     local tbl = {CharacterHandle = char and char.Handle}
     Inherit(tbl, _Task)

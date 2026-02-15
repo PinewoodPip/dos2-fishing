@@ -1,8 +1,8 @@
 
-local Fishing = Epip.GetFeature("Feature_Fishing")
+local Fishing = Epip.GetFeature("Features.Fishing")
 local UI = Fishing.UI
 
----@class Feature_Fishing_GameObject_Fish : Feature_Fishing_GameObject
+---@class Features.Fishing.GameObject.Fish : Features.Fishing.GameObject
 local _Fish = {
     Type = "Fish",
     Timer = 0,
@@ -13,7 +13,7 @@ local _Fish = {
     MAX_VELOCITY = 70,
 }
 Inherit(_Fish, UI._GameObjectClass)
-UI.RegisterGameObject("Feature_Fishing_GameObject_Fish", _Fish)
+UI.RegisterGameObject("Features.Fishing.GameObject.Fish", _Fish)
 
 function _Fish:Update(deltaTime)
     local state = self.State

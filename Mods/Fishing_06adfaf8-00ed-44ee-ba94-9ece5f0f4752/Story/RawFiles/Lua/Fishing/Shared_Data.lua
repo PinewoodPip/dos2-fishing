@@ -5,9 +5,9 @@ local V = Vector.Create
 -- Default data for the Fishing feature.
 ---------------------------------------------
 
-local Fishing = Epip.GetFeature("Feature_Fishing")
+local Fishing = Epip.GetFeature("Features.Fishing")
 
----@type table<string, Feature_Fishing_Fish>
+---@type table<string, Features.Fishing.Fish>
 local fishes = {
     -- ["FishA"] = {
     --     Icon = "Item_CON_Food_Fish_A",
@@ -142,7 +142,7 @@ local fishes = {
     },
 }
 
----@type Feature_Fishing_Region[]
+---@type Features.Fishing.Region[]
 local regions = {
     -- FJ_FortJoy_Main
     {

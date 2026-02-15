@@ -1,21 +1,21 @@
 
-local UI = Epip.GetFeature("Feature_Fishing").UI
+local UI = Epip.GetFeature("Features.Fishing").UI
 
 ---------------------------------------------
 -- STATE
 ---------------------------------------------
 
 ---Holds the physics state of a GameObject.
----@class Feature_Fishing_GameObject_State
+---@class Features.Fishing.GameObject.State
 local _State = {
     Acceleration = 0,
     Velocity = 0,
     Position = 0,
 }
 
----@return Feature_Fishing_GameObject_State
+---@return Features.Fishing.GameObject.State
 function _State.Create()
-    ---@type Feature_Fishing_GameObject_State
+    ---@type Features.Fishing.GameObject.State
     local tbl = {
         Acceleration = 0,
         Position = 0,
@@ -29,15 +29,15 @@ end
 -- GAME OBJECT
 ---------------------------------------------
 
----@class Feature_Fishing_GameObject
----@field State Feature_Fishing_GameObject_State
+---@class Features.Fishing.GameObject
+---@field State Features.Fishing.GameObject.State
 ---@field Size Vector2D
 ---@field ElementID string
 ---@field Type string
 local _GameObject = {}
 
 function _GameObject:Create(elementID, size, state)
-    ---@type Feature_Fishing_GameObject
+    ---@type Features.Fishing.GameObject
     local tbl = {
         State = state,
         ElementID = elementID,
@@ -57,7 +57,7 @@ end
 function _GameObject:Update(deltaTime) error("Not implemented") end -- TODO use template method pattern
 ---@diagnostic enable: unused-local
 
----@param otherObject Feature_Fishing_GameObject
+---@param otherObject Features.Fishing.GameObject
 ---@return boolean
 function _GameObject:IsCollidingWith(otherObject)
     local myState = self:GetState()
@@ -67,12 +67,12 @@ function _GameObject:IsCollidingWith(otherObject)
 end
 
 ---@diagnostic disable: unused-local
----@param otherObject Feature_Fishing_GameObject
+---@param otherObject Features.Fishing.GameObject
 ---@param deltaTime number In milliseconds.
 function _GameObject:OnCollideWith(otherObject, deltaTime) end
 ---@diagnostic enable: unused-local
 
----@return Feature_Fishing_GameObject_State
+---@return Features.Fishing.GameObject.State
 function _GameObject:GetState()
     return self.State
 end

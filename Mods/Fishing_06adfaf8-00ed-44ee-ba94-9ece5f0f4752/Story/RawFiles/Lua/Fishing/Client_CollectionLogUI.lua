@@ -2,8 +2,8 @@ local Generic = Client.UI.Generic
 local TextPrefab = Generic.GetPrefab("GenericUI_Prefab_Text")
 local V = Vector.Create
 
----@class Feature_Fishing
-local Fishing = Epip.GetFeature("Feature_Fishing")
+---@class Features.Fishing
+local Fishing = Epip.GetFeature("Features.Fishing")
 local UI = Generic.Create("Feature_Fishing_CollectionLog")
 Fishing.CollectionLogUI = UI
 
@@ -50,7 +50,7 @@ function UI._SetupFishGrid()
     local grid = UI.FishGrid
     grid:ClearElements()
 
-    local fishes = {} ---@type Feature_Fishing_Fish[]
+    local fishes = {} ---@type Features.Fishing.Fish[]
     for _,fish in pairs(Fishing.GetFishes()) do
         table.insert(fishes, fish)
     end
