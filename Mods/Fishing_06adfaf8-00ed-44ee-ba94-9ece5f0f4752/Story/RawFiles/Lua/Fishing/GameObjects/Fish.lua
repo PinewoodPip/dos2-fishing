@@ -1,13 +1,13 @@
 
 local Fishing = Epip.GetFeature("Features.Fishing")
-local UI = Fishing.UI
+local UI = Fishing.UI ---@class Features.Fishing.UI
 
 ---@class Features.Fishing.GameObject.Fish : Features.Fishing.GameObject
 local _Fish = {
     Type = "Fish",
     Timer = 0,
     CYCLE_TIME = 2,
-    FishState = "Floating",
+    MovementState = nil, ---@type Features.Fishing.GameObject.Fish.State
     ACCELERATION = 40,
     MAX_ACCELERATION = 30,
     MAX_VELOCITY = 70,
@@ -16,34 +16,41 @@ Inherit(_Fish, UI._GameObjectClass)
 UI.RegisterGameObject("Features.Fishing.GameObject.Fish", _Fish)
 
 function _Fish:Update(deltaTime)
-    local state = self.State
     local seconds = deltaTime / 1000
-    local acceleration = state.Acceleration
 
-    -- Switch states
+    -- Update current state
+    self.MovementState:Update(seconds)
+
+    -- Switch states based on timer
     self.Timer = self.Timer + seconds
     if self.Timer > self.CYCLE_TIME then
-        self.FishState = self.FishState == "Floating" and "Sinking" or "Floating"
+        self:TransitionState()
         self.Timer = 0
-        state.Velocity = 0
-        state.Acceleration = 0
     end
+end
 
-    if self.FishState == "Floating" then
-        acceleration = acceleration - self.ACCELERATION * seconds
+---Transition to the next movement state. TODO it should be the states that do this
+function _Fish:TransitionState()
+    if self.MovementState:IsFloating() then
+        self:SetState("Features.Fishing.GameObject.Fish.States.Sinking")
     else
-        acceleration = acceleration + self.ACCELERATION * seconds
+        self:SetState("Features.Fishing.GameObject.Fish.States.Floating")
     end
 
-    -- TODO extract method for this; it's common functionality, most classes will not override it
-    state.Acceleration = math.clamp(acceleration, -self.MAX_ACCELERATION, self.MAX_ACCELERATION)
-    state.Velocity = state.Velocity + acceleration * seconds
-    state.Velocity = math.clamp(state.Velocity, -self.MAX_VELOCITY, self.MAX_VELOCITY)
+    -- Reset velocity and acceleration
+    local state = self.State
+    state.Velocity = 0
+    state.Acceleration = 0
+end
 
-    state.Position = math.clamp(state.Position + state.Velocity * seconds, 0, UI.GetBobberUpperBound()) -- TODO adjust
-
-    if state.Position <= 0 or state.Position >= UI.GetBobberUpperBound() then -- TODO use gameobject method
-        state.Velocity = 0
-        state.Acceleration = 0
+---@param stateClassName Features.Fishing.GameObject.Fish.StateClassName
+function _Fish:SetState(stateClassName)
+    local StateClass = Fishing:GetClass(stateClassName)
+    if not StateClass then
+        UI:__Error("Fish", "Unknown state: " .. stateClassName)
+        return
     end
+
+    self.MovementState = StateClass:Create()
+    self.MovementState:SetFish(self)
 end

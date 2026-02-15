@@ -1,6 +1,6 @@
 
 local Fishing = Epip.GetFeature("Features.Fishing")
-local UI = Fishing.UI
+local UI = Fishing.UI ---@class Features.Fishing.UI
 
 ---@class Features.Fishing.GameObject.Bobber : Features.Fishing.GameObject
 local _Bobber = {

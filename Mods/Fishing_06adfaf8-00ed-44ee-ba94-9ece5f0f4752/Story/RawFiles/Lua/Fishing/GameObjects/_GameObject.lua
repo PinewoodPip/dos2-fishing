@@ -1,4 +1,5 @@
 
+---@class Features.Fishing.UI
 local UI = Epip.GetFeature("Features.Fishing").UI
 
 ---------------------------------------------

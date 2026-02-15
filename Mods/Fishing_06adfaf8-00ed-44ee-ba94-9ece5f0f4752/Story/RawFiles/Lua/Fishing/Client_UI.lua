@@ -4,7 +4,7 @@ local V = Vector.Create
 
 ---@class Features.Fishing
 local Fishing = Epip.GetFeature("Features.Fishing")
-local UI = Generic.Create("Features.Fishing")
+local UI = Generic.Create("Features.Fishing") ---@class Features.Fishing.UI : GenericUI_Instance
 Fishing.UI = UI
 UI:Hide()
 
@@ -90,7 +90,7 @@ end
 ---@param ev Features.Fishing.Event.CharacterStartedFishing
 function UI.Start(ev)
     if UI._GameState then
-        UI:Error("Start", "Instance already in use")
+        UI:__Error("Start", "Instance already in use")
     end
 
     UI._GameState = _GameState.Create(ev.Character, ev.Fish)
@@ -98,8 +98,9 @@ function UI.Start(ev)
     UI.CreateGameObject("Features.Fishing.GameObject.Bobber", "Bobber", UI.BLOBBER_SIZE)
     local fish = UI.CreateGameObject("Features.Fishing.GameObject.Fish", "Fish", UI.FISH_SIZE)
 
-    -- TODO move elsewhere
-    fish:GetState().Position = 300
+    -- Initialize fish and place it around the middle point
+    fish:SetState("Features.Fishing.GameObject.Fish.States.Floating")
+    fish:GetState().Position = UI.GetBobberUpperBound() / 2
 
     UI.SnapToCursor()
     UI.UpdateProgressBar()
