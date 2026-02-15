@@ -16,10 +16,12 @@ function _Bobber:Update(deltaTime)
     local acceleration = state.Acceleration
     local applyGravity = not Client.Input.IsKeyPressed("left2") -- TODO turn into a hook
 
+    -- Apply player force or gravity
+    local EXPONENT = UI.PHYSICS_EXPONENT
     if applyGravity then
-        acceleration = acceleration - UI.GRAVITY * seconds
+        acceleration = acceleration - (UI.GRAVITY * seconds) ^ EXPONENT
     else
-        acceleration = acceleration + UI.PLAYER_STRENGTH * seconds
+        acceleration = acceleration + (UI.PLAYER_STRENGTH * seconds) ^ EXPONENT
     end
 
     state.Acceleration = math.clamp(acceleration, -UI.MAX_ACCELERATION, UI.MAX_ACCELERATION)
