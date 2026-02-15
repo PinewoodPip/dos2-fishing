@@ -193,13 +193,11 @@ Fishing.Hooks.CanStartFishing:Subscribe(function (ev)
     end
 end, {StringID = "DefaultImplementation"})
 
--- Update fishing rod templates to have a world tooltip.
+-- Update fishing rod templates to have a world tooltip to make them easier to find.
 GameState.Events.ClientReady:Subscribe(function (_)
-    if Fishing:IsEnabled() then
-        for guid in Fishing.FISHING_ROD_TEMPLATES:Iterator() do
-            local template = Ext.Template.GetTemplate(guid) ---@type ItemTemplate
+    for guid in Fishing.FISHING_ROD_TEMPLATES:Iterator() do
+        local template = Ext.Template.GetTemplate(guid) ---@type ItemTemplate
 
-            template.Tooltip = 2
-        end
+        template.Tooltip = 2
     end
 end)

@@ -20,13 +20,6 @@ local Fishing = {
     USE_LEGACY_HOOKS = false,
 
     Settings = {
-        Enabled = {
-            Type = "Boolean",
-            Name = "Enabled",
-            Description = "Controls whether fishing is enabled.",
-            DefaultValue = false,
-            Context = "Client",
-        },
         FishCaught = {
             Type = "Map",
             Name = "Fish Caught",
