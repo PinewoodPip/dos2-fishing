@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<save>
+    <header version="2" />
+    <version major="3" minor="6" revision="6" build="0" />
+    <region id="MetaData">
+        <node id="root">
+            <attribute id="Module" value="06adfaf8-00ed-44ee-ba94-9ece5f0f4752" type="23" />
+            <attribute id="Name" value="Fishing" type="23" />
+            <attribute id="Type" value="Add-on" type="23" />
+            <attribute id="UUID" value="59ca7a4a-e874-468f-92a6-cd44230eb8e6" type="23" />
+        </node>
+    </region>
+</save>

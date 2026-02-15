@@ -1,0 +1,9 @@
+{
+    "RequiredExtensionVersion": 60,
+    "ModTable": "Fishing",
+    "FeatureFlags": [
+        "OsirisExtensions",
+        "Lua",
+        "Preprocessor"
+    ]
+}
