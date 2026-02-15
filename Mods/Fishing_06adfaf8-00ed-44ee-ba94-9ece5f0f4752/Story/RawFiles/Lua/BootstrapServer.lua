@@ -8,7 +8,12 @@ Ext.Require("BootstrapShared.lua")
 
 -- Load scripts
 local scripts = {
-    -- TODO
+    {
+        ScriptSet = "Fishing",
+        Scripts = {
+            "Fishing/Shared_Data.lua",
+        }
+    },
 }
 for _,script in ipairs(scripts) do
     RequestScriptLoad(script)
