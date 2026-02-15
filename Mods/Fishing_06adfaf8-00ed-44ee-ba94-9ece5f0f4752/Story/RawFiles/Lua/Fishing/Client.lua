@@ -3,6 +3,7 @@ local NotificationUI = Client.UI.Notification
 
 ---@class Feature_Fishing
 local Fishing = Epip.GetFeature("Feature_Fishing")
+local TSK = Fishing.TranslatedStrings
 Fishing.OPEN_LOG_KEYBIND = "EpipEncounters_Fishing_OpenCollectionLog"
 
 Fishing.Hooks.CanStartFishing = Fishing:AddSubscribableHook("CanStartFishing") ---@type Event<Feature_Fishing_Hook_CanStartFishing>
@@ -24,10 +25,10 @@ Fishing.Hooks.CanStartFishing = Fishing:AddSubscribableHook("CanStartFishing") -
 ---@param char Character
 function Fishing.Start(char)
     local region = Fishing.GetRegionAt(char.WorldPos)
-    
+
     -- Cannot fish in areas with no fishing region.
     if not region then
-        NotificationUI.ShowWarning("There don't seem to be any fish here...")
+        NotificationUI.ShowWarning(TSK.Notification_NoFishNearby)
     else
         local hook = Fishing.Hooks.CanStartFishing:Throw({
             Character = char,
@@ -61,7 +62,6 @@ function Fishing.Start(char)
                 NotificationUI.ShowNotification(hook.FailureReason)
             end
         end
-        
     end
 end
 
@@ -166,7 +166,7 @@ Fishing.Events.CharacterStoppedFishing:Subscribe(function (ev)
 
         NotificationUI.ShowIconNotification(ev.Fish:GetName(), ev.Fish:GetIcon(), nil, Fishing.TSK["Toast_Success"], subTitle, "UI_Notification_ReceiveAbility")
     elseif ev.Reason == "Failure" then
-        NotificationUI.ShowWarning("The fish got away...")
+        NotificationUI.ShowWarning(TSK.Notification_Minigame_Failure:GetString())
     end
 end)
 
@@ -176,15 +176,15 @@ Fishing.Hooks.CanStartFishing:Subscribe(function (ev)
     local reason
 
     if Fishing.IsFishing(char) then
-        reason = "I'm already fishing!"
+        reason = TSK.Notification_CantFish_AlreadyFishing:GetString()
     elseif Client.IsInCombat() or Client.IsInDialogue() then
-        reason = "Now's not the time for fishing!"
+        reason = TSK.Notification_CantFish_NotTheTime:GetString()
     elseif ev.Region.RequiresWater and not Fishing.IsNearWater(char) then
-        reason = "I'm not close enough to water to fish."
+        reason = TSK.Notification_CantFish_NoWater:GetString()
     elseif not Fishing.HasFishingRodEquipped(char) then
-        reason = "I must have a fishing rod equipped to fish!"
+        reason = TSK.Notification_CantFish_NoRod:GetString()
     elseif not Character.IsUnsheathed(char) then
-        reason = "I must unsheathe my fishing rod first."
+        reason = TSK.Notification_CantFish_RodSheathed:GetString()
     end
 
     if reason then
@@ -196,8 +196,7 @@ end, {StringID = "DefaultImplementation"})
 -- Update fishing rod templates to have a world tooltip to make them easier to find.
 GameState.Events.ClientReady:Subscribe(function (_)
     for guid in Fishing.FISHING_ROD_TEMPLATES:Iterator() do
-        local template = Ext.Template.GetTemplate(guid) ---@type ItemTemplate
-
+        local template = Ext.Template.GetTemplate(guid) ---@cast template ItemTemplate
         template.Tooltip = 2
     end
 end)

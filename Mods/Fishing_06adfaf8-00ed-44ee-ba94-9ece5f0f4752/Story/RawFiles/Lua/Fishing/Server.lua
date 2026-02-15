@@ -1,6 +1,7 @@
 
 ---@class Feature_Fishing
 local Fishing = Epip.GetFeature("Feature_Fishing")
+local TSK = Fishing.TranslatedStrings
 
 Fishing.MINIGAME_ANIMATION = "skill_prepare_weapon_01_loop"
 Fishing.ANIMATION_EVENT = "EPIP_FISHING_LOOP"
@@ -45,7 +46,7 @@ Fishing.Events.CharacterStoppedFishing:Subscribe(function (ev)
     Fishing._CharactersFishing:Remove(char.Handle)
 
     if ev.Reason == "Success" then
-        Osiris.CharacterStatusText(char, "Success!")
+        Osiris.CharacterStatusText(char, TSK.Notification_Minigame_Success:GetString())
         Osiris.PlayAnimation(char, Fishing.SUCCESS_ANIMATION, "")
         Osiris.ItemTemplateAddTo(ev.Fish.TemplateID, char, 1, 1)
     elseif ev.Reason == "Failure" then

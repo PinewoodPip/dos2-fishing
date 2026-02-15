@@ -29,6 +29,46 @@ local Fishing = {
     },
 
     TranslatedStrings = {
+        Notification_Minigame_Success = {
+            Handle = "h35cacdc8g0b2ag46f4gb003g3122d32bfecc",
+            Text = "Got it!",
+            ContextDescription = [[Overhead dialog when winning the minigame]],
+        },
+        Notification_NoFishNearby = {
+            Handle = "hede969bbg1756g4bf7gaefdga9c289918025",
+            Text = "There don't seem to be any fish here...",
+            ContextDescription = [[Notification when trying to fish in an area with no fish]],
+        },
+        Notification_Minigame_Failure = {
+            Handle = "h75475962gde88g4e98g85a2g80d5e5f86ab5",
+            Text = "The fish got away...",
+            ContextDescription = [[Notification for losing the minigame]],
+        },
+        Notification_CantFish_AlreadyFishing = {
+            Handle = "h40b6a937gfbf3g471dga223g117d1ed92eb8",
+            Text = "I'm already fishing!",
+            ContextDescription = [[Notification when trying to fish while already fishing (failsafe)]],
+        },
+        Notification_CantFish_NotTheTime = {
+            Handle = "h9c3f1a1cgcd7fg4224g81deg27edf3b307d0",
+            Text = "Now's not the time for fishing!",
+            ContextDescription = [[Notification when trying to fish during combat or dialogue]],
+        },
+        Notification_CantFish_NoWater = {
+            Handle = "hb5bdc55ag49edg402ega177g0a6cf897eb0a",
+            Text = "I'm not close enough to water to fish.",
+            ContextDescription = [[Notification when trying to fish without being near water]],
+        },
+        Notification_CantFish_NoRod = {
+            Handle = "h55b1d5a2g90b8g4bbfga67egb3350374edb4",
+            Text = "I must have a fishing rod equipped to fish!",
+            ContextDescription = [[Notification when trying to fish without a fishing rod equipped]],
+        },
+        Notification_CantFish_RodSheathed = {
+            Handle = "h4dd5393cg95eag4ecag8603g5dffd820d81d",
+            Text = "I must unsheathe my fishing rod first.",
+            ContextDescription = [[Notification when trying to fish with a sheathed fishing rod]],
+        },
         ["hcced1bb7ge818g4803gbf45gf0644370163f"] = {
             Text = "Hold left-click to raise the bar,\nlet go to have it fall.\n\nKeep the bar by the fish until the yellow bar fills up!",
             ContextDescription = "Tutorial message",

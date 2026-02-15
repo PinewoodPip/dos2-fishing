@@ -140,7 +140,7 @@ function UI.AddProgress(progress)
     state.Progress = math.clamp(state.Progress + progress, 0, 1)
 
     UI.UpdateProgressBar()
-    
+
     if state.Progress >= 1 then
         UI.Cleanup("Success")
     elseif state.Progress <= 0 then
@@ -158,7 +158,7 @@ function UI.Cleanup(reason)
     GameState.Events.RunningTick:Unsubscribe("Feature_Fishing_UI_Tick")
 
     UI:Hide()
-    
+
     Fishing.Stop(Character.Get(state.CharacterHandle), state.CurrentFish, reason)
 end
 
@@ -254,7 +254,7 @@ Client.Input.Events.MouseButtonPressed:Subscribe(function (ev)
         for _,gameObject in ipairs(UI.GetGameObjects()) do
             if gameObject.Type == "Bobber" then
                 local state = gameObject:GetState()
-        
+
                 state.Acceleration = state.Acceleration + UI.CLICK_ACCELERATION_BOOST
             end
         end
@@ -263,20 +263,15 @@ end)
 
 -- Cancel the minigame when the character is switched.
 Client.Events.ActiveCharacterChanged:Subscribe(function (_)
-    local state = UI.GetGameState()
-    
-    if state then
+    if UI.GetGameState() then
         UI.Cleanup("Cancelled")
     end
 end)
 
 -- Listen for requests to exit the minigame with escape.
 Client.Input.Events.KeyStateChanged:Subscribe(function (ev)
-    local state = UI.GetGameState()
-
-    if state and ev.InputID == "escape" then
+    if ev.InputID == "escape" and UI.GetGameState() then
         UI.Cleanup("Cancelled")
-
         ev:Prevent()
     end
 end)

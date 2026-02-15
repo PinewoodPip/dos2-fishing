@@ -85,7 +85,7 @@ function _Task:GetPriority(previousPriority)
 end
 
 function _Task:GetDescription()
-    return "Fish! For fish."
+    return "Fish! For fish." -- Not used anywhere afaik.
 end
 
 function _Task:GetExecutePriority(_)

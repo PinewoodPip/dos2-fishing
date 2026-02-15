@@ -249,13 +249,10 @@ local regions = {
         },
     },
 }
-
 for id,fish in pairs(fishes) do
     fish.ID = id
-    
     fish.NameHandle = Fishing:GetTranslatedStringHandleForKey(id .. "_Name")
     fish.DescriptionHandle = Fishing:GetTranslatedStringHandleForKey(id .. "_Description")
-
     Fishing.RegisterFish(fish)
 end
 
