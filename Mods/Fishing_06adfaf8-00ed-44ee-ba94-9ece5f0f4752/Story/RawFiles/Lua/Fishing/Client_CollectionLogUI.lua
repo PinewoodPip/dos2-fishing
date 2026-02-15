@@ -4,7 +4,7 @@ local V = Vector.Create
 
 ---@class Features.Fishing
 local Fishing = Epip.GetFeature("Features.Fishing")
-local UI = Generic.Create("Feature_Fishing_CollectionLog")
+local UI = Generic.Create("Feature_Fishing_CollectionLog") ---@class Features.Fishing.UI.CollectionLog : GenericUI_Instance
 Fishing.CollectionLogUI = UI
 
 ---------------------------------------------
@@ -37,6 +37,12 @@ UI.UNCAUGHT_FISH_TOOLTIP = { ---@type TooltipLib_FormattedTooltip
 ---------------------------------------------
 -- METHODS
 ---------------------------------------------
+
+---Opens the UI.
+function UI.Setup()
+    UI._Initialize()
+    UI:Show()
+end
 
 ---@param id string
 ---@return TooltipLib_FormattedTooltip
@@ -88,26 +94,10 @@ function UI:Show()
     UI:SetPositionRelativeToViewport("center", "center")
 end
 
----------------------------------------------
--- EVENT LISTENERS
----------------------------------------------
+---Initializes the UI's static elements.
+function UI._Initialize()
+    if UI._Initialized then return end
 
--- Toggle the UI when the keybind is used.
-Client.Input.Events.ActionExecuted:Subscribe(function (ev)
-    if ev.Action.ID == UI.KEYBIND then
-        if UI:IsVisible() then
-            UI:Hide()
-        else
-            UI:Show()
-        end
-    end
-end)
-
----------------------------------------------
--- SETUP
----------------------------------------------
-
-function UI:__Setup()
     local bg = UI:CreateElement("Background", "GenericUI_Element_TiledBackground")
     bg:SetBackground("RedPrompt", UI.SIZE:unpack())
 
@@ -128,10 +118,24 @@ function UI:__Setup()
     local closeButton = bg:AddChild("CloseButton", "GenericUI_Element_Button")
     closeButton:SetType("Close")
     closeButton:SetPositionRelativeToParent("TopRight", -20, 20)
-
     closeButton.Events.Pressed:Subscribe(function (_)
         UI:Hide()
     end)
 
-    UI:Hide()
+    UI._Initialized = true
 end
+
+---------------------------------------------
+-- EVENT LISTENERS
+---------------------------------------------
+
+-- Toggle the UI when the keybind is used.
+Client.Input.Events.ActionExecuted:Subscribe(function (ev)
+    if ev.Action.ID == UI.KEYBIND then
+        if UI:IsVisible() then
+            UI:Hide()
+        else
+            UI.Setup()
+        end
+    end
+end)
