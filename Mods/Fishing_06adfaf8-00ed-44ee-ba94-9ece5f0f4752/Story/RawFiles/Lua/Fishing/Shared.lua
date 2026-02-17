@@ -274,8 +274,10 @@ Epip.RegisterFeature("Fishing", Fishing)
 ---@field Icon string? Defaults to the template's icon.
 ---@field TemplateID GUID
 ---@field Difficulty number Affects the "intensity" of the fish's AI. Higher values are expected to translate to faster movement or shorter intervals between movement states.
+---@field Endurance number Multiplier for how much progress the player needs to accumulate to catch the fish.
 local _Fish = {
     Difficulty = 1,
+    Endurance = 1,
 }
 
 ---@return string

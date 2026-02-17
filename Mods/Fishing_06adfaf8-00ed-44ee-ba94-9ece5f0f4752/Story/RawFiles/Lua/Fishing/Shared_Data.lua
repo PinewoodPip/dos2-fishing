@@ -128,6 +128,7 @@ local fishes = {
         Icon = "Item_CON_Food_Fish_F",
         TemplateID = "6e06b364-76ae-4f2b-911b-af879adeec72",
         Difficulty = 2.5,
+        Endurance = 1.5,
     },
     ["Wolffish"] = {
         Icon = "Item_CON_Food_Fish_A",

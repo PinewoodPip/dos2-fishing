@@ -39,9 +39,10 @@ UI.MAX_ACCELERATION = 150
 UI.CLICK_ACCELERATION_BOOST = 0 -- TODO add cooldown?
 UI.PROGRESS_PER_SECOND = 0.15
 UI.PROGRESS_BAR_WIDTH = 5
-UI.STARTING_PROGRESS = 0.45
+UI.STARTING_PROGRESS = 0.45 -- As fraction of required progress.
 UI.PROGRESS_DRAIN = 0.1
 UI.TUTORIAL_PROGRESS_DRAIN_MULTIPLIER = 0.5
+UI.BASE_PROGRESS_REQUIRED = 1
 
 ---------------------------------------------
 -- EVENTS/HOOKS
@@ -69,7 +70,7 @@ local _GameState = {
 ---@return Features.Fishing.GameState
 function _GameState.Create(char, fish)
     local tbl = {
-        Progress = UI.STARTING_PROGRESS,
+        Progress = UI.STARTING_PROGRESS * fish.Endurance,
         CurrentFish = fish,
         CharacterHandle = char.Handle,
     }
@@ -153,6 +154,13 @@ function UI.AddProgress(progress)
     end
 end
 
+---Returns how much progress is required to catch the current fish.
+---@returns number
+function UI.GetRequiredProgress()
+    local state = UI.GetGameState()
+    return UI.BASE_PROGRESS_REQUIRED * state.CurrentFish.Endurance
+end
+
 ---@param reason Features.Fishing.MinigameExitReason
 function UI.Cleanup(reason)
     local state = UI.GetGameState()
@@ -172,10 +180,12 @@ function UI.GetGameObjects()
     return UI._GameObjects
 end
 
+---Updates the progress bar widget.
 function UI.UpdateProgressBar()
     local state = UI.GetGameState()
     local element = UI:GetElementByID("ProgressBar") ---@type GenericUI_Element_Color
-    local length = state.Progress * UI.SIZE[2]
+    local relativeProgress = state.Progress / UI.GetRequiredProgress()
+    local length = relativeProgress * UI.SIZE[2]
 
     element:SetColor(Color.CreateFromHex(Color.LARIAN.YELLOW))
     element:SetSize(UI.PROGRESS_BAR_WIDTH, length)
