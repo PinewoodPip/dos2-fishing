@@ -96,9 +96,10 @@ function UI.Start(ev)
     UI._GameState = _GameState.Create(ev.Character, ev.Fish)
 
     UI.CreateGameObject("Features.Fishing.GameObject.Bobber", "Bobber", UI.BLOBBER_SIZE)
-    local fish = UI.CreateGameObject("Features.Fishing.GameObject.Fish", "Fish", UI.FISH_SIZE)
 
     -- Initialize fish and place it around the middle point
+    local fish = UI.CreateGameObject("Features.Fishing.GameObject.Fish", "Fish", UI.FISH_SIZE)
+    fish.Descriptor = ev.Fish
     fish:SetState("Features.Fishing.GameObject.Fish.States.Floating")
     fish:GetState().Position = UI.GetBobberUpperBound() / 2
 

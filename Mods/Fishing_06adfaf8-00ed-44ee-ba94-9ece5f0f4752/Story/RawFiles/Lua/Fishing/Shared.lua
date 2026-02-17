@@ -273,7 +273,10 @@ Epip.RegisterFeature("Fishing", Fishing)
 ---@class Features.Fishing.Fish : I_Identifiable, I_Describable
 ---@field Icon string? Defaults to the template's icon.
 ---@field TemplateID GUID
-local _Fish = {}
+---@field Difficulty number Affects the "intensity" of the fish's AI. Higher values are expected to translate to faster movement or shorter intervals between movement states.
+local _Fish = {
+    Difficulty = 1,
+}
 
 ---@return string
 function _Fish:GetIcon()

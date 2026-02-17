@@ -3,17 +3,25 @@ local Fishing = Epip.GetFeature("Features.Fishing")
 local UI = Fishing.UI ---@class Features.Fishing.UI
 
 ---@class Features.Fishing.GameObject.Fish : Features.Fishing.GameObject
+---@field Descriptor Features.Fishing.Fish
 local _Fish = {
     Type = "Fish",
-    Timer = 0,
-    CYCLE_TIME = 2,
     MovementState = nil, ---@type Features.Fishing.GameObject.Fish.State
+
+    BASE_CYCLE_TIME = 2,
     ACCELERATION = 40,
     MAX_ACCELERATION = 30,
     MAX_VELOCITY = 70,
+    STATE_CHANGE_COOLDOWN_RANDOM_FACTOR = 0.4, -- Random deviation for time between movement state changes, as fraction of `CYCLE_TIME`.
+
+    _StateChangeCooldown = 0,
 }
 Inherit(_Fish, UI._GameObjectClass)
 UI.RegisterGameObject("Features.Fishing.GameObject.Fish", _Fish)
+
+---------------------------------------------
+-- METHODS
+---------------------------------------------
 
 function _Fish:Update(deltaTime)
     local seconds = deltaTime / 1000
@@ -22,10 +30,14 @@ function _Fish:Update(deltaTime)
     self.MovementState:Update(seconds)
 
     -- Switch states based on timer
-    self.Timer = self.Timer + seconds
-    if self.Timer > self.CYCLE_TIME then
+    -- Higher difficulty reduces time between changing movement patterns.
+    self._StateChangeCooldown = self._StateChangeCooldown - seconds
+    if self._StateChangeCooldown < 0 then
         self:TransitionState()
-        self.Timer = 0
+
+        -- Randomize time until next state
+        local cycleTime = self.BASE_CYCLE_TIME / self.Descriptor.Difficulty
+        self._StateChangeCooldown = cycleTime * (math.random() * self.STATE_CHANGE_COOLDOWN_RANDOM_FACTOR * 2 + (1 - self.STATE_CHANGE_COOLDOWN_RANDOM_FACTOR))
     end
 end
 

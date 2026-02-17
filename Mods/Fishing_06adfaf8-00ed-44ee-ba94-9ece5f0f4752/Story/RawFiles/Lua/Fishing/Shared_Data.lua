@@ -111,10 +111,10 @@ local fishes = {
     --     Icon = "Item_JUNK_FishSkeleton_A",
     --     TemplateID = "f80baa33-442d-443d-b573-cd5169473147",
     -- },
-    -- ["Pearl"] = {
-    --     Icon = "Item_HAR_Pearl_A",
-    --     TemplateID = "1bde972a-fcdf-4d63-8227-955437cc8255",
-    -- },
+    ["Pearl"] = {
+        Icon = "Item_HAR_Pearl_A",
+        TemplateID = "1bde972a-fcdf-4d63-8227-955437cc8255",
+    },
 
     ["Bluefish"] = {
         Icon = "Item_CON_Food_Fish_A",
@@ -127,6 +127,7 @@ local fishes = {
     ["Swordfish"] = {
         Icon = "Item_CON_Food_Fish_F",
         TemplateID = "6e06b364-76ae-4f2b-911b-af879adeec72",
+        Difficulty = 2.5,
     },
     ["Wolffish"] = {
         Icon = "Item_CON_Food_Fish_A",

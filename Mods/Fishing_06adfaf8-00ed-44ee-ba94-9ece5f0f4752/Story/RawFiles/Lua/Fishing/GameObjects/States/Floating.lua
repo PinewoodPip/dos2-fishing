@@ -23,9 +23,10 @@ end
 function _Floating:Update(dt)
     local state = self.Fish.State
     local acceleration = state.Acceleration
+    local difficulty = self.Fish.Descriptor.Difficulty
 
     -- Apply upward acceleration
-    acceleration = acceleration - self.Fish.ACCELERATION * dt
+    acceleration = acceleration - self.Fish.ACCELERATION * difficulty * dt
 
     state.Acceleration = math.clamp(acceleration, -self.Fish.MAX_ACCELERATION, self.Fish.MAX_ACCELERATION)
     state.Velocity = state.Velocity + acceleration * dt
