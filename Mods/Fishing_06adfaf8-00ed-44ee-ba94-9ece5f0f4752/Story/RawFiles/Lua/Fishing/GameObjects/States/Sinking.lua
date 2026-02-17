@@ -13,14 +13,19 @@ Fishing:RegisterClass("Features.Fishing.GameObject.Fish.States.Sinking", _Sinkin
 -- METHODS
 ---------------------------------------------
 
----@return Features.Fishing.GameObject.Fish.State
-function _Sinking:Create()
-    local state = StateClass.Create(self, {})
+---@param duration number Duration in seconds.
+---@return Features.Fishing.GameObject.Fish.States.Sinking
+function _Sinking:Create(duration)
+    local state = StateClass.Create(self, {
+        Duration = duration,
+    }) ---@cast state Features.Fishing.GameObject.Fish.States.Sinking
     return state
 end
 
 ---@param dt number In seconds.
 function _Sinking:Update(dt)
+    StateClass.Update(self, dt)
+
     local state = self.Fish.State
     local acceleration = state.Acceleration
     local difficulty = self.Fish.Descriptor.Difficulty

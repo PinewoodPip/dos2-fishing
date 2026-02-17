@@ -13,14 +13,19 @@ Fishing:RegisterClass("Features.Fishing.GameObject.Fish.States.Floating", _Float
 -- METHODS
 ---------------------------------------------
 
----@return Features.Fishing.GameObject.Fish.State
-function _Floating:Create()
-    local state = StateClass.Create(self, {})
+---@param duration number Duration in seconds.
+---@return Features.Fishing.GameObject.Fish.States.Floating
+function _Floating:Create(duration)
+    local state = StateClass.Create(self, {
+        Duration = duration,
+    }) ---@cast state Features.Fishing.GameObject.Fish.States.Floating
     return state
 end
 
 ---@param dt number In seconds.
 function _Floating:Update(dt)
+    StateClass.Update(self, dt)
+
     local state = self.Fish.State
     local acceleration = state.Acceleration
     local difficulty = self.Fish.Descriptor.Difficulty
