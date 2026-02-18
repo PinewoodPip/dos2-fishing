@@ -13,7 +13,6 @@ local _Fish = {
     MAX_ACCELERATION = 30,
     MAX_VELOCITY = 70,
     STATE_CHANGE_COOLDOWN_RANDOM_FACTOR = 0.4, -- Random deviation for state duration, as a fraction of `BASE_CYCLE_TIME`.
-    TWEEN_CHANCE = 0.3, -- Chance to entering the Tweening state on each state transition.
     BASE_TWEEN_DURATION = 1.5, -- Base tween duration in seconds, scaled down by fish Difficulty; higher Difficulty results in shorter tween states.
 }
 Inherit(_Fish, UI._GameObjectClass)
@@ -42,26 +41,52 @@ function _Fish:_RandomStateDuration()
     return cycleTime * (math.random() * self.STATE_CHANGE_COOLDOWN_RANDOM_FACTOR * 2 + (1 - self.STATE_CHANGE_COOLDOWN_RANDOM_FACTOR))
 end
 
----Transition to the next movement state. TODO it should be the states that do this
+---Transition to the next movement state.
 function _Fish:TransitionState()
     if not self.MovementState:IsFinished() then return end
 
-    if math.random() < self.TWEEN_CHANCE then
-        local TweenState = MovementStates.Tweening
-        local easingFunc = self:_GetRandomTweenFunction()
-        local targetPosition = math.random() * UI.GetBobberUpperBound() -- TODO avoid tweening to a position too close to current one
-        local duration = self.BASE_TWEEN_DURATION / self.Descriptor.Difficulty
-        self:SetState(TweenState:Create(easingFunc, targetPosition, duration))
-    elseif self.MovementState:IsFloating() then
-        self:SetState(MovementStates.Sinking:Create(self:_RandomStateDuration()))
-    else
-        self:SetState(MovementStates.Floating:Create(self:_RandomStateDuration()))
-    end
+    local behaviour = Fishing.GetBehaviour(self.Descriptor.Behaviour)
+    local transitions = behaviour.Transitions[self.MovementState:GetClassName()]
+    local targetStateName = self:_PickRandomTransition(transitions)
+    self:SetState(self:CreateState(targetStateName))
 
     -- Reset velocity and acceleration
     local state = self.State
     state.Velocity = 0
     state.Acceleration = 0
+end
+
+---Factory method for creating states with reasonable default parameters.
+---@param stateClassName Features.Fishing.GameObject.Fish.StateClassName
+---@return Features.Fishing.GameObject.Fish.State
+function _Fish:CreateState(stateClassName)
+    local class = Fishing:GetClass(stateClassName)
+    if stateClassName == "Features.Fishing.GameObject.Fish.States.Tweening" then
+        local easingFunc = self:_GetRandomTweenFunction()
+        local targetPosition = math.random() * UI.GetBobberUpperBound()
+        local duration = self.BASE_TWEEN_DURATION / self.Descriptor.Difficulty
+        return class:Create(easingFunc, targetPosition, duration)
+    end
+    return class:Create(self:_RandomStateDuration())
+end
+
+---Picks a target state using weighted random selection over a list of transitions.
+---@param transitions Features.Fishing.Fish.Behaviour.Transition[]
+---@return Features.Fishing.GameObject.Fish.StateClassName
+function _Fish:_PickRandomTransition(transitions)
+    local totalWeight = 0
+    for _,transition in ipairs(transitions) do
+        totalWeight = totalWeight + transition.Weight
+    end
+    local roll = math.random() * totalWeight
+    local usedWeight = 0
+    for _,transition in ipairs(transitions) do
+        usedWeight = usedWeight + transition.Weight
+        if roll <= usedWeight then
+            return transition.TargetState
+        end
+    end
+    return transitions[#transitions].TargetState
 end
 
 ---Sets the movement state.

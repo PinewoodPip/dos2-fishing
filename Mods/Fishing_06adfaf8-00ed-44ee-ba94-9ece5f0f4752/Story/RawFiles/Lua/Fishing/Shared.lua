@@ -5,6 +5,7 @@ local Set = DataStructures.Get("DataStructures_Set")
 ---@class Features.Fishing : Feature
 local Fishing = {
     _Fish = {}, ---@type table<string, Features.Fishing.Fish>
+    _FishBehaviours = {}, ---@type table<Features.Fishing.Fish.BehaviourType, Features.Fishing.Fish.Behaviour>
     _RegionsByLevel = DefaultTable.Create({}), ---@type DataStructures_DefaultTable<string, Features.Fishing.Region[]>
     _RegionsByID = {}, ---@type table<string, Features.Fishing.Region>
     _CharactersFishing = Set.Create(), -- Not synchronized across clients!
@@ -270,11 +271,24 @@ Epip.RegisterFeature("Fishing", Fishing)
 
 ---@alias Features.Fishing.MinigameExitReason "Success"|"Failure"|"Cancelled"
 
+---@diagnostic disable-next-line: duplicate-doc-alias
+---@alias Features.Fishing.Fish.BehaviourType string
+
+---@class Features.Fishing.Fish.Behaviour.Transition
+---@field TargetState Features.Fishing.GameObject.Fish.StateClassName
+---@field Weight number Relative chance for this transition to be picked.
+
+---@class Features.Fishing.Fish.Behaviour
+---@field Type Features.Fishing.Fish.BehaviourType
+---@field InitialState Features.Fishing.GameObject.Fish.StateClassName
+---@field Transitions table<Features.Fishing.GameObject.Fish.StateClassName, Features.Fishing.Fish.Behaviour.Transition[]> Maps current state to possible transitions.
+
 ---@class Features.Fishing.Fish : I_Identifiable, I_Describable
 ---@field Icon string? Defaults to the template's icon.
 ---@field TemplateID GUID
 ---@field Difficulty number Affects the "intensity" of the fish's AI. Higher values are expected to translate to faster movement or shorter intervals between movement states.
 ---@field Endurance number Multiplier for how much progress the player needs to accumulate to catch the fish.
+---@field Behaviour Features.Fishing.Fish.BehaviourType
 local _Fish = {
     Difficulty = 1,
     Endurance = 1,
@@ -355,8 +369,22 @@ function Fishing.RegisterRegion(data)
     if #data.Fish == 0 then Fishing:Error("RegisterRegion", "Regions must have at least one fish entry.") end
     Inherit(data, _Region)
     Interfaces.Apply(data, "I_Identifiable")
-    
+
     table.insert(Fishing._RegionsByLevel[data.LevelID], data)
+end
+
+---Registers a fish behaviour.
+---@param behaviour Features.Fishing.Fish.Behaviour
+function Fishing.RegisterFishBehaviour(behaviour)
+    if not behaviour.Type then Fishing:__Error("RegisterFishBehaviour", "Missing Type field") end
+    Fishing._FishBehaviours[behaviour.Type] = behaviour
+end
+
+---Returns a fish behaviour by ID.
+---@param type Features.Fishing.Fish.BehaviourType
+---@return Features.Fishing.Fish.Behaviour
+function Fishing.GetBehaviour(type)
+    return Fishing._FishBehaviours[type]
 end
 
 ---@param levelID string

@@ -11,6 +11,7 @@ local scripts = {
     {
         ScriptSet = "Fishing",
         Scripts = {
+            "Fishing/FishBehaviours.lua",
             "Fishing/Shared_Data.lua",
         }
     },

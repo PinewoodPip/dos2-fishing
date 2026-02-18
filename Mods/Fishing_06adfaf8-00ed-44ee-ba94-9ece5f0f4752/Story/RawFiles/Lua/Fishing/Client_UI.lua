@@ -101,7 +101,9 @@ function UI.Start(ev)
     -- Initialize fish and place it around the middle point
     local fish = UI.CreateGameObject("Features.Fishing.GameObject.Fish", "Fish", UI.FISH_SIZE)
     fish.Descriptor = ev.Fish
-    fish:SetState(Fishing:GetClass("Features.Fishing.GameObject.Fish.States.Sinking"):Create(0)) -- TODO delegate to fish
+    local initialStateClass = Fishing.GetBehaviour(ev.Fish.Behaviour).InitialState
+    local initialState = fish:CreateState(initialStateClass)
+    fish:SetState(initialState)
     fish:GetState().Position = UI.GetBobberUpperBound() / 2
 
     UI.SnapToCursor()

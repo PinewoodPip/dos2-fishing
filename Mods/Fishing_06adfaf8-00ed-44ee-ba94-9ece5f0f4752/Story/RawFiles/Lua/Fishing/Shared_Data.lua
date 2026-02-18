@@ -106,6 +106,7 @@ local fishes = {
     ["Starfish"] = {
         Icon = "Item_HAR_Starfish_A",
         TemplateID = "77077fc8-470c-483d-bb13-fa506cfcf229",
+        Behaviour = "Chill",
     },
     -- ["SkeletonFish"] = {
     --     Icon = "Item_JUNK_FishSkeleton_A",
@@ -114,6 +115,7 @@ local fishes = {
     ["Pearl"] = {
         Icon = "Item_HAR_Pearl_A",
         TemplateID = "1bde972a-fcdf-4d63-8227-955437cc8255",
+        Behaviour = "Sinker",
     },
 
     ["Bluefish"] = {
@@ -129,6 +131,7 @@ local fishes = {
         TemplateID = "6e06b364-76ae-4f2b-911b-af879adeec72",
         Difficulty = 2.5,
         Endurance = 1.5,
+        Behaviour = "Aggressive",
     },
     ["Wolffish"] = {
         Icon = "Item_CON_Food_Fish_A",
