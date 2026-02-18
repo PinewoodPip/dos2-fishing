@@ -140,14 +140,17 @@ function UI.GetProgressDrain()
     return hook.Drain
 end
 
+---Adds progress towards catching the fish.
+---@param progress number
 function UI.AddProgress(progress)
     local state = UI.GetGameState()
+    local requiredProgress = UI.GetRequiredProgress()
 
-    state.Progress = math.clamp(state.Progress + progress, 0, 1)
+    state.Progress = math.clamp(state.Progress + progress, 0, requiredProgress)
 
     UI.UpdateProgressBar()
 
-    if state.Progress >= 1 then
+    if state.Progress >= requiredProgress then
         UI.Cleanup("Success")
     elseif state.Progress <= 0 then
         UI.Cleanup("Failure")
