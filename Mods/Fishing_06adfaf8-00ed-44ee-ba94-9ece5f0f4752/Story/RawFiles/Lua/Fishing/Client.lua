@@ -1,5 +1,6 @@
 
 local NotificationUI = Client.UI.Notification
+local V = Vector.Create
 
 ---@class Features.Fishing
 local Fishing = Epip.GetFeature("Features.Fishing")
@@ -22,6 +23,25 @@ Fishing.Hooks.CanStartFishing = Fishing:AddSubscribableHook("CanStartFishing") -
 -- METHODS
 ---------------------------------------------
 
+---Returns whether char can start the fishing minigame.
+---@param char EclCharacter
+---@return boolean, string? -- Whether the character can fish, and reason why not (if applicable).
+function Fishing.CanFish(char)
+    local region = Fishing.GetRegionAt(char.WorldPos)
+    local canFish = region ~= nil
+    local reason = nil ---@type string?
+    if region then
+        local hook = Fishing.Hooks.CanStartFishing:Throw({
+            Character = char,
+            CanStartFishing = true,
+            Region = region,
+        })
+        canFish = hook.CanStartFishing
+        reason = hook.FailureReason
+    end
+    return canFish, reason
+end
+
 ---@param char Character
 function Fishing.Start(char)
     local region = Fishing.GetRegionAt(char.WorldPos)
@@ -30,14 +50,8 @@ function Fishing.Start(char)
     if not region then
         NotificationUI.ShowWarning(TSK.Notification_NoFishNearby)
     else
-        local hook = Fishing.Hooks.CanStartFishing:Throw({
-            Character = char,
-            CanStartFishing = true,
-            Region = region,
-        })
-
-        -- Begin fishing if no listener prevented it.
-        if hook.CanStartFishing then
+        local canFish, reason = Fishing.CanFish(char)
+        if canFish then
             local fish = Fishing.GetRandomFish(region)
 
             Fishing._CharactersFishing:Add(char.Handle)
@@ -58,8 +72,8 @@ function Fishing.Start(char)
                 FishID = fish.ID,
             })
         else -- Otherwise show failure reason (if provided)
-            if hook.FailureReason then
-                NotificationUI.ShowNotification(hook.FailureReason)
+            if reason then
+                NotificationUI.ShowNotification(reason)
             end
         end
     end
@@ -179,12 +193,37 @@ Fishing.Hooks.CanStartFishing:Subscribe(function (ev)
         reason = TSK.Notification_CantFish_AlreadyFishing:GetString()
     elseif Client.IsInCombat() or Client.IsInDialogue() then
         reason = TSK.Notification_CantFish_NotTheTime:GetString()
-    elseif ev.Region.RequiresWater and not Fishing.IsNearWater(char) then
-        reason = TSK.Notification_CantFish_NoWater:GetString()
     elseif not Fishing.HasFishingRodEquipped(char) then
         reason = TSK.Notification_CantFish_NoRod:GetString()
     elseif not Character.IsUnsheathed(char) then
         reason = TSK.Notification_CantFish_RodSheathed:GetString()
+    end
+
+    -- Check if the player and cursor area near water
+    local cursorPos = Pointer.GetWalkablePosition()
+    local charNearWater = Fishing.IsNearWater(char)
+    local canFish = charNearWater and Fishing.IsPositionNearWater(cursorPos)
+    if ev.Region.RequiresWater and not charNearWater then
+        canFish = false
+    end
+    if not canFish and ev.Region.FishingAreas then -- Check for manually defined fishing areas
+        local charPos = V(char.WorldPos[1], char.WorldPos[3])
+        local cursorPos2D = V(cursorPos[1], cursorPos[3])
+        local cursorX, cursorY = cursorPos2D[1], cursorPos2D[2]
+        local distanceToCursor = Vector.GetLength(cursorPos2D - charPos)
+        if distanceToCursor <= Fishing.WATER_MAX_DISTANCE then
+            -- Check if the cursor is within any of the fishing areas defined for the region.
+            for _,bounds in ipairs(ev.Region.FishingAreas) do
+                local boundsX, boundsY, w, h = table.unpack(bounds)
+                if cursorX >= boundsX and cursorX <= boundsX + w and cursorY >= boundsY and cursorY <= boundsY + h then
+                    canFish = true
+                    break
+                end
+            end
+        end
+    end
+    if not canFish then
+        reason = TSK.Notification_CantFish_NoWater:GetString()
     end
 
     if reason then

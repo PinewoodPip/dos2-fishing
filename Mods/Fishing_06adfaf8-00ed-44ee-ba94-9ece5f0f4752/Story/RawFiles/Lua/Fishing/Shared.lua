@@ -15,7 +15,8 @@ local Fishing = {
         "90cdb693-3564-415a-a8fa-4027b7f76f41", -- HAR_FishingRod_B, classic red/white bobber
         "9fc3cb5f-894e-4783-9eef-fbceef0104b0", -- HAR_FishingRod_C, red/yellow lure
     }),
-    WATER_SEARCH_RADIUS = 3.5,
+    WATER_SEARCH_RADIUS = 1.5,
+    WATER_MAX_DISTANCE = 3.5, -- Distance to water (or fishing areas) that a character must be within for fishing to be available.
 
     USE_LEGACY_EVENTS = false,
     USE_LEGACY_HOOKS = false,
@@ -336,10 +337,11 @@ end
 
 ---@class Features.Fishing.Region : I_Identifiable
 ---@field LevelID string
----@field Bounds Vector4 X, Y, width, height.
+---@field Bounds Vector4 X, Y, width, height bounds of the area where fishing will be possible when near deepwater surfaces.
 ---@field Fish Features.Fishing.Region.FishEntry[]
 ---@field RequiresWater boolean? Defaults to true.
 ---@field Priority integer? Defaults to 0.
+---@field FishingAreas Vector4[]? Bounds of areas where fishing is possible even without deepwater surfaces.
 local _Region = {
     RequiresWater = true,
     Priority = 0,
@@ -422,20 +424,16 @@ function Fishing.GetRegionAt(pos)
     local levelID = Entity.GetLevel().LevelDesc.LevelName
     local regions = Fishing.GetRegions(levelID)
     local region = nil ---@type Features.Fishing.Region
-
     for _,levelRegion in ipairs(regions) do
         local bounds = levelRegion.Bounds
-
         -- Boundaries go from north-west to south-east.
         if pos[1] >= bounds[1] and pos[1] <= bounds[1] + bounds[3] and pos[3] <= bounds[2] and pos[3] >= bounds[2] - bounds[4] then
-            
             -- Higher-priority regions take priority.
             if not region or levelRegion.Priority > region.Priority then
                 region = levelRegion
             end
         end
     end
-
     return region
 end
 

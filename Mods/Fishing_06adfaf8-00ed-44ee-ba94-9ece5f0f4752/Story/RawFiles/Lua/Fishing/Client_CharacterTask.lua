@@ -73,7 +73,7 @@ function _Task:Exit() end
 function _Task:MeetsRequirements()
     local char = self:GetCharacter()
 
-    return self:HasValidTargetPos() and Fishing.HasFishingRodEquipped(char) and Character.IsUnsheathed(char) and Fishing.IsNearWater(char)
+    return self:HasValidTargetPos() and Fishing.HasFishingRodEquipped(char) and Character.IsUnsheathed(char)
 end
 
 function _Task:GetPriority(previousPriority)
@@ -107,7 +107,7 @@ function _Task:HasValidTargetPos() -- TODO make it require looking at the water
     local region = Fishing.GetRegionAt(char.WorldPos)
     local isCursorByWater = Fishing.IsPositionNearWater(Pointer.GetWalkablePosition(), self.WATER_SEARCH_RADIUS)
 
-    return region and (isCursorByWater or not region.RequiresWater)
+    return region and (isCursorByWater or Fishing.CanFish(char))
 end
 
 function _Task:HasValidTarget()
