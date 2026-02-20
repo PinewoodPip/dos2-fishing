@@ -5,7 +5,31 @@
     <region id="Config">
         <node id="root">
             <children>
-                <node id="Dependencies" />
+                <node id="Dependencies">
+                    <children>
+                        <node id="ModuleShortDesc">
+                            <attribute id="Folder" value="Character_Creation_Pack" type="30" />
+                            <attribute id="MD5" value="" type="23" />
+                            <attribute id="Name" value="Character_Creation_Pack" type="22" />
+                            <attribute id="UUID" value="b40e443e-badd-4727-82b3-f88a170c4db7" type="22" />
+                            <attribute id="Version" value="268435456" type="4" />
+                        </node>
+                        <node id="ModuleShortDesc">
+                            <attribute id="Folder" value="Shared_DOS" type="30" />
+                            <attribute id="MD5" value="51f45a5233f4b8a45b8a8ab71eccbc30" type="23" />
+                            <attribute id="Name" value="Shared_DOS" type="22" />
+                            <attribute id="UUID" value="eedf7638-36ff-4f26-a50a-076b87d53ba0" type="22" />
+                            <attribute id="Version" value="268435456" type="4" />
+                        </node>
+                        <node id="ModuleShortDesc">
+                            <attribute id="Folder" value="EpipEncounters_7d32cb52-1cfd-4526-9b84-db4867bf9356" type="30" />
+                            <attribute id="MD5" value="" type="23" />
+                            <attribute id="Name" value="Epip" type="22" />
+                            <attribute id="UUID" value="7d32cb52-1cfd-4526-9b84-db4867bf9356" type="22" />
+                            <attribute id="Version" value="268894212" type="4" />
+                        </node>
+                    </children>
+                </node>
                 <node id="ModuleInfo">
                     <attribute id="Author" value="" type="30" />
                     <attribute id="CharacterCreationLevelName" value="" type="22" />
