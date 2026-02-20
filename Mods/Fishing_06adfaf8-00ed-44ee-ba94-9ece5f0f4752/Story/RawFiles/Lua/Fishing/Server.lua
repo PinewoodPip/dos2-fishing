@@ -74,3 +74,11 @@ Net.RegisterListener("Feature_Fishing_NetMsg_CharacterStoppedFishing", function 
         Fish = Fishing.GetFish(payload.FishID),
     })
 end)
+
+-- Cheat to add all fish items.
+Ext.RegisterConsoleCommand("fishaddall", function (_)
+    local charGUID = Osi.CharacterGetHostCharacter()
+    for _,fish in pairs(Fishing._Fish) do
+        Osiris.ItemTemplateAddTo(fish.TemplateID, charGUID, 1, 0)
+    end
+end)

@@ -20,6 +20,13 @@
                     <attribute id="V2" value="0.124023" type="6" />
                 </node>
                 <node id="IconUV">
+                    <attribute id="MapKey" value="PIP_Fish_Blobfish" type="22" />
+                    <attribute id="U1" value="0.625977" type="6" />
+                    <attribute id="U2" value="0.749023" type="6" />
+                    <attribute id="V1" value="0.250977" type="6" />
+                    <attribute id="V2" value="0.374023" type="6" />
+                </node>
+                <node id="IconUV">
                     <attribute id="MapKey" value="PIP_Fish_CrystalCoral" type="22" />
                     <attribute id="U1" value="0.250977" type="6" />
                     <attribute id="U2" value="0.374023" type="6" />
@@ -39,6 +46,13 @@
                     <attribute id="U2" value="0.624023" type="6" />
                     <attribute id="V1" value="0.000976563" type="6" />
                     <attribute id="V2" value="0.124023" type="6" />
+                </node>
+                <node id="IconUV">
+                    <attribute id="MapKey" value="PIP_Fish_GilledMushroom" type="22" />
+                    <attribute id="U1" value="0.250977" type="6" />
+                    <attribute id="U2" value="0.374023" type="6" />
+                    <attribute id="V1" value="0.500977" type="6" />
+                    <attribute id="V2" value="0.624023" type="6" />
                 </node>
                 <node id="IconUV">
                     <attribute id="MapKey" value="PIP_Fish_Hurchin" type="22" />
@@ -76,6 +90,69 @@
                     <attribute id="V2" value="0.249023" type="6" />
                 </node>
                 <node id="IconUV">
+                    <attribute id="MapKey" value="PIP_Fish_Petri" type="22" />
+                    <attribute id="U1" value="0.375977" type="6" />
+                    <attribute id="U2" value="0.499023" type="6" />
+                    <attribute id="V1" value="0.250977" type="6" />
+                    <attribute id="V2" value="0.374023" type="6" />
+                </node>
+                <node id="IconUV">
+                    <attribute id="MapKey" value="PIP_Fish_Piranha" type="22" />
+                    <attribute id="U1" value="0.125977" type="6" />
+                    <attribute id="U2" value="0.249023" type="6" />
+                    <attribute id="V1" value="0.500977" type="6" />
+                    <attribute id="V2" value="0.624023" type="6" />
+                </node>
+                <node id="IconUV">
+                    <attribute id="MapKey" value="PIP_Fish_Pomfret" type="22" />
+                    <attribute id="U1" value="0.000976563" type="6" />
+                    <attribute id="U2" value="0.124023" type="6" />
+                    <attribute id="V1" value="0.500977" type="6" />
+                    <attribute id="V2" value="0.624023" type="6" />
+                </node>
+                <node id="IconUV">
+                    <attribute id="MapKey" value="PIP_Fish_Porgy" type="22" />
+                    <attribute id="U1" value="0.875977" type="6" />
+                    <attribute id="U2" value="0.999023" type="6" />
+                    <attribute id="V1" value="0.375977" type="6" />
+                    <attribute id="V2" value="0.499023" type="6" />
+                </node>
+                <node id="IconUV">
+                    <attribute id="MapKey" value="PIP_Fish_PremoldedCheese" type="22" />
+                    <attribute id="U1" value="0.000976563" type="6" />
+                    <attribute id="U2" value="0.124023" type="6" />
+                    <attribute id="V1" value="0.375977" type="6" />
+                    <attribute id="V2" value="0.499023" type="6" />
+                </node>
+                <node id="IconUV">
+                    <attribute id="MapKey" value="PIP_Fish_RedHerring" type="22" />
+                    <attribute id="U1" value="0.625977" type="6" />
+                    <attribute id="U2" value="0.749023" type="6" />
+                    <attribute id="V1" value="0.375977" type="6" />
+                    <attribute id="V2" value="0.499023" type="6" />
+                </node>
+                <node id="IconUV">
+                    <attribute id="MapKey" value="PIP_Fish_Reptile" type="22" />
+                    <attribute id="U1" value="0.750977" type="6" />
+                    <attribute id="U2" value="0.874023" type="6" />
+                    <attribute id="V1" value="0.250977" type="6" />
+                    <attribute id="V2" value="0.374023" type="6" />
+                </node>
+                <node id="IconUV">
+                    <attribute id="MapKey" value="PIP_Fish_Riftling" type="22" />
+                    <attribute id="U1" value="0.250977" type="6" />
+                    <attribute id="U2" value="0.374023" type="6" />
+                    <attribute id="V1" value="0.375977" type="6" />
+                    <attribute id="V2" value="0.499023" type="6" />
+                </node>
+                <node id="IconUV">
+                    <attribute id="MapKey" value="PIP_Fish_Rockfish" type="22" />
+                    <attribute id="U1" value="0.750977" type="6" />
+                    <attribute id="U2" value="0.874023" type="6" />
+                    <attribute id="V1" value="0.375977" type="6" />
+                    <attribute id="V2" value="0.499023" type="6" />
+                </node>
+                <node id="IconUV">
                     <attribute id="MapKey" value="PIP_Fish_SeaGooseberry" type="22" />
                     <attribute id="U1" value="0.250977" type="6" />
                     <attribute id="U2" value="0.374023" type="6" />
@@ -111,6 +188,20 @@
                     <attribute id="V2" value="0.249023" type="6" />
                 </node>
                 <node id="IconUV">
+                    <attribute id="MapKey" value="PIP_Fish_StringFish" type="22" />
+                    <attribute id="U1" value="0.375977" type="6" />
+                    <attribute id="U2" value="0.499023" type="6" />
+                    <attribute id="V1" value="0.375977" type="6" />
+                    <attribute id="V2" value="0.499023" type="6" />
+                </node>
+                <node id="IconUV">
+                    <attribute id="MapKey" value="PIP_Fish_Swordine" type="22" />
+                    <attribute id="U1" value="0.500977" type="6" />
+                    <attribute id="U2" value="0.624023" type="6" />
+                    <attribute id="V1" value="0.375977" type="6" />
+                    <attribute id="V2" value="0.499023" type="6" />
+                </node>
+                <node id="IconUV">
                     <attribute id="MapKey" value="PIP_Fish_TorrentedSoul" type="22" />
                     <attribute id="U1" value="0.125977" type="6" />
                     <attribute id="U2" value="0.249023" type="6" />
@@ -125,11 +216,32 @@
                     <attribute id="V2" value="0.249023" type="6" />
                 </node>
                 <node id="IconUV">
+                    <attribute id="MapKey" value="PIP_Treasure_LetterMap" type="22" />
+                    <attribute id="U1" value="0.500977" type="6" />
+                    <attribute id="U2" value="0.624023" type="6" />
+                    <attribute id="V1" value="0.250977" type="6" />
+                    <attribute id="V2" value="0.374023" type="6" />
+                </node>
+                <node id="IconUV">
+                    <attribute id="MapKey" value="PIP_Treasure_LightAtTheEnd" type="22" />
+                    <attribute id="U1" value="0.125977" type="6" />
+                    <attribute id="U2" value="0.249023" type="6" />
+                    <attribute id="V1" value="0.375977" type="6" />
+                    <attribute id="V2" value="0.499023" type="6" />
+                </node>
+                <node id="IconUV">
                     <attribute id="MapKey" value="PIP_Treasure_NonFineChina" type="22" />
                     <attribute id="U1" value="0.875977" type="6" />
                     <attribute id="U2" value="0.999023" type="6" />
                     <attribute id="V1" value="0.125977" type="6" />
                     <attribute id="V2" value="0.249023" type="6" />
+                </node>
+                <node id="IconUV">
+                    <attribute id="MapKey" value="PIP_Treasure_Sludge" type="22" />
+                    <attribute id="U1" value="0.875977" type="6" />
+                    <attribute id="U2" value="0.999023" type="6" />
+                    <attribute id="V1" value="0.250977" type="6" />
+                    <attribute id="V2" value="0.374023" type="6" />
                 </node>
                 <node id="IconUV">
                     <attribute id="MapKey" value="PIP_Treasure_TemporalGear" type="22" />
