@@ -382,14 +382,22 @@ function Fishing.RegisterFish(data)
     Fishing._Fish[data.ID] = data
 end
 
+---Registers a fishing region.
 ---@param data Features.Fishing.Region
 function Fishing.RegisterRegion(data)
-    if not data.ID then Fishing:Error("RegisterRegion", "Data must include ID.") end
-    if #data.Fish == 0 then Fishing:Error("RegisterRegion", "Regions must have at least one fish entry.") end
+    if not data.ID then Fishing:__Error("RegisterRegion", "Data must include ID.") end
+    if #data.Fish == 0 then Fishing:__Error("RegisterRegion", "Regions must have at least one fish entry.") end
     Inherit(data, _Region)
     Interfaces.Apply(data, "I_Identifiable")
 
     table.insert(Fishing._RegionsByLevel[data.LevelID], data)
+
+    -- Validate fish IDs
+    for _,fishEntry in ipairs(data.Fish) do
+        if not Fishing.GetFish(fishEntry.ID) then
+            Fishing:__Error("RegisterRegion", "Unknown fish ID:", fishEntry.ID)
+        end
+    end
 end
 
 ---Registers a fish behaviour.

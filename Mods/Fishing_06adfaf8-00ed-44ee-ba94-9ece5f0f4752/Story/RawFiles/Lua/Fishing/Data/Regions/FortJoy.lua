@@ -160,7 +160,7 @@ local regions = {
         RequiresWater = false,
         Fish = {
             {
-                ID = "SkeletonFish",
+                ID = "FishBone",
                 Weight = 0.5,
             },
             {
@@ -491,6 +491,10 @@ local regions = {
                 Weight = 0.6,
             },
             {
+                ID = "SoulJar",
+                Weight = 0.5,
+            },
+            {
                 ID = "BranchingCoral",
                 Weight = 0.5,
             },
@@ -562,7 +566,6 @@ local regions = {
         },
     },
 }
-
 for _,region in ipairs(regions) do
     local bounds = region.Bounds
 
