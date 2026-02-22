@@ -10,6 +10,9 @@ local Fishing = {
     _RegionsByID = {}, ---@type table<string, Features.Fishing.Region>
     _CharactersFishing = Set.Create(), -- Not synchronized across clients!
 
+    NETMSG_STARTED_FISHING = "Features.Fishing.NetMsgs.CharacterStartedFishing",
+    NETMSG_STOPPED_FISHING = "Features.Fishing.NetMsgs.CharacterStoppedFishing",
+
     FISHING_ROD_TEMPLATES = Set.Create({
         "81cbf17f-cc71-4e09-9ab3-ca2a5cb0cefc", -- HAR_FishingRod_A, green fish-shaped lure
         "90cdb693-3564-415a-a8fa-4027b7f76f41", -- HAR_FishingRod_B, classic red/white bobber
@@ -260,11 +263,25 @@ Epip.RegisterFeature("Fishing", Fishing)
 ---@field Character Character
 ---@field Region Features.Fishing.Region
 ---@field Fish Features.Fishing.Fish
+---@field TargetPosition vec3
 
 ---@class Features.Fishing.Event.CharacterStoppedFishing
 ---@field Character Character
 ---@field Reason Features.Fishing.MinigameExitReason
 ---@field Fish Features.Fishing.Fish
+
+---------------------------------------------
+-- NET MESSAGES
+---------------------------------------------
+
+---@class Features.Fishing.NetMsgs.CharacterStartedFishing : NetLib_Message_Character
+---@field RegionID string
+---@field FishID string
+---@field TargetPosition vec3
+
+---@class Features.Fishing.NetMsgs.CharacterStoppedFishing : NetLib_Message_Character
+---@field Reason Features.Fishing.MinigameExitReason
+---@field FishID string
 
 ---------------------------------------------
 -- CLASSES

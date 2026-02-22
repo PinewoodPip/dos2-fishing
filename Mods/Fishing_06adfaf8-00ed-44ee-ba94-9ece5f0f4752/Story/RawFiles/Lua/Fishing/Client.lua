@@ -60,16 +60,19 @@ function Fishing.Start(char)
                 NotificationUI.ShowNotification("Starting fishing in " .. region.ID)
             end
 
+            -- Throw events
+            local targetPos = Pointer.GetWalkablePosition()
             Fishing.Events.CharacterStartedFishing:Throw({
                 Character = char,
                 Region = region,
                 Fish = fish,
+                TargetPosition = targetPos,
             })
-
-            Net.PostToServer("Feature_Fishing_NetMsg_CharacterStartedFishing", {
+            Net.PostToServer(Fishing.NETMSG_STARTED_FISHING, {
                 CharacterNetID = char.NetID,
                 RegionID = region.ID,
                 FishID = fish.ID,
+                TargetPosition = targetPos,
             })
         else -- Otherwise show failure reason (if provided)
             if reason then
@@ -134,7 +137,7 @@ function Fishing.Stop(char, fish, reason)
         Fish = fish,
     })
 
-    Net.PostToServer("Feature_Fishing_NetMsg_CharacterStoppedFishing", {
+    Net.PostToServer(Fishing.NETMSG_STOPPED_FISHING, {
         CharacterNetID = char.NetID,
         Reason = reason,
         FishID = fish.ID,

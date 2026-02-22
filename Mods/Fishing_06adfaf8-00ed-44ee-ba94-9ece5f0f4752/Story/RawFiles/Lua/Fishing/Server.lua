@@ -23,9 +23,17 @@ end
 
 -- Tag characters when they start fishing and play an animation.
 Fishing.Events.CharacterStartedFishing:Subscribe(function (ev)
-    Fishing._CharactersFishing:Add(ev.Character.Handle)
+    local char = ev.Character
+    Fishing._CharactersFishing:Add(char.Handle)
 
-    Fishing.PlayAnimation(ev.Character)
+    -- Face target position
+    -- Unfortunately there's no Osiris call for this that takes position (only GUID) and the ROTATE status doesn't seem usable, so we spawn a temporary item as a workaround.
+    local x, y, z = table.unpack(ev.TargetPosition)
+    local dummyItemGUID = Osi.CreateItemTemplateAtPosition(Item.TEMPLATES.GOLD, x, y, z) -- Gold template conveniently has no destroy visuals.
+    Osi.CharacterLookAt(char.MyGuid, dummyItemGUID, 1)
+    Osi.ItemDestroy(dummyItemGUID)
+
+    Fishing.PlayAnimation(char) -- Should be done after facing the target, as characters cannot turn during an animation.
 end)
 
 -- Loop animation if the character is still fishing.
@@ -55,21 +63,22 @@ Fishing.Events.CharacterStoppedFishing:Subscribe(function (ev)
 end)
 
 -- Listen for clients starting to fish and forward the event.
-Net.RegisterListener("Feature_Fishing_NetMsg_CharacterStartedFishing", function (payload)
+Net.RegisterListener(Fishing.NETMSG_STARTED_FISHING, function (payload)
     local region = Fishing.GetRegion(payload.RegionID)
     local fish = Fishing.GetFish(payload.FishID)
 
     Fishing.Events.CharacterStartedFishing:Throw({
-        Character = Character.Get(payload.CharacterNetID),
+        Character = payload:GetCharacter(),
         Region = region,
         Fish = fish,
+        TargetPosition = payload.TargetPosition,
     })
 end)
 
 -- Listen for clients exiting the minigame and forward the event.
-Net.RegisterListener("Feature_Fishing_NetMsg_CharacterStoppedFishing", function (payload)
+Net.RegisterListener(Fishing.NETMSG_STOPPED_FISHING, function (payload)
     Fishing.Events.CharacterStoppedFishing:Throw({
-        Character = Character.Get(payload.CharacterNetID),
+        Character = payload:GetCharacter(),
         Reason = payload.Reason,
         Fish = Fishing.GetFish(payload.FishID),
     })
