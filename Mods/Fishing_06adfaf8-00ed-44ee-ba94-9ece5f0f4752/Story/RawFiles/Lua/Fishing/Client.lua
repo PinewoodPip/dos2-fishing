@@ -206,9 +206,6 @@ Fishing.Hooks.CanStartFishing:Subscribe(function (ev)
     local cursorPos = Pointer.GetWalkablePosition()
     local charNearWater = Fishing.IsNearWater(char)
     local canFish = charNearWater and Fishing.IsPositionNearWater(cursorPos)
-    if ev.Region.RequiresWater and not charNearWater then
-        canFish = false
-    end
     if not canFish and ev.Region.FishingAreas then -- Check for manually defined fishing areas
         local charPos = V(char.WorldPos[1], char.WorldPos[3])
         local cursorPos2D = V(cursorPos[1], cursorPos[3])

@@ -113,7 +113,6 @@ local regions = {
         ID = "FJ.AmadiaSanctuary",
         LevelID = "FJ_FortJoy_Main",
         Bounds = V(419, 41, 434, 12),
-        RequiresWater = false,
         Priority = 99,
         Fish = {
             {
@@ -157,7 +156,6 @@ local regions = {
         ID = "FJ.FortDungeons",
         LevelID = "FJ_FortJoy_Main",
         Bounds = V(308, 597, 327, 567),
-        RequiresWater = false,
         Fish = {
             {
                 ID = "FishBone",
@@ -189,7 +187,6 @@ local regions = {
         ID = "FJ.RadekaCave",
         LevelID = "FJ_FortJoy_Main",
         Bounds = V(672, 668, 720, 581),
-        RequiresWater = false,
         FishingAreas = {
             V(703, 601, 710, 634), -- River to the left when entering Radeka's area (the other side of the river is unreachable)
         },
@@ -220,7 +217,6 @@ local regions = {
         ID = "FJ.FrogCave",
         LevelID = "FJ_FortJoy_Main",
         Bounds = V(474, 580, 550, 471),
-        RequiresWater = false,
         FishingAreas = {
             V(479, 522, 495, 540), -- Near large pillar towards the NPCs
             V(500, 512, 531, 518), -- North shipwreck
@@ -255,7 +251,6 @@ local regions = {
         ID = "FJ.WithermoreCave",
         LevelID = "FJ_FortJoy_Main",
         Bounds = V(489, 670, 499, 630),
-        RequiresWater = false,
         FishingAreas = {
             V(487, 657, 491, 662), -- Waterfall
             V(497, 656, 503, 661), -- East from the bridge
@@ -289,7 +284,6 @@ local regions = {
         ID = "FJ.Swamp",
         LevelID = "FJ_FortJoy_Main",
         Bounds = V(312, 237, 511, 130),
-        RequiresWater = false,
         FishingAreas = {
             V(332, 141, 340, 155), -- South shipwreck
 
@@ -347,7 +341,6 @@ local regions = {
         Priority = 99, -- Needs to be higher priority than swamp.
         LevelID = "FJ_FortJoy_Main",
         Bounds = V(320, 216, 340, 169),
-        RequiresWater = false,
         FishingAreas = {
             V(322, 170, 337, 201), -- Drawbridge area
             V(328, 201, 338, 207), -- North of drawbridge, near the workshop
@@ -391,7 +384,6 @@ local regions = {
         ID = "FJ.BraccusTower",
         LevelID = "FJ_FortJoy_Main",
         Bounds = V(578, 689, 638, 595),
-        RequiresWater = false,
         FishingAreas = {
             V(617, 596, 635, 611), -- Near skeleton encounter
             V(557, 635, 560, 641), -- Canal
@@ -428,7 +420,6 @@ local regions = {
         LevelID = "FJ_FortJoy_Main",
         Priority = 99,
         Bounds = V(634, 650, 639, 645),
-        RequiresWater = false,
         FishingAreas = {
             V(634, 645, 639, 650),
         },
@@ -459,7 +450,6 @@ local regions = {
         ID = "FJ.TrompdoyCave",
         LevelID = "FJ_FortJoy_Main",
         Bounds = V(550, 564, 696, 462),
-        RequiresWater = false,
         FishingAreas = {
             V(652, 458, 658, 504), -- Entrance
             V(686, 456, 703, 468), -- Pond to the right of entrance
@@ -508,7 +498,6 @@ local regions = {
         ID = "FJ.LavaPortal", -- From the Braccus maze area
         LevelID = "FJ_FortJoy_Main",
         Bounds = V(405, 506, 446, 454),
-        RequiresWater = false,
         FishingAreas = {
             V(417, 454, 430, 490), -- Middle
 
@@ -542,7 +531,6 @@ local regions = {
         ID = "FJ.SourceFountain", -- Fountain underneath Gareth's fort
         LevelID = "FJ_FortJoy_Main",
         Bounds = V(328, 482, 338, 476),
-        RequiresWater = false,
         FishingAreas = {
             V(331, 478, 335, 482),
         },
