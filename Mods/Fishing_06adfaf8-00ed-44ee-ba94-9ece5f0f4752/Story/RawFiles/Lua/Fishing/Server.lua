@@ -50,13 +50,16 @@ end)
 Fishing.Events.CharacterStoppedFishing:Subscribe(function (ev)
     local char = ev.Character
 
+    -- Stop previous animation
     Osiris.CharacterFlushQueue(char)
+
     Fishing._CharactersFishing:Remove(char.Handle)
 
+    -- Success/failure feedback
     if ev.Reason == "Success" then
         Osiris.CharacterStatusText(char, TSK.Notification_Minigame_Success:GetString())
         Osiris.PlayAnimation(char, Fishing.SUCCESS_ANIMATION, "")
-        Osiris.ItemTemplateAddTo(ev.Fish.TemplateID, char, 1, 1)
+        Osiris.ItemTemplateAddTo(ev.CaughtFish.TemplateID, char, 1, 1)
     elseif ev.Reason == "Failure" then
         Osiris.PlayAnimation(char, Fishing.FAILURE_ANIMATION, "")
     end
@@ -65,12 +68,9 @@ end)
 -- Listen for clients starting to fish and forward the event.
 Net.RegisterListener(Fishing.NETMSG_STARTED_FISHING, function (payload)
     local region = Fishing.GetRegion(payload.RegionID)
-    local fish = Fishing.GetFish(payload.FishID)
-
     Fishing.Events.CharacterStartedFishing:Throw({
         Character = payload:GetCharacter(),
         Region = region,
-        Fish = fish,
         TargetPosition = payload.TargetPosition,
     })
 end)
@@ -80,7 +80,7 @@ Net.RegisterListener(Fishing.NETMSG_STOPPED_FISHING, function (payload)
     Fishing.Events.CharacterStoppedFishing:Throw({
         Character = payload:GetCharacter(),
         Reason = payload.Reason,
-        Fish = Fishing.GetFish(payload.FishID),
+        CaughtFish = Fishing.GetFish(payload.CaughtFishID),
     })
 end)
 

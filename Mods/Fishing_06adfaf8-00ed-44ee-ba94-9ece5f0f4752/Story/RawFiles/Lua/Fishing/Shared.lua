@@ -252,7 +252,7 @@ Epip.RegisterFeature("Fishing", Fishing)
 
 ---@class Features.Fishing.NetMsg.CharacterStoppedFishing : NetLib_Message_Character
 ---@field Reason Features.Fishing.MinigameExitReason
----@field FishID string
+---@field CaughtFishID string? `nil` unless the minigame was won.
 
 ---@class Features.Fishing.Hook.IsFishingRod
 ---@field Character Character
@@ -262,13 +262,12 @@ Epip.RegisterFeature("Fishing", Fishing)
 ---@class Features.Fishing.Event.CharacterStartedFishing
 ---@field Character Character
 ---@field Region Features.Fishing.Region
----@field Fish Features.Fishing.Fish
 ---@field TargetPosition vec3
 
 ---@class Features.Fishing.Event.CharacterStoppedFishing
 ---@field Character Character
 ---@field Reason Features.Fishing.MinigameExitReason
----@field Fish Features.Fishing.Fish
+---@field CaughtFish Features.Fishing.Fish? The fish caught, if any.
 
 ---------------------------------------------
 -- NET MESSAGES
@@ -276,12 +275,11 @@ Epip.RegisterFeature("Fishing", Fishing)
 
 ---@class Features.Fishing.NetMsgs.CharacterStartedFishing : NetLib_Message_Character
 ---@field RegionID string
----@field FishID string
 ---@field TargetPosition vec3
 
 ---@class Features.Fishing.NetMsgs.CharacterStoppedFishing : NetLib_Message_Character
 ---@field Reason Features.Fishing.MinigameExitReason
----@field FishID string
+---@field CaughtFishID string
 
 ---------------------------------------------
 -- CLASSES
@@ -356,11 +354,9 @@ end
 ---@field LevelID string
 ---@field Bounds Vector4 X, Y, width, height bounds of the area where fishing will be possible when near deepwater surfaces.
 ---@field Fish Features.Fishing.Region.FishEntry[]
----@field RequiresWater boolean? Defaults to true.
 ---@field Priority integer? Defaults to 0.
 ---@field FishingAreas Vector4[]? Bounds of areas where fishing is possible even without deepwater surfaces.
 local _Region = {
-    RequiresWater = true,
     Priority = 0,
 }
 

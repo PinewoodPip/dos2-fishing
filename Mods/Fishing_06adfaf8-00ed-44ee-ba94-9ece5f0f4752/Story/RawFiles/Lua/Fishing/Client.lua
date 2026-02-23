@@ -1,11 +1,23 @@
 
 local NotificationUI = Client.UI.Notification
+local Input = Client.Input
 local V = Vector.Create
 
 ---@class Features.Fishing
 local Fishing = Epip.GetFeature("Features.Fishing")
 local TSK = Fishing.TranslatedStrings
 Fishing.OPEN_LOG_KEYBIND = "EpipEncounters_Fishing_OpenCollectionLog"
+
+-- Bite phase tuning
+Fishing.FISH_BITE_DELAY_RANGE = {3.2, 6.5} -- Time range (in seconds) for how long it can take for a fish to bite after the player starts fishing.
+Fishing.FISH_BITE_DURATION = 0.4 -- Duration the player has to react to a bite before the fish gets away, in seconds.
+
+-- Reeling phase tuning
+Fishing.STARTING_PROGRESS = 0.45 -- As fraction of required progress.
+Fishing.BASE_PROGRESS_REQUIRED = 1
+Fishing.PROGRESS_DRAIN = 0.1
+
+Fishing._States = {} ---@type table<CharacterHandle, Features.Fishing.GameState>
 
 Fishing.Hooks.CanStartFishing = Fishing:AddSubscribableHook("CanStartFishing") ---@type Event<Features.Fishing.Hook.CanStartFishing>
 
@@ -18,6 +30,25 @@ Fishing.Hooks.CanStartFishing = Fishing:AddSubscribableHook("CanStartFishing") -
 ---@field Region Features.Fishing.Region
 ---@field CanStartFishing boolean Hookable. Defaults to true.
 ---@field FailureReason string? Will be shown in a notification toast if CanStartFishing is false.
+
+---------------------------------------------
+-- CLASSES
+---------------------------------------------
+
+---@alias Features.Fishing.GameStateType "WaitingForBite" | "Fishing"
+
+---@class Features.Fishing.GameState
+---@field Type Features.Fishing.GameStateType
+---@field CharacterHandle CharacterHandle
+
+---@class Features.Fishing.GameStates.WaitingForBite : Features.Fishing.GameState
+---@field Type "WaitingForBite"
+---@field BiteTime integer Monotonic time at which the fish will bite.
+
+---@class Features.Fishing.GameStates.Fishing : Features.Fishing.GameState
+---@field Type "Fishing"
+---@field CurrentFish Features.Fishing.Fish
+---@field Progress number
 
 ---------------------------------------------
 -- METHODS
@@ -42,6 +73,13 @@ function Fishing.CanFish(char)
     return canFish, reason
 end
 
+---Returns char's fishing minigame state, if they're fishing.
+---@param char EclCharacter
+---@return Features.Fishing.GameState?
+function Fishing.GetState(char)
+    return Fishing._States[char.Handle]
+end
+
 ---@param char Character
 function Fishing.Start(char)
     local region = Fishing.GetRegionAt(char.WorldPos)
@@ -52,26 +90,41 @@ function Fishing.Start(char)
     else
         local canFish, reason = Fishing.CanFish(char)
         if canFish then
-            local fish = Fishing.GetRandomFish(region)
+            local minBiteTime, maxBiteTime = table.unpack(Fishing.FISH_BITE_DELAY_RANGE)
+            local biteTimeRange = maxBiteTime - minBiteTime
+            local biteTime = minBiteTime + math.random() * biteTimeRange
 
             Fishing._CharactersFishing:Add(char.Handle)
+            Fishing._States[char.Handle] = {
+                Type = "WaitingForBite",
+                CharacterHandle = char.Handle,
+                BiteTime = Ext.Utils.MonotonicTime() + biteTime * 1000,
+            }
 
             if Fishing:IsDebug() then
                 NotificationUI.ShowNotification("Starting fishing in " .. region.ID)
             end
+
+            -- Fail the minigame if the player missed the bite
+            local charHandle = char.Handle
+            Timer.Start("Fishing.BiteTimeout." .. char.MyGuid, biteTime + Fishing.FISH_BITE_DURATION, function (_)
+                char = Character.Get(charHandle)
+                local state = Fishing.GetState(char)
+                if state and state.Type == "WaitingForBite" then
+                    Fishing.Stop(char, "Failure")
+                end
+            end)
 
             -- Throw events
             local targetPos = Pointer.GetWalkablePosition()
             Fishing.Events.CharacterStartedFishing:Throw({
                 Character = char,
                 Region = region,
-                Fish = fish,
                 TargetPosition = targetPos,
             })
             Net.PostToServer(Fishing.NETMSG_STARTED_FISHING, {
                 CharacterNetID = char.NetID,
                 RegionID = region.ID,
-                FishID = fish.ID,
                 TargetPosition = targetPos,
             })
         else -- Otherwise show failure reason (if provided)
@@ -79,6 +132,31 @@ function Fishing.Start(char)
                 NotificationUI.ShowNotification(reason)
             end
         end
+    end
+end
+
+---Attempts to proceed to the reeling part of the minigame.
+---@param char EclCharacter
+function Fishing.ReelIn(char)
+    local state = Fishing.GetState(char)
+    if state and state.Type ~= "WaitingForBite" then Fishing:__Error("ReelIn", "Character is not waiting for bite") return end
+    ---@cast state Features.Fishing.GameStates.WaitingForBite
+
+    -- Transition to fishing state,
+    -- or fail the minigame if reeling was mistimed.
+    local now = Ext.Utils.MonotonicTime()
+    if now > state.BiteTime and now < state.BiteTime + Fishing.FISH_BITE_DURATION * 1000 then
+        local region = Fishing.GetRegionAt(char.WorldPos)
+        local fish = Fishing.GetRandomFish(region)
+        Fishing._States[char.Handle] = {
+            Type = "Fishing",
+            CharacterHandle = char.Handle,
+            CurrentFish = fish,
+            Progress = Fishing.STARTING_PROGRESS * fish.Endurance,
+        }
+        Fishing.UI.Start(char) -- TODO extract in case someone wants to replace the minigame entirely
+    else
+        Fishing.Stop(char, "Failure")
     end
 end
 
@@ -121,11 +199,24 @@ function Fishing.GetTotalFishCaught()
     return total
 end
 
+---Finishes the fishing minigame for char.
 ---@param char EclCharacter
----@param fish Features.Fishing.Fish TODO rework param
 ---@param reason Features.Fishing.MinigameExitReason
-function Fishing.Stop(char, fish, reason)
-    Fishing._CharactersFishing:Remove(char.Handle)
+function Fishing.Stop(char, reason)
+    local state = Fishing.GetState(char)
+    if not state then Fishing:__Error("Stop", "Character is not fishing") return end
+    local fish = nil ---@type Features.Fishing.Fish
+    if state.Type == "Fishing" then
+        ---@cast state Features.Fishing.GameStates.Fishing
+        fish = state.CurrentFish
+    end
+
+    -- Clear bite timers, if any
+    local timeoutTimerID = "Fishing.BiteTimeout." .. char.MyGuid
+    local timer = Timer.GetTimer(timeoutTimerID)
+    if timer then
+        timer:Cancel()
+    end
 
     if reason == "Success" then
         Fishing._OnSuccess(fish)
@@ -134,14 +225,17 @@ function Fishing.Stop(char, fish, reason)
     Fishing.Events.CharacterStoppedFishing:Throw({
         Character = char,
         Reason = reason,
-        Fish = fish,
+        CaughtFish = fish,
     })
 
     Net.PostToServer(Fishing.NETMSG_STOPPED_FISHING, {
         CharacterNetID = char.NetID,
         Reason = reason,
-        FishID = fish.ID,
+        CaughtFishID = fish and fish.ID or nil,
     })
+
+    Fishing._CharactersFishing:Remove(char.Handle)
+    Fishing._States[char.Handle] = nil
 end
 
 ---@param fish Features.Fishing.Fish
@@ -168,7 +262,7 @@ Fishing.Events.CharacterStoppedFishing:Subscribe(function (ev)
         local subTitle = nil
 
         -- Show a hint on how to open the collection log the first time you catch each type of fish.
-        if Fishing.GetTimesCaught(ev.Fish:GetID()) == 1 then
+        if Fishing.GetTimesCaught(ev.CaughtFish:GetID()) == 1 then
             local keybinds = Client.Input.GetActionBindings(Fishing.OPEN_LOG_KEYBIND)
             local keybind = keybinds[1]
 
@@ -181,7 +275,7 @@ Fishing.Events.CharacterStoppedFishing:Subscribe(function (ev)
             end
         end
 
-        NotificationUI.ShowIconNotification(ev.Fish:GetName(), ev.Fish:GetIcon(), nil, Fishing.TSK["Toast_Success"], subTitle, "UI_Notification_ReceiveAbility")
+        NotificationUI.ShowIconNotification(ev.CaughtFish:GetName(), ev.CaughtFish:GetIcon(), nil, Fishing.TSK["Toast_Success"], subTitle, "UI_Notification_ReceiveAbility")
     elseif ev.Reason == "Failure" then
         NotificationUI.ShowWarning(TSK.Notification_Minigame_Failure:GetString())
     end
@@ -231,6 +325,17 @@ Fishing.Hooks.CanStartFishing:Subscribe(function (ev)
         ev.FailureReason = reason
     end
 end, {StringID = "DefaultImplementation"})
+
+-- Listen for inputs to reel in during WaitingForBite phase.
+Input.Events.KeyPressed:Subscribe(function (ev)
+    if ev.InputID == "left2" then
+        local char = Client.GetCharacter()
+        local state = Fishing.GetState(char)
+        if state and state.Type == "WaitingForBite" then
+            Fishing.ReelIn(char)
+        end
+    end
+end)
 
 -- Update fishing rod templates to have a world tooltip to make them easier to find.
 GameState.Events.ClientReady:Subscribe(function (_)

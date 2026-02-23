@@ -10,14 +10,14 @@ UI:Hide()
 
 UI.Elements = {} -- Holds references to various important elements of the UI.
 
-UI._GameState = nil ---@type Features.Fishing.GameState
+UI._CharacterHandle = nil ---@type CharacterHandle The owner of this instance.
 UI._GameObjects = {} ---@type Features.Fishing.GameObject[]
 UI._GameObjectClass = nil ---@type Features.Fishing.GameObject
 UI._GameObjectClasses = {} ---@type table<string, Features.Fishing.GameObject>
 UI._GameObjectStateClass = nil ---@type Features.Fishing.GameObject.State
 
 UI.USE_LEGACY_HOOKS = false
-UI.Hooks.GetProgressDrain = UI:AddSubscribableHook("GetProgressDrain") ---@type Event<Features.Fishing.UI.Hook.GetProgressDrain>
+UI.Hooks.GetProgressDrain = UI:AddSubscribableHook("GetProgressDrain") ---@type Event<Features.Fishing.UI.Hooks.GetProgressDrain>
 
 ---------------------------------------------
 -- CONSTANTS
@@ -39,45 +39,18 @@ UI.MAX_ACCELERATION = 150
 UI.CLICK_ACCELERATION_BOOST = 0 -- TODO add cooldown?
 UI.PROGRESS_PER_SECOND = 0.15
 UI.PROGRESS_BAR_WIDTH = 5
-UI.STARTING_PROGRESS = 0.45 -- As fraction of required progress.
-UI.PROGRESS_DRAIN = 0.1
 UI.TUTORIAL_PROGRESS_DRAIN_MULTIPLIER = 0.5
-UI.BASE_PROGRESS_REQUIRED = 1
 
 ---------------------------------------------
 -- EVENTS/HOOKS
 ---------------------------------------------
 
----@class Features.Fishing.UI.Hook.GetProgressDrain
+---@class Features.Fishing.UI.Hooks.GetProgressDrain
 ---@field Drain integer Hookable.
 ---@field GameState Features.Fishing.GameState
 ---@field Character EclCharacter
 ---@field Fish Features.Fishing.Fish
 
----------------------------------------------
--- CLASSES
----------------------------------------------
-
----@class Features.Fishing.GameState
-local _GameState = {
-    Progress = 0,
-    CurrentFish = nil, ---@type Features.Fishing.Fish
-    CharacterHandle = nil, ---@type ComponentHandle
-}
-
----@param char EclCharacter
----@param fish Features.Fishing.Fish
----@return Features.Fishing.GameState
-function _GameState.Create(char, fish)
-    local tbl = {
-        Progress = UI.STARTING_PROGRESS * fish.Endurance,
-        CurrentFish = fish,
-        CharacterHandle = char.Handle,
-    }
-    Inherit(tbl, _GameState)
-
-    return tbl
-end
 
 ---------------------------------------------
 -- METHODS
@@ -88,20 +61,18 @@ function Fishing.GetUI()
     return Fishing.UI
 end
 
----@param ev Features.Fishing.Event.CharacterStartedFishing
-function UI.Start(ev)
-    if UI._GameState then
-        UI:__Error("Start", "Instance already in use")
-    end
-
-    UI._GameState = _GameState.Create(ev.Character, ev.Fish)
+---Initializes & shows the minigame UI for char.
+---@param char EclCharacter
+function UI.Start(char)
+    UI._CharacterHandle = char.Handle
+    local state = UI.GetGameState()
 
     UI.CreateGameObject("Features.Fishing.GameObject.Bobber", "Bobber", UI.BLOBBER_SIZE)
 
     -- Initialize fish and place it around the middle point
     local fish = UI.CreateGameObject("Features.Fishing.GameObject.Fish", "Fish", UI.FISH_SIZE)
-    fish.Descriptor = ev.Fish
-    local initialStateClass = Fishing.GetBehaviour(ev.Fish.Behaviour).InitialState
+    fish.Descriptor = state.CurrentFish
+    local initialStateClass = Fishing.GetBehaviour(state.CurrentFish.Behaviour).InitialState
     local initialState = fish:CreateState(initialStateClass)
     fish:SetState(initialState)
     fish:GetState().Position = UI.GetBobberUpperBound() / 2
@@ -115,9 +86,12 @@ function UI.Start(ev)
     GameState.Events.RunningTick:Subscribe(UI._OnTick, nil, "Features.Fishing.UI.Tick")
 end
 
----@return Features.Fishing.GameState
+---Returns the minigame state model.
+---@return Features.Fishing.GameStates.Fishing
 function UI.GetGameState()
-    return UI._GameState
+    local char = Character.Get(UI._CharacterHandle)
+    local state = Fishing.GetState(char) ---@cast state Features.Fishing.GameStates.Fishing
+    return state
 end
 
 ---@return EclCharacter?
@@ -128,8 +102,11 @@ function UI.GetCharacter()
     return char
 end
 
+---Returns how much progress should drain per second.
+---@see Features.Fishing.UI.Hooks.GetProgressDrain
+---@return number
 function UI.GetProgressDrain()
-    local drain = UI.PROGRESS_DRAIN
+    local drain = Fishing.PROGRESS_DRAIN
     local char = UI.GetCharacter()
     local state = UI.GetGameState()
     local hook = UI.Hooks.GetProgressDrain:Throw({
@@ -138,7 +115,6 @@ function UI.GetProgressDrain()
         Drain = drain,
         Fish = state.CurrentFish,
     })
-
     return hook.Drain
 end
 
@@ -163,7 +139,7 @@ end
 ---@returns number
 function UI.GetRequiredProgress()
     local state = UI.GetGameState()
-    return UI.BASE_PROGRESS_REQUIRED * state.CurrentFish.Endurance
+    return Fishing.BASE_PROGRESS_REQUIRED * state.CurrentFish.Endurance
 end
 
 ---@param reason Features.Fishing.MinigameExitReason
@@ -177,7 +153,7 @@ function UI.Cleanup(reason)
 
     UI:Hide()
 
-    Fishing.Stop(Character.Get(state.CharacterHandle), state.CurrentFish, reason)
+    Fishing.Stop(Character.Get(state.CharacterHandle), reason)
 end
 
 ---@return Features.Fishing.GameObject[]
@@ -320,20 +296,6 @@ end)
 ---------------------------------------------
 -- SETUP
 ---------------------------------------------
-
--- Start the minigame when fishing starts.
--- Unsubscribe this listener to replace the minigame with a different implementation.
--- The minigame should call Fishing.Stop() when it exits for any reason.
-Fishing.Events.CharacterStartedFishing:Subscribe(function (ev)
-    UI.Start(ev)
-end, {StringID = "DefaultImplementation"})
-
--- TODO remove once the start sequence is implemented.
-Client.Input.Events.ActionExecuted:Subscribe(function (ev)
-    if ev.Action.ID == "EpipEncounters_Debug_Generic" then
-        Fishing.Start(Client.GetCharacter())
-    end
-end)
 
 function Fishing:__Setup()
     local panel = UI:CreateElement("Root", "GenericUI_Element_TiledBackground")
