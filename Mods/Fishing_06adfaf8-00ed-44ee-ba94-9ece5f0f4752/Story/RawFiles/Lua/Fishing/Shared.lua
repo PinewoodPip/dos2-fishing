@@ -74,6 +74,11 @@ local Fishing = {
             Text = "I must unsheathe my fishing rod first.",
             ContextDescription = [[Notification when trying to fish with a sheathed fishing rod]],
         },
+        Notification_Biting = {
+            Handle = "h282e1f37gda86g46e2gaa58g717d71dc5340",
+            Text = "Something's on the hook!",
+            ContextDescription = [[Notification when a fish bites, during the 1st phase of the minigame]],
+        },
         ["hcced1bb7ge818g4803gbf45gf0644370163f"] = {
             Text = "Hold left-click to raise the bar,\nlet go to have it fall.\n\nKeep the bar by the fish until the yellow bar fills up!",
             ContextDescription = "Tutorial message",

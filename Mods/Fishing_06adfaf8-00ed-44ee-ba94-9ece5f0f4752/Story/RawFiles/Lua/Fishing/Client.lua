@@ -17,6 +17,8 @@ Fishing.STARTING_PROGRESS = 0.45 -- As fraction of required progress.
 Fishing.BASE_PROGRESS_REQUIRED = 1
 Fishing.PROGRESS_DRAIN = 0.1
 
+Fishing._MINIGAME_TIMER_INFIXES = {"BiteNotification", "BiteTimeout"}
+
 Fishing._States = {} ---@type table<CharacterHandle, Features.Fishing.GameState>
 
 Fishing.Hooks.CanStartFishing = Fishing:AddSubscribableHook("CanStartFishing") ---@type Event<Features.Fishing.Hook.CanStartFishing>
@@ -105,8 +107,13 @@ function Fishing.Start(char)
                 NotificationUI.ShowNotification("Starting fishing in " .. region.ID)
             end
 
-            -- Fail the minigame if the player missed the bite
+            -- Show timing hint when the fish bites
             local charHandle = char.Handle
+            Timer.Start("Fishing.BiteNotification." .. char.MyGuid, biteTime, function (_)
+                NotificationUI.ShowNotification(TSK.Notification_Biting:GetString())
+            end)
+
+            -- Fail the minigame if the player missed the bite
             Timer.Start("Fishing.BiteTimeout." .. char.MyGuid, biteTime + Fishing.FISH_BITE_DURATION, function (_)
                 char = Character.Get(charHandle)
                 local state = Fishing.GetState(char)
@@ -211,11 +218,13 @@ function Fishing.Stop(char, reason)
         fish = state.CurrentFish
     end
 
-    -- Clear bite timers, if any
-    local timeoutTimerID = "Fishing.BiteTimeout." .. char.MyGuid
-    local timer = Timer.GetTimer(timeoutTimerID)
-    if timer then
-        timer:Cancel()
+    -- Clear timers
+    for _, timerName in ipairs(Fishing._MINIGAME_TIMER_INFIXES) do
+        local timerID = "Fishing." .. timerName .. "." .. char.MyGuid
+        local timer = Timer.GetTimer(timerID)
+        if timer then
+            timer:Cancel()
+        end
     end
 
     if reason == "Success" then
