@@ -180,10 +180,16 @@ function UI.UpdateFishIcon()
     UI.Elements.Fish:SetIcon(state.CurrentFish:GetIcon(), UI.FISH_ICON_SIZE:unpack())
 end
 
+---Returns whether it's the player's first time playing the minigame.
+---@return boolean
+function UI.IsTutorial()
+    local isFirstPlay = next(Fishing.GetFishCatchCount(UI.GetCharacter())) == nil
+    return isFirstPlay
+end
+
 function UI.UpdateTutorialText()
     local element = UI.Elements.TutorialText
-
-    element:SetVisible(Fishing.GetTotalFishCaught() <= 0)
+    element:SetVisible(UI.IsTutorial())
 end
 
 function UI.SnapToCursor()
@@ -266,7 +272,7 @@ end)
 
 -- Listen for requests to exit the minigame with escape.
 Client.Input.Events.KeyStateChanged:Subscribe(function (ev)
-    if ev.InputID == "escape" and UI.GetGameState() then
+    if ev.InputID == "escape" and UI:IsVisible() then
         UI.Cleanup("Cancelled")
         ev:Prevent()
     end
@@ -288,7 +294,7 @@ end
 -- If the user is catching fish for the first time, slow down the drain
 -- so as to let give them more time to get used to the controls.
 UI.Hooks.GetProgressDrain:Subscribe(function (ev)
-    if Fishing.GetTotalFishCaught() <= 0 then
+    if UI.IsTutorial() then
         ev.Drain = ev.Drain * UI.TUTORIAL_PROGRESS_DRAIN_MULTIPLIER
     end
 end)

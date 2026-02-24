@@ -1,4 +1,6 @@
 
+Mod.GUIDS.FISHING = "06adfaf8-00ed-44ee-ba94-9ece5f0f4752"
+
 local PREFIXED_GUID = "Fishing_06adfaf8-00ed-44ee-ba94-9ece5f0f4752"
 local EE_CORE_GUID = "63bb9b65-2964-4c10-be5b-55a63ec02fa0"
 

@@ -188,24 +188,6 @@ function Fishing.IsPositionNearWater(position, searchRadius)
     return foundCell
 end
 
----@param fishID string
----@return integer
-function Fishing.GetTimesCaught(fishID)
-    return Fishing:GetSettingValue(Fishing.Settings.FishCaught)[fishID] or 0
-end
-
----@return integer
-function Fishing.GetTotalFishCaught()
-    local fishes = Fishing.GetFishes()
-    local total = 0
-
-    for id,_ in pairs(fishes) do
-        total = total + Fishing.GetTimesCaught(id)
-    end
-
-    return total
-end
-
 ---Finishes the fishing minigame for char.
 ---@param char EclCharacter
 ---@param reason Features.Fishing.MinigameExitReason
@@ -227,10 +209,6 @@ function Fishing.Stop(char, reason)
         end
     end
 
-    if reason == "Success" then
-        Fishing._OnSuccess(fish)
-    end
-
     Fishing.Events.CharacterStoppedFishing:Throw({
         Character = char,
         Reason = reason,
@@ -247,20 +225,6 @@ function Fishing.Stop(char, reason)
     Fishing._States[char.Handle] = nil
 end
 
----@param fish Features.Fishing.Fish
-function Fishing._OnSuccess(fish)
-    local setting = Fishing:GetSettingValue(Fishing.Settings.FishCaught)
-
-    -- Increment catch counter.
-    if not setting[fish.ID] then
-        setting[fish.ID] = 1
-    else
-        setting[fish.ID] = setting[fish.ID] + 1
-    end
-
-    Fishing:SaveSettings()
-end
-
 ---------------------------------------------
 -- EVENT LISTENERS
 ---------------------------------------------
@@ -268,10 +232,11 @@ end
 -- Show notifications for success or failure.
 Fishing.Events.CharacterStoppedFishing:Subscribe(function (ev)
     if ev.Reason == "Success" then
+        local char = ev.Character
         local subTitle = nil
 
         -- Show a hint on how to open the collection log the first time you catch each type of fish.
-        if Fishing.GetTimesCaught(ev.CaughtFish:GetID()) == 1 then
+        if Fishing.GetFishCatchCount(char, ev.CaughtFish:GetID()) == 1 then
             local keybinds = Client.Input.GetActionBindings(Fishing.OPEN_LOG_KEYBIND)
             local keybind = keybinds[1]
 

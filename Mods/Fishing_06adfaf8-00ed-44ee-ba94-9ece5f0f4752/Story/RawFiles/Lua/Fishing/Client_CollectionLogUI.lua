@@ -48,8 +48,9 @@ end
 ---@return TooltipLib_FormattedTooltip
 function UI.GetFishTooltip(id)
     local fish = Fishing.GetFish(id)
+    local char = Client.GetCharacter()
 
-    return Fishing.GetTimesCaught(fish.ID) > 0 and fish:GetTooltip() or UI.UNCAUGHT_FISH_TOOLTIP
+    return Fishing.GetFishCatchCount(char, fish.ID) > 0 and fish:GetTooltip() or UI.UNCAUGHT_FISH_TOOLTIP
 end
 
 function UI._SetupFishGrid()
@@ -65,7 +66,7 @@ function UI._SetupFishGrid()
 
     for _,fish in ipairs(fishes) do
         local icon = grid:AddChild(fish.ID, "GenericUI_Element_IggyIcon")
-        local greyedOut = Fishing.GetTimesCaught(fish.ID) == 0
+        local greyedOut = Fishing.GetFishCatchCount(Client.GetCharacter(), fish.ID) == 0
         local width, height = UI.FISH_SIZE:unpack()
 
         icon:SetIcon(greyedOut and "unknown" or fish:GetIcon(), width, height, greyedOut and UI.UNCAUGHT_FISH_MATERIAL or nil)

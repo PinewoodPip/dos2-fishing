@@ -57,9 +57,14 @@ Fishing.Events.CharacterStoppedFishing:Subscribe(function (ev)
 
     -- Success/failure feedback
     if ev.Reason == "Success" then
+        local caughtFish = ev.CaughtFish
         Osiris.CharacterStatusText(char, TSK.Notification_Minigame_Success:GetString())
         Osiris.PlayAnimation(char, Fishing.SUCCESS_ANIMATION, "")
-        Osiris.ItemTemplateAddTo(ev.CaughtFish.TemplateID, char, 1, 1)
+        Osiris.ItemTemplateAddTo(caughtFish.TemplateID, char, 1, 1)
+
+        -- Track stats
+        Fishing.AddFishCatchCount(char, caughtFish.ID)
+        Fishing.MarkFishTypeAsCaught(caughtFish.ID)
     elseif ev.Reason == "Failure" then
         Osiris.PlayAnimation(char, Fishing.FAILURE_ANIMATION, "")
     end
@@ -80,7 +85,7 @@ Net.RegisterListener(Fishing.NETMSG_STOPPED_FISHING, function (payload)
     Fishing.Events.CharacterStoppedFishing:Throw({
         Character = payload:GetCharacter(),
         Reason = payload.Reason,
-        CaughtFish = Fishing.GetFish(payload.CaughtFishID),
+        CaughtFish = payload.CaughtFishID and Fishing.GetFish(payload.CaughtFishID) or nil,
     })
 end)
 

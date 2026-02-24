@@ -13,6 +13,9 @@ local Fishing = {
     NETMSG_STARTED_FISHING = "Features.Fishing.NetMsgs.CharacterStartedFishing",
     NETMSG_STOPPED_FISHING = "Features.Fishing.NetMsgs.CharacterStoppedFishing",
 
+    MODVAR_UNIQUE_FISH_CAUGHT = "PlaythroughUniqueFishCaught",
+    USERVAR_FISH_CAUGHT = "CharacterFishCaught",
+
     FISHING_ROD_TEMPLATES = Set.Create({
         "81cbf17f-cc71-4e09-9ab3-ca2a5cb0cefc", -- HAR_FishingRod_A, green fish-shaped lure
         "90cdb693-3564-415a-a8fa-4027b7f76f41", -- HAR_FishingRod_B, classic red/white bobber
@@ -24,14 +27,7 @@ local Fishing = {
     USE_LEGACY_EVENTS = false,
     USE_LEGACY_HOOKS = false,
 
-    Settings = {
-        FishCaught = {
-            Type = "Map",
-            Name = "Fish Caught",
-            Description = "Fish caught.",
-            Context = "Client",
-        },
-    },
+    Settings = {},
 
     TranslatedStrings = {
         Notification_Minigame_Success = {
@@ -247,6 +243,15 @@ local Fishing = {
 }
 Epip.RegisterFeature("Fishing", Fishing)
 
+Fishing:RegisterModVariable(Mod.GUIDS.FISHING, Fishing.MODVAR_UNIQUE_FISH_CAUGHT, {
+    Persistent = true,
+    DefaultValue = {},
+})
+Fishing:RegisterUserVariable(Fishing.USERVAR_FISH_CAUGHT, {
+    Persistent = true,
+    DefaultValue = {},
+})
+
 ---------------------------------------------
 -- EVENTS
 ---------------------------------------------
@@ -284,7 +289,7 @@ Epip.RegisterFeature("Fishing", Fishing)
 
 ---@class Features.Fishing.NetMsgs.CharacterStoppedFishing : NetLib_Message_Character
 ---@field Reason Features.Fishing.MinigameExitReason
----@field CaughtFishID string
+---@field CaughtFishID string?
 
 ---------------------------------------------
 -- CLASSES
@@ -336,7 +341,7 @@ function _Fish:GetTooltip()
                 Type = "SkillDescription",
                 Label = Text.Format("Total caught: %s", {
                     FormatArgs = {
-                        Fishing.GetTimesCaught(self.ID),
+                        Fishing.GetFishCatchCount(Client.GetCharacter(), self.ID),
                     },
                     Color = Color.LARIAN.GREEN,
                 }),
@@ -431,6 +436,58 @@ end
 ---@return boolean
 function Fishing.IsFishing(char)
     return Fishing._CharactersFishing:Contains(char.Handle)
+end
+
+---Returns the amount of each fish that char has caught.
+---@overload fun(char: Character, fishID: string): integer
+---@param char Character
+---@return table<string, integer> -- Maps fish ID to catch count.
+function Fishing.GetFishCatchCount(char, fishID)
+    local fishCounts = Fishing:GetUserVariable(char, Fishing.USERVAR_FISH_CAUGHT) or {}
+    if fishID then -- ID overload.
+        return fishCounts[fishID] or 0
+    else
+        return fishCounts
+    end
+end
+
+---Returns the total amount of fishes that char has caught.
+---@param char Character
+---@return integer
+function Fishing.GetTotalFishCaught(char)
+    local fishCounts = Fishing.GetFishCatchCount(char)
+    local total = 0
+    for _,count in pairs(fishCounts) do
+        total = total + count
+    end
+    return total
+end
+
+---Increments the amount of fish caught by char.
+---@param char Character
+---@param fishID string
+---@param count integer? Defaults to 1.
+function Fishing.AddFishCatchCount(char, fishID, count)
+    count = count or 1
+    local currentCount = Fishing.GetFishCatchCount(char)
+    local fishCounts = currentCount or {}
+    fishCounts[fishID] = (fishCounts[fishID] or 0) + count
+    Fishing:SetUserVariable(char, Fishing.USERVAR_FISH_CAUGHT, fishCounts)
+end
+
+---Returns the fish types that were caught in this playthrough.
+---@return set<string>, integer -- Fish IDs and count.
+function Fishing.GetUniqueFishCaught()
+    local uniqueFishCaught = Set.Create(Fishing:GetModVariable(Mod.GUIDS.FISHING, Fishing.MODVAR_UNIQUE_FISH_CAUGHT) or {})
+    return uniqueFishCaught, #uniqueFishCaught
+end
+
+---Marks a fish type as having been caught in this playthrough.
+---@param fishID string
+function Fishing.MarkFishTypeAsCaught(fishID)
+    local uniqueFishCaught = Fishing:GetModVariable(Mod.GUIDS.FISHING, Fishing.MODVAR_UNIQUE_FISH_CAUGHT)
+    uniqueFishCaught[fishID] = true
+    Fishing:SetModVariable(Mod.GUIDS.FISHING, Fishing.MODVAR_UNIQUE_FISH_CAUGHT, uniqueFishCaught)
 end
 
 ---@param id string
