@@ -1259,6 +1259,48 @@ local fishes = {
         Difficulty = 0.7,
         Endurance = 1,
     },
+    ["Nightfarer"] = {
+        NameHandle = T{
+            Handle = "ha9f1c67eg614ag44e5g99b8g869125c12ef1",
+            Text = "Nightfarer",
+        },
+        DescriptionHandle = T{
+            Handle = "hc2625a80gcfd0g46a2ga45eg656060dbfd6c",
+            Text = "A void-touched fish that has never been caught at night. Their only weakness is the other part of the day.",
+        },
+        TemplateID = "3e59c0fa-dc33-4ec3-849b-07c67c46664d",
+        Behaviour = "Chill",
+        Difficulty = 1.2,
+        Endurance = 1.2,
+    },
+    ["GripSlipper"] = {
+        NameHandle = T{
+            Handle = "h9918d8e5gdb17g4c38gbad5ga27494928ba4",
+            Text = "Grip Slipper",
+        },
+        DescriptionHandle = T{
+            Handle = "h48c7f160gbc69g467ag9c6dgde7aa828dd26",
+            Text = "An eel that has lost all grip on reality from prolonged contact with the void. It desires nothing but to continue sharing nonsense with its colleagues, in a private stream you cannot access.",
+        },
+        TemplateID = "2d76c20d-ed93-4862-9248-b2d983be588b",
+        Behaviour = "Floater",
+        Difficulty = 2.5,
+        Endurance = 0.9,
+    },
+    ["GenericVoidwoken"] = {
+        NameHandle = T{
+            Handle = "h8a4f1aa0geec5g4012gb8eeg5ddc257d8811",
+            Text = "Void-touched Fish",
+        },
+        DescriptionHandle = T{
+            Handle = "haea9efe6gdfadg4263g939bg73b00356aa46",
+            Text = "A fish that has been immersed in the void and lost all its identifying features.",
+        },
+        TemplateID = "c823c188-308d-4f4c-a27a-03086efba15e",
+        Behaviour = "Aggressive",
+        Difficulty = 1.2,
+        Endurance = 1.2,
+    },
 }
 for id,fish in pairs(fishes) do
     fish.ID = id
