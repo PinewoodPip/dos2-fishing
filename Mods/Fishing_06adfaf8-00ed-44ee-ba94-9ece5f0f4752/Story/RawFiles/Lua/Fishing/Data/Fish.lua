@@ -747,7 +747,7 @@ local fishes = {
         },
         DescriptionHandle = T{
             Handle = "hd82dc7c0gd40bg498eg8cb5g6a4600987106",
-            Text = "With one of these in your backpack, you feel confident all your interfaces are significantly improved. And quicker, too.",
+            Text = "A particularly dear item. With one of these in your backpack, you feel confident all your interfaces are significantly improved. Years of dedication and support from Godwoken all over Rivellon have made it into something truly special, and an unforgettable part of their journeys.",
         },
         TemplateID = "9b6827a3-9f44-4179-803b-cf6deb9e943a",
         Behaviour = "Sinker",
