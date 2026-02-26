@@ -7,6 +7,7 @@ local Fishing = {
     _Fish = {}, ---@type table<string, Features.Fishing.Fish>
     _FishBehaviours = {}, ---@type table<Features.Fishing.Fish.BehaviourType, Features.Fishing.Fish.Behaviour>
     _RegionsByLevel = DefaultTable.Create({}), ---@type DataStructures_DefaultTable<string, Features.Fishing.Region[]>
+    _FishesByLevel = DefaultTable.Create({}), ---@type table<string, set<string>> Maps level ID to fish IDs that can be found in that level.
     _RegionsByID = {}, ---@type table<string, Features.Fishing.Region>
     _CharactersFishing = Set.Create(), -- Not synchronized across clients!
 
@@ -94,11 +95,6 @@ local Fishing = {
             Text = "Click to start fishing.",
             ContextDescription = "Mouseover text for fishable areas",
             LocalKey = "CharacterTask_MouseTextTooltip",
-        },
-        ["hf433845bg662bg4cdegbbd5g002d2abb4743"] = {
-            Text = "You haven't caught this fish yet.",
-            ContextDescription = "Tooltip for fish not registered in collection log",
-            LocalKey = "CollectionLog_UncaughtFish",
         },
     },
 
@@ -249,7 +245,7 @@ local _Region = {
 
 ---@param data Features.Fishing.Fish
 function Fishing.RegisterFish(data)
-    if not data.ID then Fishing:Error("RegisterFish", "Data must include ID.") end
+    if not data.ID then Fishing:__Error("RegisterFish", "Data must include ID.") end
     Inherit(data, _Fish)
     Interfaces.Apply(data, "I_Identifiable")
     Interfaces.Apply(data, "I_Describable")
@@ -267,12 +263,21 @@ function Fishing.RegisterRegion(data)
 
     table.insert(Fishing._RegionsByLevel[data.LevelID], data)
 
-    -- Validate fish IDs
+    -- Validate fish IDs and cache their regions
     for _,fishEntry in ipairs(data.Fish) do
         if not Fishing.GetFish(fishEntry.ID) then
             Fishing:__Error("RegisterRegion", "Unknown fish ID:", fishEntry.ID)
         end
+        Fishing._FishesByLevel[data.LevelID][fishEntry.ID] = true
     end
+end
+
+---Returns whether a fish can be caught in the given level.
+---@param fishID string
+---@param levelID string
+---@return boolean
+function Fishing.IsFishAvailable(fishID, levelID)
+    return Fishing._FishesByLevel[levelID][fishID]
 end
 
 ---Registers a fish behaviour.
