@@ -54,6 +54,28 @@ Tooltip.Hooks.RenderAbilityTooltip:Subscribe(function (ev)
         description.Description = TSK.Label_SchoolDescription:GetString() -- TODO set CurrentLevelEffect, NextLevelEffect, Description2 fields?
         baseValueLabel.Label = Text.FormatLarianTranslatedString(Fishing.TSKHANDLE_BASE_VALUE_LABEL, score)
 
+        -- Add leveling hint
+        local _, uniqueFishCaught = Fishing.GetUniqueFishCaught()
+        local totalFishCaught = Fishing.GetTotalFishCaught(char)
+        local nextLevelRequirements = Fishing.GetAbilityRequirements(score + 1)
+        local requirementsLabels = {} ---@type string[]
+        local remainingUniqueFish = nextLevelRequirements.UniqueFishCaught - uniqueFishCaught
+        local remainingTotalFish = nextLevelRequirements.TotalFishCaught - totalFishCaught
+        if remainingUniqueFish > 0 then -- Unique fish requirement
+            table.insert(requirementsLabels, TSK.Label_SchoolDescription_LevelingRequirement_UniqueCatches:Format(remainingUniqueFish))
+        end
+        if remainingTotalFish > 0 then -- Total catches requirement
+            table.insert(requirementsLabels, TSK.Label_SchoolDescription_LevelingRequirement_TotalCatches:Format(remainingTotalFish))
+        end
+        tooltip:InsertElement({
+            Type = "StatsPointValue",
+            Label = TSK.Label_SchoolDescriptionLevelingHint:Format({
+                FormatArgs = {
+                    Text.Join(requirementsLabels, "\n")
+                }
+            })
+        })
+
         -- Rewrite the stat ID so that other tooltip listeners do not consider this as a vanilla skill ability.
         ---@diagnostic disable-next-line: assign-type-mismatch
         ev.AbilityID = Fishing._FISHING_STAT_ID

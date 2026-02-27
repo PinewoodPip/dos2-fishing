@@ -91,6 +91,21 @@ local Fishing = {
             Text = "Each point of Fishermancy unlocks fishy techniques based on your other school scores.",
             ContextDescription = [[Tooltip for Fishermancy ability in character sheet]],
         },
+        Label_SchoolDescriptionLevelingHint = {
+            Handle = "h3f123bb0g4b8cg464dga18fg29fc44cad36a",
+            Text = "Your Fishermancy levels up as you catch more fish.<br>%s",
+            ContextDescription = [[Tooltip hint for Fishermancy ability in character sheet; param are the requirements for the next level]],
+        },
+        Label_SchoolDescription_LevelingRequirement_UniqueCatches = {
+            Handle = "h1e113f2fg065eg43eag8925gdb08f67a3404",
+            Text = "Next level requires catching %d more unique species.",
+            ContextDescription = [[Tooltip for Fishermancy ability; param is amount]],
+        },
+        Label_SchoolDescription_LevelingRequirement_TotalCatches = {
+            Handle = "h40d06bbbg6e40g461ega038g5d2a4a4f61ec",
+            Text = "Next level requires catching %d more fish in total.",
+            ContextDescription = [[Tooltip for Fishermancy ability; param is amount]],
+        },
 
         ["hcced1bb7ge818g4803gbf45gf0644370163f"] = {
             Text = "Hold left-click to raise the bar,\nlet go to have it fall.\n\nKeep the bar by the fish until the yellow bar fills up!",
@@ -368,8 +383,12 @@ end
 ---Returns the fish types that were caught in this playthrough.
 ---@return set<string>, integer -- Fish IDs and count.
 function Fishing.GetUniqueFishCaught()
-    local uniqueFishCaught = Set.Create(Fishing:GetModVariable(Mod.GUIDS.FISHING, Fishing.MODVAR_UNIQUE_FISH_CAUGHT) or {})
-    return uniqueFishCaught, #uniqueFishCaught
+    local uniqueFishCaught = Fishing:GetModVariable(Mod.GUIDS.FISHING, Fishing.MODVAR_UNIQUE_FISH_CAUGHT) or {}
+    local count = 0
+    for _,_ in pairs(uniqueFishCaught) do
+        count = count + 1
+    end
+    return uniqueFishCaught, count
 end
 
 ---Marks a fish type as having been caught in this playthrough.
@@ -386,13 +405,30 @@ end
 function Fishing.GetAbilityScore(char)
     local totalCatches = Fishing.GetTotalFishCaught(char)
     local _, uniqueFishCount = Fishing.GetUniqueFishCaught()
+    local requirements = Fishing.GetAbilityRequirements(1)
     local score = 0
-    local catchRequirement = Fishing.ABILITY_SCHOOL_FISH_PER_LEVEL
-    while totalCatches >= catchRequirement and uniqueFishCount >= (score + 1) * Fishing.ABILITY_SCHOOL_UNIQUE_FISH_PER_LEVEL do
+    while totalCatches >= requirements.TotalFishCaught and uniqueFishCount >= requirements.UniqueFishCaught do
         score = score + 1
-        catchRequirement = catchRequirement + Fishing.ABILITY_SCHOOL_FISH_PER_LEVEL + Fishing.ABILITY_SCHOOL_FISH_PER_LEVEL_GROWTH * score
+        requirements = Fishing.GetAbilityRequirements(score + 1)
     end
     return score
+end
+
+---Returns the requirements to reach the given Fishermancy level.
+---@param level integer
+---@return {TotalFishCaught: integer, UniqueFishCaught: integer}
+function Fishing.GetAbilityRequirements(level)
+    local requirements = {
+        TotalFishCaught = 0,
+        UniqueFishCaught = 0,
+    }
+    local catchRequirement = Fishing.ABILITY_SCHOOL_FISH_PER_LEVEL
+    for _=1,level,1 do -- TODO surely this can be optimized to avoid a for loop - get a mathematician
+        requirements.UniqueFishCaught = requirements.UniqueFishCaught + Fishing.ABILITY_SCHOOL_UNIQUE_FISH_PER_LEVEL
+        requirements.TotalFishCaught = requirements.TotalFishCaught + catchRequirement
+        catchRequirement = catchRequirement + Fishing.ABILITY_SCHOOL_FISH_PER_LEVEL_GROWTH
+    end
+    return requirements
 end
 
 ---@param id string
