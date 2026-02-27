@@ -26,6 +26,7 @@ local scripts = {
             "Fishing/GameObjects/Bobber.lua",
 
             "Fishing/Client_CharacterTask.lua",
+            "Fishing/CharacterSheet.lua",
             "Fishing/CollectionLog.lua",
         }
     },

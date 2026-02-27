@@ -25,6 +25,10 @@ local Fishing = {
     WATER_SEARCH_RADIUS = 1.5,
     WATER_MAX_DISTANCE = 3.5, -- Distance to water (or fishing areas) that a character must be within for fishing to be available.
 
+    ABILITY_SCHOOL_FISH_PER_LEVEL = 15, -- Amount of fish that has to be caught per level in the Fishermancy ability.
+    ABILITY_SCHOOL_FISH_PER_LEVEL_GROWTH = 5, -- Extra amount of fish that need to be caught per level in the Fishermancy ability, for each level after the first.
+    ABILITY_SCHOOL_UNIQUE_FISH_PER_LEVEL = 5, -- Amount of unique fish that has to be caught per level in the Fishermancy ability.
+
     USE_LEGACY_EVENTS = false,
     USE_LEGACY_HOOKS = false,
 
@@ -76,6 +80,18 @@ local Fishing = {
             Text = "Something's on the hook!",
             ContextDescription = [[Notification when a fish bites, during the 1st phase of the minigame]],
         },
+
+        Label_SchoolName = {
+            Handle = "h6361a0cbg34edg430bga50eg461695dacb6d",
+            Text = "Fishermancy",
+            ContextDescription = [[Ability school name shown in the character sheet]],
+        },
+        Label_SchoolDescription = {
+            Handle = "hf8ea30dbg68a5g437dg9027gebc72244dab8",
+            Text = "Each point of Fishermancy unlocks fishy techniques based on your other school scores.",
+            ContextDescription = [[Tooltip for Fishermancy ability in character sheet]],
+        },
+
         ["hcced1bb7ge818g4803gbf45gf0644370163f"] = {
             Text = "Hold left-click to raise the bar,\nlet go to have it fall.\n\nKeep the bar by the fish until the yellow bar fills up!",
             ContextDescription = "Tutorial message",
@@ -362,6 +378,21 @@ function Fishing.MarkFishTypeAsCaught(fishID)
     local uniqueFishCaught = Fishing:GetModVariable(Mod.GUIDS.FISHING, Fishing.MODVAR_UNIQUE_FISH_CAUGHT)
     uniqueFishCaught[fishID] = true
     Fishing:SetModVariable(Mod.GUIDS.FISHING, Fishing.MODVAR_UNIQUE_FISH_CAUGHT, uniqueFishCaught)
+end
+
+---Returns the fishermancy ability score of char.
+---@param char Character
+---@return integer
+function Fishing.GetAbilityScore(char)
+    local totalCatches = Fishing.GetTotalFishCaught(char)
+    local _, uniqueFishCount = Fishing.GetUniqueFishCaught()
+    local score = 0
+    local catchRequirement = Fishing.ABILITY_SCHOOL_FISH_PER_LEVEL
+    while totalCatches >= catchRequirement and uniqueFishCount >= (score + 1) * Fishing.ABILITY_SCHOOL_UNIQUE_FISH_PER_LEVEL do
+        score = score + 1
+        catchRequirement = catchRequirement + Fishing.ABILITY_SCHOOL_FISH_PER_LEVEL + Fishing.ABILITY_SCHOOL_FISH_PER_LEVEL_GROWTH * score
+    end
+    return score
 end
 
 ---@param id string
