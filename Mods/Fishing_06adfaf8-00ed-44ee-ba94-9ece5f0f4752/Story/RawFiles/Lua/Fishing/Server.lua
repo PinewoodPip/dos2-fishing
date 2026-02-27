@@ -46,6 +46,23 @@ Osiris.RegisterSymbolListener("StoryEvent", 2, "after", function (obj, event)
     end
 end)
 
+---Grants the fish item to char and increments statistics.
+---@param char EsvCharacter
+---@param fish Features.Fishing.Fish
+---@return GUID
+function Fishing.CatchFish(char, fish)
+    local charGUID = char.MyGuid
+    Osi.CharacterStatusText(charGUID, TSK.Notification_Minigame_Success:GetString())
+    Osi.PlayAnimation(charGUID, Fishing.SUCCESS_ANIMATION, "")
+    local fishItemGUID = Osi.ItemTemplateAddTo(fish.TemplateID, charGUID, 1, 1)
+
+    -- Track stats
+    Fishing.AddFishCatchCount(char, fish.ID)
+    Fishing.MarkFishTypeAsCaught(fish.ID)
+
+    return fishItemGUID
+end
+
 -- Untag characters when they finish fishing.
 Fishing.Events.CharacterStoppedFishing:Subscribe(function (ev)
     local char = ev.Character
@@ -58,13 +75,7 @@ Fishing.Events.CharacterStoppedFishing:Subscribe(function (ev)
     -- Success/failure feedback
     if ev.Reason == "Success" then
         local caughtFish = ev.CaughtFish
-        Osiris.CharacterStatusText(char, TSK.Notification_Minigame_Success:GetString())
-        Osiris.PlayAnimation(char, Fishing.SUCCESS_ANIMATION, "")
-        Osiris.ItemTemplateAddTo(caughtFish.TemplateID, char, 1, 1)
-
-        -- Track stats
-        Fishing.AddFishCatchCount(char, caughtFish.ID)
-        Fishing.MarkFishTypeAsCaught(caughtFish.ID)
+        Fishing.CatchFish(char, caughtFish)
     elseif ev.Reason == "Failure" then
         Osiris.PlayAnimation(char, Fishing.FAILURE_ANIMATION, "")
     end
@@ -92,7 +103,19 @@ end)
 -- Cheat to add all fish items.
 Ext.RegisterConsoleCommand("fishaddall", function (_)
     local charGUID = Osi.CharacterGetHostCharacter()
-    for _,fish in pairs(Fishing._Fish) do
-        Osiris.ItemTemplateAddTo(fish.TemplateID, charGUID, 1, 0)
+    local char = Character.Get(charGUID)
+    for _,fish in pairs(Fishing.GetFishes()) do
+        Fishing.CatchFish(char, fish)
+    end
+    Osi.CharacterFlushQueue(charGUID) -- Skip all catch animations, as they would've been queued otherwise.
+end)
+
+-- Cheat to emulate catching a fish.
+Ext.RegisterConsoleCommand("fishcatch", function (_, fishID, amount)
+    amount = tonumber(amount) or 1
+    local charGUID = Osi.CharacterGetHostCharacter()
+    local fish = Fishing.GetFish(fishID)
+    for _=1,amount,1 do
+        Fishing.CatchFish(Character.Get(charGUID), fish)
     end
 end)
