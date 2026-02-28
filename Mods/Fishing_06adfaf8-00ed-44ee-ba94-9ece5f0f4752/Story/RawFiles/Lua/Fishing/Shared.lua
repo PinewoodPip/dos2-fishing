@@ -50,6 +50,11 @@ local Fishing = {
             Text = "The fish got away...",
             ContextDescription = [[Notification for losing the minigame]],
         },
+        Notification_Minigame_ReeledInTooEarly = {
+            Handle = "h37a75c7ag70ceg4f26g84d2g6d74a64dd2f3",
+            Text = "Too early! I should wait for the fish to bite first.",
+            ContextDescription = [[Notification for failing the 1st phase of the minigame by reeling in before the fish bites]],
+        },
         Notification_CantFish_AlreadyFishing = {
             Handle = "h40b6a937gfbf3g471dga223g117d1ed92eb8",
             Text = "I'm already fishing!",
@@ -191,7 +196,7 @@ Fishing:RegisterUserVariable(Fishing.USERVAR_FISH_CAUGHT, {
 -- CLASSES
 ---------------------------------------------
 
----@alias Features.Fishing.MinigameExitReason "Success"|"Failure"|"Cancelled"
+---@alias Features.Fishing.MinigameExitReason "Success"|"Failure"|"Cancelled"|"ReeledInTooEarly"
 
 ---@diagnostic disable-next-line: duplicate-doc-alias
 ---@alias Features.Fishing.Fish.BehaviourType string

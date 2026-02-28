@@ -163,7 +163,7 @@ function Fishing.ReelIn(char)
         }
         Fishing.UI.Start(char) -- TODO extract in case someone wants to replace the minigame entirely
     else
-        Fishing.Stop(char, "Failure")
+        Fishing.Stop(char, "ReeledInTooEarly")
     end
 end
 
@@ -252,6 +252,8 @@ Fishing.Events.CharacterStoppedFishing:Subscribe(function (ev)
         NotificationUI.ShowIconNotification(ev.CaughtFish:GetName(), ev.CaughtFish:GetIcon(), nil, Fishing.TSK["Toast_Success"], subTitle, "UI_Notification_ReceiveAbility")
     elseif ev.Reason == "Failure" then
         NotificationUI.ShowWarning(TSK.Notification_Minigame_Failure:GetString())
+    elseif ev.Reason == "ReeledInTooEarly" then
+        NotificationUI.ShowWarning(TSK.Notification_Minigame_ReeledInTooEarly:GetString())
     end
 end)
 
