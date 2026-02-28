@@ -3,14 +3,18 @@ local Fishing = Epip.GetFeature("Features.Fishing")
 local UI = Fishing.UI ---@class Features.Fishing.UI
 
 ---@class Features.Fishing.GameObject.Bobber : Features.Fishing.GameObject
+---@field GetElement fun(self:Features.Fishing.GameObject.Bobber):GenericUI_Element_Color
 local _Bobber = {
     Type = "Bobber",
+
+    _IsCollidingWithFish = false,
 }
 Inherit(_Bobber, UI._GameObjectClass)
 UI.RegisterGameObject("Features.Fishing.GameObject.Bobber", _Bobber)
 
 ---@param deltaTime number In milliseconds.
 function _Bobber:Update(deltaTime)
+    local wasColliding = self._IsCollidingWithFish
     local state = self.State
     local seconds = deltaTime / 1000
     local acceleration = state.Acceleration
@@ -34,6 +38,12 @@ function _Bobber:Update(deltaTime)
         state.Velocity = 0
         state.Acceleration = 0
     end
+
+    -- Update visuals
+    local element = self:GetElement()
+    element:SetColor(wasColliding and UI.BOBBER_COLLISION_COLOR or UI.BOBBER_COLOR)
+
+    self._IsCollidingWithFish = false
 end
 
 ---@param otherObject Features.Fishing.GameObject
@@ -44,5 +54,7 @@ function _Bobber:OnCollideWith(otherObject, deltaTime)
         local drain = UI.GetProgressDrain()
 
         UI.AddProgress((drain + UI.PROGRESS_PER_SECOND) * deltaTime / 1000)
+
+        self._IsCollidingWithFish = true
     end
 end

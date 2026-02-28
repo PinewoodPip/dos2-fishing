@@ -28,7 +28,8 @@ UI.BLOBBER_AREA_SIZE = V(40, 490)
 UI.BLOBBER_SIZE = V(40, 70)
 UI.FISH_SIZE = V(32, 32)
 UI.FISH_ICON_SIZE = V(32, 32)
-UI.BOBBER_COLOR = Color.CreateFromHex(Color.LARIAN.GREEN)
+UI.BOBBER_COLOR = Color.CreateFromHex(Color.LARIAN.POISON_GREEN)
+UI.BOBBER_COLLISION_COLOR = Color.CreateFromHex(Color.LARIAN.GREEN)
 
 -- Physics & tuning
 UI.PHYSICS_EXPONENT = 1.8 -- Exponent applied to acceleration (both player & gravity).
