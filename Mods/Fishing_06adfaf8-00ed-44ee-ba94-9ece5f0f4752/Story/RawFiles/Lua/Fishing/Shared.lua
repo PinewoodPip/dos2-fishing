@@ -45,6 +45,35 @@ local Fishing = {
             Text = "To fish, equip a rod, unsheathe it and left-click a body of water while near it.",
             ContextDescription = [[Tooltip for fishing rods]],
         },
+        Label_Fish = {
+            Handle = "h509d1edagfcc5g4cdcga271g6358aa96bcea",
+            Text = "Fish",
+        },
+        Label_FishRarity_Common = {
+            Handle = "h66cdd0b9g1b6dg413egac30g68b6fcdfe1c4",
+            Text = "Common Fish",
+            ContextDescription = [[Rarity tooltip for fishes]],
+        },
+        Label_FishRarity_Uncommon = {
+            Handle = "h7d92c127gaccbg45a0g89b0g159d07f1a649",
+            Text = "Uncommon Fish",
+            ContextDescription = [[Rarity tooltip for fishes]],
+        },
+        Label_FishRarity_Rare = {
+            Handle = "h7581c7d0g0566g4a38g9703ge2d5694a662a",
+            Text = "Rare Fish",
+            ContextDescription = [[Rarity tooltip for fishes]],
+        },
+        Label_FishRarity_Epic = {
+            Handle = "h89de4a73gc4a2g4f00g9ddag7b5c921ba49d",
+            Text = "Epic Fish",
+            ContextDescription = [[Rarity tooltip for fishes]],
+        },
+        Label_FishRarity_Legendary = {
+            Handle = "h6aac4362ge637g4d42g953cgcd87f2de7224",
+            Text = "Legendary Fish",
+            ContextDescription = [[Rarity tooltip for fishes]],
+        },
         Notification_Minigame_Success = {
             Handle = "h35cacdc8g0b2ag46f4gb003g3122d32bfecc",
             Text = "Got it!",
@@ -153,6 +182,7 @@ local Fishing = {
     },
 }
 Epip.RegisterFeature("Fishing", Fishing)
+local TSK = Fishing.TranslatedStrings
 
 Fishing:RegisterModVariable(Mod.GUIDS.FISHING, Fishing.MODVAR_UNIQUE_FISH_CAUGHT, {
     Persistent = true,
@@ -162,6 +192,16 @@ Fishing:RegisterUserVariable(Fishing.USERVAR_FISH_CAUGHT, {
     Persistent = true,
     DefaultValue = {},
 })
+
+---@type table<ItemLib_Rarity, TextLib_TranslatedString>
+Fishing.RARITY_TO_LABEL = {
+    ["Common"] = TSK.Label_FishRarity_Common,
+    ["Uncommon"] = TSK.Label_FishRarity_Uncommon,
+    ["Rare"] = TSK.Label_FishRarity_Rare,
+    ["Epic"] = TSK.Label_FishRarity_Epic,
+    ["Legendary"] = TSK.Label_FishRarity_Legendary,
+    -- There are currently no divine/unique fish.
+}
 
 ---------------------------------------------
 -- EVENTS
@@ -222,6 +262,7 @@ Fishing:RegisterUserVariable(Fishing.USERVAR_FISH_CAUGHT, {
 
 ---@class Features.Fishing.Fish : I_Identifiable, I_Describable
 ---@field Icon string? Defaults to the template's icon.
+---@field Rarity ItemLib_Rarity
 ---@field TemplateID GUID
 ---@field Difficulty number Affects the "intensity" of the fish's AI. Higher values are expected to translate to faster movement or shorter intervals between movement states.
 ---@field Endurance number Multiplier for how much progress the player needs to accumulate to catch the fish.
@@ -240,14 +281,16 @@ end
 
 ---@return TooltipLib_FormattedTooltip
 function _Fish:GetTooltip()
+    local rarityString = Fishing.RARITY_TO_LABEL[self.Rarity] or TSK.Label_Fish
+    local rarityColor = Color.ITEM_RARITIES[self.Rarity] or Color.WHITE
     ---@type TooltipLib_FormattedTooltip
     local tooltip = {
         Elements = {
             {
                 Type = "ItemName",
-                Label = self:GetName(), -- TODO rarity color
+                Label = Text.Format(self:GetName(), {Color = rarityColor}),
             },
-            -- Multiple SkillDescriptions are ordered inversely, lol TODO fix?
+            -- Note: multiple SkillDescriptions are ordered inversely in flash
             {
                 Type = "SkillDescription",
                 Label = Text.Format("Total caught: %s", {
@@ -263,7 +306,7 @@ function _Fish:GetTooltip()
             },
             {
                 Type = "ItemRarity",
-                Label = "Fish", -- TODO
+                Label = rarityString:Format({Color = rarityColor}),
             }
         }
     }
