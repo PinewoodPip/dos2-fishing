@@ -35,6 +35,16 @@ local Fishing = {
     Settings = {},
 
     TranslatedStrings = {
+        Label_FishingRod = {
+            Handle = "hf0dada5eg975cg45fcg8c70g6e67792c8430",
+            Text = "Fishing Rod",
+            ContextDescription = [[Tooltip footer for fishing rod items]],
+        },
+        Label_FishingRodHint = {
+            Handle = "h8e225a0bg8481g4c06gaefag7ff1abbe00fb",
+            Text = "To fish, equip a rod, unsheathe it and left-click a body of water while near it.",
+            ContextDescription = [[Tooltip for fishing rods]],
+        },
         Notification_Minigame_Success = {
             Handle = "h35cacdc8g0b2ag46f4gb003g3122d32bfecc",
             Text = "Got it!",

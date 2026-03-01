@@ -1,5 +1,6 @@
 
 local NotificationUI = Client.UI.Notification
+local Tooltip = Client.Tooltip
 local Input = Client.Input
 local V = Vector.Create
 
@@ -7,6 +8,7 @@ local V = Vector.Create
 local Fishing = Epip.GetFeature("Features.Fishing")
 local TSK = Fishing.TranslatedStrings
 Fishing.OPEN_LOG_KEYBIND = "EpipEncounters_Fishing_OpenCollectionLog"
+Fishing.FISHING_ROD_RARITY_COLOR = Color.LARIAN.BLUE
 
 -- Bite phase tuning
 Fishing.FISH_BITE_DELAY_RANGE = {3.2, 6.5} -- Time range (in seconds) for how long it can take for a fish to bite after the player starts fishing.
@@ -225,6 +227,13 @@ function Fishing.Stop(char, reason)
     Fishing._States[char.Handle] = nil
 end
 
+---Returns whether an item is usable as a fishing rod.
+---@param item Item
+---@return boolean
+function Fishing.IsFishingRod(item)
+    return Fishing.FISHING_ROD_TEMPLATES:Contains(item.RootTemplate.Id)
+end
+
 ---------------------------------------------
 -- EVENT LISTENERS
 ---------------------------------------------
@@ -310,6 +319,32 @@ Input.Events.KeyPressed:Subscribe(function (ev)
         if state and state.Type == "WaitingForBite" then
             Fishing.ReelIn(char)
         end
+    end
+end)
+
+-- Add tooltip hints on how to use fishing rods.
+Tooltip.Hooks.RenderItemTooltip:Subscribe(function (ev)
+    if Fishing.IsFishingRod(ev.Item) then
+        local tooltip = ev.Tooltip
+        tooltip:InsertElement({
+            Type = "Engraving",
+            Label = TSK.Label_FishingRodHint:Format({
+                Color = Color.LARIAN.GREEN,
+            }),
+        })
+
+        -- Recolor header
+        local itemNameElement = tooltip:GetFirstElement("ItemName")
+        local itemName = Text.StripFormatting(itemNameElement.Label)
+        itemNameElement.Label = Text.Format(itemName, {
+            Color = Fishing.FISHING_ROD_RARITY_COLOR,
+        })
+
+        -- Change rarity/footer to indicate the item is a rod
+        local rarityElement = tooltip:GetFirstElement("ItemRarity")
+        rarityElement.Label = TSK.Label_FishingRod:Format({
+            Color = Fishing.FISHING_ROD_RARITY_COLOR,
+        })
     end
 end)
 
