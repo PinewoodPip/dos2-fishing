@@ -8,6 +8,7 @@ local Fishing = {
     _FishBehaviours = {}, ---@type table<Features.Fishing.Fish.BehaviourType, Features.Fishing.Fish.Behaviour>
     _RegionsByLevel = DefaultTable.Create({}), ---@type DataStructures_DefaultTable<string, Features.Fishing.Region[]>
     _FishesByLevel = DefaultTable.Create({}), ---@type table<string, set<string>> Maps level ID to fish IDs that can be found in that level.
+    _RootTemplateToFish = {}, ---@type table<GUID.ItemTemplate, string>
     _RegionsByID = {}, ---@type table<string, Features.Fishing.Region>
     _CharactersFishing = Set.Create(), -- Not synchronized across clients!
 
@@ -340,6 +341,7 @@ function Fishing.RegisterFish(data)
     Interfaces.Apply(data, "I_Describable")
 
     Fishing._Fish[data.ID] = data
+    Fishing._RootTemplateToFish[data.TemplateID] = data.ID
 end
 
 ---Registers a fishing region.
@@ -493,6 +495,14 @@ end
 ---@return Features.Fishing.Fish?
 function Fishing.GetFish(id)
     return Fishing._Fish[id]
+end
+
+---Returns a fish by its root template.
+---@param templateID GUID.ItemTemplate
+---@return Features.Fishing.Fish?
+function Fishing.GetFishByTemplate(templateID)
+    local fishID = Fishing._RootTemplateToFish[templateID]
+    return Fishing.GetFish(fishID)
 end
 
 ---@return table<string, Features.Fishing.Fish>

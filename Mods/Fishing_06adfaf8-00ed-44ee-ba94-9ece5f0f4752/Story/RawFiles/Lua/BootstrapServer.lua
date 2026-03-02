@@ -17,6 +17,7 @@ local scripts = {
             "Fishing/Data/Regions/ReapersCoast.lua",
         }
     },
+    {ScriptSet = "Fishing/Runes"},
 }
 for _,script in ipairs(scripts) do
     RequestScriptLoad(script)

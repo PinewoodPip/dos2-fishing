@@ -28,8 +28,11 @@ local scripts = {
             "Fishing/Client_CharacterTask.lua",
             "Fishing/CharacterSheet.lua",
             "Fishing/CollectionLog.lua",
+
+            "Fishing/GenerateStats.lua",
         }
     },
+    {ScriptSet = "Fishing/Runes"},
 }
 for _,script in ipairs(scripts) do
     RequestScriptLoad(script)
