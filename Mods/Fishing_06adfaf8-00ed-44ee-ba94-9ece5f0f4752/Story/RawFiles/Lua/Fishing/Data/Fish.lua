@@ -1088,7 +1088,7 @@ local fishes = {
             Handle = "hd5a5c46cgaa85g40a0g8d3ag0a0d4ce152c9",
             Text = "You dredged this lost soul from the deep. It seems content with just being with company again at last. Would releasing it even be the moral thing to do?",
         },
-        TemplateID = "0d547d36-340b-45f4-a9c4-c601fef20c31",
+        TemplateID = "c92b0f3a-a938-4dab-b639-ecd8102a8a47",
         Rarity = "Rare",
         Behaviour = "Sinker",
         Difficulty = 1.5,
