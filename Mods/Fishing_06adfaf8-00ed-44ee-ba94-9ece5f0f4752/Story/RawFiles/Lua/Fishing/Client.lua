@@ -348,10 +348,52 @@ Tooltip.Hooks.RenderItemTooltip:Subscribe(function (ev)
     end
 end)
 
+-- Format fish item names & rarity tooltips.
+Tooltip.Hooks.RenderItemTooltip:Subscribe(function (ev)
+    local fish = Fishing.GetFishByTemplate(ev.Item.RootTemplate.Id)
+    if fish then
+        local tooltip = ev.Tooltip
+
+        -- Set name (with rarity color)
+        local itemNameElement = tooltip:GetFirstElement("ItemName")
+        itemNameElement.Label = fish:GetNameTooltip().Label
+
+        -- Set description
+        local descriptionElement = tooltip:GetFirstElement("ItemDescription")
+        local fishDesc = fish:GetDescription()
+        if descriptionElement then
+            descriptionElement.Label = fishDesc
+        else
+            tooltip:InsertElement({
+                Type = "ItemDescription",
+                Label = fishDesc,
+            })
+        end
+
+        -- Add rarity label
+        local itemRarityElement = tooltip:GetFirstElement("ItemRarity")
+        local fishRarityTooltip = fish:GetRarityTooltip()
+        if itemRarityElement then
+            itemRarityElement.Label = fishRarityTooltip.Label
+        else
+            tooltip:InsertElement(fishRarityTooltip, 1) -- ItemRarity must be among the first elements or the flash element sorting function breaks (vanilla bug)
+        end
+    end
+end)
+
 -- Update fishing rod templates to have a world tooltip to make them easier to find.
 GameState.Events.ClientReady:Subscribe(function (_)
     for guid in Fishing.FISHING_ROD_TEMPLATES:Iterator() do
         local template = Ext.Template.GetTemplate(guid) ---@cast template ItemTemplate
         template.Tooltip = 2
+    end
+end)
+
+-- Replace fish template names & descriptions with TSKs.
+GameState.Events.ClientReady:Subscribe(function (_)
+    for _,fish in pairs(Fishing.GetFishes()) do
+        local template = Ext.Template.GetTemplate(fish.TemplateID) ---@cast template ItemTemplate
+        template.DisplayName = fish.NameHandle
+        template.Description = fish.DescriptionHandle
     end
 end)

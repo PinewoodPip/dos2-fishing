@@ -282,15 +282,10 @@ end
 
 ---@return TooltipLib_FormattedTooltip
 function _Fish:GetTooltip()
-    local rarityString = Fishing.RARITY_TO_LABEL[self.Rarity] or TSK.Label_Fish
-    local rarityColor = Color.ITEM_RARITIES[self.Rarity] or Color.WHITE
     ---@type TooltipLib_FormattedTooltip
     local tooltip = {
         Elements = {
-            {
-                Type = "ItemName",
-                Label = Text.Format(self:GetName(), {Color = rarityColor}),
-            },
+            self:GetNameTooltip(),
             -- Note: multiple SkillDescriptions are ordered inversely in flash
             {
                 Type = "SkillDescription",
@@ -305,14 +300,31 @@ function _Fish:GetTooltip()
                 Type = "SkillDescription",
                 Label = self:GetDescription(),
             },
-            {
-                Type = "ItemRarity",
-                Label = rarityString:Format({Color = rarityColor}),
-            }
+            self:GetRarityTooltip(),
         }
     }
-
     return tooltip
+end
+
+---Returns the ItemName tooltip element for the fish.
+---@return TooltipLib_Element
+function _Fish:GetNameTooltip()
+    local rarityColor = Color.ITEM_RARITIES[self.Rarity] or Color.WHITE
+    return {
+        Type = "ItemName",
+        Label = Text.Format(self:GetName(), {Color = rarityColor}),
+    }
+end
+
+---Returns the ItemRarity tooltip element for the fish.
+---@return TooltipLib_Element
+function _Fish:GetRarityTooltip()
+    local rarityString = Fishing.RARITY_TO_LABEL[self.Rarity] or TSK.Label_Fish
+    local rarityColor = Color.ITEM_RARITIES[self.Rarity] or Color.WHITE
+    return {
+        Type = "ItemRarity",
+        Label = rarityString:Format({Color = rarityColor}),
+    }
 end
 
 ---@class Features.Fishing.Region : I_Identifiable
