@@ -1279,17 +1279,33 @@ local TIER_GOLD_VALUES = {
     [3] = 500,
 }
 
+---Returns a list of fish descriptors sorted by ID.
+---Used to avoid the stats entries from being reshuffled when regenerating them (causing annoying diffs)
+---@return Features.Fishing.Fish[]
+local function GetSortedFishes()
+    local fishDescs = Fishing.GetFishes()
+    local orderedFishes = {} ---@type Features.Fishing.Fish[]
+    for _,fish in pairs(fishDescs) do
+        table.insert(orderedFishes, fish)
+    end
+    table.sort(orderedFishes, function(a,b) return a.ID < b.ID end)
+    return orderedFishes
+end
+
 ---Generates Armor stat entries for all fishes.
 local function GenerateArmorStats()
+    local sortedFishes = GetSortedFishes()
     local lines = {}
+    local addLine = function(line, ...) table.insert(lines, string.format(line, ...)) end
 
     -- Add dummy entry
-    table.insert(lines, [[new entry "_Boost_PIP_Dummy"]])
-    table.insert(lines, [[type "Armor"]])
-    table.insert(lines, "")
+    addLine([[new entry "_Boost_PIP_Dummy"]])
+    addLine([[type "Armor"]])
+    addLine("")
 
     -- Iterate through all fishes
-    for fishID,_ in pairs(Fishing.GetFishes()) do
+    for _, fish in ipairs(sortedFishes) do
+        local fishID = fish.ID
         -- Get boost values for this fish (use default if not specified)
         local boostValues = STAT_BOOSTS[fishID]
         if not boostValues then
@@ -1297,20 +1313,20 @@ local function GenerateArmorStats()
         end
 
         -- Generate 3 entries for each fish
-        for tier = 1, 3 do
+        for tier=1,3,1 do
             local entryName = string.format("_Boost_PIP_Fish_%s_%d", fishID, tier)
             local tierData = boostValues[tier]
 
-            table.insert(lines, string.format("new entry %s", entryName))
-            table.insert(lines, [[type "Armor"]])
-            table.insert(lines, [[using "_Boosts_Runes_Armor_Upperbody"]])
+            addLine([[new entry %s]], entryName)
+            addLine([[type "Armor"]])
+            addLine([[using "_Boosts_Runes_Armor_Upperbody"]])
 
             -- Add all data fields for this tier
             for field, value in pairs(tierData) do
-                table.insert(lines, string.format([[data "%s" "%s"]], field, value))
+                addLine([[data "%s" "%s"]], field, value)
             end
 
-            table.insert(lines, "")
+            addLine("")
         end
     end
 
@@ -1319,27 +1335,90 @@ end
 
 ---Generates Object stats .txt for all fishes.
 local function GenerateObjectStats()
+    local orderedFishes = GetSortedFishes()
     local output = {}
+    local addLine = function(line, ...) table.insert(output, string.format(line, ...)) end
 
     -- Generate stat entries for each rune tier
-    for fishID, fish in pairs(Fishing.GetFishes()) do
+    for _, fish in ipairs(orderedFishes) do
+        local fishID = fish.ID
         for tier=1,MAX_RUNE_TIER,1 do
             local entryName = string.format("PIP_FishRune_%s_Tier%d", fishID, tier)
             local armorBoostRef = string.format("_Boost_PIP_Fish_%s_%d", fishID, tier)
 
-            table.insert(output, string.format("new entry %s", entryName))
-            table.insert(output, [[type "Object"]])
-            table.insert(output, [[using "_Runes""]])
+            addLine([[new entry %s]], entryName)
+            addLine([[type "Object"]])
+            addLine([[using "_Runes""]])
 
-            table.insert(output, string.format([[data "RootTemplate" "%s"]], fish.TemplateID))
-            table.insert(output, [[data "Act part" "1"]])
-            table.insert(output, string.format([[data "Value" "%d"]], TIER_GOLD_VALUES[tier]))
-            table.insert(output, string.format([[data "RuneLevel" "%d"]], tier))
-            table.insert(output, [[data "RuneEffectWeapon" "_Boost_PIP_Dummy"]])
-            table.insert(output, string.format([[data "RuneEffectUpperbody" "%s"]], armorBoostRef))
-            table.insert(output, [[data "RuneEffectAmulet" "_Boost_PIP_Dummy"]])
-            table.insert(output, "")
+            addLine([[data "RootTemplate" "%s"]], fish.RootTemplates[tier])
+            addLine([[data "Act part" "1"]])
+            addLine([[data "Value" "%d"]], TIER_GOLD_VALUES[tier])
+            addLine([[data "RuneLevel" "%d"]], tier)
+            addLine([[data "RuneEffectWeapon" "_Boost_PIP_Dummy"]])
+            addLine([[data "RuneEffectUpperbody" "%s"]], armorBoostRef)
+            addLine([[data "RuneEffectAmulet" "_Boost_PIP_Dummy"]])
+            addLine("")
         end
+    end
+
+    return table.concat(output, "\n")
+end
+
+---Generates ItemCombos.txt for upgrading fish runes through crafting.
+local function GenerateItemCombos()
+    local output = {}
+    local addLine = function(line, ...) table.insert(output, string.format(line, ...)) end
+    local sortedFishes = GetSortedFishes()
+    for _, fish in ipairs(sortedFishes) do
+        local fishID = fish.ID
+
+        -- Recipe for Tier 1 -> Tier 2
+        local tier1ID = string.format("PIP_FishRune_%s_Tier1", fishID)
+        local tier2ID = string.format("PIP_FishRune_%s_Tier2", fishID)
+        local recipe1Name = string.format("%s_%s", tier1ID, tier1ID)
+
+        addLine([[new ItemCombination "%s"]], recipe1Name)
+        addLine([[data "RecipeCategory" "Runes"]])
+        addLine([[data "Type 1" "Object"]])
+        addLine([[data "Object 1" "%s"]], tier1ID)
+        addLine([[data "Transform 1" "Transform"]])
+        addLine([[data "Type 2" "Object"]])
+        addLine([[data "Object 2" "%s"]], tier1ID)
+        addLine([[data "Transform 2" "Consume"]])
+        addLine([[data "Type 3" "Object"]])
+        addLine([[data "Object 3" "%s"]], tier1ID)
+        addLine([[data "Transform 3" "Consume"]])
+        addLine([[data "Type 4" "Object"]])
+        addLine([[data "Object 4" "%s"]], tier1ID)
+        addLine([[data "Transform 4" "Consume"]])
+        addLine("")
+
+        addLine([[new ItemCombinationResult "%s_1"]], recipe1Name)
+        addLine([[data "Result 1" "%s"]], tier2ID)
+        addLine([[data "PreviewStatsID" "%s"]], tier2ID)
+        addLine("")
+
+        -- Recipe for Tier 2 -> Tier 3
+        local tier3ID = string.format("PIP_FishRune_%s_Tier3", fishID)
+        local recipe2Name = string.format("%s_%s", tier2ID, tier2ID)
+
+        addLine([[new ItemCombination "%s"]], recipe2Name)
+        addLine([[data "RecipeCategory" "Runes"]])
+        addLine([[data "Type 1" "Object"]])
+        addLine([[data "Object 1" "%s"]], tier2ID)
+        addLine([[data "Transform 1" "Transform"]])
+        addLine([[data "Type 2" "Object"]])
+        addLine([[data "Object 2" "%s"]], tier2ID)
+        addLine([[data "Transform 2" "Consume"]])
+        addLine([[data "Type 3" "Object"]])
+        addLine([[data "Object 3" "%s"]], tier2ID)
+        addLine([[data "Transform 3" "Consume"]])
+        addLine("")
+
+        addLine([[new ItemCombinationResult "%s_1"]], recipe2Name)
+        addLine([[data "Result 1" "%s"]], tier3ID)
+        addLine([[data "PreviewStatsID" "%s"]], tier3ID)
+        addLine("")
     end
 
     return table.concat(output, "\n")
@@ -1347,15 +1426,21 @@ end
 
 ---Generates stats .txts and saves their files.
 Ext.RegisterConsoleCommand("fishgeneratestats", function (_)
-    -- Generate and save Armor stats
+    -- Generate Armor stats (for rune boosts)
     local armorContent = GenerateArmorStats()
     local armorFilename = "FishingStats/Armor.txt"
     IO.SaveFile(armorFilename, armorContent, true)
-    Ext.Utils.Print(string.format("[Fishing] Generated armor stats saved to %s", armorFilename))
+    print(string.format("[Fishing] Generated armor stats saved to %s", armorFilename))
 
-    -- Generate and save Object stats
+    -- Generate Object stats
     local objectContent = GenerateObjectStats()
     local objectFilename = "FishingStats/Object.txt"
     IO.SaveFile(objectFilename, objectContent, true)
-    Ext.Utils.Print(string.format("[Fishing] Generated object stats saved to %s", objectFilename))
+    print(string.format("[Fishing] Generated object stats saved to %s", objectFilename))
+
+    -- Generate crafting recipes
+    local combosContent = GenerateItemCombos()
+    local combosFilename = "FishingStats/ItemCombos.txt"
+    IO.SaveFile(combosFilename, combosContent, true)
+    print(string.format("[Fishing] Generated item combos saved to %s", combosFilename))
 end)

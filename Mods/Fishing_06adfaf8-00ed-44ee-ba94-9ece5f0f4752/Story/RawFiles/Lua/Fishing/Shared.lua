@@ -264,7 +264,8 @@ Fishing.RARITY_TO_LABEL = {
 ---@class Features.Fishing.Fish : I_Identifiable, I_Describable
 ---@field Icon string? Defaults to the template's icon.
 ---@field Rarity ItemLib_Rarity
----@field TemplateID GUID
+---@field TemplateID GUID.ItemTemplate GUID for the tier 1 fish rune template. **Mostly for backwards compatibility; see `Templates` field.**
+---@field RootTemplates table<integer, GUID.ItemTemplate> Maps fish rune tier to the corresponding template.
 ---@field Difficulty number Affects the "intensity" of the fish's AI. Higher values are expected to translate to faster movement or shorter intervals between movement states.
 ---@field Endurance number Multiplier for how much progress the player needs to accumulate to catch the fish.
 ---@field Behaviour Features.Fishing.Fish.BehaviourType
@@ -354,6 +355,9 @@ function Fishing.RegisterFish(data)
 
     Fishing._Fish[data.ID] = data
     Fishing._RootTemplateToFish[data.TemplateID] = data.ID
+    for _,templateID in pairs(data.RootTemplates) do
+        Fishing._RootTemplateToFish[templateID] = data.ID
+    end
 end
 
 ---Registers a fishing region.

@@ -101,13 +101,25 @@ Net.RegisterListener(Fishing.NETMSG_STOPPED_FISHING, function (payload)
 end)
 
 -- Cheat to add all fish items.
-Ext.RegisterConsoleCommand("fishaddall", function (_)
+Ext.RegisterConsoleCommand("fishaddall", function (_, amount)
+    amount = tonumber(amount) or 1
     local charGUID = Osi.CharacterGetHostCharacter()
     local char = Character.Get(charGUID)
     for _,fish in pairs(Fishing.GetFishes()) do
-        Fishing.CatchFish(char, fish)
+        for _=1,amount,1 do
+            Fishing.CatchFish(char, fish)
+        end
     end
     Osi.CharacterFlushQueue(charGUID) -- Skip all catch animations, as they would've been queued otherwise.
+end)
+Ext.RegisterConsoleCommand("fishaddallrunes", function (_)
+    local charGUID = Osi.CharacterGetHostCharacter()
+    for _,fish in pairs(Fishing.GetFishes()) do
+        for tier=1,#fish.RootTemplates,1 do
+            local runeTemplate = fish.RootTemplates[tier]
+            Osi.ItemTemplateAddTo(runeTemplate, charGUID, 1, 1)
+        end
+    end
 end)
 
 -- Cheat to emulate catching a fish.

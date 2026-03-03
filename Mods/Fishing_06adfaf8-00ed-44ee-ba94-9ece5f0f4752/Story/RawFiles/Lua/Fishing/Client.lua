@@ -392,8 +392,15 @@ end)
 -- Replace fish template names & descriptions with TSKs.
 GameState.Events.ClientReady:Subscribe(function (_)
     for _,fish in pairs(Fishing.GetFishes()) do
-        local template = Ext.Template.GetTemplate(fish.TemplateID) ---@cast template ItemTemplate
-        template.DisplayName = fish.NameHandle
-        template.Description = fish.DescriptionHandle
+        for i=1,#fish.RootTemplates,1 do
+            local templateID = fish.RootTemplates[i]
+            local template = Ext.Template.GetTemplate(templateID) ---@cast template ItemTemplate
+            template.DisplayName = fish.NameHandle
+            template.Description = fish.DescriptionHandle
+
+            -- Create string key for stat ID (necessary for crafting UI result preview tooltips)
+            local statID = template.Stats
+            Ext.L10N.CreateTranslatedString(statID, fish.NameHandle)
+        end
     end
 end)
