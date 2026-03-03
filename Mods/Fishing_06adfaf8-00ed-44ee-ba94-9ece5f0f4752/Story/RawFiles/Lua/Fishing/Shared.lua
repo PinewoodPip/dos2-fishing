@@ -8,6 +8,7 @@ local Fishing = {
     _FishBehaviours = {}, ---@type table<Features.Fishing.Fish.BehaviourType, Features.Fishing.Fish.Behaviour>
     _RegionsByLevel = DefaultTable.Create({}), ---@type DataStructures_DefaultTable<string, Features.Fishing.Region[]>
     _FishesByLevel = DefaultTable.Create({}), ---@type table<string, set<string>> Maps level ID to fish IDs that can be found in that level.
+    _FishToRegions = DefaultTable.Create({}), ---@type table<string, set<string>> Maps fish ID to regions where it can be found.
     _RootTemplateToFish = {}, ---@type table<GUID.ItemTemplate, string>
     _RegionsByID = {}, ---@type table<string, Features.Fishing.Region>
     _CharactersFishing = Set.Create(), -- Not synchronized across clients!
@@ -353,6 +354,7 @@ end
 
 ---@class Features.Fishing.Region : I_Identifiable
 ---@field LevelID string
+---@field NameHandle TranslatedStringHandle
 ---@field Bounds Vector4 X, Y, width, height bounds of the area where fishing will be possible when near deepwater surfaces.
 ---@field Fish Features.Fishing.Region.FishEntry[]
 ---@field Priority integer? Defaults to 0.
@@ -392,6 +394,7 @@ function Fishing.RegisterRegion(data)
     Interfaces.Apply(data, "I_Identifiable")
 
     table.insert(Fishing._RegionsByLevel[data.LevelID], data)
+    Fishing._RegionsByID[data.ID] = data
 
     -- Validate fish IDs and cache their regions
     for _,fishEntry in ipairs(data.Fish) do
@@ -399,6 +402,7 @@ function Fishing.RegisterRegion(data)
             Fishing:__Error("RegisterRegion", "Unknown fish ID:", fishEntry.ID)
         end
         Fishing._FishesByLevel[data.LevelID][fishEntry.ID] = true
+        Fishing._FishToRegions[fishEntry.ID][data.ID] = true
     end
 end
 
@@ -408,6 +412,18 @@ end
 ---@return boolean
 function Fishing.IsFishAvailable(fishID, levelID)
     return Fishing._FishesByLevel[levelID][fishID]
+end
+
+---Returns the regions that a fish can be caught in.
+---@param fishID string
+---@return table<string, Features.Fishing.Region>
+function Fishing.GetFishRegions(fishID)
+    local regionIDs = Fishing._FishToRegions[fishID]
+    local regions = {} ---@type table<string, Features.Fishing.Region>
+    for regionID,_ in pairs(regionIDs) do
+        regions[regionID] = Fishing.GetRegion(regionID)
+    end
+    return regions
 end
 
 ---Registers a fish behaviour.

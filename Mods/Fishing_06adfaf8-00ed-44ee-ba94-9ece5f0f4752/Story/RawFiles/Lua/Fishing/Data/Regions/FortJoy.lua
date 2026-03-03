@@ -3,10 +3,18 @@ local V = Vector.Create
 
 local Fishing = Epip.GetFeature("Features.Fishing")
 
+---Utility method to register translated strings for a region.
+local T = function(tsk)
+    local tskEntry = Fishing:RegisterTranslatedString(tsk)
+    tskEntry.ContextDescription = "Fishing region name"
+    return tskEntry.Handle
+end
+
 ---@type Features.Fishing.Region[]
 local regions = {
     {
         ID = "FJ.StartingBeach",
+        NameHandle = "h5ad7c407g7364g4a4dg9ca4g07ee2b7d9e5e", -- "Fort Joy Beach"
         LevelID = "FJ_FortJoy_Main",
         Bounds = Vector.Create(128, 410, 216, 189),
         Fish = {
@@ -23,6 +31,7 @@ local regions = {
     },
     {
         ID = "FJ.PrisonerArea",
+        NameHandle = "h5905ab33g01d7g41f4g81a3ge0a71e0c3e71", -- "Fort Joy Ghetto"
         LevelID = "FJ_FortJoy_Main",
         Bounds = V(83, 257, 291, 52),
         Fish = {
@@ -43,6 +52,10 @@ local regions = {
     },
     {
         ID = "FJ.TurtleBeach",
+        NameHandle = T{
+            Handle = "h1e1ff28fgd6e3g4cd1ga1f4gbbd6a8cbdee5",
+            Text = "Fort Joy Turtle Beach",
+        },
         LevelID = "FJ_FortJoy_Main",
         Bounds = V(218, 416, 324, 341),
         Fish = {
@@ -67,6 +80,10 @@ local regions = {
     },
     {
         ID = "FJ.NorthCoast",
+        NameHandle = T{
+            Handle = "hbcd49682g59ffg4360gad84g80dbac535327",
+            Text = "Reaper's Eye North Coast",
+        },
         LevelID = "FJ_FortJoy_Main",
         Bounds = V(299, 341, 664, 220),
         Fish = {
@@ -91,6 +108,10 @@ local regions = {
     },
     {
         ID = "FJ.SouthCoast",
+        NameHandle = T{
+            Handle = "h9ce681a2g7903g4b2dg9dbag30d502fbffc5",
+            Text = "Reaper's Eye South Coast",
+        },
         LevelID = "FJ_FortJoy_Main",
         Bounds = V(303, 120, 591, 5),
         Fish = {
@@ -111,6 +132,7 @@ local regions = {
     },
     {
         ID = "FJ.AmadiaSanctuary",
+        NameHandle = "h37c1b298ge94ag4dd4gad32g7550e1c3ff80", -- "Amadia's Sanctuary"
         LevelID = "FJ_FortJoy_Main",
         Bounds = V(419, 41, 434, 12),
         Priority = 99,
@@ -135,6 +157,10 @@ local regions = {
     },
     {
         ID = "FJ.DragonBeach",
+        NameHandle = T{
+            Handle = "h986f9d16g0f55g4cdfg99c4gb315a2cb11c8",
+            Text = "Reaper's Eye Dragon Beach",
+        },
         LevelID = "FJ_FortJoy_Main",
         Bounds = V(533, 209, 608, 86),
         Fish = {
@@ -154,6 +180,10 @@ local regions = {
     },
     {
         ID = "FJ.FortDungeons",
+        NameHandle = T{
+            Handle = "h03918ca1gd68dg42feg8b77g83cd47baf6f7",
+            Text = "Fort Joy Dungeons",
+        },
         LevelID = "FJ_FortJoy_Main",
         Bounds = V(308, 597, 327, 567),
         Fish = {
@@ -185,6 +215,10 @@ local regions = {
     },
     {
         ID = "FJ.RadekaCave",
+        NameHandle = T{
+            Handle = "haf573039gb7dfg4b7cg87f2gadce781be86b",
+            Text = "Radeka's Cave",
+        },
         LevelID = "FJ_FortJoy_Main",
         Bounds = V(672, 668, 720, 581),
         FishingAreas = {
@@ -215,6 +249,10 @@ local regions = {
     },
     {
         ID = "FJ.FrogCave",
+        NameHandle = T{
+            Handle = "hb4f45e86gc7b3g4b48gad92g1d87b34e992b",
+            Text = "Fort Joy Frog Cave",
+        },
         LevelID = "FJ_FortJoy_Main",
         Bounds = V(474, 580, 550, 471),
         FishingAreas = {
@@ -248,7 +286,11 @@ local regions = {
         },
     },
     {
-        ID = "FJ.WithermoreCave",
+        ID = "FJ.WithermooreCave",
+        NameHandle = T{
+            Handle = "h46b7ca32gfcdbg456eg93ffga0cbc8c70abb",
+            Text = "Withermoore's Hideout",
+        },
         LevelID = "FJ_FortJoy_Main",
         Bounds = V(489, 670, 499, 630),
         FishingAreas = {
@@ -282,6 +324,7 @@ local regions = {
     },
     {
         ID = "FJ.Swamp",
+        NameHandle = "h4bec762bge675g4296g9277g18dc2b1b370f", -- "The Hollow Marshes"
         LevelID = "FJ_FortJoy_Main",
         Bounds = V(312, 237, 511, 130),
         FishingAreas = {
@@ -338,6 +381,10 @@ local regions = {
     },
     {
         ID = "FJ.FortBridge", -- The drawbridge, specifically.
+        NameHandle = T{
+            Handle = "hd37c6a61g2417g4310g80dbg4bc75ae29926",
+            Text = "Fort Joy Drawbridge",
+        },
         Priority = 99, -- Needs to be higher priority than swamp.
         LevelID = "FJ_FortJoy_Main",
         Bounds = V(320, 216, 340, 169),
@@ -366,6 +413,10 @@ local regions = {
     },
     {
         ID = "FJ.BrahmosDesert", -- No idea if this area is actually playable lmao, so don't put unique fish there
+        NameHandle = T{
+            Handle = "h69c87adfg0526g4156g8576gb1eb82c20827",
+            Text = "Brahmos's Dream",
+        },
         LevelID = "FJ_FortJoy_Main",
         Bounds = V(156, 505, 195, 486),
         RequiresWater = true,
@@ -382,6 +433,7 @@ local regions = {
     },
     {
         ID = "FJ.BraccusTower",
+        NameHandle = "h4118bd9ag21f5g4f69gba96ge85d123247a7", -- "Braccus Rex's Tower"
         LevelID = "FJ_FortJoy_Main",
         Bounds = V(578, 689, 638, 595),
         FishingAreas = {
@@ -417,6 +469,10 @@ local regions = {
     },
     {
         ID = "FJ.BraccusTower.Well",
+        NameHandle = T{
+            Handle = "h460592c3gafc1g42bbga416ga7f89e03e513",
+            Text = "Braccus Rex's Tower Well",
+        },
         LevelID = "FJ_FortJoy_Main",
         Priority = 99,
         Bounds = V(634, 650, 639, 645),
@@ -448,6 +504,10 @@ local regions = {
     },
     {
         ID = "FJ.TrompdoyCave",
+        NameHandle = T{
+            Handle = "h46951bebg94c9g489cgaf5cga49af70fd335",
+            Text = "Trompdoy's Cave",
+        },
         LevelID = "FJ_FortJoy_Main",
         Bounds = V(550, 564, 696, 462),
         FishingAreas = {
@@ -496,6 +556,10 @@ local regions = {
     },
     {
         ID = "FJ.LavaPortal", -- From the Braccus maze area
+        NameHandle = T{
+            Handle = "h23492074g54bcg4551g95ffg52c51c35709c",
+            Text = "Braccus's Labyrinth Lava Portal",
+        },
         LevelID = "FJ_FortJoy_Main",
         Bounds = V(405, 506, 446, 454),
         FishingAreas = {
@@ -529,6 +593,7 @@ local regions = {
     },
     {
         ID = "FJ.SourceFountain", -- Fountain underneath Gareth's fort
+        NameHandle = "h85912bb6g7e2bg40fcg9b85g0d2f2b274964", -- "Braccus's Armoury"
         LevelID = "FJ_FortJoy_Main",
         Bounds = V(328, 482, 338, 476),
         FishingAreas = {

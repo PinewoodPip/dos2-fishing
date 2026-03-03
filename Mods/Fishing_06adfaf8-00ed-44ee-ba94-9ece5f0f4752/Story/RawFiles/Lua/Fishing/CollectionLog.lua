@@ -24,6 +24,11 @@ local CollectionLog = {
            Text = "Displays all your caught fishes.",
            ContextDescription = [[Section tooltip]],
         },
+        Label_RegionsHint = {
+            Handle = "h82ff869cg637eg465eg8448g3636c792b4cb",
+            Text = "Found in %s.",
+            ContextDescription = [[Codex tooltip for the regions a fish can be found in; param is comma-separated list of regions]],
+        },
         Label_UncaughtFish = {
             Handle = "hf433845bg662bg4cdegbbd5g002d2abb4743",
             Text = "You haven't caught this fish yet.",
@@ -120,6 +125,33 @@ function CollectionLog.GetFishes()
     return fishes
 end
 
+---Returns the complete tooltip for a fish.
+---@param fishID string
+---@return TooltipLib_FormattedTooltip
+function CollectionLog.GetFishTooltip(fishID)
+    local fish = Fishing.GetFish(fishID)
+    local tooltip = table.shallowCopy(fish:GetTooltip())
+
+    -- Append region info to tooltip
+    local regions = Fishing.GetFishRegions(fishID)
+    local regionNames = {}
+    for _,region in pairs(regions) do
+        table.insert(regionNames, Text.GetTranslatedString(region.NameHandle))
+    end
+    table.sort(regionNames, function (a, b) return a < b end) -- Sort alphabetically
+    local regionsString = table.concat(regionNames, ", ")
+    local regionElement = {
+        Type = "SkillDescription",
+        Label = TSK.Label_RegionsHint:Format({
+            FontType = Text.FONTS.ITALIC,
+            FormatArgs = {regionsString},
+        }),
+    }
+    table.insert(tooltip.Elements, regionElement)
+
+    return tooltip
+end
+
 ---Returns the tooltip to show for fish the player party has not caught yet.
 ---@return TooltipLib_FormattedTooltip
 function CollectionLog.GetUncaughtFishTooltip()
@@ -187,7 +219,7 @@ function Section:__UpdateElement(_, slot, fish)
     local char = Client.GetCharacter()
     local wasCaught = Fishing.GetFishCatchCount(char, fish.ID) > 0
     local icon = wasCaught and template.Icon or "unknown"
-    local tooltip = wasCaught and fish:GetTooltip() or CollectionLog.GetUncaughtFishTooltip()
+    local tooltip = wasCaught and CollectionLog.GetFishTooltip(fish.ID) or CollectionLog.GetUncaughtFishTooltip()
 
     slot:SetIcon(icon)
     slot:SetCanDragDrop(false)

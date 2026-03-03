@@ -3,10 +3,21 @@ local V = Vector.Create
 
 local Fishing = Epip.GetFeature("Features.Fishing")
 
+---Utility method to register translated strings for a region.
+local T = function(tsk)
+    local tskEntry = Fishing:RegisterTranslatedString(tsk)
+    tskEntry.ContextDescription = "Fishing region name"
+    return tskEntry.Handle
+end
+
 ---@type Features.Fishing.Region[]
 local regions = {
     {
         ID = "RC.StartingBeach",
+        NameHandle = T{
+            Handle = "hc494529bg98feg4b23g9846g56b96a1a12cd",
+            Text = "Driftwood Dunes",
+        },
         LevelID = "RC_Main",
         Bounds = V(387, 190, 516, -83),
         FishingAreas = {
@@ -48,6 +59,10 @@ local regions = {
     },
     {
         ID = "RC.RykerMansion.Underground",
+        NameHandle = T{
+            Handle = "h44e46be5g46d0g4537gabc7gc837406aafc8",
+            Text = "Ryker's Mansion Underground",
+        },
         LevelID = "RC_Main",
         Bounds = V(86, 655, 139, 593),
         FishingAreas = {
@@ -82,6 +97,7 @@ local regions = {
     },
     {
         ID = "RC.Driftwood",
+        NameHandle = "h8df27bc1g92d0g491fg9314g1e8d8ada8042", -- "Driftwood"
         LevelID = "RC_Main",
         Priority = 99, -- Needs to be higher than starting beach.
         Bounds = V(238, 194, 410, 29),
@@ -131,6 +147,10 @@ local regions = {
     },
     {
         ID = "RC.Driftwood.FishFactory",
+        NameHandle = T{
+            Handle = "hef3823eeg0142g4678gb932g992e4ae1ecf3",
+            Text = "Diftwood Fish Factory",
+        },
         LevelID = "RC_Main",
         Priority = 99, -- Needs to be higher than starting beach.
         Bounds = V(196, 582, 222, 556),
@@ -156,6 +176,7 @@ local regions = {
     },
     {
         ID = "RC.Driftwood.Arena",
+        NameHandle = "h933be1fag13f4g4017g9739gffd2a4c4c80d", -- "Driftwood Arena"
         LevelID = "RC_Main",
         Bounds = V(390, 881, 448, 717), -- Most of the usable area is the water near the drudanae farm.
         FishingAreas = {
@@ -188,6 +209,10 @@ local regions = {
     },
     {
         ID = "RC.SouthWest",
+        NameHandle = T{
+            Handle = "h28abfc31g3773g4a4cga0b4g9fa1f5e76e41",
+            Text = "Reaper's Coast Southwest",
+        },
         LevelID = "RC_Main",
         Bounds = V(42, 210, 241, 29),
         FishingAreas = {},
@@ -232,6 +257,7 @@ local regions = {
     },
     {
         ID = "RC.WreckersCave",
+        NameHandle = "he7b23cc3geeebg4713gb40bgdb26cb686b96", -- "Wrecker's Cave"
         LevelID = "RC_Main",
         Bounds = V(529, 701, 761, 521),
         FishingAreas = {
@@ -338,6 +364,7 @@ local regions = {
     },
     {
         ID = "RC.Cloisterwood",
+        NameHandle = "h95a18a2bgfa1ag412fgbd74g5342459c92a2", -- "Cloisterwood"
         LevelID = "RC_Main",
         Bounds = V(105, 350, 336, 180),
         FishingAreas = {
@@ -388,6 +415,10 @@ local regions = {
     },
     {
         ID = "RC.Cloisterwood.ChurchPool",
+        NameHandle = T{
+            Handle = "hb1073514ge681g45e9ga312g67adb433cea0",
+            Text = "Cloisterwood Church",
+        },
         LevelID = "RC_Main",
         Priority = 99, -- Needs to be higher than the main cloisterwood region.
         Bounds = V(194, 262, 203, 253),
@@ -421,6 +452,7 @@ local regions = {
     },
     {
         ID = "RC.BloodmoonIsland",
+        NameHandle = "hdfbbb1bfg7ec9g4c90g8457gd88a12aee82d", -- "Bloodmoon Island"
         LevelID = "RC_Main",
         Bounds = V(147, 489, 440, 340),
         FishingAreas = {
@@ -475,6 +507,10 @@ local regions = {
     },
     {
         ID = "RC.DriftwoodFields",
+        NameHandle = T{
+            Handle = "he70d8080g3585g41c3g940dg6f127377afce",
+            Text = "Driftwood Fields",
+        },
         LevelID = "RC_Main",
         Priority = 98, -- Needs to be higher than Bloodmoon Island
         Bounds = V(362, 360, 532, 192),
@@ -524,6 +560,7 @@ local regions = {
     },
     {
         ID = "RC.Sawmill",
+        NameHandle = "h247d6aa0g1798g4d5eg9289g395cc2907803", -- "Abandoned Livewood Sawmill"
         LevelID = "RC_Main",
         Bounds = V(431, 500, 569, 384),
         FishingAreas = {
@@ -579,6 +616,7 @@ local regions = {
     },
     {
         ID = "RC.ParadiseDowns",
+        NameHandle = "h3138fa95gde9fg4d33g9233gdaa5a9a594fe", -- "Paradise Downs"
         LevelID = "RC_Main",
         Bounds = V(561, 461, 750, 214),
         FishingAreas = {
@@ -648,6 +686,10 @@ local regions = {
     },
     {
         ID = "RC.Blackpits",
+        NameHandle = T{
+            Handle = "h2d2c6579gdfcfg4c47gb506gc063aa691808",
+            Text = "Blackpits Coast",
+        },
         LevelID = "RC_Main",
         Bounds = V(589, 197, 741, 27),
         FishingAreas = {},
@@ -684,6 +726,10 @@ local regions = {
     },
     {
         ID = "RC.Blackpits.Underground",
+        NameHandle = T{
+            Handle = "hd07b3191g6013g4c52g8066ge4b8164da730",
+            Text = "Blackpits Underground",
+        },
         LevelID = "RC_Main",
         Bounds = V(278, 680, 491, 541),
         FishingAreas = {
@@ -735,6 +781,10 @@ local regions = {
     },
     {
         ID = "RC.WreckersCave.MordusHideout",
+        NameHandle = T{
+            Handle = "hf52d37cbgb834g450cgbc15gd8e0ad1ceaf6",
+            Text = "Mordus's Hideout",
+        },
         LevelID = "RC_Main",
         Bounds = V(81, 745, 125, 702),
         FishingAreas = {},
@@ -767,6 +817,10 @@ local regions = {
     },
     {
         ID = "RC.MeistrBasement",
+        NameHandle = T{
+            Handle = "hbe8aeadfg590cg4c9dg8849g33aae2dd688d",
+            Text = "Meistr's Basement",
+        },
         LevelID = "RC_Main",
         Bounds = V(143, 700, 149, 693),
         FishingAreas = {
