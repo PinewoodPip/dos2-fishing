@@ -352,11 +352,13 @@ end)
 Tooltip.Hooks.RenderItemTooltip:Subscribe(function (ev)
     local fish = Fishing.GetFishByTemplate(ev.Item.RootTemplate.Id)
     if fish then
+        local Runes = Epip.GetFeature("Features.Fishing.Runes") -- TODO it's dirty that we have to fetch the feature here
         local tooltip = ev.Tooltip
+        local runeTier = Runes.GetFishRuneTier(ev.Item)
 
         -- Set name (with rarity color)
         local itemNameElement = tooltip:GetFirstElement("ItemName")
-        itemNameElement.Label = fish:GetNameTooltip().Label
+        itemNameElement.Label = fish:GetNameTooltip(runeTier).Label
 
         -- Set description
         local descriptionElement = tooltip:GetFirstElement("ItemDescription")
@@ -395,12 +397,23 @@ GameState.Events.ClientReady:Subscribe(function (_)
         for i=1,#fish.RootTemplates,1 do
             local templateID = fish.RootTemplates[i]
             local template = Ext.Template.GetTemplate(templateID) ---@cast template ItemTemplate
-            template.DisplayName = fish.NameHandle
-            template.Description = fish.DescriptionHandle
-
-            -- Create string key for stat ID (necessary for crafting UI result preview tooltips)
             local statID = template.Stats
-            Ext.L10N.CreateTranslatedString(statID, fish.NameHandle)
+
+            local tierPrefix = Fishing.RUNE_TIER_PREFIXES[i]
+            if tierPrefix then
+                local prefixedName = tierPrefix:Format({
+                    FormatArgs = {fish:GetName()},
+                })
+                -- Use raw strings, no need to register actual TSKs for these
+                template.DisplayName = prefixedName
+                -- Create string key for stat ID (necessary for crafting UI result preview tooltips)
+                Ext.L10N.CreateTranslatedString(statID, prefixedName)
+            else -- Use base name for tier 1 and fallback.
+                template.DisplayName = fish.NameHandle
+                Ext.L10N.CreateTranslatedString(statID, fish.NameHandle)
+            end
+
+            template.Description = fish.DescriptionHandle
         end
     end
 end)

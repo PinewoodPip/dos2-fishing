@@ -50,6 +50,16 @@ local Fishing = {
             Handle = "h509d1edagfcc5g4cdcga271g6358aa96bcea",
             Text = "Fish",
         },
+        Label_RuneTierPrefix_Tier2 = {
+            Handle = "h18b85d49gd618g4ef9gb43egc2413999e187",
+            Text = "Greater %s",
+            ContextDescription = [[Name for tier 2 fish runes; param is fish name (ex. "Greater Sardine")]],
+        },
+        Label_RuneTierPrefix_Tier3 = {
+            Handle = "h189720b0g8766g43aegac05g52656ff2c260",
+            Text = "Descended %s",
+            ContextDescription = [[Name for tier 3 fish runes; param is fish name (ex. "Descended Sardine")]],
+        },
         Label_FishRarity_Common = {
             Handle = "h66cdd0b9g1b6dg413egac30g68b6fcdfe1c4",
             Text = "Common Fish",
@@ -204,6 +214,13 @@ Fishing.RARITY_TO_LABEL = {
     -- There are currently no divine/unique fish.
 }
 
+---Maps fish rune tier to their name prefix TSK.
+---@type table<integer, TextLib_TranslatedString?>
+Fishing.RUNE_TIER_PREFIXES = {
+    [2] = TSK.Label_RuneTierPrefix_Tier2,
+    [3] = TSK.Label_RuneTierPrefix_Tier3,
+}
+
 ---------------------------------------------
 -- EVENTS
 ---------------------------------------------
@@ -308,12 +325,18 @@ function _Fish:GetTooltip()
 end
 
 ---Returns the ItemName tooltip element for the fish.
+---@param runeTier integer? Defaults to 1.
 ---@return TooltipLib_Element
-function _Fish:GetNameTooltip()
+function _Fish:GetNameTooltip(runeTier)
+    local tierPrefix = Fishing.RUNE_TIER_PREFIXES[runeTier]
+    local name = self:GetName()
+    if tierPrefix then
+        name = tierPrefix:Format(name)
+    end
     local rarityColor = Color.ITEM_RARITIES[self.Rarity] or Color.WHITE
     return {
         Type = "ItemName",
-        Label = Text.Format(self:GetName(), {Color = rarityColor}),
+        Label = Text.Format(name, {Color = rarityColor}),
     }
 end
 
