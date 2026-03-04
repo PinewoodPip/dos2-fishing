@@ -124,14 +124,15 @@ end
 function UI.AddProgress(progress)
     local state = UI.GetGameState()
     local requiredProgress = UI.GetRequiredProgress()
+    local newProgress = state.Progress + progress
 
-    state.Progress = math.clamp(state.Progress + progress, 0, requiredProgress)
+    state.Progress = math.clamp(newProgress, 0, requiredProgress)
 
     UI.UpdateProgressBar()
 
-    if state.Progress >= requiredProgress then
+    if newProgress >= requiredProgress then -- Uses the pre-clamped value to avoid floating point issues.
         UI.Cleanup("Success")
-    elseif state.Progress <= 0 then
+    elseif newProgress <= 0 then
         UI.Cleanup("Failure")
     end
 end
