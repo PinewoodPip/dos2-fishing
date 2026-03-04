@@ -29,6 +29,11 @@ local CollectionLog = {
             Text = "Found in %s.",
             ContextDescription = [[Codex tooltip for the regions a fish can be found in; param is comma-separated list of regions]],
         },
+        Label_UnknownRegions = {
+            Handle = "h7f0018a1g7b0dg4312g93c7gb8cb445331cc",
+            Text = "Habitats unknown.<br>Discover more fishing spots in Rivellon for a chance to encounter this fish.",
+            ContextDescription = [[Codex tooltip for fish in regions that have not been found by the party]],
+        },
         Label_UncaughtFish = {
             Handle = "hf433845bg662bg4cdegbbd5g002d2abb4743",
             Text = "You haven't caught this fish yet.",
@@ -132,22 +137,38 @@ function CollectionLog.GetFishTooltip(fishID)
     local fish = Fishing.GetFish(fishID)
     local tooltip = table.shallowCopy(fish:GetTooltip())
 
-    -- Append region info to tooltip
+    -- Get discovered regions with the fish
     local regions = Fishing.GetFishRegions(fishID)
     local regionNames = {}
+    local anyRegionDiscovered = false
     for _,region in pairs(regions) do
-        table.insert(regionNames, Text.GetTranslatedString(region.NameHandle))
+        local isDiscovered = Fishing.IsRegionDiscovered(region.ID)
+        local regionName = isDiscovered and Text.GetTranslatedString(region.NameHandle) or "???" -- Only show known regions, but tease additional ones.
+        table.insert(regionNames, regionName)
+        anyRegionDiscovered = anyRegionDiscovered or isDiscovered
     end
-    table.sort(regionNames, function (a, b) return a < b end) -- Sort alphabetically
-    local regionsString = table.concat(regionNames, ", ")
-    local regionElement = {
-        Type = "SkillDescription",
-        Label = TSK.Label_RegionsHint:Format({
-            FontType = Text.FONTS.ITALIC,
-            FormatArgs = {regionsString},
-        }),
-    }
-    table.insert(tooltip.Elements, regionElement)
+
+    -- Add regions tooltip
+    if anyRegionDiscovered then
+        table.sort(regionNames, function (a, b) return a < b end) -- Sort alphabetically
+        local regionsString = table.concat(regionNames, ", ")
+        local regionElement = {
+            Type = "SkillDescription",
+            Label = TSK.Label_RegionsHint:Format({
+                FontType = Text.FONTS.ITALIC,
+                FormatArgs = {regionsString},
+            }),
+        }
+        table.insert(tooltip.Elements, regionElement)
+    else -- Habitats completely unknown
+        local regionElement = {
+            Type = "SkillDescription",
+            Label = TSK.Label_UnknownRegions:Format({
+                FontType = Text.FONTS.ITALIC,
+            }),
+        }
+        table.insert(tooltip.Elements, regionElement)
+    end
 
     return tooltip
 end

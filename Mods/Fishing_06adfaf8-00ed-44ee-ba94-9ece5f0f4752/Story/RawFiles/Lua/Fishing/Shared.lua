@@ -17,6 +17,7 @@ local Fishing = {
     NETMSG_STOPPED_FISHING = "Features.Fishing.NetMsgs.CharacterStoppedFishing",
 
     MODVAR_UNIQUE_FISH_CAUGHT = "PlaythroughUniqueFishCaught",
+    MODVAR_REGIONS_DISCOVERED = "RegionsDiscovered",
     USERVAR_FISH_CAUGHT = "CharacterFishCaught",
 
     FISHING_ROD_TEMPLATES = Set.Create({
@@ -197,6 +198,10 @@ Epip.RegisterFeature("Fishing", Fishing)
 local TSK = Fishing.TranslatedStrings
 
 Fishing:RegisterModVariable(Mod.GUIDS.FISHING, Fishing.MODVAR_UNIQUE_FISH_CAUGHT, {
+    Persistent = true,
+    DefaultValue = {},
+})
+Fishing:RegisterModVariable(Mod.GUIDS.FISHING, Fishing.MODVAR_REGIONS_DISCOVERED, {
     Persistent = true,
     DefaultValue = {},
 })
@@ -512,6 +517,22 @@ function Fishing.MarkFishTypeAsCaught(fishID)
     local uniqueFishCaught = Fishing:GetModVariable(Mod.GUIDS.FISHING, Fishing.MODVAR_UNIQUE_FISH_CAUGHT)
     uniqueFishCaught[fishID] = true
     Fishing:SetModVariable(Mod.GUIDS.FISHING, Fishing.MODVAR_UNIQUE_FISH_CAUGHT, uniqueFishCaught)
+end
+
+---Returns whether a fishing region has been used at least once.
+---@param regionID string
+---@return boolean
+function Fishing.IsRegionDiscovered(regionID)
+    local discoveredRegions = Fishing:GetModVariable(Mod.GUIDS.FISHING, Fishing.MODVAR_REGIONS_DISCOVERED)
+    return discoveredRegions[regionID]
+end
+
+---Marks a fishing region as being known to the party.
+---@param regionID string
+function Fishing.MarkRegionAsDiscovered(regionID)
+    local discoveredRegions = Fishing:GetModVariable(Mod.GUIDS.FISHING, Fishing.MODVAR_REGIONS_DISCOVERED)
+    discoveredRegions[regionID] = true
+    Fishing:SetModVariable(Mod.GUIDS.FISHING, Fishing.MODVAR_REGIONS_DISCOVERED, discoveredRegions)
 end
 
 ---Returns the fishermancy ability score of char.

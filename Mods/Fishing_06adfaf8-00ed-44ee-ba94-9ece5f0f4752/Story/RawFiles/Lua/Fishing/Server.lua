@@ -34,6 +34,8 @@ Fishing.Events.CharacterStartedFishing:Subscribe(function (ev)
     Osi.ItemDestroy(dummyItemGUID)
 
     Fishing.PlayAnimation(char) -- Should be done after facing the target, as characters cannot turn during an animation.
+
+    Fishing.MarkRegionAsDiscovered(ev.Region.ID)
 end)
 
 -- Loop animation if the character is still fishing.
