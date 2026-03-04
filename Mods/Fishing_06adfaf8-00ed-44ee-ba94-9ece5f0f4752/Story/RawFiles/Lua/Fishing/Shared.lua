@@ -1,6 +1,7 @@
 
 local DefaultTable = DataStructures.Get("DataStructures_DefaultTable")
 local Set = DataStructures.Get("DataStructures_Set")
+local V = Vector.Create
 
 ---@class Features.Fishing : Feature
 local Fishing = {
@@ -33,6 +34,8 @@ local Fishing = {
     ABILITY_SCHOOL_FISH_PER_LEVEL = 15, -- Amount of fish that has to be caught per level in the Fishermancy ability.
     ABILITY_SCHOOL_FISH_PER_LEVEL_GROWTH = 5, -- Extra amount of fish that need to be caught per level in the Fishermancy ability, for each level after the first.
     ABILITY_SCHOOL_UNIQUE_FISH_PER_LEVEL = 5, -- Amount of unique fish that has to be caught per level in the Fishermancy ability.
+
+    TARGET_POS_EFFECT_OFFSET = V(0, 1, 0),
 
     USE_LEGACY_EVENTS = false,
     USE_LEGACY_HOOKS = false,
@@ -538,6 +541,14 @@ function Fishing.AddFishCatchCount(char, fishID, count)
     local fishCounts = currentCount or {}
     fishCounts[fishID] = (fishCounts[fishID] or 0) + count
     Fishing:SetUserVariable(char, Fishing.USERVAR_FISH_CAUGHT, fishCounts)
+end
+
+---Increments the encounter counter for a fish.
+---@param fishID string
+function Fishing.AddFishEncounter(fishID)
+    local encounters = Fishing.GetTotalFishEncounters()
+    encounters[fishID] = (encounters[fishID] or 0) + 1
+    Fishing:SetModVariable(Mod.GUIDS.FISHING, Fishing.MODVAR_FISHES_ENCOUNTERED, encounters)
 end
 
 ---Returns the fish types that were caught in this playthrough.

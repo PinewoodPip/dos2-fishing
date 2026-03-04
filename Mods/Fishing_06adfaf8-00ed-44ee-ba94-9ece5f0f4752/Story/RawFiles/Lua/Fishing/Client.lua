@@ -17,6 +17,9 @@ Fishing.FISH_BITE_DURATION = 0.4 -- Duration the player has to react to a bite b
 Fishing.STARTING_PROGRESS = 0.45 -- As fraction of required progress.
 Fishing.BASE_PROGRESS_REQUIRED = 1
 Fishing.PROGRESS_DRAIN = 0.1
+Fishing.BITE_ALERT_EFFECT = "PIP_FX_ExclamationMark"
+Fishing.BITE_ALERT_SOUND = "UI_Handling_Lockpick_Stop"
+Fishing.SPLASH_EFFECT_INTERVAL = 1 -- Interval between small splash effects during the waiting-for-bite phase, in seconds.
 
 Fishing._MINIGAME_TIMER_INFIXES = {"BiteNotification", "BiteTimeout"}
 
@@ -43,6 +46,7 @@ Fishing.Hooks.CanStartFishing = Fishing:AddSubscribableHook("CanStartFishing") -
 ---@class Features.Fishing.GameState
 ---@field Type Features.Fishing.GameStateType
 ---@field CharacterHandle CharacterHandle
+---@field TargetPosition Vector3
 
 ---@class Features.Fishing.GameStates.WaitingForBite : Features.Fishing.GameState
 ---@field Type "WaitingForBite"
@@ -86,6 +90,7 @@ end
 ---@param char Character
 function Fishing.Start(char)
     local region = Fishing.GetRegionAt(char.WorldPos)
+    local charHandle = char.Handle
 
     -- Cannot fish in areas with no fishing region.
     if not region then
@@ -102,16 +107,36 @@ function Fishing.Start(char)
                 Type = "WaitingForBite",
                 CharacterHandle = char.Handle,
                 BiteTime = Ext.Utils.MonotonicTime() + biteTime * 1000,
+                TargetPosition = V(Pointer.GetWalkablePosition()),
             }
 
             if Fishing:IsDebug() then
                 NotificationUI.ShowNotification("Starting fishing in " .. region.ID)
             end
 
+            -- Periodically play small ripples/splashes until the real bite
+            local splashTimer = Timer.Start("Fishing.Splash." .. char.MyGuid, Fishing.SPLASH_EFFECT_INTERVAL, function (ev)
+                char = Character.Get(charHandle)
+                local state = Fishing.GetState(char)
+                if state and state.Type == "WaitingForBite" then
+                    local targetPos = state.TargetPosition + Fishing.TARGET_POS_EFFECT_OFFSET
+                    Fishing._PlayEffect(targetPos, "PIP_FX_SmallSplash", 2.5)
+                else
+                    ev.Timer:Cancel()
+                end
+            end)
+            splashTimer:SetRepeatCount(-1)
+
             -- Show timing hint when the fish bites
-            local charHandle = char.Handle
             Timer.Start("Fishing.BiteNotification." .. char.MyGuid, biteTime, function (_)
-                NotificationUI.ShowNotification(TSK.Notification_Biting:GetString())
+                char = Character.Get(charHandle)
+                NotificationUI.ShowNotification(TSK.Notification_Biting:GetString(), nil, nil, Fishing.BITE_ALERT_SOUND)
+
+                -- Play alert effect
+                local effectPos = V(char.WorldPos) + V(0, char.Height, 0)
+                Fishing._PlayEffect(effectPos, Fishing.BITE_ALERT_EFFECT)
+
+                splashTimer:Cancel()
             end)
 
             -- Fail the minigame if the player missed the bite
@@ -167,6 +192,7 @@ function Fishing.ReelIn(char)
             CharacterHandle = char.Handle,
             CurrentFish = fish,
             Progress = Fishing.STARTING_PROGRESS * fish.Endurance,
+            TargetPosition = state.TargetPosition,
         }
         Net.PostToServer(Fishing.NETMSG_ENCOUNTERED_FISH, {
             CharacterNetID = char.NetID,
@@ -241,6 +267,28 @@ end
 ---@return boolean
 function Fishing.IsFishingRod(item)
     return Fishing.FISHING_ROD_TEMPLATES:Contains(item.RootTemplate.Id)
+end
+
+---Plays a single-loop effect at pos.
+---@param pos vec3
+---@param effect string
+---@param scale number? Defaults to 1.
+---@param duration number? Time after which the handler will be disposed. Defaults to 2.
+function Fishing._PlayEffect(pos, effect, scale, duration)
+    scale = scale or 1
+    duration = duration or 2
+    local effectHandler = Ext.Visual.Create(pos)
+    local effectHandlerHandle = effectHandler.Handle
+    effectHandler:ParseFromStats(effect)
+
+    -- Rescale the effect
+    local effectHandle = Ext.Visual.Get(effectHandlerHandle).Effects[1]
+    Ext.Entity.GetEffect(effectHandle).WorldTransform.Scale = {scale, scale, scale}
+
+    -- Dispose after a delay
+    Timer.Start(duration, function (_)
+        Ext.Visual.Get(effectHandlerHandle):Delete()
+    end)
 end
 
 ---------------------------------------------

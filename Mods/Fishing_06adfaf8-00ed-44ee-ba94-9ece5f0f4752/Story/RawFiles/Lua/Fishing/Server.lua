@@ -1,12 +1,18 @@
 
+local V = Vector.Create
+
 ---@class Features.Fishing
 local Fishing = Epip.GetFeature("Features.Fishing")
 local TSK = Fishing.TranslatedStrings
+
+---@type table<CharacterHandle, {TargetPosition: Vector3, ReelingIn: boolean}>
+Fishing._CharacterStates = {}
 
 Fishing.MINIGAME_ANIMATION = "skill_prepare_weapon_01_loop"
 Fishing.ANIMATION_EVENT = "EPIP_FISHING_LOOP"
 Fishing.SUCCESS_ANIMATION = "use_loot"
 Fishing.FAILURE_ANIMATION = "emotion_sad"
+Fishing.FISH_SPLASH_EFFECT = "PIP_FX_LargeSplash"
 
 ---------------------------------------------
 -- METHODS
@@ -44,7 +50,11 @@ end
 ---@see Features.Fishing.ANIMATION_EVENT
 ---@param char EsvCharacter
 function Fishing.PlayAnimation(char)
+    local state = Fishing._CharacterStates[char.Handle]
     Osiris.PlayAnimation(char, Fishing.MINIGAME_ANIMATION, Fishing.ANIMATION_EVENT)
+    if state.ReelingIn then
+        Osi.PlayScaledEffectAtPosition("PIP_FX_ContinuousSplashes", 4, table.unpack(state.TargetPosition + Fishing.TARGET_POS_EFFECT_OFFSET))
+    end
 end
 
 ---------------------------------------------
@@ -80,6 +90,7 @@ end)
 
 -- Untag characters when they finish fishing.
 Fishing.Events.CharacterStoppedFishing:Subscribe(function (ev)
+    local state = Fishing._CharacterStates[ev.Character.Handle]
     local char = ev.Character
 
     -- Stop previous animation
@@ -91,6 +102,7 @@ Fishing.Events.CharacterStoppedFishing:Subscribe(function (ev)
     if ev.Reason == "Success" then
         local caughtFish = ev.CaughtFish
         Fishing.CatchFish(char, caughtFish)
+        Osi.PlayScaledEffectAtPosition(Fishing.FISH_SPLASH_EFFECT, 3, table.unpack(state.TargetPosition + Fishing.TARGET_POS_EFFECT_OFFSET))
     elseif ev.Reason == "Failure" then
         Osiris.PlayAnimation(char, Fishing.FAILURE_ANIMATION, "")
     end
@@ -99,8 +111,13 @@ end)
 -- Listen for clients starting to fish and forward the event.
 Net.RegisterListener(Fishing.NETMSG_STARTED_FISHING, function (payload)
     local region = Fishing.GetRegion(payload.RegionID)
+    local char = payload:GetCharacter()
+    Fishing._CharacterStates[char.Handle] = {
+        TargetPosition = V(payload.TargetPosition),
+        ReelingIn = false,
+    }
     Fishing.Events.CharacterStartedFishing:Throw({
-        Character = payload:GetCharacter(),
+        Character = char,
         Region = region,
         TargetPosition = payload.TargetPosition,
     })
@@ -108,16 +125,22 @@ end)
 
 -- Listen for clients exiting the minigame and forward the event.
 Net.RegisterListener(Fishing.NETMSG_STOPPED_FISHING, function (payload)
+    local char = payload:GetCharacter()
     Fishing.Events.CharacterStoppedFishing:Throw({
-        Character = payload:GetCharacter(),
+        Character = char,
         Reason = payload.Reason,
         CaughtFish = payload.CaughtFishID and Fishing.GetFish(payload.CaughtFishID) or nil,
     })
+    Fishing._CharacterStates[char.Handle] = nil
 end)
 
 -- Listen for clients encountering fishes.
 Net.RegisterListener(Fishing.NETMSG_ENCOUNTERED_FISH, function (payload)
     Fishing.AddFishEncounter(payload.FishID)
+    local char = payload:GetCharacter()
+    local state = Fishing._CharacterStates[char.Handle]
+    state.ReelingIn = true
+    Osi.PlayEffectAtPosition(Fishing.FISH_SPLASH_EFFECT, table.unpack(state.TargetPosition + Fishing.TARGET_POS_EFFECT_OFFSET))
 end)
 
 -- Cheat to add all fish items.
