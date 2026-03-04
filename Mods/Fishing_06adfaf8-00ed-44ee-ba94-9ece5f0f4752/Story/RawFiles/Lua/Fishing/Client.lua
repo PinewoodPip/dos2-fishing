@@ -7,7 +7,6 @@ local V = Vector.Create
 ---@class Features.Fishing
 local Fishing = Epip.GetFeature("Features.Fishing")
 local TSK = Fishing.TranslatedStrings
-Fishing.OPEN_LOG_KEYBIND = "EpipEncounters_Fishing_OpenCollectionLog"
 Fishing.FISHING_ROD_RARITY_COLOR = Color.LARIAN.BLUE
 
 -- Bite phase tuning
@@ -252,13 +251,13 @@ Fishing.Events.CharacterStoppedFishing:Subscribe(function (ev)
 
         -- Show a hint on how to open the collection log the first time you catch each type of fish.
         if Fishing.GetFishCatchCount(char, ev.CaughtFish:GetID()) == 1 then
-            local keybinds = Client.Input.GetActionBindings(Fishing.OPEN_LOG_KEYBIND)
+            local CollectionLog = Epip.GetFeature("Features.Fishing.Codex.CollectionLog")
+            local keybinds = Input.GetActionBindings(CollectionLog.InputActions.OpenCollectionLog.ID)
             local keybind = keybinds[1]
-
             if keybind then
                 subTitle = Text.Format(Fishing.TSK["Toast_Success_Subtitle"], {
                     FormatArgs = {
-                        Client.Input.StringifyBinding(keybind, true)
+                        Input.StringifyBinding(keybind, true)
                     }
                 })
             end
