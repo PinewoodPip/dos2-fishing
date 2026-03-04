@@ -87,6 +87,11 @@ local Fishing = {
             Text = "Legendary Fish",
             ContextDescription = [[Rarity tooltip for fishes]],
         },
+        Notification_RegionDiscovered = {
+            Handle = "h9b68207cg7fb6g4860g89d4g8b04d1bd289f",
+            Text = "Fishing spot discovered: %s",
+            ContextDescription = [[Notification when fishing in a new region; param is region name]],
+        },
         Notification_Minigame_Success = {
             Handle = "h35cacdc8g0b2ag46f4gb003g3122d32bfecc",
             Text = "Got it!",

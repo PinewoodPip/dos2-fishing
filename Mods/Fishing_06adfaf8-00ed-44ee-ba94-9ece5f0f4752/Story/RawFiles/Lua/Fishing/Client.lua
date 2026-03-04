@@ -124,6 +124,12 @@ function Fishing.Start(char)
                 end
             end)
 
+            -- Show feedback for discovering new regions
+            if not Fishing.IsRegionDiscovered(region.ID) then
+                local regionName = Text.GetTranslatedString(region.NameHandle)
+                NotificationUI.ShowIconNotification(TSK.Notification_RegionDiscovered:Format(regionName), "Item_HAR_FishingRod_ABC")
+            end
+
             -- Throw events
             local targetPos = Pointer.GetWalkablePosition()
             Fishing.Events.CharacterStartedFishing:Throw({
