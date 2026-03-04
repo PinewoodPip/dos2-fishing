@@ -168,6 +168,10 @@ function Fishing.ReelIn(char)
             CurrentFish = fish,
             Progress = Fishing.STARTING_PROGRESS * fish.Endurance,
         }
+        Net.PostToServer(Fishing.NETMSG_ENCOUNTERED_FISH, {
+            CharacterNetID = char.NetID,
+            FishID = fish.ID,
+        })
         Fishing.UI.Start(char) -- TODO extract in case someone wants to replace the minigame entirely
     else
         Fishing.Stop(char, "ReeledInTooEarly")

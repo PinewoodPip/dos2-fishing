@@ -6,23 +6,36 @@
 local Generic = Client.UI.Generic
 local Codex = Epip.GetFeature("Feature_Codex")
 local GridSectionClass = Codex:GetClass("Features.Codex.Sections.Grid")
+local TextPrefab = Generic.GetPrefab("GenericUI_Prefab_Text")
 local HotbarSlot = Generic.GetPrefab("GenericUI_Prefab_HotbarSlot")
+local LabelPrefab = Generic.GetPrefab("GenericUI.Prefabs.FormLabel")
 local Icons = Epip.GetFeature("Feature_GenericUITextures").ICONS
 local CommonStrings = Text.CommonStrings
 local Fishing = Epip.GetFeature("Features.Fishing")
+local V = Vector.Create
 
 ---@class Features.Fishing.CollectionLog : Feature
 local CollectionLog = {
     TranslatedStrings = {
         Section_Name = {
             Handle = "hcdbc8107gbb79g4850gba76g447a5d916989",
-            Text = "Fish",
+            Text = "Fishing",
             ContextDescription = [[Section name]],
         },
         Section_Description = {
            Handle = "hd28bfe3cg4d84g4384gb5f9ge7be4a6e3a8b",
            Text = "Displays all your caught fishes.",
            ContextDescription = [[Section tooltip]],
+        },
+        Label_Stats = {
+            Handle = "he1ab927fg5d1dg42bcg89f7g2a77aa09ecc0",
+            Text = "Stats",
+            ContextDescription = [[Header in codex section]],
+        },
+        Label_CollectionLog = {
+            Handle = "h682c031agb5cfg451bg9c23g34018d305320",
+            Text = "Collection Log",
+            ContextDescription = [[Header in codex section]],
         },
         Label_RegionsHint = {
             Handle = "h82ff869cg637eg465eg8448g3636c792b4cb",
@@ -39,6 +52,26 @@ local CollectionLog = {
             Text = "You haven't caught this fish yet.",
             ContextDescription = "Tooltip for fish not registered in collection log",
             LocalKey = "CollectionLog_UncaughtFish",
+        },
+        Label_Stat_FishDiscovered = {
+            Handle = "he154277cg9200g43d2g9368g6cf4a44473bd",
+            Text = "Fishes discovered:",
+            ContextDescription = [[Stat label]],
+        },
+        Label_Stat_TotalCatches = {
+            Handle = "h97de6b7bg20c5g4c54g9019g40f729b5a7b3",
+            Text = "Total fish caught:",
+            ContextDescription = [[Stat label]],
+        },
+        Label_Stat_TotalEncounters = {
+            Handle = "he7dbe78dgbb53g4214gab61gd3610cfd37fc",
+            Text = "Total fish encountered:",
+            ContextDescription = [[Stat label]],
+        },
+        Label_Stat_LossRate = {
+            Handle = "h3e09daedg0a0cg470cgb17dgd60d6c3ee724",
+            Text = "Lossrate:",
+            ContextDescription = [[Stat label]],
         },
         Setting_ActFilter_Name = {
             Handle = "hc6911e5fgd5c6g4d88g9e16gca4953e492c5",
@@ -211,16 +244,84 @@ local Section = {
 Codex:RegisterClass("Features.Fishing.CollectionLog.CodexSection", Section, {"Features.Codex.Sections.Grid"})
 Codex.RegisterSection("Fish", Section)
 
+---Decorates a string with leading & trailing em-dashes.
+---@param text string
+---@return string
+local function WrapWithDashes(text)
+    return string.format("———    %s    ———", text)
+end
+
 ---@override
 ---@param root GenericUI_Element_Empty
 function Section:Render(root)
+    local HEADER_X_OFFSET = -40
+
     GridSectionClass.Render(self, root)
+
+    -- Stats header
+    local statsHeader = TextPrefab.Create(Codex.UI, self:__PrefixElement("StatsHeader"), root, WrapWithDashes(TSK.Label_Stats:GetString()), "Center", V(self.GRID_LIST_FRAME[1], 50))
+    statsHeader:SetStroke(0, 2, 1, 15, 15)
+    statsHeader:Move(HEADER_X_OFFSET, -20)
+
+    -- Add stat labels
+    local statsGrid = root:AddChild(self:__PrefixElement("StatsGrid"), "GenericUI_Element_Grid")
+    self.StatsGrid = statsGrid -- Should be set before calling AddStatLabel()
+    statsGrid:SetGridSize(2, 2)
+    local fishDiscoveredLabel = self:AddStatLabel("FishDiscoveredLabel", TSK.Label_Stat_FishDiscovered)
+    local totalCatchesLabel = self:AddStatLabel("TotalCatchesLabel", TSK.Label_Stat_TotalCatches)
+    local totalEncountersLabel = self:AddStatLabel("TotalEncountersLabel", TSK.Label_Stat_TotalEncounters)
+    local lossRateLabel = self:AddStatLabel("LossRateLabel", TSK.Label_Stat_LossRate)
+    self.StatLabels = {
+        FishDiscovered = fishDiscoveredLabel,
+        TotalCatches = totalCatchesLabel,
+        TotalEncounters = totalEncountersLabel,
+        LossRate = lossRateLabel,
+    }
+    statsGrid:Move(0, 20)
+
+    self.GridScrollList:Move(0, 70) -- Move down to make space for stats
+
+    -- Collection log header
+    local collectionLogHeader = TextPrefab.Create(Codex.UI, self:__PrefixElement("CollectionLogHeader"), root, WrapWithDashes(TSK.Label_CollectionLog:GetString()), "Center", V(self.GRID_LIST_FRAME[1], 50))
+    collectionLogHeader:SetStroke(0, 2, 1, 15, 15)
+    local headerX, _ = collectionLogHeader:GetPosition()
+    local _, gridY = self.GridScrollList:GetPosition()
+    collectionLogHeader:SetPosition(headerX - HEADER_X_OFFSET - 80, gridY - 40)
+
+    statsGrid:RepositionElements()
 end
 
 ---@override
 function Section:Update(_)
     local fishes = CollectionLog.GetFishes()
+    local char = Client.GetCharacter()
+
+    -- Update fish grid
     self:__Update(fishes)
+
+    -- Update stat values
+    local _, uniqueFishCaught = Fishing.GetUniqueFishCaught()
+    local totalFishes = table.getKeyCount(Fishing.GetFishes())
+    local encountersMap = Fishing.GetTotalFishEncounters()
+    local totalEncounters = 0
+    for _,encounters in pairs(encountersMap) do
+        totalEncounters = totalEncounters + encounters
+    end
+    local lossRate = totalEncounters > 0 and (100 - Fishing.GetTotalFishCaught(char) / totalEncounters * 100) or 0
+    local statLabels = self.StatLabels
+    statLabels.FishDiscovered:SetValue(string.format("%d/%d", uniqueFishCaught, totalFishes))
+    statLabels.TotalCatches:SetValue(Fishing.GetTotalFishCaught(char) .. "") -- TODO use a party-wide catch stat?
+    statLabels.TotalEncounters:SetValue(totalEncounters .. "")
+    statLabels.LossRate:SetValue(string.format("%s%%", Text.Round(lossRate, 2)))
+end
+
+---Creates a stat label element.
+---@param id string
+---@param labelTSK TextLib_TranslatedString
+---@return GenericUI.Prefabs.FormLabel
+function Section:AddStatLabel(id, labelTSK)
+    local STAT_LABEL_SIZE = V(self.GRID_LIST_FRAME[1] / 2 - 40, 50)
+    return LabelPrefab.Create(Codex.UI, self:__PrefixElement(id), self.StatsGrid, labelTSK, STAT_LABEL_SIZE, "")
 end
 
 ---@override
@@ -229,6 +330,13 @@ end
 function Section:__CreateElement(index)
     local slot = HotbarSlot.Create(Codex.UI, "Fish.Slot." .. tostring(index), self.Grid)
     return slot
+end
+
+---Prefixes an ID with the section's ID.
+---@param id string
+---@return string
+function Section:__PrefixElement(id)
+    return self.ID .. "_" .. id
 end
 
 ---@override

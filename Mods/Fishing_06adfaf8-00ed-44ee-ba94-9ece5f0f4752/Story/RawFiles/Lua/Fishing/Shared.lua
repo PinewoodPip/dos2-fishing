@@ -15,9 +15,11 @@ local Fishing = {
 
     NETMSG_STARTED_FISHING = "Features.Fishing.NetMsgs.CharacterStartedFishing",
     NETMSG_STOPPED_FISHING = "Features.Fishing.NetMsgs.CharacterStoppedFishing",
+    NETMSG_ENCOUNTERED_FISH = "Features.Fishing.NetMsgs.CharacterEncounteredFish",
 
     MODVAR_UNIQUE_FISH_CAUGHT = "PlaythroughUniqueFishCaught",
     MODVAR_REGIONS_DISCOVERED = "RegionsDiscovered",
+    MODVAR_FISHES_ENCOUNTERED = "PlaythroughFishesEncountered",
     USERVAR_FISH_CAUGHT = "CharacterFishCaught",
 
     FISHING_ROD_TEMPLATES = Set.Create({
@@ -61,6 +63,16 @@ local Fishing = {
             Handle = "h189720b0g8766g43aegac05g52656ff2c260",
             Text = "Descended %s",
             ContextDescription = [[Name for tier 3 fish runes; param is fish name (ex. "Descended Sardine")]],
+        },
+        Label_Fish_TotalCaught = {
+            Handle = "hb9ff816dg02c7g434cg9fe8gc4a76115dfe9",
+            Text = "Total Caught: %d",
+            ContextDescription = [[Fish tooltip in collection log; param is amount of times the fish was caught]],
+        },
+        Label_Fish_TotalEncounters = {
+            Handle = "hb4657d53g1707g49bbgbfc3g1c240ed5279e",
+            Text = "Total Encounters (party-wide): %d",
+            ContextDescription = [[Fish tooltip in collection log; param is amount of times the fish was encountered]],
         },
         Label_FishRarity_Common = {
             Handle = "h66cdd0b9g1b6dg413egac30g68b6fcdfe1c4",
@@ -215,6 +227,10 @@ Fishing:RegisterModVariable(Mod.GUIDS.FISHING, Fishing.MODVAR_REGIONS_DISCOVERED
     Persistent = true,
     DefaultValue = {},
 })
+Fishing:RegisterModVariable(Mod.GUIDS.FISHING, Fishing.MODVAR_FISHES_ENCOUNTERED, {
+    Persistent = true,
+    DefaultValue = {},
+})
 Fishing:RegisterUserVariable(Fishing.USERVAR_FISH_CAUGHT, {
     Persistent = true,
     DefaultValue = {},
@@ -276,6 +292,9 @@ Fishing.RUNE_TIER_PREFIXES = {
 ---@field Reason Features.Fishing.MinigameExitReason
 ---@field CaughtFishID string?
 
+---@class Features.Fishing.NetMsgs.CharacterEncounteredFish : NetLib_Message_Character
+---@field FishID string
+
 ---------------------------------------------
 -- CLASSES
 ---------------------------------------------
@@ -316,6 +335,10 @@ end
 
 ---@return TooltipLib_FormattedTooltip
 function _Fish:GetTooltip()
+    local char = Client.GetCharacter()
+    local timesCaught = Fishing.GetFishCatchCount(char, self.ID)
+    local timesEncountered = Fishing.GetTotalFishEncounters()[self.ID] or 0
+
     ---@type TooltipLib_FormattedTooltip
     local tooltip = {
         Elements = {
@@ -323,12 +346,13 @@ function _Fish:GetTooltip()
             -- Note: multiple SkillDescriptions are ordered inversely in flash
             {
                 Type = "SkillDescription",
-                Label = Text.Format("Total caught: %s", {
+                Label = Text.Format("%s<br>%s", {
                     FormatArgs = {
-                        Fishing.GetFishCatchCount(Client.GetCharacter(), self.ID),
+                        TSK.Label_Fish_TotalCaught:Format(timesCaught),
+                        TSK.Label_Fish_TotalEncounters:Format(timesEncountered),
                     },
                     Color = Color.LARIAN.GREEN,
-                }),
+                })
             },
             {
                 Type = "SkillDescription",
@@ -498,6 +522,12 @@ function Fishing.GetTotalFishCaught(char)
     return total
 end
 
+---Returns the total amount of times each fish has been encountered.
+---@return table<string, integer?> -- Maps fish ID to times encountered (`nil` if unencountered).
+function Fishing.GetTotalFishEncounters()
+    return Fishing:GetModVariable(Mod.GUIDS.FISHING, Fishing.MODVAR_FISHES_ENCOUNTERED) or {}
+end
+
 ---Increments the amount of fish caught by char.
 ---@param char Character
 ---@param fishID string
@@ -623,9 +653,6 @@ function Fishing.GetRandomFish(region)
     local seed
 
     for _,entry in ipairs(region.Fish) do
-        local fish = Fishing.GetFish(entry.ID)
-        if not fish then Fishing:Error("GetRandomFish", "Found unregistered fish " .. entry.ID) end -- TODO move to registerregion
-
         totalWeight = totalWeight + entry.Weight
     end
 

@@ -115,6 +115,11 @@ Net.RegisterListener(Fishing.NETMSG_STOPPED_FISHING, function (payload)
     })
 end)
 
+-- Listen for clients encountering fishes.
+Net.RegisterListener(Fishing.NETMSG_ENCOUNTERED_FISH, function (payload)
+    Fishing.AddFishEncounter(payload.FishID)
+end)
+
 -- Cheat to add all fish items.
 Ext.RegisterConsoleCommand("fishaddall", function (_, amount)
     amount = tonumber(amount) or 1
