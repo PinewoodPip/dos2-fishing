@@ -142,6 +142,11 @@ local Fishing = {
             Text = "Something's on the hook!",
             ContextDescription = [[Notification when a fish bites, during the 1st phase of the minigame]],
         },
+        Notification_FishermancyLevelUp = {
+            Handle = "h60a4c23ega10dg48f7g9d15g9eba6fe26c03",
+            Text = "Fishermancy Level Up!",
+            ContextDescription = [[Notification when leveling up the Fishermancy ability school]],
+        },
 
         Label_SchoolName = {
             Handle = "h6361a0cbg34edg430bga50eg461695dacb6d",

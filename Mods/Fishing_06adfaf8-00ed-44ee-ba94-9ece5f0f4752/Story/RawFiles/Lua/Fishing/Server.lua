@@ -12,6 +12,36 @@ Fishing.FAILURE_ANIMATION = "emotion_sad"
 -- METHODS
 ---------------------------------------------
 
+---Grants the fish item to char and increments statistics.
+---@param char EsvCharacter
+---@param fish Features.Fishing.Fish
+---@return GUID
+function Fishing.CatchFish(char, fish)
+    local charGUID = char.MyGuid
+    Osi.CharacterStatusText(charGUID, TSK.Notification_Minigame_Success:GetString())
+    Osi.PlayAnimation(charGUID, Fishing.SUCCESS_ANIMATION, "")
+    local fishItemGUID = Osi.ItemTemplateAddTo(fish.TemplateID, charGUID, 1, 1)
+    local oldFishermancy = Fishing.GetAbilityScore(char)
+
+    -- Track stats
+    Fishing.AddFishCatchCount(char, fish.ID)
+    Fishing.MarkFishTypeAsCaught(fish.ID)
+
+    -- Show skill ability level up feedback 
+    local newFishermancy = Fishing.GetAbilityScore(char)
+    if newFishermancy > oldFishermancy then
+        Osi.CharacterPlayHUDSound(charGUID, "UI_Game_LevelUp")
+        Osi.PlayEffect(charGUID, "RS3_FX_GP_Status_LevelUp_01")
+        Osi.CharacterStatusText(charGUID, TSK.Notification_FishermancyLevelUp:Format({
+            Color = Color.LARIAN.GOLD,
+        }))
+    end
+
+    return fishItemGUID
+end
+
+---Starts the fishing animation loop for char.
+---@see Features.Fishing.ANIMATION_EVENT
 ---@param char EsvCharacter
 function Fishing.PlayAnimation(char)
     Osiris.PlayAnimation(char, Fishing.MINIGAME_ANIMATION, Fishing.ANIMATION_EVENT)
@@ -47,23 +77,6 @@ Osiris.RegisterSymbolListener("StoryEvent", 2, "after", function (obj, event)
         end
     end
 end)
-
----Grants the fish item to char and increments statistics.
----@param char EsvCharacter
----@param fish Features.Fishing.Fish
----@return GUID
-function Fishing.CatchFish(char, fish)
-    local charGUID = char.MyGuid
-    Osi.CharacterStatusText(charGUID, TSK.Notification_Minigame_Success:GetString())
-    Osi.PlayAnimation(charGUID, Fishing.SUCCESS_ANIMATION, "")
-    local fishItemGUID = Osi.ItemTemplateAddTo(fish.TemplateID, charGUID, 1, 1)
-
-    -- Track stats
-    Fishing.AddFishCatchCount(char, fish.ID)
-    Fishing.MarkFishTypeAsCaught(fish.ID)
-
-    return fishItemGUID
-end
 
 -- Untag characters when they finish fishing.
 Fishing.Events.CharacterStoppedFishing:Subscribe(function (ev)
