@@ -155,9 +155,13 @@ function CollectionLog.GetFishes()
         end
     end
 
-    -- Sort by name
+    -- Sort by rarity ascending, then name
+    local rarityOrder = Item.RARITY_ORDER_MAP
     table.sort(fishes, function (a, b)
-        return a:GetName() < b:GetName()
+        if a.Rarity == b.Rarity then
+            return a:GetName() < b:GetName()
+        end
+        return rarityOrder[a.Rarity] < rarityOrder[b.Rarity]
     end)
 
     return fishes
