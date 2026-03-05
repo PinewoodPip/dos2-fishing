@@ -1,10 +1,13 @@
 
+local Tooltip = Client.Tooltip
+
 ---@class Features.Fishing
 local Fishing = Epip.GetFeature("Features.Fishing")
+Fishing._CharacterTasks = {} ---@type table<CharacterHandle, Features.Fishing.CharacterTask>
 
 ---@class Features.Fishing.CharacterTask : UserspaceCharacterTaskCallbacks
 local _Task = {
-    _Previewing = false,
+    IsPreviewing = false,
     CharacterHandle = nil, ---@type ComponentHandle
 
     ID = "Epip_Feature_Fishing",
@@ -12,17 +15,23 @@ local _Task = {
 }
 Fishing._CharacterTaskClass = _Task
 
+---------------------------------------------
+-- METHODS
+---------------------------------------------
+
 ---@param char EclCharacter
 ---@return Features.Fishing.CharacterTask
 function _Task.Create(char)
     local tbl = {CharacterHandle = char and char.Handle}
     Inherit(tbl, _Task)
 
+    Fishing._CharacterTasks[char.Handle] = tbl
+
     return tbl
 end
 
 function _Task:GetCharacter()
-    return Client.GetCharacter() -- TODO
+    return Character.Get(self.CharacterHandle)
 end
 
 function _Task:Enter()
@@ -35,10 +44,10 @@ function _Task:Attached() end
 function _Task:SetCursor()
     local cc = Ext.UI.GetCursorControl()
 
-    if self._Previewing then
+    if self.IsPreviewing then
         cc.MouseCursor = "CursorWand_Ground"
 
-        Client.Tooltip.ShowMouseTextTooltip(Fishing.TSK["CharacterTask_MouseTextTooltip"], Vector.Create(30, 20))
+        Tooltip.ShowMouseTextTooltip(Fishing.TSK["CharacterTask_MouseTextTooltip"], Vector.Create(30, 20))
     end
 end
 
@@ -63,9 +72,9 @@ end
 
 -- Called when the task loses top priority or is cancelled.
 function _Task:ExitPreview()
-    self._Previewing = false
+    self.IsPreviewing = false
 
-    Client.Tooltip.HideMouseTextTooltip()
+    Tooltip.HideMouseTextTooltip()
 end
 
 function _Task:Exit() end
@@ -125,17 +134,11 @@ _Task.GetError = function (self)
  end
 
 function _Task:EnterPreview() -- Called when the task has high enough priority
-    self._Previewing = true
+    self.IsPreviewing = true
 end
 
-function _Task:HandleInputEvent(ev, _)
-    local evDesc = Ext.Input.GetInputManager().InputDefinitions[ev.EventId]
-
-    -- Start fishing when Action1 is pressed.
-    if evDesc.EventName == "Action1" and ev.OldValue.State == "Pressed" and Client.Input.IsAltPressed() and self._Previewing and self:HasValidTargetPos() then
-        Fishing.Start(self:GetCharacter())
-    end
-end
+---@diagnostic disable-next-line: unused-local
+function _Task:HandleInputEvent(ev, _) end -- Custom character tasks require all methods to be defined even if not used.
 
 ---------------------------------------------
 -- EVENT LISTENERS
@@ -148,6 +151,16 @@ Client.Events.ActiveCharacterChanged:Subscribe(function (ev)
     if char and not attached:Contains(char.Handle) then
         Ext.Behavior.AttachCharacterTask(char, _Task.ID)
         attached:Add(char.Handle)
+    end
+end)
+
+-- Hide tooltips from tasks when the cursor hovers over a UI.
+GameState.Events.Tick:Subscribe(function()
+    for _,task in pairs(Fishing._CharacterTasks) do
+        if task.IsPreviewing and Client.IsCursorOverUI() then
+            Tooltip.HideMouseTextTooltip()
+            break -- Only one such text tooltip may exist at once(?)
+        end
     end
 end)
 
