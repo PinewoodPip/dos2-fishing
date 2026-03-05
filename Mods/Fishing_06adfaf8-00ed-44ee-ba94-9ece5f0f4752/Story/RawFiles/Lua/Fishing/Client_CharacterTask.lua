@@ -1,5 +1,6 @@
 
 local Tooltip = Client.Tooltip
+local Input = Client.Input
 
 ---@class Features.Fishing
 local Fishing = Epip.GetFeature("Features.Fishing")
@@ -101,16 +102,6 @@ function _Task:GetExecutePriority(_)
     return 0
 end
 
--- Called when left click is pressed, even if the task does not have top priority.
-function _Task:Start()
-    if self:MeetsRequirements() then
-        Fishing.Start(self:GetCharacter())
-    end
-end
-
--- Called when right-click is pressed.
-function _Task:Stop() end
-
 function _Task:HasValidTargetPos() -- TODO make it require looking at the water
     local char = Character.Get(self.CharacterHandle)
     local region = Fishing.GetRegionAt(char.WorldPos)
@@ -137,8 +128,11 @@ function _Task:EnterPreview() -- Called when the task has high enough priority
     self.IsPreviewing = true
 end
 
+-- Custom character tasks require all methods to be defined even if not used.
 ---@diagnostic disable-next-line: unused-local
-function _Task:HandleInputEvent(ev, _) end -- Custom character tasks require all methods to be defined even if not used.
+function _Task:HandleInputEvent(ev, _) end
+function _Task:Start() end
+function _Task:Stop() end
 
 ---------------------------------------------
 -- EVENT LISTENERS
@@ -151,6 +145,21 @@ Client.Events.ActiveCharacterChanged:Subscribe(function (ev)
     if char and not attached:Contains(char.Handle) then
         Ext.Behavior.AttachCharacterTask(char, _Task.ID)
         attached:Add(char.Handle)
+    end
+end)
+
+-- Start fishing when a valid spot is clicked.
+-- This is used in place of Start() as otherwise the character would also attempt to move to the clicked spot (race condition?)
+Input.Events.KeyStateChanged:Subscribe(function (ev)
+    if ev.InputID ~= "left2" then return end
+    local char = Client.GetCharacter()
+    local task = char and Fishing._CharacterTasks[char.Handle]
+    if task and task.IsPreviewing and task:MeetsRequirements() then
+        -- Start fishing on release
+        if ev.State == "Released" then
+            Fishing.Start(char)
+        end
+        ev:Prevent() -- Prevent Pressed state as well to avoid side-effects.
     end
 end)
 
