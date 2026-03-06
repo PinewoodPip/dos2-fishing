@@ -21,7 +21,8 @@ local scripts = {
     {
         ScriptSet = "Fishing/Skills",
         Scripts = {
-            "Fishing/Skills/Scripts/BlueFireball.lua"
+            "Fishing/Skills/Scripts/BlueFireball.lua",
+            "Fishing/Skills/Scripts/BlowTheHornPipe.lua",
         }
     },
 }

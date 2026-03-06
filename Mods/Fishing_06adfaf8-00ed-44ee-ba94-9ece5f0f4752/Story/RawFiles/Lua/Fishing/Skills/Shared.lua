@@ -7,6 +7,7 @@ local Skills = {
     ---@type table<string, AbilityType>
     FISHERMANCY_SKILLS = {
         ["Projectile_PIP_Fishing_BlueFireball"] = "FireSpecialist",
+        ["Shout_PIP_Fishing_Hornpipe"] = "WaterSpecialist",
     },
     TranslatedStrings = {
         Label_SkillSchoolFooter = {
@@ -26,6 +27,18 @@ local Skills = {
             ContextDescription = [[Skill tooltip for "Blue Fireball"]],
             StringKey = "Projectile_PIP_Fishing_BlueFireball_Description",
         },
+        Skill_Hornpipe_DisplayName = {
+            Handle = "hb1ec7f6dg8d10g461bga0dcg5ac5945f0004",
+            Text = "Blow the Hornpipe",
+            ContextDescription = [[Skill name]],
+            StringKey = "Shout_PIP_Fishing_Hornpipe_DisplayName",
+        },
+        Skill_Hornpipe_Description = {
+            Handle = "h3a713104g80b4g426ag8ed7ga2747320e096",
+            Text = "Get the voyage started on the right foot by blowing the hornpipe, applying Horned Pipe Spirit to allies in range.<br>Horned Pipe Spirit restores 1% Vitality and Magic Armor per point in the status owner's Fishermancy upon dealing a critical hit.",
+            ContextDescription = [[Skill tooltip for "Blow the Hornpipe"]],
+            StringKey = "Shout_PIP_Fishing_Hornpipe_Description",
+        },
         Status_Seaburn_DisplayName = {
             Handle = "hbe276f31gd6c5g475dgb83bg1690ee01327f",
             Text = "Seaburn",
@@ -37,6 +50,16 @@ local Skills = {
             Text = "Deals [1] every turn.",
             ContextDescription = [[Status tooltip for "Seaburn"]],
             StringKey = "PIP_FISHING_SEABURN_Description",
+        },
+        Status_Hornpipe_DisplayName = {
+            Handle = "h8b39a27age17cg4527gbaaeg9963bbd7230d",
+            Text = "Horned Pipe Spirit",
+            ContextDescription = [[Status name]],
+        },
+        Status_Hornpipe_Description = {
+            Handle = "h088afc65gf93dg4220gabefg08d09791dbe2",
+            Text = "Restores 1% Vitality and Magic Armor per point in the status owner's Fishermancy upon dealing a critical hit.",
+            ContextDescription = [[Status tooltip for "Horned Pipe Spirit"]],
         },
     },
 }
