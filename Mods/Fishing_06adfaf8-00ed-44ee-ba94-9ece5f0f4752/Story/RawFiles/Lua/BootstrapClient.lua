@@ -33,6 +33,7 @@ local scripts = {
         }
     },
     {ScriptSet = "Fishing/Runes"},
+    {ScriptSet = "Fishing/Skills"},
 }
 for _,script in ipairs(scripts) do
     RequestScriptLoad(script)

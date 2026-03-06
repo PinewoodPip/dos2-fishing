@@ -1,0 +1,8 @@
+new entry "Stats_PIP_Fishing_Seaburn"
+type "Potion"
+data "Act" "1"
+data "Act part" "0"
+data "AirResistance" "-10"
+data "WaterResistance" "-20"
+data "Duration" "2"
+data "StatusIcon" "statIcons_Water"

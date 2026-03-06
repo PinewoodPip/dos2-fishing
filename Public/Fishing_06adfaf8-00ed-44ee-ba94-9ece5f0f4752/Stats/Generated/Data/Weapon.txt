@@ -1,0 +1,8 @@
+new entry "PIP_Damage_Seaburn"
+type "Weapon"
+data "ModifierType" "Item"
+data "Damage Type" "Water"
+data "Damage" "1"
+data "Damage Range" "7"
+data "DamageFromBase" "50"
+data "Charges" "0"

@@ -18,6 +18,12 @@ local scripts = {
         }
     },
     {ScriptSet = "Fishing/Runes"},
+    {
+        ScriptSet = "Fishing/Skills",
+        Scripts = {
+            "Fishing/Skills/Scripts/BlueFireball.lua"
+        }
+    },
 }
 for _,script in ipairs(scripts) do
     RequestScriptLoad(script)
