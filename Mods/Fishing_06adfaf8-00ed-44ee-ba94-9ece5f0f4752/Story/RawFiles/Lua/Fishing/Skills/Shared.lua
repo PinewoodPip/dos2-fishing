@@ -8,6 +8,7 @@ local Skills = {
     FISHERMANCY_SKILLS = {
         ["Projectile_PIP_Fishing_BlueFireball"] = "FireSpecialist",
         ["Shout_PIP_Fishing_Hornpipe"] = "WaterSpecialist",
+        ["Shout_PIP_Fishing_WithTheCurrents"] = "AirSpecialist",
     },
     TranslatedStrings = {
         Label_SkillSchoolFooter = {
@@ -39,6 +40,18 @@ local Skills = {
             ContextDescription = [[Skill tooltip for "Blow the Hornpipe"]],
             StringKey = "Shout_PIP_Fishing_Hornpipe_Description",
         },
+        Skill_WithTheCurrents_DisplayName = {
+            Handle = "hdd0db2b3ge2ecg4735gb980gc3110a2ca2c2",
+            Text = "With the Currents",
+            ContextDescription = [[Skill name]],
+            StringKey = "Shout_PIP_Fishing_WithTheCurrents_DisplayName",
+        },
+        Skill_WithTheCurrents_Description = {
+            Handle = "hff2e328bg115eg4d46g9c1fge2fc231a8c31",
+            Text = "Create a cursed water surface and apply With the Currents to yourself, summoning a ring of fish around you that will bite enemies that move or are moved within [1] of you, dealing [2], applying Seaburn and creating a cursed water surface.",
+            ContextDescription = [[Skill tooltip for "With the Currents"]],
+            StringKey = "Shout_PIP_Fishing_WithTheCurrents_Description",
+        },
         Status_Seaburn_DisplayName = {
             Handle = "hbe276f31gd6c5g475dgb83bg1690ee01327f",
             Text = "Seaburn",
@@ -60,6 +73,18 @@ local Skills = {
             Handle = "h088afc65gf93dg4220gabefg08d09791dbe2",
             Text = "Restores 1% Vitality and Magic Armor per point in the status owner's Fishermancy upon dealing a critical hit.",
             ContextDescription = [[Status tooltip for "Horned Pipe Spirit"]],
+        },
+        Status_WithTheCurrent_DisplayName = {
+            Handle = "h7fda51b1g17ecg4e7eg92acge597024dc68d",
+            Text = "With the Currents",
+            ContextDescription = [[Status name]],
+            StringKey = "PIP_FISHING_WITH_THE_CURRENT_DisplayName",
+        },
+        Status_WithTheCurrent_Description = {
+            Handle = "h62dd5ff4g57e7g4525gaf99g6924095308a2",
+            Text = "TODO",
+            ContextDescription = [[Status tooltip for "With the Currents"]],
+            StringKey = "PIP_FISHING_WITH_THE_CURRENT_Description",
         },
     },
 }
