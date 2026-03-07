@@ -1,0 +1,5 @@
+new skillset "Summon_PIP_Fishing_Crab"
+add skill "Jump_BonePileBurrow"
+add skill "Target_PIP_Fishing_CrabPinch"
+add skill "Cone_PIP_Fishing_BreathOfFreshSeaAir"
+add skill "Shout_PIP_Fishing_CrabDance"
