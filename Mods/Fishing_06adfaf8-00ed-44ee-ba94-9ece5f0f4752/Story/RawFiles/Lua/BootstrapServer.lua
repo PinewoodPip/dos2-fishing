@@ -23,6 +23,7 @@ local scripts = {
         Scripts = {
             "Fishing/Skills/Scripts/BlueFireball.lua",
             "Fishing/Skills/Scripts/BlowTheHornPipe.lua",
+            "Fishing/Skills/Scripts/Sashimi.lua",
         }
     },
 }

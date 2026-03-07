@@ -8,6 +8,7 @@ local Skills = {
     FISHERMANCY_SKILLS = {
         ["Projectile_PIP_Fishing_BlueFireball"] = "FireSpecialist",
         ["Shout_PIP_Fishing_Hornpipe"] = "WaterSpecialist",
+        ["Target_PIP_Fishing_Sashimi"] = "RogueLore",
         ["Shout_PIP_Fishing_WithTheCurrents"] = "AirSpecialist",
     },
     TranslatedStrings = {
@@ -40,6 +41,18 @@ local Skills = {
             ContextDescription = [[Skill tooltip for "Blow the Hornpipe"]],
             StringKey = "Shout_PIP_Fishing_Hornpipe_Description",
         },
+        Skill_Sashimi_DisplayName = {
+            Handle = "hd7910501gf347g4ba1gb973gb602f88e61ee",
+            Text = "Prepare Sashimi",
+            ContextDescription = [[Skill name]],
+            StringKey = "Target_PIP_Fishing_Sashimi_DisplayName",
+        },
+        Skill_Sashimi_Description = {
+            Handle = "h48590371g58b1g4d5bga23dgfc37d526e44c",
+            Text = "Attempt to process the target into sashimi, dealing [1]. If a non-boss target has Seaburn and less than 20% (+1% per Fishermancy) Vitality, it dies and becomes sashimi.",
+            ContextDescription = [[Skill tooltip for "Prepare Sashimi"]],
+            StringKey = "Target_PIP_Fishing_Sashimi_Description",
+        },
         Skill_WithTheCurrents_DisplayName = {
             Handle = "hdd0db2b3ge2ecg4735gb980gc3110a2ca2c2",
             Text = "With the Currents",
@@ -60,7 +73,7 @@ local Skills = {
         },
         Status_Seaburn_Description = {
             Handle = "h828e84d7g9080g4345g94e3gecbb1ac24bab",
-            Text = "Deals [1] every turn.",
+            Text = "Deals [1] every turn.<br>Reduces water and air resistance.",
             ContextDescription = [[Status tooltip for "Seaburn"]],
             StringKey = "PIP_FISHING_SEABURN_Description",
         },
