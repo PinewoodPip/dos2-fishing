@@ -10,6 +10,7 @@ local Skills = {
         ["Shout_PIP_Fishing_Hornpipe"] = "WaterSpecialist",
         ["Target_PIP_Fishing_Sashimi"] = "RogueLore",
         ["Shout_PIP_Fishing_WithTheCurrents"] = "AirSpecialist",
+        ["Target_PIP_Fishing_ReelIn"] = "WarriorLore",
     },
     TranslatedStrings = {
         Label_SkillSchoolFooter = {
@@ -52,6 +53,18 @@ local Skills = {
             Text = "Attempt to process the target into sashimi, dealing [1]. If a non-boss target has Seaburn and less than 20% (+1% per Fishermancy) Vitality, it dies and becomes sashimi.",
             ContextDescription = [[Skill tooltip for "Prepare Sashimi"]],
             StringKey = "Target_PIP_Fishing_Sashimi_Description",
+        },
+        Skill_ReelIn_DisplayName = {
+            Handle = "h1962c37eg0600g4728g9343g42d8674ce596",
+            Text = "Reel In",
+            ContextDescription = [[Skill name]],
+            StringKey = "Target_PIP_Fishing_ReelIn_DisplayName",
+        },
+        Skill_ReelIn_Description = {
+            Handle = "h0999dbacgde3eg430ag8071gee3d46d1aeab",
+            Text = "Reel in a big catch, dealing [1] and pulling targets towards your position.<br>Targets receive piercing damage every 4m travelled (-0.2m per Fishermancy) while being reeled in.",
+            ContextDescription = [[Skill tooltip for "Reel In"]],
+            StringKey = "Target_PIP_Fishing_ReelIn_Description",
         },
         Skill_WithTheCurrents_DisplayName = {
             Handle = "hdd0db2b3ge2ecg4735gb980gc3110a2ca2c2",

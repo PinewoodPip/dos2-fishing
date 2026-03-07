@@ -47,6 +47,29 @@ function Skills.GetCombatAllies(char)
     return combatAllies
 end
 
+---Explodes a projectile at the target's position.
+---@param caster EsvCharacter
+---@param skillID skill
+---@param target EsvCharacter|vec3
+function Skills.ExplodeProjectile(caster, skillID, target)
+    local casterLevel = caster.Stats.Level
+    local targetPos = type(target) == "table" and target or target.WorldPos
+    Osi.NRD_ProjectilePrepareLaunch();
+    Osi.NRD_ProjectileSetString("SkillId", skillID);
+    Osi.NRD_ProjectileSetInt("CasterLevel", casterLevel);
+    Osi.NRD_ProjectileSetGuidString("Caster", caster.MyGuid);
+    Osi.NRD_ProjectileSetInt("CanDeflect", 0);
+    Osi.NRD_ProjectileSetVector3("SourcePosition", table.unpack(targetPos));
+    Osi.NRD_ProjectileSetVector3("TargetPosition", table.unpack(targetPos));
+    Osi.NRD_ProjectileSetGuidString("Source", caster.MyGuid);
+    if target then
+        Osi.NRD_ProjectileSetGuidString("Target", target.MyGuid);
+        Osi.NRD_ProjectileSetGuidString("HitObject", target.MyGuid);
+        Osi.NRD_ProjectileSetGuidString("HitObjectPosition", target.MyGuid);
+    end
+    Osi.NRD_ProjectileLaunch();
+end
+
 ---------------------------------------------
 -- EVENT LISTENERS
 ---------------------------------------------
