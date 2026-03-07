@@ -31,6 +31,7 @@ local Fishing = {
     WATER_SEARCH_RADIUS = 1.5,
     WATER_MAX_DISTANCE = 3.5, -- Distance to water (or fishing areas) that a character must be within for fishing to be available.
 
+    ABILITY_SCHOOL_COLOR = "86a4f7", ---@type htmlcolor
     ABILITY_SCHOOL_FISH_PER_LEVEL = 15, -- Amount of fish that has to be caught per level in the Fishermancy ability.
     ABILITY_SCHOOL_FISH_PER_LEVEL_GROWTH = 5, -- Extra amount of fish that need to be caught per level in the Fishermancy ability, for each level after the first.
     ABILITY_SCHOOL_UNIQUE_FISH_PER_LEVEL = 5, -- Amount of unique fish that has to be caught per level in the Fishermancy ability.
