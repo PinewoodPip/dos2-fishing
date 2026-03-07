@@ -25,6 +25,7 @@ local scripts = {
             "Fishing/Skills/Scripts/BlowTheHornPipe.lua",
             "Fishing/Skills/Scripts/Sashimi.lua",
             "Fishing/Skills/Scripts/ReelIn.lua",
+            "Fishing/Skills/Scripts/CannonBall.lua",
         }
     },
 }

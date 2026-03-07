@@ -11,13 +11,9 @@ local Skills = {
         ["Target_PIP_Fishing_Sashimi"] = "RogueLore",
         ["Shout_PIP_Fishing_WithTheCurrents"] = "AirSpecialist",
         ["Target_PIP_Fishing_ReelIn"] = "WarriorLore",
+        ["Projectile_PIP_Fishing_CannonBall"] = "EarthSpecialist",
     },
     TranslatedStrings = {
-        Label_SkillSchoolFooter = {
-            Handle = "h8a92f9e4ge7dcg466ag9a69g9987014b5c35",
-            Text = "Fishermancy + %s",
-            ContextDescription = [[Footer for Fishermancy skill tooltips; param is the other school of the skill]],
-        },
         Skill_BlueFireball_DisplayName = {
             Handle = "h63cc250fg2bfeg4c3cgb888gbd8d5beb1be4",
             Text = "Blue Fireball",
@@ -65,6 +61,18 @@ local Skills = {
             Text = "Reel in a big catch, dealing [1] and pulling targets towards your position.<br>Targets receive piercing damage every 4m travelled (-0.2m per Fishermancy) while being reeled in.",
             ContextDescription = [[Skill tooltip for "Reel In"]],
             StringKey = "Target_PIP_Fishing_ReelIn_Description",
+        },
+        Skill_CannonBall_DisplayName = {
+            Handle = "hcf883158g721eg4daeg98beg0d979e8f86c2",
+            Text = "Shoot Canon Ball",
+            ContextDescription = [[Skill name]],
+            StringKey = "Projectile_PIP_Fishing_CannonBall_DisplayName",
+        },
+        Skill_CannonBall_Description = {
+            Handle = "h4a09fa59gc72dg4e2dgb935gb91783945e69",
+            Text = "Shoot the canonical cannon ball, dealing [1] in a wonderfully straight line and pushing away targets hit by 7m (+1m per Fichermancy). Targets pushed into walls or obstacles cause [2] to characters within [3] of their impact.",
+            ContextDescription = [[Skill tooltip for "Shoot Canon Ball"]],
+            StringKey = "Projectile_PIP_Fishing_CannonBall_Description",
         },
         Skill_WithTheCurrents_DisplayName = {
             Handle = "hdd0db2b3ge2ecg4735gb980gc3110a2ca2c2",
