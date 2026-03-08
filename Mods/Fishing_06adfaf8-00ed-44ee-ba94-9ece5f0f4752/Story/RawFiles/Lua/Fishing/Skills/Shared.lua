@@ -13,6 +13,7 @@ local Skills = {
         ["Shout_PIP_Fishing_WithTheCurrents"] = "AirSpecialist",
         ["Target_PIP_Fishing_ReelIn"] = "WarriorLore",
         ["Projectile_PIP_Fishing_CannonBall"] = "EarthSpecialist",
+        ["Summon_PIP_Fishing_Swashbuckler"] = "Necromancy",
     },
     TranslatedStrings = {
         Skill_BlueFireball_DisplayName = {
@@ -135,6 +136,30 @@ local Skills = {
             ContextDescription = [[Skill tooltip for "Shoot Canon Ball"]],
             StringKey = "Projectile_PIP_Fishing_CannonBall_Description",
         },
+        Skill_SwashbucklingAura_DisplayName = {
+            Handle = "hbb7dda26g0b44g477bgab71g3ef7233d81e0",
+            Text = "Swashbuckling Spirit",
+            ContextDescription = [[Skill name (necromancer summon)]],
+            StringKey = "Shout_PIP_Fishing_SwashbucklingAura_DisplayName",
+        },
+        Skill_SwashbucklingAura_Description = {
+            Handle = "h0ee5e72agfda1g42c6gbfc9g40260ed83780",
+            Text = "TODO",
+            ContextDescription = [[Skill tooltip for "Swashbuckling Spirit" (necromancer summon)]],
+            StringKey = "Shout_PIP_Fishing_SwashbucklingAura_Description",
+        },
+        Skill_SummonSwashbuckler_DisplayName = {
+            Handle = "ha46a9cbcg01cdg4425g864eg0d85f385523c",
+            Text = "Summon Swashbuckler",
+            ContextDescription = [[Skill name]],
+            StringKey = "Summon_PIP_Fishing_Swashbuckler_DisplayName",
+        },
+        Skill_SummonSwashbuckler_Description = {
+            Handle = "h30a9a1f0g0d04g4c62g9935g051dba84d38c",
+            Text = "Summon the trusty ol' crew, an undead swashbuckler who knows Ice Shard, Terrifying Cruelty, Execute, Dust Blast and Swashbuckling Spirit.<br>Swashbuckling Spirit grants water-based weapon coating to nearby allies while active.",
+            ContextDescription = [[Skill tooltip for "Summon Swashbuckler"]],
+            StringKey = "Summon_PIP_Fishing_Swashbuckler_Description",
+        },
         Skill_WithTheCurrents_DisplayName = {
             Handle = "hdd0db2b3ge2ecg4735gb980gc3110a2ca2c2",
             Text = "With the Currents",
@@ -170,6 +195,24 @@ local Skills = {
             Text = "Deals [1] every turn.<br>Reduces water and air resistance.",
             ContextDescription = [[Status tooltip for "Seaburn"]],
             StringKey = "PIP_FISHING_SEABURN_Description",
+        },
+        Status_WaterCoating_DisplayName = {
+            Handle = "h080ffb54g3995g4253gb58ag8189c9f6bc7f",
+            Text = "Swashbuckling Spirit",
+            ContextDescription = [[Status name]],
+            StringKey = "PIP_FISHING_WATER_COATING_DisplayName",
+        },
+        Status_WaterCoating_Description = {
+            Handle = "hc65843e2gd089g426dga6a8g825afa745a8f",
+            Text = "Invigorated by the crew; weapon attacks gain additional water damage.",
+            ContextDescription = [[Status tooltip for "Swashbuckling Spirit"]],
+            StringKey = "PIP_FISHING_WATER_COATING_Description",
+        },
+        Status_WaterCoatingAura_DisplayName = {
+            Handle = "hb0b91f35g12bbg417cg97abg1f3921ef1e03",
+            Text = "Swashbuckling Spirit Giver",
+            ContextDescription = [[Status name]],
+            StringKey = "PIP_FISHING_WATER_COATING_AURA_DisplayName",
         },
         Status_Hornpipe_DisplayName = {
             Handle = "h8b39a27age17cg4527gbaaeg9963bbd7230d",
