@@ -115,7 +115,7 @@ data "StatsDescriptionParams" "AreaRadius;Skill:Projectile_PIP_Fishing_WithTheCu
 data "FXScale" "100"
 data "PrepareAnimationInit" "skill_prepare_soul_01_start"
 data "PrepareAnimationLoop" "skill_prepare_soul_01_loop"
-data "PrepareEffect" "RS3_FX_Skills_Polymorph_Soul_TurnInto_Prepare_Root_01;RS3_FX_Skills_Polymorph_Soul_TurnInto_Prepare_Hand_01:Dummy_R_HandFX"
+data "PrepareEffect" "PIP_FX_Skills_WithTheCurrents_Prepare,Detach;RS3_FX_Skills_Polymorph_Soul_TurnInto_Prepare_Hand_01:Dummy_R_HandFX"
 data "CastAnimation" "skill_cast_self_soul_01_cast"
 data "CastTextEvent" "cast"
 data "CastEffect" "RS3_FX_Skills_Polymorph_Soul_TurnInto_Cast_Root_01,Detach:root:cast;RS3_FX_Skills_Polymorph_Soul_TurnInto_Cast_Overlay_01;RS3_FX_Skills_Polymorph_Soul_TurnInto_Human_Cast_Root_01,Detach:root"
