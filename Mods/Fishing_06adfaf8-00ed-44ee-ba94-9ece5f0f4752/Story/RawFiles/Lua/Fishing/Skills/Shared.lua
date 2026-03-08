@@ -175,11 +175,13 @@ local Skills = {
             Handle = "h8b39a27age17cg4527gbaaeg9963bbd7230d",
             Text = "Horned Pipe Spirit",
             ContextDescription = [[Status name]],
+            StringKey = "PIP_Fishing_Hornpipe_DisplayName",
         },
         Status_Hornpipe_Description = {
             Handle = "h088afc65gf93dg4220gabefg08d09791dbe2",
             Text = "Restores 1% Vitality and Magic Armor per point in the status owner's Fishermancy upon dealing a critical hit.",
             ContextDescription = [[Status tooltip for "Horned Pipe Spirit"]],
+            StringKey = "PIP_Fishing_Hornpipe_Description",
         },
         Status_WithTheCurrent_DisplayName = {
             Handle = "h7fda51b1g17ecg4e7eg92acge597024dc68d",
@@ -206,6 +208,11 @@ local ReqFishermancy = Ext.Stats.Requirement.Add("PIP_Fishermancy")
 ReqFishermancy.Description = "Fishermancy"
 ReqFishermancy.Callbacks.EvaluateCallback = function(_, ctx)
     local char = ctx.ClientCharacter or ctx.ServerCharacter ---@type Character
+    if not char then -- Requirements on items (ex. skillbooks) do not set the character fields; infer the character from the stats object instead.
+        local charStats = ctx.CharacterStats ---@type CDivinityStats_Character
+        local charGUID = charStats.MyGuid
+        char = Character.Get(charGUID)
+    end
     if not char then return false end
 
     local abilityScore = Fishing.GetAbilityScore(char)

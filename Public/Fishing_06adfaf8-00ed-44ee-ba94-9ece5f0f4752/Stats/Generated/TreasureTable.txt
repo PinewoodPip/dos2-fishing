@@ -1,0 +1,21 @@
+new treasuretable "ST_PIP_Fishing_Skillbook_FishermancyTrainer"
+MinLevel "-30"
+MaxLevel "0"
+new subtable "1,1"
+object category "I_PIP_Fishing_Skillbook_BlueFireBall",1,0,0,0,0,0,0,0
+new subtable "1,1"
+object category "I_PIP_Fishing_Skillbook_Hornpipe",1,0,0,0,0,0,0,0
+new subtable "1,1"
+object category "I_PIP_Fishing_Skillbook_Sashimi",1,0,0,0,0,0,0,0
+new subtable "1,1"
+object category "I_PIP_Fishing_Skillbook_ReturnToCrab",1,0,0,0,0,0,0,0
+new subtable "1,1"
+object category "I_PIP_Fishing_Skillbook_WithTheCurrents",1,0,0,0,0,0,0,0
+new subtable "1,1"
+object category "I_PIP_Fishing_Skillbook_ReelIn",1,0,0,0,0,0,0,0
+new subtable "1,1"
+object category "I_PIP_Fishing_Skillbook_CannonBall",1,0,0,0,0,0,0,0
+new subtable "1,1"
+object category "I_PIP_Fishing_Skillbook_Swashbuckler",1,0,0,0,0,0,0,0
+new subtable "1,1"
+object category "I_PIP_Fishing_Skillbook_DeployFishnets",1,0,0,0,0,0,0,0
