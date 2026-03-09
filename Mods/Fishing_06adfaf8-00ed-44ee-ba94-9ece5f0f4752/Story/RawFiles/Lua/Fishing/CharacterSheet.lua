@@ -1,5 +1,6 @@
 
 local CharacterSheet = Client.UI.CharacterSheet
+local TooltipUI = Client.UI.Tooltip
 local Tooltip = Client.Tooltip
 
 local Fishing = Epip.GetFeature("Features.Fishing")
@@ -37,6 +38,9 @@ CharacterSheet:RegisterCallListener("showAbilityTooltip", function (ev)
         -- Hijack the next tooltip render.
         isRenderingFishingAbilityTooltip = true
         ev.Args[1] = Fishing._DUMMY_STAT_ID
+    else
+        -- Clear the previous icon override
+        TooltipUI:GetUI():ClearCustomIcon("tt_ability_" .. Fishing._DUMMY_STAT_ID)
     end
 end)
 Tooltip.Hooks.RenderAbilityTooltip:Subscribe(function (ev)
@@ -49,10 +53,14 @@ Tooltip.Hooks.RenderAbilityTooltip:Subscribe(function (ev)
         local baseValueLabel = tooltip:GetFirstElement("StatsBaseValue")
 
         -- Edit tooltip
-        -- TODO also edit the icon
         header.Label = TSK.Label_SchoolName:GetString()
         description.Description = TSK.Label_SchoolDescription:GetString() -- TODO set CurrentLevelEffect, NextLevelEffect, Description2 fields?
         baseValueLabel.Label = Text.FormatLarianTranslatedString(Fishing.TSKHANDLE_BASE_VALUE_LABEL, score)
+
+        -- Set icon
+        local tooltipUI = TooltipUI:GetUI()
+        tooltipUI:EnableCustomDraw()
+        tooltipUI:SetCustomIcon("tt_ability_" .. Fishing._DUMMY_STAT_ID, Fishing.SKILL_ABILITY_ICON, 128, 128)
 
         -- Add leveling hint
         local _, uniqueFishCaught = Fishing.GetUniqueFishCaught()

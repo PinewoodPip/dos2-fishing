@@ -8,6 +8,7 @@ local V = Vector.Create
 local Fishing = Epip.GetFeature("Features.Fishing")
 local TSK = Fishing.TranslatedStrings
 Fishing.FISHING_ROD_RARITY_COLOR = Color.LARIAN.BLUE
+Fishing.SKILL_ABILITY_ICON = "PIP_Fishing_SkillAbility"
 
 -- Bite phase tuning
 Fishing.FISH_BITE_DELAY_RANGE = {3.2, 6.5} -- Time range (in seconds) for how long it can take for a fish to bite after the player starts fishing.
