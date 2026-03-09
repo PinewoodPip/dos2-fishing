@@ -62,6 +62,10 @@ Tooltip.Hooks.RenderAbilityTooltip:Subscribe(function (ev)
         tooltipUI:EnableCustomDraw()
         tooltipUI:SetCustomIcon("tt_ability_" .. Fishing._DUMMY_STAT_ID, Fishing.SKILL_ABILITY_ICON, 128, 128)
 
+        -- Add minigame hint
+        local minigameHint = TSK.Label_FishingRodHint:Format({Color = Color.LARIAN.GREEN})
+        description.Description = description.Description .. "\n" .. minigameHint
+
         -- Add leveling hint
         local _, uniqueFishCaught = Fishing.GetUniqueFishCaught()
         local totalFishCaught = Fishing.GetTotalFishCaught(char)
