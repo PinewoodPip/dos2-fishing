@@ -324,7 +324,7 @@ Fishing.Events.CharacterStoppedFishing:Subscribe(function (ev)
 
         NotificationUI.ShowIconNotification(ev.CaughtFish:GetName(), ev.CaughtFish:GetIcon(), nil, Fishing.TSK["Toast_Success"], subTitle, "UI_Notification_ReceiveAbility")
     elseif ev.Reason == "Failure" then
-        NotificationUI.ShowWarning(TSK.Notification_Minigame_Failure:GetString())
+        NotificationUI.ShowWarning(TSK.Notification_Minigame_Failure:GetString(), nil, "UI_Handling_Fail")
     elseif ev.Reason == "ReeledInTooEarly" then
         NotificationUI.ShowWarning(TSK.Notification_Minigame_ReeledInTooEarly:GetString())
     end

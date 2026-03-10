@@ -233,6 +233,7 @@ end
 
 ---@param deltaTime number In milliseconds.
 function UI.UpdateGameObjects(deltaTime)
+    -- Invoke Update
     for _,gameObject in ipairs(UI._GameObjects) do
         gameObject:Update(deltaTime)
         gameObject:UpdatePosition()
@@ -245,6 +246,11 @@ function UI.UpdateGameObjects(deltaTime)
                 gameObject:OnCollideWith(otherObject, deltaTime)
             end
         end
+    end
+
+    -- Invoke LateUpdate
+    for _,gameObject in ipairs(UI._GameObjects) do
+        gameObject:LateUpdate(deltaTime)
     end
 end
 

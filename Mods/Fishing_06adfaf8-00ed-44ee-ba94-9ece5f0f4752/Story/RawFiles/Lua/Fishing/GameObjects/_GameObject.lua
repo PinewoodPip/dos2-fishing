@@ -53,10 +53,15 @@ function _GameObject:GetUpperBound()
     return self.State.Position + self.Size[2]
 end
 
----@diagnostic disable: unused-local
+---@abstract
 ---@param deltaTime number In milliseconds.
-function _GameObject:Update(deltaTime) error("Not implemented") end -- TODO use template method pattern
----@diagnostic enable: unused-local
+---@diagnostic disable-next-line: unused-local
+function _GameObject:Update(deltaTime) error("Not implemented") end
+
+---@virtual
+---@param deltaTime number In milliseconds.
+---@diagnostic disable-next-line: unused-local
+function _GameObject:LateUpdate(deltaTime) end
 
 ---@param otherObject Features.Fishing.GameObject
 ---@return boolean
