@@ -1,4 +1,6 @@
 
+local CharacterSheet = Client.UI.CharacterSheet
+local PartyInventory = Client.UI.PartyInventory
 local NotificationUI = Client.UI.Notification
 local Tooltip = Client.Tooltip
 local Input = Client.Input
@@ -154,6 +156,10 @@ function Fishing.Start(char)
                 local regionName = Text.GetTranslatedString(region.NameHandle)
                 NotificationUI.ShowIconNotification(TSK.Notification_RegionDiscovered:Format(regionName), "Item_HAR_FishingRod_ABC")
             end
+
+            -- Hide main panel UIs
+            CharacterSheet:TryHide()
+            PartyInventory:TryHide()
 
             -- Throw events
             local targetPos = Pointer.GetWalkablePosition()
