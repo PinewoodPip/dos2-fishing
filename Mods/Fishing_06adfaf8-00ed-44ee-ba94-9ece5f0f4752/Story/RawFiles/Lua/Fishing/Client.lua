@@ -213,22 +213,23 @@ end
 
 ---@param char EclCharacter?
 ---@param searchRadius number? Defaults to WATER_SEARCH_RADIUS.
+---@param waterSurface SurfaceType? Defaults to "Deepwater".
 ---@return boolean
-function Fishing.IsNearWater(char, searchRadius)
+function Fishing.IsNearWater(char, searchRadius, waterSurface)
     char = char or Client.GetCharacter()
     local position = char.WorldPos
-
-    return Fishing.IsPositionNearWater(Vector.Create(position), searchRadius)
+    return Fishing.IsPositionNearWater(Vector.Create(position), searchRadius, waterSurface)
 end
 
 ---Returns whether a position is near a Deepwater surface.
 ---@param position Vector3D
 ---@param searchRadius number? Defaults to WATER_SEARCH_RADIUS.
+---@param waterSurface SurfaceType? Defaults to "Deepwater".
 ---@return boolean
-function Fishing.IsPositionNearWater(position, searchRadius)
+function Fishing.IsPositionNearWater(position, searchRadius, waterSurface)
     local grid = Ext.Entity.GetAiGrid()
-    local foundCell = grid:SearchForCell(position[1], position[3], searchRadius or Fishing.WATER_SEARCH_RADIUS, "Deepwater", 0)
-
+    local surfaceFlags = Ext.Enums.ESurfaceFlag[waterSurface or "Deepwater"]
+    local foundCell = grid:SearchForCell(position[1], position[3], searchRadius or Fishing.WATER_SEARCH_RADIUS, surfaceFlags.__Value, 0)
     return foundCell
 end
 
@@ -347,8 +348,8 @@ Fishing.Hooks.CanStartFishing:Subscribe(function (ev)
 
     -- Check if the player and cursor area near water
     local cursorPos = Pointer.GetWalkablePosition()
-    local charNearWater = Fishing.IsNearWater(char)
-    local canFish = charNearWater and Fishing.IsPositionNearWater(cursorPos)
+    local charNearWater = Fishing.IsNearWater(char, nil, ev.Region.FishableSurfaceType)
+    local canFish = charNearWater and Fishing.IsPositionNearWater(cursorPos, nil, ev.Region.FishableSurfaceType)
     if not canFish and ev.Region.FishingAreas then -- Check for manually defined fishing areas
         local charPos = V(char.WorldPos[1], char.WorldPos[3])
         local cursorPos2D = V(cursorPos[1], cursorPos[3])

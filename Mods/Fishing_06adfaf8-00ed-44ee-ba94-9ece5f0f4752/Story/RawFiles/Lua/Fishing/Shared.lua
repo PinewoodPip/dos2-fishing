@@ -402,6 +402,7 @@ end
 ---@field Fish Features.Fishing.Region.FishEntry[]
 ---@field Priority integer? Defaults to 0.
 ---@field FishingAreas Vector4[]? Bounds of areas where fishing is possible even without deepwater surfaces.
+---@field FishableSurfaceType SurfaceType? Override for the surface type that is considered fishable by default within the region.
 local _Region = {
     Priority = 0,
 }

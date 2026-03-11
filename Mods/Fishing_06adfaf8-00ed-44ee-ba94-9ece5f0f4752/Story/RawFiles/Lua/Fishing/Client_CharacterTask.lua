@@ -12,7 +12,6 @@ local _Task = {
     CharacterHandle = nil, ---@type ComponentHandle
 
     ID = "Epip_Feature_Fishing",
-    WATER_SEARCH_RADIUS = 0.3,
 }
 Fishing._CharacterTaskClass = _Task
 
@@ -99,15 +98,14 @@ function _Task:GetDescription()
 end
 
 function _Task:GetExecutePriority(_)
-    return 0
+    return 9999
 end
 
-function _Task:HasValidTargetPos() -- TODO make it require looking at the water
+function _Task:HasValidTargetPos()
     local char = Character.Get(self.CharacterHandle)
     local region = Fishing.GetRegionAt(char.WorldPos)
-    local isCursorByWater = Fishing.IsPositionNearWater(Pointer.GetWalkablePosition(), self.WATER_SEARCH_RADIUS)
-
-    return region and (isCursorByWater or Fishing.CanFish(char))
+    local isCursorByWater = Fishing.IsPositionNearWater(Pointer.GetWalkablePosition(), Fishing.WATER_CURSOR_SEARCH_RADIUS, region and region.FishableSurfaceType or nil)
+    return region ~= nil and (isCursorByWater or Fishing.CanFish(char))
 end
 
 function _Task:HasValidTarget()
