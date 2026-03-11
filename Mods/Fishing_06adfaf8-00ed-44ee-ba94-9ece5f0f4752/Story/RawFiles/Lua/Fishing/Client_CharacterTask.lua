@@ -152,7 +152,7 @@ Input.Events.KeyStateChanged:Subscribe(function (ev)
     if ev.InputID ~= "left2" then return end
     local char = Client.GetCharacter()
     local task = char and Fishing._CharacterTasks[char.Handle]
-    if task and task.IsPreviewing and task:MeetsRequirements() then
+    if task and task.IsPreviewing and task:MeetsRequirements() and not Client.IsCursorOverUI() then
         -- Start fishing on release
         if ev.State == "Released" then
             Fishing.Start(char)
