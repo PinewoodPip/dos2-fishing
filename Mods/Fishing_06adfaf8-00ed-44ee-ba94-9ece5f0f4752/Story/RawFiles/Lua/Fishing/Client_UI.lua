@@ -8,6 +8,24 @@ local UI = Generic.Create("Features.Fishing") ---@class Features.Fishing.UI : Ge
 Fishing.UI = UI
 UI:Hide()
 
+---@type GenericUI_ElementTween
+UI.OPEN_TWEEN = {
+    EventID = "RootScale",
+    Duration = 0.2,
+    Type = "To",
+    Function = "Quadratic",
+    Ease = "EaseIn",
+    StartingValues = {
+        scaleX = 0.1,
+        scaleY = 0.1,
+    },
+    FinalValues = {
+        scaleX = 1,
+        scaleY = 1,
+    },
+}
+UI.OVERFLOW_PADDING = 100 -- Extra height added when calculating bottom screen overflow of the UI, in pixels.
+
 UI.Elements = {} -- Holds references to various important elements of the UI.
 
 UI._CharacterHandle = nil ---@type CharacterHandle The owner of this instance.
@@ -82,6 +100,10 @@ function UI.Start(char)
     UI.UpdateProgressBar()
     UI.UpdateFishIcon()
     UI.UpdateTutorialText()
+
+    -- Animate opening
+    UI.Root:Tween(UI.OPEN_TWEEN)
+
     UI:Show()
 
     GameState.Events.RunningTick:Subscribe(UI._OnTick, nil, "Features.Fishing.UI.Tick")
