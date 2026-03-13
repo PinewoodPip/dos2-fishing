@@ -190,7 +190,7 @@ local regions = {
         },
     },
     {
-        ID = "Arx.",
+        ID = "Arx.BridgeLake",
         NameHandle = T{
             Handle = "h25a516c6g433cg491bg8f59g3003953cf0a0",
             Text = "Arx Bridge Lake",
@@ -491,7 +491,7 @@ local regions = {
         },
     },
     {
-        ID = "Arx.",
+        ID = "Arx.Sewers",
         NameHandle = T{
             Handle = "hb3a20076g8440g428cga186g41ca6eb08455",
             Text = "Arx Sewers",
@@ -653,16 +653,6 @@ local regions = {
             },
         },
     },
-    -- {
-    --     ID = "Arx.",
-        
-    --     LevelID = "ARX_Main",
-    --     Bounds = V(339, 62, 430, -34),
-    --     FishingAreas = {
-    --     },
-    --     Fish = {
-    --     },
-    -- },
 
 }
 for _,region in ipairs(regions) do
