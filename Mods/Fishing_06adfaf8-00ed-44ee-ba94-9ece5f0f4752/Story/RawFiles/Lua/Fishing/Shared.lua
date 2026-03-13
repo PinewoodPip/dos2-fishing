@@ -712,3 +712,32 @@ Fishing.Hooks.IsFishingRod:Subscribe(function (ev)
         ev.IsFishingRod = true
     end
 end)
+
+-- Console command to print fish availability across the regions.
+-- Useful to analyze distributions of fish across the maps & regions.
+Ext.RegisterConsoleCommand("fishavailability", function (_)
+    local availability = {} ---@type table<string, {Acts: table<string, integer>, Total: integer, Regions: table<string, string>}>
+    for _,fish in pairs(Fishing.GetFishes()) do
+        availability[fish.ID] = {
+            Acts = {},
+            Total = 0,
+            Regions = {},
+        }
+    end
+
+    -- Count sources of each fish in all regions
+    for _,region in pairs(Fishing._RegionsByID) do
+        local level = region.LevelID
+        for _,fishEntry in ipairs(region.Fish) do
+            local fishAvailability = availability[fishEntry.ID]
+            if fishAvailability then
+                fishAvailability.Regions[region.ID] = Text.Round(fishEntry.Weight, 2)
+                fishAvailability.Acts[level] = (fishAvailability.Acts[level] or 0) + 1
+                fishAvailability.Total = fishAvailability.Total + 1
+            end
+        end
+    end
+
+    Fishing:__Log("Fish availability across regions:")
+    Ext.Dump(availability)
+end)
