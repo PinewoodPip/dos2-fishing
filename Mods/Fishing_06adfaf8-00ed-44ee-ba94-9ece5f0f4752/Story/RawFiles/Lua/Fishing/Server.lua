@@ -174,3 +174,12 @@ Ext.RegisterConsoleCommand("fishcatch", function (_, fishID, amount)
         Fishing.CatchFish(Character.Get(charGUID), fish)
     end
 end)
+
+-- Cheat to discover all regions.
+Ext.RegisterConsoleCommand("fishdiscoverall", function (_)
+    for _,regions in pairs(Fishing._RegionsByLevel) do
+        for _,region in pairs(regions) do
+            Fishing.MarkRegionAsDiscovered(region.ID)
+        end
+    end
+end)
