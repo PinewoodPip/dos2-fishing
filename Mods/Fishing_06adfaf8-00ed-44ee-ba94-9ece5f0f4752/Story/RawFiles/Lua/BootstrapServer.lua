@@ -16,6 +16,7 @@ local scripts = {
             "Fishing/Data/Regions/FortJoy.lua",
             "Fishing/Data/Regions/ReapersCoast.lua",
             "Fishing/Data/Regions/NamelessIsle.lua",
+            "Fishing/Data/Regions/Arx.lua",
         }
     },
     {ScriptSet = "Fishing/Runes"},

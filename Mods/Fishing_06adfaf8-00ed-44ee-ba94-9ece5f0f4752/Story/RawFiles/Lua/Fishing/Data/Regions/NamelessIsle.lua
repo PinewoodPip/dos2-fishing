@@ -10,7 +10,6 @@ local T = function(tsk)
     return tskEntry.Handle
 end
 
-
 ---@type Features.Fishing.Region[]
 local regions = {
     {
