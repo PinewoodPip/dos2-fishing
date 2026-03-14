@@ -16,6 +16,12 @@ local Skills = {
         ["Summon_PIP_Fishing_Swashbuckler"] = "Necromancy",
     },
     TranslatedStrings = {
+        Label_Skillbook = {
+            Handle = "hc8b2f0aagf897g4d3bg93f1g4f653c89d697",
+            Text = "%s Skillbook",
+            ContextDescription = [[Item name for skillbooks; param is the skill name]],
+        },
+
         Skill_BlueFireball_DisplayName = {
             Handle = "h63cc250fg2bfeg4c3cgb888gbd8d5beb1be4",
             Text = "Blue Fireball",
