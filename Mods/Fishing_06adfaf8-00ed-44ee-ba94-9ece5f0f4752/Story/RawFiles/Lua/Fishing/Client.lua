@@ -270,13 +270,6 @@ function Fishing.Stop(char, reason)
     Fishing._States[char.Handle] = nil
 end
 
----Returns whether an item is usable as a fishing rod.
----@param item Item
----@return boolean
-function Fishing.IsFishingRod(item)
-    return Fishing.FISHING_ROD_TEMPLATES:Contains(item.RootTemplate.Id)
-end
-
 ---Plays a single-loop effect at pos.
 ---@param pos vec3
 ---@param effect string

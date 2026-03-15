@@ -29,6 +29,12 @@ local Fishing = {
         "9fc3cb5f-894e-4783-9eef-fbceef0104b0", -- HAR_FishingRod_C, red/yellow lure
     }),
     WATER_SEARCH_RADIUS = 1.5,
+    ---@type set<GUID>
+    FISHING_ROD_VISUAL_TEMPLATES = {
+        ["c7639619-4c44-44a3-af53-81275a80af15"] = true, -- Green bobber.
+        ["483ecb63-b01a-4452-be65-904d9ff03554"] = true, -- Red/white bobber.
+        ["5a14df6e-8e63-425c-9802-1916d630212e"] = true, -- Yellow bobber.
+    },
     WATER_MAX_DISTANCE = 3.5, -- Distance to water (or fishing areas) that a character must be within for fishing to be available.
 
     ABILITY_SCHOOL_COLOR = "86a4f7", ---@type htmlcolor
@@ -218,7 +224,7 @@ local Fishing = {
         FishDiscovered = {}, ---@type Event<Features.Fishing.Events.FishDiscovered> -- **Server-only.**
     },
     Hooks = {
-        IsFishingRod = {}, ---@type Event<Feature_Fishin_Hook_IsFishingRod>
+        IsFishingRod = {}, ---@type Event<Features.Fishing.Hooks.IsFishingRod>
     },
 }
 Epip.RegisterFeature("Fishing", Fishing)
@@ -679,22 +685,25 @@ function Fishing.GetRandomFish(region)
     return Fishing.GetFish(fishID)
 end
 
+---Returns whether an item is usable as a fishing rod.
+---@see Features.Fishing.Hooks.IsFishingRod
+---@param item Item
+---@return boolean
+function Fishing.IsFishingRod(item)
+    return Fishing.Hooks.IsFishingRod:Throw({
+        Item = item,
+        IsFishingRod = false,
+    }).IsFishingRod
+end
+
 ---@param char Character
 ---@return boolean
 function Fishing.HasFishingRodEquipped(char)
     local item = Item.GetEquippedItem(char, "Weapon")
     local hasRod = false
-
     if item then
-        local event = Fishing.Hooks.IsFishingRod:Throw({
-            Character = char,
-            Item = item,
-            IsFishingRod = hasRod,
-        })
-
-        hasRod = event.IsFishingRod
+        hasRod = Fishing.IsFishingRod(item)
     end
-
     return hasRod
 end
 
@@ -702,12 +711,14 @@ end
 -- EVENT LISTENERS
 ---------------------------------------------
 
--- Check for fishing rod template.
+-- Mark items with rod root/visual templates as fishing rods.
+-- Visual template check covers various locally-placed rods in Origins levels (which were *not* created from the root templates).
 Fishing.Hooks.IsFishingRod:Subscribe(function (ev)
-    if Fishing.FISHING_ROD_TEMPLATES:Contains(ev.Item.RootTemplate.Id) then
+    local template = ev.Item.RootTemplate
+    if Fishing.FISHING_ROD_TEMPLATES:Contains(template.Id) or Fishing.FISHING_ROD_VISUAL_TEMPLATES[template.VisualTemplate] then
         ev.IsFishingRod = true
     end
-end)
+end, {StringID = "DefaultImplementation"})
 
 -- Console command to print fish availability across the regions.
 -- Useful to analyze distributions of fish across the maps & regions.
