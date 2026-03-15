@@ -215,6 +215,7 @@ local Fishing = {
     Events = {
         CharacterStartedFishing = {}, ---@type Event<Features.Fishing.Event.CharacterStartedFishing>
         CharacterStoppedFishing = {}, ---@type Event<Features.Fishing.Event.CharacterStoppedFishing>
+        FishDiscovered = {}, ---@type Event<Features.Fishing.Events.FishDiscovered> -- **Server-only.**
     },
     Hooks = {
         IsFishingRod = {}, ---@type Event<Feature_Fishin_Hook_IsFishingRod>
@@ -283,6 +284,9 @@ Fishing.RUNE_TIER_PREFIXES = {
 ---@field Character Character
 ---@field Reason Features.Fishing.MinigameExitReason
 ---@field CaughtFish Features.Fishing.Fish? The fish caught, if any.
+
+---@class Features.Fishing.Events.FishDiscovered
+---@field Fish Features.Fishing.Fish
 
 ---------------------------------------------
 -- NET MESSAGES
@@ -562,14 +566,6 @@ function Fishing.GetUniqueFishCaught()
         count = count + 1
     end
     return uniqueFishCaught, count
-end
-
----Marks a fish type as having been caught in this playthrough.
----@param fishID string
-function Fishing.MarkFishTypeAsCaught(fishID)
-    local uniqueFishCaught = Fishing:GetModVariable(Mod.GUIDS.FISHING, Fishing.MODVAR_UNIQUE_FISH_CAUGHT)
-    uniqueFishCaught[fishID] = true
-    Fishing:SetModVariable(Mod.GUIDS.FISHING, Fishing.MODVAR_UNIQUE_FISH_CAUGHT, uniqueFishCaught)
 end
 
 ---Returns whether a fishing region has been used at least once.

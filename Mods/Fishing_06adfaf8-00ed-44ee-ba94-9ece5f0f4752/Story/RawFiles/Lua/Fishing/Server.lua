@@ -46,6 +46,23 @@ function Fishing.CatchFish(char, fish)
     return fishItemGUID
 end
 
+---Marks a fish type as having been caught in this playthrough.
+---@param fishID string
+function Fishing.MarkFishTypeAsCaught(fishID)
+    local fishCaught, _ = Fishing.GetUniqueFishCaught()
+    local wasCaught = fishCaught[fishID]
+    if wasCaught then return end
+
+    local fish = Fishing.GetFish(fishID)
+    local uniqueFishCaught = Fishing:GetModVariable(Mod.GUIDS.FISHING, Fishing.MODVAR_UNIQUE_FISH_CAUGHT)
+    uniqueFishCaught[fishID] = true
+    Fishing:SetModVariable(Mod.GUIDS.FISHING, Fishing.MODVAR_UNIQUE_FISH_CAUGHT, uniqueFishCaught)
+
+    Fishing.Events.FishDiscovered:Throw({
+        Fish = fish,
+    })
+end
+
 ---Starts the fishing animation loop for char.
 ---@see Features.Fishing.ANIMATION_EVENT
 ---@param char EsvCharacter

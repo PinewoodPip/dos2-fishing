@@ -36,6 +36,7 @@ local scripts = {
     },
     {ScriptSet = "Fishing/Runes"},
     {ScriptSet = "Fishing/Skills"},
+    {ScriptSet = "Fishing/Trader"},
 }
 for _,script in ipairs(scripts) do
     RequestScriptLoad(script)

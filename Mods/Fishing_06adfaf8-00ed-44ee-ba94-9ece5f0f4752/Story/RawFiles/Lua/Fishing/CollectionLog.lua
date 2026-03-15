@@ -27,6 +27,11 @@ local CollectionLog = {
            Text = "Displays all your caught fishes.",
            ContextDescription = [[Section tooltip]],
         },
+        Notification_KeybindHint = {
+            Handle = "hd1dc9edegf7e0g4c62g979fg09713480d863",
+            Text = "Press %s to open the Collection Log.",
+            ContextDescription = [[Notification hint; param is the keybind]],
+        },
         Label_Stats = {
             Handle = "he1ab927fg5d1dg42bcg89f7g2a77aa09ecc0",
             Text = "Stats",
@@ -361,6 +366,14 @@ function Section:__UpdateElement(_, slot, fish)
     slot:SetEnabled(wasCaught)
 end
 
+---Opens the Codex to the Fishing section.
+function CollectionLog.Show()
+    if not Codex.UI:IsVisible() then
+        Codex.UI:Show()
+        Codex.UI.SetSection(Section) -- Should be done after Show() else the UI's static elements will not yet be initialized.
+    end
+end
+
 ---------------------------------------------
 -- EVENT LISTENERS
 ---------------------------------------------
@@ -381,9 +394,6 @@ end, {StringID = "DefaultImplementation"})
 -- Toggle the UI when the keybind is used.
 Client.Input.Events.ActionExecuted:Subscribe(function (ev)
     if ev.Action.ID == InputActions.Open.ID then
-        if not Codex.UI:IsVisible() then
-            Codex.UI:Show()
-            Codex.UI.SetSection(Section) -- Should be done after Show() else the UI's static elements will not yet be initialized.
-        end
+        CollectionLog.Show()
     end
 end)

@@ -31,6 +31,7 @@ local scripts = {
             "Fishing/Skills/Scripts/TurnOnTheTides.lua",
         }
     },
+    {ScriptSet = "Fishing/Trader"},
 }
 for _,script in ipairs(scripts) do
     RequestScriptLoad(script)
