@@ -1,0 +1,8 @@
+
+new itemgroup "PIP_Fishing_FishingRods"
+
+add levelgroup 0,0,"All"
+add rootgroup "81cbf17f-cc71-4e09-9ab3-ca2a5cb0cefc",""
+add rootgroup "90cdb693-3564-415a-a8fa-4027b7f76f41",""
+add rootgroup "9fc3cb5f-894e-4783-9eef-fbceef0104b0",""
+add namegroup "Fishing Rod","",""

@@ -1,3 +1,9 @@
+
+new entry "PIP_Fishing_FishingRod"
+type "Weapon"
+using "TOOL_FishingRod_A"
+data "ItemGroup" "PIP_Fishing_FishingRods"
+
 new entry "PIP_Damage_Seaburn"
 type "Weapon"
 data "ModifierType" "Item"

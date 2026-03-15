@@ -16,6 +16,9 @@ local Skills = {
         ["Projectile_PIP_Fishing_CannonBall"] = "EarthSpecialist",
         ["Summon_PIP_Fishing_Swashbuckler"] = "Necromancy",
     },
+
+    TRADER_ROOTTEMPLATE = "a093021b-46fc-4b6d-87dc-21ea6fa535b7",
+
     TranslatedStrings = {
         Label_Skillbook = {
             Handle = "hc8b2f0aagf897g4d3bg93f1g4f653c89d697",
