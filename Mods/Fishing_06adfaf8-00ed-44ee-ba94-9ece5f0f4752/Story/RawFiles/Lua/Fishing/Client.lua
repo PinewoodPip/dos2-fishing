@@ -385,7 +385,7 @@ Input.Events.KeyPressed:Subscribe(function (ev)
             Fishing.ReelIn(char)
         end
     end
-end)
+end, {EnabledFunctor = GameState.IsInRunningSession})
 
 -- Add tooltip hints on how to use fishing rods.
 Tooltip.Hooks.RenderItemTooltip:Subscribe(function (ev)
