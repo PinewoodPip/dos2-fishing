@@ -51,6 +51,16 @@ Tooltip.Hooks.RenderAbilityTooltip:Subscribe(function (ev)
         local header = tooltip:GetFirstElement("StatName")
         local description = tooltip:GetFirstElement("AbilityDescription")
         local baseValueLabel = tooltip:GetFirstElement("StatsBaseValue")
+        if not baseValueLabel then
+            baseValueLabel = {
+                Type = "StatsBaseValue",
+                Label = ""
+            }
+            tooltip:InsertElement(baseValueLabel)
+        end
+
+        -- Clear other elements (to avoid leakage of extra ones from the vanilla tooltip)
+        tooltip.Elements = {header, description, baseValueLabel}
 
         -- Edit tooltip
         header.Label = TSK.Label_SchoolName:GetString()
