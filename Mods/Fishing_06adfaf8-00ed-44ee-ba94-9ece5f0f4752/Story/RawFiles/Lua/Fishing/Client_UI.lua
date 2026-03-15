@@ -1,5 +1,7 @@
 local Generic = Client.UI.Generic
 local TextPrefab = Generic.GetPrefab("GenericUI_Prefab_Text")
+local PlayerInfo = Client.UI.PlayerInfo
+local Minimap = Client.UI.Minimap
 local V = Vector.Create
 
 ---@class Features.Fishing
@@ -24,7 +26,13 @@ UI.OPEN_TWEEN = {
         scaleY = 1,
     },
 }
-UI.OVERFLOW_PADDING = 100 -- Extra height added when calculating bottom screen overflow of the UI, in pixels.
+-- Extra margin when preventing the UI from overflowing the screen.
+UI.OVERFLOW_MARGINS = {
+    BOTTOM = 200,
+    RIGHT = 150,
+    LEFT = 50,
+    CHARACTER_Y = 60,
+}
 
 UI.Elements = {} -- Holds references to various important elements of the UI.
 
@@ -96,7 +104,7 @@ function UI.Start(char)
     fish:SetState(initialState)
     fish:GetState().Position = UI.GetBobberUpperBound() / 2
 
-    UI.SnapToCursor()
+    UI.UpdatePosition()
     UI.UpdateProgressBar()
     UI.UpdateFishIcon()
     UI.UpdateTutorialText()
@@ -110,9 +118,10 @@ function UI.Start(char)
 end
 
 ---Returns the minigame state model.
----@return Features.Fishing.GameStates.Fishing
+---@return Features.Fishing.GameStates.Fishing?
 function UI.GetGameState()
     local char = Character.Get(UI._CharacterHandle)
+    if not char then return nil end
     local state = Fishing.GetState(char) ---@cast state Features.Fishing.GameStates.Fishing
     return state
 end
@@ -216,16 +225,50 @@ function UI.UpdateTutorialText()
     element:SetVisible(UI.IsTutorial())
 end
 
-function UI.SnapToCursor()
-    local cursorX, cursorY = Client.GetMousePosition()
-    local vp = Ext.UI.GetViewportSize()
-    local x, y = cursorX, cursorY
+---Updates the UI's position to stay by the character.
+function UI.UpdatePosition()
+    local uiScale = UI:GetUI():GetUIScaleMultiplier()
+    local viewport = Ext.UI.GetViewportSize()
+    local screenW, screenH = viewport[1], viewport[2]
+    local MARGINS = UI.OVERFLOW_MARGINS
 
-    -- Prevent the UI from overflowing through the bottom of the screen
-    local yOverflow = math.max(0, y + UI.SIZE[2] - vp[2])
+    -- Position the UI to the right of the character, if possible
+    local char = UI.GetCharacter()
+    local charPos = char.WorldPos
+    local charScreenPos = Client.WorldPositionToScreen(charPos)
+    local x, y = table.unpack(charScreenPos)
+    x = x + (UI.SIZE[1] * 3) * uiScale
+    y = y - (UI.SIZE[2] / 2 + MARGINS.CHARACTER_Y) * uiScale
+
+    -- Prevent bottom overflow
+    local yOverflow = (y + uiScale * (UI.SIZE[2] + MARGINS.BOTTOM) - screenH)
+    yOverflow = math.max(0, yOverflow)
     y = y - yOverflow
 
-    UI:GetUI():SetPosition(x, y)
+    -- Prevent right overflow,
+    -- adding margin to avoid overlap with minimap
+    local rightMargin = UI.SIZE[1] + MARGINS.RIGHT
+    if Minimap:IsVisible() then
+        local mapFrame = Minimap:GetRoot().map_mc.frame_mc
+        rightMargin = rightMargin + mapFrame.width
+    end
+    local xOverflow = (x + uiScale * rightMargin - screenW)
+    xOverflow = math.max(0, xOverflow)
+    x = x - xOverflow
+
+    -- Prevent top overflow
+    y = math.max(0, y)
+
+    -- Prevent left overflow,
+    -- adding margin to avoid overlap with payer portraits
+    local dummyPortrait = PlayerInfo:GetRoot().player_array[0]
+    local leftMargin = 0
+    if dummyPortrait then -- Should always exist.
+        leftMargin = (dummyPortrait.frame_mc.x + dummyPortrait.frame_mc.width + MARGINS.LEFT) * uiScale
+    end
+    x = math.max(leftMargin, x)
+
+    UI:SetPosition(V(x // 1, y // 1))
 end
 
 ---@return number
@@ -312,6 +355,8 @@ end)
 function UI._OnTick(ev)
     -- Drain progress.
     UI.AddProgress(-UI.GetProgressDrain() * ev.DeltaTime / 1000)
+
+    UI.UpdatePosition()
 
     -- Exit the minigame if the client goes into dialogue.
     if Client.IsInDialogue() then
