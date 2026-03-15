@@ -17,6 +17,7 @@ Skills._SKILLBOOK_STRING_KEYS = {
     ["PIP_Fishing_Skillbook_ReelIn"] = "Target_PIP_Fishing_ReelIn",
     ["PIP_Fishing_Skillbook_CannonBall"] = "Projectile_PIP_Fishing_CannonBall",
     ["PIP_Fishing_Skillbook_Swashbuckler"] = "Summon_PIP_Fishing_Swashbuckler",
+    ["PIP_Fishing_Skillbook_DeployFishnets"] = "Projectile_PIP_Fishing_DeployFishnets",
 }
 
 ---------------------------------------------

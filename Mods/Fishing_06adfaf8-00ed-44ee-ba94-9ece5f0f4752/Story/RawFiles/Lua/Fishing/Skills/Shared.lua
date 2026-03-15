@@ -8,6 +8,7 @@ local Skills = {
     FISHERMANCY_SKILLS = {
         ["Projectile_PIP_Fishing_BlueFireball"] = "FireSpecialist",
         ["Shout_PIP_Fishing_Hornpipe"] = "WaterSpecialist",
+        ["Projectile_PIP_Fishing_DeployFishnets"] = "RangerLore",
         ["Target_PIP_Fishing_Sashimi"] = "RogueLore",
         ["Shout_PIP_Fishing_ReturnToCrab"] = "Polymorph",
         ["Shout_PIP_Fishing_WithTheCurrents"] = "AirSpecialist",
@@ -94,10 +95,22 @@ local Skills = {
             ContextDescription = [[Skill tooltip for "Return to Modernity"]],
             StringKey = "Shout_PIP_Fishing_ReturnToModernity_Description",
         },
+        Skill_DeployFishnets_DisplayName = {
+            Handle = "h322704d1gdaf7g46e1ga366g6edd7db52a6f",
+            Text = "Deploy Fishnets",
+            ContextDescription = [[Skill name]],
+            StringKey = "Projectile_PIP_Fishing_DeployFishnets_DisplayName",
+        },
+        Skill_DeployFishnets_Description = {
+            Handle = "h4b9d4d07g868eg49e0g8532g301e913d7012",
+            Text = "Reach for your equipment and deploy [1] fish nets at target positions. Each fish net takes 1 turn to activate; after arming, enemies approaching will trigger the fishnet, dealing [2] damage to enemies within [3], applying Disarmed for 1 turn and creating a web surface.",
+            ContextDescription = [[Skill tooltip for "Deploy Fishnets"]],
+            StringKey = "Projectile_PIP_Fishing_DeployFishnets_Description",
+        },
         Skill_CrabPinch_DisplayName = {
             Handle = "h01a13c16g65bag4241ga135g202f845fa140",
             Text = "Pinch & Punch",
-            ContextDescription = [[Skill name (for crab form))]],
+            ContextDescription = [[Skill name (for crab form)]],
             StringKey = "Target_PIP_Fishing_CrabPinch_DisplayName",
         },
         Skill_CrabPinch_Description = {
