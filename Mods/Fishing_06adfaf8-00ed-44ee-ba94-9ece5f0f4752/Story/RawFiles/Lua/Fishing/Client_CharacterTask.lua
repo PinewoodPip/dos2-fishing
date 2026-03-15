@@ -104,8 +104,7 @@ end
 function _Task:HasValidTargetPos()
     local char = Character.Get(self.CharacterHandle)
     local region = Fishing.GetRegionAt(char.WorldPos)
-    local isCursorByWater = Fishing.IsPositionNearWater(Pointer.GetWalkablePosition(), Fishing.WATER_CURSOR_SEARCH_RADIUS, region and region.FishableSurfaceType or nil)
-    return region ~= nil and (isCursorByWater or Fishing.CanFish(char))
+    return region ~= nil and (Fishing.CanFish(char))
 end
 
 function _Task:HasValidTarget()

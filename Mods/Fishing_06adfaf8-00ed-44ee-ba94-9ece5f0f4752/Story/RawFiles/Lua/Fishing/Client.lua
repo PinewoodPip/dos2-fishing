@@ -221,6 +221,13 @@ function Fishing.IsNearWater(char, searchRadius, waterSurface)
     return Fishing.IsPositionNearWater(Vector.Create(position), searchRadius, waterSurface)
 end
 
+---Returns whether the cursor is near a fishable surface.
+---@param region Features.Fishing.Region? If provided, the region's `FishableSurfaceType` will be used instead of "Deepwater".
+function Fishing.IsCursorNearWater(region)
+    local surface = region and region.FishableSurfaceType or nil
+    return Fishing.IsPositionNearWater(Pointer.GetWalkablePosition(), Fishing.CURSOR_WATER_SEARCH_RADIUS, surface)
+end
+
 ---Returns whether a position is near a Deepwater surface.
 ---@param position Vector3D
 ---@param searchRadius number? Defaults to WATER_SEARCH_RADIUS.
@@ -329,6 +336,7 @@ Fishing.Hooks.CanStartFishing:Subscribe(function (ev)
     local char = ev.Character
     local reason
 
+    -- Check prerequisites
     if Fishing.IsFishing(char) then
         reason = TSK.Notification_CantFish_AlreadyFishing:GetString()
     elseif Client.IsInCombat() or Client.IsInDialogue() then
@@ -339,28 +347,33 @@ Fishing.Hooks.CanStartFishing:Subscribe(function (ev)
         reason = TSK.Notification_CantFish_RodSheathed:GetString()
     end
 
-    -- Check if the player and cursor area near water
+    -- Check if the player and cursor are near water
+    local charNearWater = Fishing.IsNearWater(char, Fishing.WATER_MAX_DISTANCE, ev.Region.FishableSurfaceType)
+    local canFish = charNearWater and Fishing.IsCursorNearWater(ev.Region)
+
+    -- Check for manually-defined fishing areas
     local cursorPos = Pointer.GetWalkablePosition()
-    local charNearWater = Fishing.IsNearWater(char, nil, ev.Region.FishableSurfaceType)
-    local canFish = charNearWater and Fishing.IsPositionNearWater(cursorPos, nil, ev.Region.FishableSurfaceType)
-    if not canFish and ev.Region.FishingAreas then -- Check for manually defined fishing areas
-        local charPos = V(char.WorldPos[1], char.WorldPos[3])
-        local cursorPos2D = V(cursorPos[1], cursorPos[3])
-        local cursorX, cursorY = cursorPos2D[1], cursorPos2D[2]
-        local distanceToCursor = Vector.GetLength(cursorPos2D - charPos)
-        if distanceToCursor <= Fishing.WATER_MAX_DISTANCE then
-            -- Check if the cursor is within any of the fishing areas defined for the region.
-            for _,bounds in ipairs(ev.Region.FishingAreas) do
-                local boundsX, boundsY, w, h = table.unpack(bounds)
-                if cursorX >= boundsX and cursorX <= boundsX + w and cursorY >= boundsY and cursorY <= boundsY + h then
-                    canFish = true
-                    break
-                end
+    local cursorPos2D = V(cursorPos[1], cursorPos[3])
+    local cursorX, cursorY = cursorPos2D[1], cursorPos2D[2]
+    if not canFish and ev.Region.FishingAreas then
+        -- Check if the cursor is within any of the fishing areas defined for the region.
+        for _,bounds in ipairs(ev.Region.FishingAreas) do
+            local boundsX, boundsY, boundsW, boundsH = table.unpack(bounds)
+            if cursorX >= boundsX and cursorX <= boundsX + boundsW and cursorY >= boundsY and cursorY <= boundsY + boundsH then
+                canFish = true
+                break
             end
         end
     end
     if not canFish then
         reason = TSK.Notification_CantFish_NoWater:GetString()
+    end
+
+    -- Check distance to target fishing point
+    local charPos = V(char.WorldPos[1], char.WorldPos[3])
+    local distanceToCursor = Vector.GetLength(cursorPos2D - charPos)
+    if distanceToCursor > Fishing.WATER_MAX_DISTANCE then
+        reason = TSK.Notification_CantFish_TooFar:GetString()
     end
 
     if reason then

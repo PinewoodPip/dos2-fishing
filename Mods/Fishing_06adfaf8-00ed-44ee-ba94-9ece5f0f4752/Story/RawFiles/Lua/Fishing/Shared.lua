@@ -28,14 +28,15 @@ local Fishing = {
         "90cdb693-3564-415a-a8fa-4027b7f76f41", -- HAR_FishingRod_B, classic red/white bobber
         "9fc3cb5f-894e-4783-9eef-fbceef0104b0", -- HAR_FishingRod_C, red/yellow lure
     }),
-    WATER_SEARCH_RADIUS = 1.5,
     ---@type set<GUID>
     FISHING_ROD_VISUAL_TEMPLATES = {
         ["c7639619-4c44-44a3-af53-81275a80af15"] = true, -- Green bobber.
         ["483ecb63-b01a-4452-be65-904d9ff03554"] = true, -- Red/white bobber.
         ["5a14df6e-8e63-425c-9802-1916d630212e"] = true, -- Yellow bobber.
     },
-    WATER_MAX_DISTANCE = 3.5, -- Distance to water (or fishing areas) that a character must be within for fishing to be available.
+    WATER_SEARCH_RADIUS = 2.5,
+    CURSOR_WATER_SEARCH_RADIUS = 1.0,
+    WATER_MAX_DISTANCE = 7.5, -- Distance to water (or fishing areas) that a character must be within for fishing to be available.
 
     ABILITY_SCHOOL_COLOR = "86a4f7", ---@type htmlcolor
     ABILITY_SCHOOL_FISH_PER_LEVEL = 15, -- Amount of fish that has to be caught per level in the Fishermancy ability.
@@ -148,6 +149,11 @@ local Fishing = {
             Handle = "hb5bdc55ag49edg402ega177g0a6cf897eb0a",
             Text = "I'm not close enough to water to fish.",
             ContextDescription = [[Notification when trying to fish without being near water]],
+        },
+        Notification_CantFish_TooFar = {
+            Handle = "ha875440cgfcb2g4231g8747gca7fe6c661d9",
+            Text = "That's too far for my fishing rod!",
+            ContextDescription = [[Notification when trying to fish too far from the character]],
         },
         Notification_CantFish_NoRod = {
             Handle = "h55b1d5a2g90b8g4bbfga67egb3350374edb4",
