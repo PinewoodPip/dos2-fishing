@@ -15,6 +15,7 @@ local Skills = {
         ["Target_PIP_Fishing_ReelIn"] = "WarriorLore",
         ["Projectile_PIP_Fishing_CannonBall"] = "EarthSpecialist",
         ["Summon_PIP_Fishing_Swashbuckler"] = "Necromancy",
+        ["Shout_PIP_Fishing_TurnOnTheTides"] = "Summoning",
     },
 
     TRADER_ROOTTEMPLATE = "a093021b-46fc-4b6d-87dc-21ea6fa535b7",
@@ -193,6 +194,30 @@ local Skills = {
             Text = "Create a cursed water surface and apply With the Currents to yourself, summoning a ring of fish around you that will bite enemies that move or are moved within [1] of you, dealing [2], applying Seaburn and creating a cursed water surface.",
             ContextDescription = [[Skill tooltip for "With the Currents"]],
             StringKey = "Shout_PIP_Fishing_WithTheCurrents_Description",
+        },
+        Skill_TurnOnTheTides_DisplayName = {
+            Handle = "hc021a1a9gce11g4ed7g8b55g7599019f12b7",
+            Text = "Turn on The Tides",
+            ContextDescription = [[Skill name]],
+            StringKey = "Shout_PIP_Fishing_TurnOnTheTides_DisplayName",
+        },
+        Skill_TurnOnTheTides_Description = {
+            Handle = "ha3dd6e66g284fg4550ga6edgb98c7721f660",
+            Text = "Apply Turned On Tides to allied summons, causing them to splash a burst of water at the start of their turns, dealing [1] within [2].",
+            ContextDescription = [[Skill tooltip for "Turn on The Tides"]],
+            StringKey = "Shout_PIP_Fishing_TurnOnTheTides_Description",
+        },
+        Status_TurnOnTheTides_DisplayName = {
+            Handle = "h146da339gbae2g453dgb25bgb8d1d4d73b12",
+            Text = "Turned On Tides",
+            ContextDescription = [[Status name]],
+            StringKey = "PIP_Fishing_TurnOnTheTides_DisplayName",
+        },
+        Status_TurnOnTheTides_Description = {
+            Handle = "h6fd8b98bg7685g4a8dgaa29g894ee2c1b003",
+            Text = "Character causes a burst of waves at the start of their turn, dealing water damage to enemies near them.",
+            ContextDescription = [[Tooltip for "Turned On Tides" status]],
+            StringKey = "PIP_Fishing_TurnOnTheTides_Description",
         },
         Status_CrabForm_DisplayName = {
             Handle = "h246a2d29g33b1g4befgb733g2dea55daefae",

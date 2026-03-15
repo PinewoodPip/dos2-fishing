@@ -19,6 +19,8 @@ new subtable "1,1"
 object category "I_PIP_Fishing_Skillbook_Swashbuckler",1,0,0,0,0,0,0,0
 new subtable "1,1"
 object category "I_PIP_Fishing_Skillbook_DeployFishnets",1,0,0,0,0,0,0,0
+new subtable "1,1"
+object category "I_PIP_Fishing_Skillbook_TurnOnTheTides",1,0,0,0,0,0,0,0
 
 new treasuretable "ST_PIP_Fishing_FishingRodTrader"
 MinLevel "-30"

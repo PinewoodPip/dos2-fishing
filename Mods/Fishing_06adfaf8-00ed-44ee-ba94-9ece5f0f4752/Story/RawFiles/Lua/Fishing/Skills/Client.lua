@@ -11,6 +11,7 @@ local TSK = Skills.TranslatedStrings
 Skills._SKILLBOOK_STRING_KEYS = {
     ["PIP_Fishing_Skillbook_BlueFireBall"] = "Projectile_PIP_Fishing_BlueFireball",
     ["PIP_Fishing_Skillbook_Hornpipe"] = "Shout_PIP_Fishing_Hornpipe",
+    ["PIP_Fishing_Skillbook_TurnOnTheTides"] = "Shout_PIP_Fishing_TurnOnTheTides",
     ["PIP_Fishing_Skillbook_Sashimi"] = "Target_PIP_Fishing_Sashimi",
     ["PIP_Fishing_Skillbook_ReturnToCrab"] = "Shout_PIP_Fishing_ReturnToCrab",
     ["PIP_Fishing_Skillbook_WithTheCurrents"] = "Shout_PIP_Fishing_WithTheCurrents",
