@@ -1,5 +1,5 @@
 
-local Fishing = Epip.GetFeature("Features.Fishing")
+local Fishing = GetFeature("Features.Fishing")
 
 ---@class Features.Fishing.Runes : Feature
 local Runes = {
@@ -37,7 +37,7 @@ local Runes = {
         },
     }
 }
-Epip.RegisterFeature("Fishing.Runes", Runes)
+RegisterFeature("Fishing.Runes", Runes)
 
 ---Returns whether value is an extender Item object.
 ---@param value any

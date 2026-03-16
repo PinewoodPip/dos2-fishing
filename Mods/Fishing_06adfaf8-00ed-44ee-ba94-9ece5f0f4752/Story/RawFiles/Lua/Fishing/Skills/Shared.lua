@@ -1,5 +1,5 @@
 
-local Fishing = Epip.GetFeature("Features.Fishing")
+local Fishing = GetFeature("Features.Fishing")
 
 ---@class Features.Fishing.Skills : Feature
 local Skills = {
@@ -285,7 +285,7 @@ local Skills = {
         },
     },
 }
-Epip.RegisterFeature("Fishing", "Features.Fishing.Skills", Skills)
+RegisterFeature("Features.Fishing.Skills", Skills)
 
 ---------------------------------------------
 -- CUSTOM REQUIREMENTS

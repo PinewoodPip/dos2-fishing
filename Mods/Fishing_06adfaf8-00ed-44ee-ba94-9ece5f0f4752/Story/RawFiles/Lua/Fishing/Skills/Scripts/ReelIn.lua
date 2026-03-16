@@ -1,8 +1,8 @@
 
-local Fishing = Epip.GetFeature("Features.Fishing")
+local Fishing = GetFeature("Features.Fishing")
 
 ---@class Features.Fishing.Skills
-local Skills = Epip.GetFeature("Fishing", "Features.Fishing.Skills")
+local Skills = GetFeature("Features.Fishing.Skills")
 
 Skills.REEL_IN_TUNING = {
     DAMAGE_ON_MOVE_STATUS = "PIP_Fishing_ReelIn_ScriptedForceMoveDamage",

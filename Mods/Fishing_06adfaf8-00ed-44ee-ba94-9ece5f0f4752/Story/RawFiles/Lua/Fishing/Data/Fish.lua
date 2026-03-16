@@ -1,5 +1,5 @@
 
-local Fishing = Epip.GetFeature("Features.Fishing")
+local Fishing = GetFeature("Features.Fishing")
 
 ---Utility method to register translated strings for a fish.
 local T = function(tsk)

@@ -1,8 +1,8 @@
 
 local Tooltip = Client.Tooltip
-local Fishing = Epip.GetFeature("Features.Fishing")
+local Fishing = GetFeature("Features.Fishing")
 
-local Runes = Epip.GetFeature("Features.Fishing.Runes")
+local Runes = GetFeature("Features.Fishing.Runes")
 local TSK = Runes.TranslatedStrings
 
 -- Maps fish ID to map of rune tiers to additional text to show within the rune power tooltip.

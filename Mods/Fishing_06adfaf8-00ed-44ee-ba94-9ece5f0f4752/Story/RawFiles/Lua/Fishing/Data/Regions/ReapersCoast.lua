@@ -1,7 +1,7 @@
 
 local V = Vector.Create
 
-local Fishing = Epip.GetFeature("Features.Fishing")
+local Fishing = GetFeature("Features.Fishing")
 
 ---Utility method to register translated strings for a region.
 local T = function(tsk)

@@ -1,10 +1,10 @@
 
-local CollectionLog = Epip.GetFeature("Features.Fishing.Codex.CollectionLog")
+local CollectionLog = GetFeature("Features.Fishing.CollectionLog")
 local Notification = Client.UI.Notification
 local Input = Client.Input
 
 ---@class Features.Fishing.Trader
-local Trader = Epip.GetFeature("Fishing", "Features.Fishing.Trader")
+local Trader = GetFeature("Features.Fishing.Trader")
 
 ---------------------------------------------
 -- EVENT LISTENERS

@@ -9,4 +9,4 @@ local Trader = {
     DIALOG_ID = "PIP_Pip_FortJoy",
     NETMSG_OPEN_CODEX = "Fishing.NetMsgs.Trader.OpenCodex",
 }
-Epip.RegisterFeature("Fishing", "Features.Fishing.Trader", Trader)
+RegisterFeature("Features.Fishing.Trader", Trader)

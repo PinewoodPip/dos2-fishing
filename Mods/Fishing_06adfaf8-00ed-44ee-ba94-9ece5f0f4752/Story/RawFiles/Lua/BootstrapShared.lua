@@ -1,5 +1,6 @@
 
 Mod.GUIDS.FISHING = "06adfaf8-00ed-44ee-ba94-9ece5f0f4752"
+MODTABLE_ID = "Fishing"
 
 local PREFIXED_GUID = "Fishing_06adfaf8-00ed-44ee-ba94-9ece5f0f4752"
 local EE_CORE_GUID = "63bb9b65-2964-4c10-be5b-55a63ec02fa0"
@@ -62,4 +63,19 @@ function RequestScriptLoad(script)
     elseif type(script) == "string" then
         return Ext.Require(PREFIXED_GUID, script)
     end
+end
+
+---Wrapper for registering Epip features.
+---@param featureID string
+---@param feature Feature
+function RegisterFeature(featureID, feature)
+    Epip.RegisterFeature(MODTABLE_ID, featureID, feature)
+end
+
+---Wrappers for fetching Fishing features from Epip.
+---@generic T
+---@param featureID `T`
+---@return T
+function GetFeature(featureID)
+    return Epip.GetFeature(MODTABLE_ID, featureID)
 end

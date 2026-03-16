@@ -5,7 +5,7 @@ local Minimap = Client.UI.Minimap
 local V = Vector.Create
 
 ---@class Features.Fishing
-local Fishing = Epip.GetFeature("Features.Fishing")
+local Fishing = GetFeature("Features.Fishing")
 local UI = Generic.Create("Features.Fishing") ---@class Features.Fishing.UI : GenericUI_Instance
 Fishing.UI = UI
 UI:Hide()

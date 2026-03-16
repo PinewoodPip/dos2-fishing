@@ -4,7 +4,7 @@
 -- If modding, there's no need to fiddle with this, instead overwrite the stats objects as usual.
 ---------------------------------------------
 
-local Fishing = Epip.GetFeature("Features.Fishing")
+local Fishing = GetFeature("Features.Fishing")
 
 local MAX_RUNE_TIER = 3
 

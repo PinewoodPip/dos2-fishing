@@ -3,7 +3,7 @@ local Tooltip = Client.Tooltip
 local Input = Client.Input
 
 ---@class Features.Fishing
-local Fishing = Epip.GetFeature("Features.Fishing")
+local Fishing = GetFeature("Features.Fishing")
 Fishing._CharacterTasks = {} ---@type table<CharacterHandle, Features.Fishing.CharacterTask>
 
 ---@class Features.Fishing.CharacterTask : UserspaceCharacterTaskCallbacks

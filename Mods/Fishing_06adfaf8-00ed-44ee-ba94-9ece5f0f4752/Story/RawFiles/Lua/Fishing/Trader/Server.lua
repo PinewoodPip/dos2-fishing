@@ -1,8 +1,8 @@
 
-local Fishing = Epip.GetFeature("Features.Fishing")
+local Fishing = GetFeature("Features.Fishing")
 
 ---@class Features.Fishing.Trader
-local Trader = Epip.GetFeature("Fishing", "Features.Fishing.Trader")
+local Trader = GetFeature("Features.Fishing.Trader")
 
 ---------------------------------------------
 -- EVENT LISTENERS

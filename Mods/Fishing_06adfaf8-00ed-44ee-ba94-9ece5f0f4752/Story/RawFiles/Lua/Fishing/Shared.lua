@@ -233,7 +233,7 @@ local Fishing = {
         IsFishingRod = {}, ---@type Event<Features.Fishing.Hooks.IsFishingRod>
     },
 }
-Epip.RegisterFeature("Fishing", Fishing)
+RegisterFeature("Fishing", Fishing)
 local TSK = Fishing.TranslatedStrings
 
 Fishing:RegisterModVariable(Mod.GUIDS.FISHING, Fishing.MODVAR_UNIQUE_FISH_CAUGHT, {

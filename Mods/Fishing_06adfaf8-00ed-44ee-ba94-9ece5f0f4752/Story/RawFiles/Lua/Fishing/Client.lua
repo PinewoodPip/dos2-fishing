@@ -7,7 +7,7 @@ local Input = Client.Input
 local V = Vector.Create
 
 ---@class Features.Fishing
-local Fishing = Epip.GetFeature("Features.Fishing")
+local Fishing = GetFeature("Features.Fishing")
 local TSK = Fishing.TranslatedStrings
 Fishing.FISHING_ROD_RARITY_COLOR = Color.LARIAN.BLUE
 Fishing.SKILL_ABILITY_ICON = "PIP_Fishing_SkillAbility"
@@ -311,7 +311,7 @@ Fishing.Events.CharacterStoppedFishing:Subscribe(function (ev)
 
         -- Show a hint on how to open the collection log the first time you catch each type of fish.
         if Fishing.GetFishCatchCount(char, ev.CaughtFish:GetID()) == 1 then
-            local CollectionLog = Epip.GetFeature("Features.Fishing.Codex.CollectionLog")
+            local CollectionLog = GetFeature("Features.Fishing.CollectionLog")
             local keybinds = Input.GetActionBindings(CollectionLog.InputActions.OpenCollectionLog.ID)
             local keybind = keybinds[1]
             if keybind then
@@ -352,7 +352,7 @@ Fishing.Hooks.CanStartFishing:Subscribe(function (ev)
     local canFish = charNearWater and Fishing.IsCursorNearWater(ev.Region)
 
     -- Check for manually-defined fishing areas
-    local cursorPos = Pointer.GetWalkablePosition()
+    local cursorPos = Fishing.GetCastingPosition()
     local cursorPos2D = V(cursorPos[1], cursorPos[3])
     local cursorX, cursorY = cursorPos2D[1], cursorPos2D[2]
     if not canFish and ev.Region.FishingAreas then
@@ -423,7 +423,7 @@ end)
 Tooltip.Hooks.RenderItemTooltip:Subscribe(function (ev)
     local fish = Fishing.GetFishByTemplate(ev.Item.RootTemplate.Id)
     if fish then
-        local Runes = Epip.GetFeature("Features.Fishing.Runes") -- TODO it's dirty that we have to fetch the feature here
+        local Runes = GetFeature("Features.Fishing.Runes") -- TODO it's dirty that we have to fetch the feature here
         local tooltip = ev.Tooltip
         local runeTier = Runes.GetFishRuneTier(ev.Item)
 

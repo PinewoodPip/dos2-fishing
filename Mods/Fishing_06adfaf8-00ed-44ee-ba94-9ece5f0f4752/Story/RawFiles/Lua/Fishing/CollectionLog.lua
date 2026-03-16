@@ -11,7 +11,7 @@ local HotbarSlot = Generic.GetPrefab("GenericUI_Prefab_HotbarSlot")
 local LabelPrefab = Generic.GetPrefab("GenericUI.Prefabs.FormLabel")
 local Icons = Epip.GetFeature("Feature_GenericUITextures").ICONS
 local CommonStrings = Text.CommonStrings
-local Fishing = Epip.GetFeature("Features.Fishing")
+local Fishing = GetFeature("Features.Fishing")
 local V = Vector.Create
 
 ---@class Features.Fishing.CollectionLog : Feature
@@ -103,7 +103,7 @@ local CollectionLog = {
         IsFishVisible = {}, ---@type Hook<Features.Fishing.CollectionLog.Hooks.IsFishVisible>
     }
 }
-Epip.RegisterFeature("Features.Fishing.Codex.CollectionLog", CollectionLog)
+RegisterFeature("Features.Fishing.Codex.CollectionLog", CollectionLog)
 local TSK = CollectionLog.TranslatedStrings
 
 local InputActions = {

@@ -1,9 +1,9 @@
 
-local Fishing = Epip.GetFeature("Features.Fishing")
+local Fishing = GetFeature("Features.Fishing")
 local Tooltip = Client.Tooltip
 
 ---@class Features.Fishing.Skills
-local Skills = Epip.GetFeature("Fishing", "Features.Fishing.Skills")
+local Skills = GetFeature("Features.Fishing.Skills")
 local TSK = Skills.TranslatedStrings
 
 -- Maps skillbook string key to its Fishermancy skill.

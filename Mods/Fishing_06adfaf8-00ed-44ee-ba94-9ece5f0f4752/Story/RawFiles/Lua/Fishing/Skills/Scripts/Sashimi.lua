@@ -1,8 +1,8 @@
 
-local Fishing = Epip.GetFeature("Features.Fishing")
+local Fishing = GetFeature("Features.Fishing")
 
 ---@class Features.Fishing.Skills
-local Skills = Epip.GetFeature("Fishing", "Features.Fishing.Skills")
+local Skills = GetFeature("Features.Fishing.Skills")
 
 ---@type GUID.ItemTemplate[]
 Skills.SASHIMI_TEMPLATES = {

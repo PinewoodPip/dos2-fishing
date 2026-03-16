@@ -1,9 +1,9 @@
 
 ---@diagnostic disable-next-line: unused-local
-local Fishing = Epip.GetFeature("Features.Fishing")
+local Fishing = GetFeature("Features.Fishing")
 
 ---@class Features.Fishing.Skills
-local Skills = Epip.GetFeature("Fishing", "Features.Fishing.Skills")
+local Skills = GetFeature("Features.Fishing.Skills")
 
 Skills.TURN_ON_THE_TIDES_TUNING = {
     BURST_PROJECTILE = "Projectile_PIP_Fishing_TurnOnTheTides_ScriptedDamage",

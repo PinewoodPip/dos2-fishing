@@ -1,6 +1,6 @@
 
 ---@class Features.Fishing.UI
-local UI = Epip.GetFeature("Features.Fishing").UI
+local UI = GetFeature("Features.Fishing").UI
 
 ---------------------------------------------
 -- STATE

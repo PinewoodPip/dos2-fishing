@@ -2,7 +2,7 @@
 local V = Vector.Create
 
 ---@class Features.Fishing
-local Fishing = Epip.GetFeature("Features.Fishing")
+local Fishing = GetFeature("Features.Fishing")
 local TSK = Fishing.TranslatedStrings
 
 ---@type table<CharacterHandle, {TargetPosition: Vector3, ReelingIn: boolean}>

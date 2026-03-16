@@ -1,5 +1,5 @@
 
-local Fishing = Epip.GetFeature("Features.Fishing")
+local Fishing = GetFeature("Features.Fishing")
 
 ---@diagnostic disable-next-line: duplicate-doc-alias
 ---@alias Features.Fishing.Fish.BehaviourType "Chill"|"Aggressive"|"Sinker"|"Floater"|"Unpredictable"

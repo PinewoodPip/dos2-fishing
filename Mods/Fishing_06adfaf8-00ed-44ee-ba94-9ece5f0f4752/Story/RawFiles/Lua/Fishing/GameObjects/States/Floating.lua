@@ -1,5 +1,5 @@
 
-local Fishing = Epip.GetFeature("Features.Fishing")
+local Fishing = GetFeature("Features.Fishing")
 local UI = Fishing.UI ---@class Features.Fishing.UI
 local StateClass = Fishing:GetClass("Features.Fishing.GameObject.Fish.State")
 

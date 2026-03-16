@@ -3,7 +3,7 @@ local CharacterSheet = Client.UI.CharacterSheet
 local TooltipUI = Client.UI.Tooltip
 local Tooltip = Client.Tooltip
 
-local Fishing = Epip.GetFeature("Features.Fishing")
+local Fishing = GetFeature("Features.Fishing")
 local TSK = Fishing.TranslatedStrings
 
 Fishing.TSKHANDLE_BASE_VALUE_LABEL = "hbb9884d7g3b9ag43dfga88egdcc32db8bd74" -- "Base: [1]"

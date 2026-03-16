@@ -1,6 +1,6 @@
 
 ---@class Features.Fishing.Skills
-local Skills = Epip.GetFeature("Fishing", "Features.Fishing.Skills")
+local Skills = GetFeature("Features.Fishing.Skills")
 
 ---------------------------------------------
 -- METHODS
