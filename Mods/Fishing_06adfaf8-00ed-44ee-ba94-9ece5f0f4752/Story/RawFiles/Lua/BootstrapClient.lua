@@ -47,6 +47,7 @@ local scripts = {
     {ScriptSet = "Fishing/Runes"},
     {ScriptSet = "Fishing/Skills"},
     {ScriptSet = "Fishing/Trader"},
+    "Fishing/ControllerSupportWarning/Client.lua",
 }
 for _,script in ipairs(scripts) do
     RequestScriptLoad(script)
