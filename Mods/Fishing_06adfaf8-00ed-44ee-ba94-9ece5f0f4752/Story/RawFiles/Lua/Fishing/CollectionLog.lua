@@ -16,6 +16,15 @@ local V = Vector.Create
 
 ---@class Features.Fishing.CollectionLog : Feature
 local CollectionLog = {
+    -- Order in which to display levels in the region source tooltips.
+    -- Unspecified levels will be sorted alphabetically afterwards.
+    LEVEL_ORDER = {
+        "FJ_FortJoy_Main",
+        "RC_Main",
+        -- TODO Lady Vengeance
+        "CoS_Main",
+        "ARX_Main",
+    },
     TranslatedStrings = {
         Section_Name = {
             Handle = "hcdbc8107gbb79g4850gba76g447a5d916989",
@@ -43,9 +52,9 @@ local CollectionLog = {
             ContextDescription = [[Header in codex section]],
         },
         Label_RegionsHint = {
-            Handle = "h82ff869cg637eg465eg8448g3636c792b4cb",
-            Text = "Found in %s.",
-            ContextDescription = [[Codex tooltip for the regions a fish can be found in; param is comma-separated list of regions]],
+            Handle = "h11091fbeg8bafg4be2gb697g9a365ba43e38",
+            Text = "——— Habitats ———",
+            ContextDescription = [[Header in fish tooltip]],
         },
         Label_UnknownRegions = {
             Handle = "h7f0018a1g7b0dg4312g93c7gb8cb445331cc",
@@ -103,7 +112,7 @@ local CollectionLog = {
         IsFishVisible = {}, ---@type Hook<Features.Fishing.CollectionLog.Hooks.IsFishVisible>
     }
 }
-RegisterFeature("Features.Fishing.Codex.CollectionLog", CollectionLog)
+RegisterFeature("Features.Fishing.CollectionLog", CollectionLog)
 local TSK = CollectionLog.TranslatedStrings
 
 local InputActions = {
@@ -179,33 +188,74 @@ function CollectionLog.GetFishTooltip(fishID)
     local fish = Fishing.GetFish(fishID)
     local tooltip = table.shallowCopy(fish:GetTooltip())
 
-    -- Get discovered regions with the fish
+    -- Group fish regions by level and gather discovered region names
     local regions = Fishing.GetFishRegions(fishID)
-    local regionNames = {}
-    local anyRegionDiscovered = false
+    local regionsByLevel = {} ---@type table<string, {LevelName: string, Regions: string[]}>
     for _,region in pairs(regions) do
+        local levelID = region.LevelID
+        if not regionsByLevel[levelID] then
+            regionsByLevel[levelID] = {
+                LevelName = Fishing.GetLevelName(levelID),
+                Regions = {},
+            }
+        end
+        local levelEntry = regionsByLevel[levelID]
         local isDiscovered = Fishing.IsRegionDiscovered(region.ID)
-        local regionName = isDiscovered and Text.GetTranslatedString(region.NameHandle) or "???" -- Only show known regions, but tease additional ones.
-        table.insert(regionNames, regionName)
-        anyRegionDiscovered = anyRegionDiscovered or isDiscovered
+        table.insert(levelEntry.Regions, isDiscovered and Fishing.GetRegionName(region) or "???")
     end
 
-    -- Add regions tooltip
-    if anyRegionDiscovered then
-        table.sort(regionNames, function (a, b) return a < b end) -- Sort alphabetically
-        local regionsString = table.concat(regionNames, ", ")
+    -- Sort by level
+    local levelOrder = {}
+    for levelID,_ in pairs(regionsByLevel) do
+        table.insert(levelOrder, levelID)
+    end
+    table.sort(levelOrder, function (a, b)
+        local aIndex = table.reverseLookup(CollectionLog.LEVEL_ORDER, a)
+        local bIndex = table.reverseLookup(CollectionLog.LEVEL_ORDER, b)
+        if aIndex and bIndex then -- Sort both by specified order
+            return aIndex < bIndex
+        elseif aIndex then
+            return true
+        elseif bIndex then
+            return false
+        else -- Sort by name
+            return a < b
+        end
+    end)
+
+    -- Build per-level region source labels
+    local levelLines = {}
+    for _,levelID in ipairs(levelOrder) do
+        local levelEntry = regionsByLevel[levelID]
+        table.sort(levelEntry.Regions, function (a, b) return a < b end)
+        local regionsString = table.concat(levelEntry.Regions, ", ")
+        table.insert(levelLines, Text.Format("%s: %s", {
+            FormatArgs = {
+                Text.Format(levelEntry.LevelName, {
+                    FontType = Text.FONTS.BOLD,
+                }),
+                regionsString,
+            },
+        }))
+    end
+
+    -- Build tooltip element
+    local linesString = table.concat(levelLines, "<br>")
+    local habitatHeader = TSK.Label_RegionsHint:Format({
+            Color = Color.LARIAN.GREEN,
+            Align = "Center",
+        })
+    if linesString ~= "" then
+        -- Note: manual line break is not necessary as it's inserted by the center-align.
         local regionElement = {
             Type = "SkillDescription",
-            Label = TSK.Label_RegionsHint:Format({
-                FontType = Text.FONTS.ITALIC,
-                FormatArgs = {regionsString},
-            }),
+            Label = habitatHeader .. linesString,
         }
         table.insert(tooltip.Elements, regionElement)
     else -- Habitats completely unknown
         local regionElement = {
             Type = "SkillDescription",
-            Label = TSK.Label_UnknownRegions:Format({
+            Label = habitatHeader .. TSK.Label_UnknownRegions:Format({
                 FontType = Text.FONTS.ITALIC,
             }),
         }

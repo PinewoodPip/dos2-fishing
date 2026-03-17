@@ -270,6 +270,16 @@ Fishing.RUNE_TIER_PREFIXES = {
     [3] = TSK.Label_RuneTierPrefix_Tier3,
 }
 
+-- Maps level IDs to their name TSK handles.
+-- We cannot fetch anything but the current level,
+-- thus this extra table is necessary.
+Fishing.LEVEL_NAME_TSKHANDLES = {
+    ["FJ_FortJoy_Main"] = "h0d7789e0g8140g4391g8511gc41a2ad8a476", -- "Fort Joy"
+    ["RC_Main"] = "he5f965fdg9423g4699g87d0g4af1b2e155b6", -- "Reaper's Coast"
+    ["CoS_Main"] = "h3a427261gf3cbg489fgb36agf90c6fc1844b", -- "The Nameless Isle"
+    ["ARX_Main"] = "hd8971510g1ba0g4b01gad48g6aa3600195e4", -- "Arx"
+}
+
 ---------------------------------------------
 -- EVENTS
 ---------------------------------------------
@@ -510,6 +520,26 @@ end
 ---@return Features.Fishing.Region?
 function Fishing.GetRegion(id)
     return Fishing._RegionsByID[id]
+end
+
+---Returns the name of a region.
+---@param region Features.Fishing.Region
+---@param appendLevel boolean? Whether to suffix the name with the level name. Defaults to `false`.
+---@return string
+function Fishing.GetRegionName(region, appendLevel)
+    local name = Text.GetTranslatedString(region.NameHandle)
+    if appendLevel then
+        local levelName = Fishing.GetLevelName(region.LevelID)
+        name = string.format("%s (%s)", name, levelName)
+    end
+    return name
+end
+
+---Returns the name of a level.
+---@param levelID string
+---@return string
+function Fishing.GetLevelName(levelID)
+    return Text.GetTranslatedString(Fishing.LEVEL_NAME_TSKHANDLES[levelID] or "h0d1e4595g92d0g434fgae36g0b83733e268b") -- "Unknown" is fallback.
 end
 
 ---@param char Character
