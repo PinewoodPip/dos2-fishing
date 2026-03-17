@@ -12,6 +12,8 @@ local TSK = Fishing.TranslatedStrings
 Fishing.FISHING_ROD_RARITY_COLOR = Color.LARIAN.BLUE
 Fishing.SKILL_ABILITY_ICON = "PIP_Fishing_SkillAbility"
 
+Fishing.CURSOR_PLANE_FALLBACK_HEIGHT = 2 -- Picker height difference with the character past which the casting position logic will fallback to raycasting onto a plane below the character. See `GetCastingPosition()`.
+
 -- Bite phase tuning
 Fishing.FISH_BITE_DELAY_RANGE = {3.2, 6.5} -- Time range (in seconds) for how long it can take for a fish to bite after the player starts fishing.
 Fishing.FISH_BITE_DURATION = 0.4 -- Duration the player has to react to a bite before the fish gets away, in seconds.
@@ -110,7 +112,7 @@ function Fishing.Start(char)
                 Type = "WaitingForBite",
                 CharacterHandle = char.Handle,
                 BiteTime = Ext.Utils.MonotonicTime() + biteTime * 1000,
-                TargetPosition = V(Pointer.GetWalkablePosition()),
+                TargetPosition = V(Fishing.GetCastingPosition()),
             }
 
             if Fishing:IsDebug() then
@@ -162,7 +164,7 @@ function Fishing.Start(char)
             PartyInventory:TryHide()
 
             -- Throw events
-            local targetPos = Pointer.GetWalkablePosition()
+            local targetPos = Fishing.GetCastingPosition()
             Fishing.Events.CharacterStartedFishing:Throw({
                 Character = char,
                 Region = region,
@@ -225,7 +227,48 @@ end
 ---@param region Features.Fishing.Region? If provided, the region's `FishableSurfaceType` will be used instead of "Deepwater".
 function Fishing.IsCursorNearWater(region)
     local surface = region and region.FishableSurfaceType or nil
-    return Fishing.IsPositionNearWater(Pointer.GetWalkablePosition(), Fishing.CURSOR_WATER_SEARCH_RADIUS, surface)
+    return Fishing.IsPositionNearWater(Fishing.GetCastingPosition(), Fishing.CURSOR_WATER_SEARCH_RADIUS, surface)
+end
+
+---Returns the fishing position of the cursor.
+---This will use `WalkablePosition` if the height difference with the player character is not high,
+---else will fallback to using a point on a plane underneath the character, ensuring the position is at a believable water level (rather than at the bottom of lakes, seas etc.)
+---@see Features.Fishing.CURSOR_PLANE_FALLBACK_HEIGHT
+---@return vec3
+function Fishing.GetCastingPosition()
+    local char = Client.GetCharacter()
+    local charPos = Vector.Create(char.WorldPos)
+    local cursorPos = Pointer.GetWalkablePosition()
+    local heightDifference = charPos[2] - cursorPos[2]
+    -- If there's not much height difference, use the pointeer pos directly
+    if heightDifference <= Fishing.CURSOR_PLANE_FALLBACK_HEIGHT then
+        return cursorPos
+    else
+        -- Otherwise raycast from camera onto a plane under the character;
+        -- this results in a believable "on-water" position (pointer pos would otherwise be at the bottom)
+        local planeHeight = charPos[2] - Fishing.CURSOR_PLANE_FALLBACK_HEIGHT
+        local cursorScreenPos = V(Client.GetMousePosition())
+        local camera = Client.Camera.GetPlayerCamera() ---@cast camera EclGameCamera
+        local screenW, screenH = table.unpack(Client.GetViewportSize())
+        local u = cursorScreenPos[1] / screenW
+        local v = cursorScreenPos[2] / screenH
+
+        -- Calculate the point we're raycasting to
+        local TL = V(camera.FrustumPoints[5])
+        local TR = V(camera.FrustumPoints[6])
+        local BR = V(camera.FrustumPoints[7])
+        local BL = V(camera.FrustumPoints[8])
+        local top    = TL + (TR - TL) * u
+        local bottom = BL + (BR - BL) * u
+        local farPoint = top + (bottom - top) * v
+
+        -- Raycast to the fixed-height plane
+        local rayOrigin = V(camera.Transform.Translate) -- Note: `EclGameCamera.Position` is the snapped-to-ground position instead (for movement logic)
+        local rayDir = Vector.GetNormalized(farPoint - rayOrigin)
+        local t = (planeHeight - rayOrigin[2]) / rayDir[2]
+        local hitPos = rayOrigin + rayDir * t
+        return hitPos
+    end
 end
 
 ---Returns whether a position is near a Deepwater surface.
