@@ -47,6 +47,7 @@ Tooltip.Hooks.RenderAbilityTooltip:Subscribe(function (ev)
     if isRenderingFishingAbilityTooltip and ev.AbilityID == Fishing._DUMMY_STAT_ID then
         local char = Client.GetCharacter()
         local score = Fishing.GetAbilityScore(char)
+        local maxScore = Fishing.GetMaxAbilityScore()
         local tooltip = ev.Tooltip
         local header = tooltip:GetFirstElement("StatName")
         local description = tooltip:GetFirstElement("AbilityDescription")
@@ -77,26 +78,33 @@ Tooltip.Hooks.RenderAbilityTooltip:Subscribe(function (ev)
         description.Description = description.Description .. "\n" .. minigameHint
 
         -- Add leveling hint
-        local _, uniqueFishCaught = Fishing.GetUniqueFishCaught()
-        local totalFishCaught = Fishing.GetTotalFishCaught(char)
-        local nextLevelRequirements = Fishing.GetAbilityRequirements(score + 1)
-        local requirementsLabels = {} ---@type string[]
-        local remainingUniqueFish = nextLevelRequirements.UniqueFishCaught - uniqueFishCaught
-        local remainingTotalFish = nextLevelRequirements.TotalFishCaught - totalFishCaught
-        if remainingUniqueFish > 0 then -- Unique fish requirement
-            table.insert(requirementsLabels, TSK.Label_SchoolDescription_LevelingRequirement_UniqueCatches:Format(remainingUniqueFish))
-        end
-        if remainingTotalFish > 0 then -- Total catches requirement
-            table.insert(requirementsLabels, TSK.Label_SchoolDescription_LevelingRequirement_TotalCatches:Format(remainingTotalFish))
-        end
-        tooltip:InsertElement({
-            Type = "StatsPointValue",
-            Label = TSK.Label_SchoolDescriptionLevelingHint:Format({
-                FormatArgs = {
-                    Text.Join(requirementsLabels, "\n")
-                }
+        if score ~= maxScore then
+            local _, uniqueFishCaught = Fishing.GetUniqueFishCaught()
+            local totalFishCaught = Fishing.GetTotalFishCaught(char)
+            local nextLevelRequirements = Fishing.GetAbilityRequirements(score + 1)
+            local requirementsLabels = {} ---@type string[]
+            local remainingUniqueFish = nextLevelRequirements.UniqueFishCaught - uniqueFishCaught
+            local remainingTotalFish = nextLevelRequirements.TotalFishCaught - totalFishCaught
+            if remainingUniqueFish > 0 then -- Unique fish requirement
+                table.insert(requirementsLabels, TSK.Label_SchoolDescription_LevelingRequirement_UniqueCatches:Format(remainingUniqueFish))
+            end
+            if remainingTotalFish > 0 then -- Total catches requirement
+                table.insert(requirementsLabels, TSK.Label_SchoolDescription_LevelingRequirement_TotalCatches:Format(remainingTotalFish))
+            end
+            tooltip:InsertElement({
+                Type = "StatsPointValue",
+                Label = TSK.Label_SchoolDescriptionLevelingHint:Format({
+                    FormatArgs = {
+                        Text.Join(requirementsLabels, "\n")
+                    }
+                })
             })
-        })
+        else
+            tooltip:InsertElement({
+                Type = "StatsPointValue",
+                Label = TSK.Label_SchoolDescription_MaxLevel:GetString()
+            })
+        end
 
         -- Rewrite the stat ID so that other tooltip listeners do not consider this as a vanilla skill ability.
         ---@diagnostic disable-next-line: assign-type-mismatch

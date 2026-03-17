@@ -201,6 +201,11 @@ local Fishing = {
             Text = "Next level requires catching %d more fish in total.",
             ContextDescription = [[Tooltip for Fishermancy ability; param is amount]],
         },
+        Label_SchoolDescription_MaxLevel = {
+            Handle = "h8d574642g2dccg4fc3gaa67g4ea7531724ed",
+            Text = "You've reached the maximum Fishermancy level.",
+            ContextDescription = [[Tooltip for Fishermancy ability]],
+        },
 
         ["hcced1bb7ge818g4803gbf45gf0644370163f"] = {
             Text = "Hold left-click to raise the bar,\nlet go to have it fall.\n\nKeep the bar by the fish until the yellow bar fills up!",
@@ -638,6 +643,17 @@ function Fishing.GetAbilityScore(char)
     local requirements = Fishing.GetAbilityRequirements(1)
     local score = 0
     while totalCatches >= requirements.TotalFishCaught and uniqueFishCount >= requirements.UniqueFishCaught do
+        score = score + 1
+        requirements = Fishing.GetAbilityRequirements(score + 1)
+    end
+
+---Returns the maximum Fishermancy level that can be reached with the amount of unique fish that exist.
+---@return integer
+function Fishing.GetMaxAbilityScore()
+    local uniqueFishTotal = table.getKeyCount(Fishing.GetFishes())
+    local requirements = Fishing.GetAbilityRequirements(1)
+    local score = 0
+    while uniqueFishTotal >= requirements.UniqueFishCaught do
         score = score + 1
         requirements = Fishing.GetAbilityRequirements(score + 1)
     end
