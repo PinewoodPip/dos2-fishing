@@ -280,6 +280,7 @@ Fishing.RUNE_TIER_PREFIXES = {
 -- thus this extra table is necessary.
 Fishing.LEVEL_NAME_TSKHANDLES = {
     ["FJ_FortJoy_Main"] = "h0d7789e0g8140g4391g8511gc41a2ad8a476", -- "Fort Joy"
+    ["LV_HoE_Main"] = "hde585bf1gd58ag49a9g88dagbab9b9b94ab1", -- "The Lady Vengeance"
     ["RC_Main"] = "he5f965fdg9423g4699g87d0g4af1b2e155b6", -- "Reaper's Coast"
     ["CoS_Main"] = "h3a427261gf3cbg489fgb36agf90c6fc1844b", -- "The Nameless Isle"
     ["ARX_Main"] = "hd8971510g1ba0g4b01gad48g6aa3600195e4", -- "Arx"

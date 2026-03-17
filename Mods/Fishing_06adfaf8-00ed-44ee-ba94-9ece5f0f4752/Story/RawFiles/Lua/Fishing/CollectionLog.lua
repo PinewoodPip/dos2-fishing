@@ -20,8 +20,8 @@ local CollectionLog = {
     -- Unspecified levels will be sorted alphabetically afterwards.
     LEVEL_ORDER = {
         "FJ_FortJoy_Main",
+        "LV_HoE_Main",
         "RC_Main",
-        -- TODO Lady Vengeance
         "CoS_Main",
         "ARX_Main",
     },
