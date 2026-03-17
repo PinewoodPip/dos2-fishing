@@ -211,7 +211,7 @@ local regions = {
         ID = "RC.SouthWest",
         NameHandle = T{
             Handle = "h28abfc31g3773g4a4cga0b4g9fa1f5e76e41",
-            Text = "Reaper's Coast Southwest",
+            Text = "Reaper's Bluffs",
         },
         LevelID = "RC_Main",
         Bounds = V(42, 210, 241, 29),

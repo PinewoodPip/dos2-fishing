@@ -54,7 +54,7 @@ local regions = {
         ID = "FJ.TurtleBeach",
         NameHandle = T{
             Handle = "h1e1ff28fgd6e3g4cd1ga1f4gbbd6a8cbdee5",
-            Text = "Fort Joy Turtle Beach",
+            Text = "Turtle Beach",
         },
         LevelID = "FJ_FortJoy_Main",
         Bounds = V(218, 416, 324, 341),
@@ -251,7 +251,7 @@ local regions = {
         ID = "FJ.FrogCave",
         NameHandle = T{
             Handle = "hb4f45e86gc7b3g4b48gad92g1d87b34e992b",
-            Text = "Fort Joy Frog Cave",
+            Text = "Frog Cave",
         },
         LevelID = "FJ_FortJoy_Main",
         Bounds = V(474, 580, 550, 471),

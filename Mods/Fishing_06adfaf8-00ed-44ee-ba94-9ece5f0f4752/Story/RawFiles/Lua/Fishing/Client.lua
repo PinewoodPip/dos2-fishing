@@ -155,7 +155,7 @@ function Fishing.Start(char)
 
             -- Show feedback for discovering new regions
             if not Fishing.IsRegionDiscovered(region.ID) then
-                local regionName = Text.GetTranslatedString(region.NameHandle)
+                local regionName = Fishing.GetRegionName(region)
                 NotificationUI.ShowIconNotification(TSK.Notification_RegionDiscovered:Format(regionName), "Item_HAR_FishingRod_ABC")
             end
 

@@ -16,7 +16,7 @@ local regions = {
         ID = "CoS.NorthCoast",
         NameHandle = T{
             Handle = "h120b0697ge5aag4425gb670g849d10ea7cd9",
-            Text = "Nameless Isle North Coast",
+            Text = "North Coast",
         },
         LevelID = "CoS_Main",
         Bounds = V(55, 1005, 349, 929),
@@ -60,7 +60,7 @@ local regions = {
     --     ID = "CoS.WaterPortal",
     --     NameHandle = T{
     --         Handle = "h54a1bd55g543dg4b3fga61eg56c937bc81df",
-    --         Text = "Nameless Isle Water Temple",
+    --         Text = "Water Temple",
     --     },
     --     LevelID = "CoS_Main",
     --     Bounds = V(104, 923, 146, 870),
@@ -73,7 +73,7 @@ local regions = {
         ID = "CoS.WestCoast",
         NameHandle = T{
             Handle = "hb04e74b3gfff8g490fgb656g0f71f0ae5b88",
-            Text = "Nameless Isle West Coast",
+            Text = "West Coast",
         },
         LevelID = "CoS_Main",
         Bounds = V(33, 922, 94, 782),
@@ -112,7 +112,7 @@ local regions = {
         ID = "CoS.SouthCoast",
         NameHandle = T{
             Handle = "h6d35e63ag700cg4b91g8fdbg6d64ada4e17d",
-            Text = "Nameless Isle South Coast",
+            Text = "South Coast",
         },
         LevelID = "CoS_Main",
         FishableSurfaceType = "Lava",
@@ -148,7 +148,7 @@ local regions = {
         ID = "CoS.LadyVengeance",
         NameHandle = T{
             Handle = "hbec6e4f2g031bg447cgbd3cg3795dc9be16c",
-            Text = "Lady Vengeance (Nameless Isle sea)",
+            Text = "Lady Vengeance",
         },
         LevelID = "CoS_Main",
         Bounds = V(-32, 749, 29, 623),
@@ -188,7 +188,7 @@ local regions = {
         ID = "CoS.VrogirEnclave",
         NameHandle = T{
             Handle = "h0329e50bgad93g4becg8cd2ga85c658359f8",
-            Text = "Nameless Isle Temple of Vrogir",
+            Text = "Temple of Vrogir",
         },
         LevelID = "CoS_Main",
         Bounds = V(255, 530, 387, 382), -- Note that this spawn 2 subregions.
@@ -250,7 +250,7 @@ local regions = {
         ID = "CoS.MurkyCave",
         NameHandle = T{
             Handle = "ha1ec473fgbe2ag4291gb09fg77a60c691101",
-            Text = "Nameless Isle Seaside Cave",
+            Text = "Seaside Cave",
         },
         LevelID = "CoS_Main",
         Bounds = V(595, 292, 642, 212),
@@ -280,7 +280,7 @@ local regions = {
         ID = "CoS.SallowManCave",
         NameHandle = T{
             Handle = "hbd9945d0g2743g4033g9a45gf024804394d5",
-            Text = "Nameless Isle Sallow Man's Hideout",
+            Text = "Sallow Man's Hideout",
         },
         LevelID = "CoS_Main",
         Bounds = V(20, 318, 153, 187),
@@ -316,7 +316,7 @@ local regions = {
         ID = "CoS.TempleOfDuna",
         NameHandle = T{
             Handle = "h55a0e39egdc2fg4695g8717g6c3d8510b0c4",
-            Text = "Nameless Isle Temple of Duna",
+            Text = "Temple of Duna",
         },
         LevelID = "CoS_Main",
         Bounds = V(478, 291, 538, 197),

@@ -40,7 +40,7 @@ local regions = {
         ID = "Arx.SouthDeathfogRivers",
         NameHandle = T{
             Handle = "h3a627f33g59bag4f0fg9169gbaf8f2c0be2d",
-            Text = "Arx South Outskirts",
+            Text = "South Outskirts",
         },
         LevelID = "ARX_Main",
         Bounds = V(339, 67, 430, -34),
@@ -86,7 +86,7 @@ local regions = {
         ID = "Arx.PilgrimRiver",
         NameHandle = T{
             Handle = "h00067f25g3881g4c38gb5dcg36f6d30ad02d",
-            Text = "Arx Pilgrimage River",
+            Text = "Pilgrimage River",
         },
         LevelID = "ARX_Main",
         Bounds = V(250, 123, 410, 59),
@@ -163,7 +163,7 @@ local regions = {
         ID = "Arx.HarbourCellar",
         NameHandle = T{
             Handle = "h72967dcfge390g4793gba50gc60e650080d9",
-            Text = "Arx Harbour Cellar",
+            Text = "Harbour Cellar",
         },
         LevelID = "ARX_Main",
         Bounds = V(467, 741, 484, 719),
@@ -272,7 +272,7 @@ local regions = {
         Priority = 99, -- Needs to be higher than Arx East.
         NameHandle = T{
             Handle = "hb3581279g28fcg4c78g8c2eg02a8c627730a",
-            Text = "Arx Orphanage Fountain",
+            Text = "Orphanage Fountain",
         },
         LevelID = "ARX_Main",
         Bounds = V(423, 252, 435, 233),
@@ -303,7 +303,7 @@ local regions = {
         Priority = 99, -- Needs to be higher than Arx East.
         NameHandle = T{
             Handle = "h0458002dg2eb0g4ff2gaa40g06a2969862e8",
-            Text = "Arx Loremaster's Fountain",
+            Text = "Loremaster's Fountain",
         },
         LevelID = "ARX_Main",
         Bounds = V(382, 306, 401, 293),
@@ -337,7 +337,7 @@ local regions = {
         ID = "Arx.City",
         NameHandle = T{
             Handle = "h5bed96c9gd5a1g4f17g9123g64d2d100e069",
-            Text = "Arx City",
+            Text = "Arx City West",
         },
         LevelID = "ARX_Main",
         Bounds = V(185, 375, 378, 172),
@@ -420,7 +420,7 @@ local regions = {
         Priority = 99, -- Needs to be higher than Kemm's Garden.
         NameHandle = T{
             Handle = "h1dff0a71g64d7g4364ga247g1131b06184c7",
-            Text = "Arx Garden Fountain",
+            Text = "Garden Fountain",
         },
         LevelID = "ARX_Main",
         Bounds = V(169, 245, 182, 234),
@@ -447,7 +447,7 @@ local regions = {
         Priority = 99, -- Needs to be higher than Kemm's Garden.
         NameHandle = T{
             Handle = "he0d688a1g69afg4c58gb9d2ga012e2ceeeae",
-            Text = "Arx Consulate Garden",
+            Text = "Consulate Garden",
         },
         LevelID = "ARX_Main",
         Bounds = V(185, 428, 216, 392),
@@ -494,7 +494,7 @@ local regions = {
         ID = "Arx.Sewers",
         NameHandle = T{
             Handle = "hb3a20076g8440g428cga186g41ca6eb08455",
-            Text = "Arx Sewers",
+            Text = "Sewers Upper Level",
         },
         LevelID = "ARX_Main",
         Bounds = V(156, 799, 208, 706),
@@ -527,7 +527,7 @@ local regions = {
         ID = "Arx.LowerSewers",
         NameHandle = T{
             Handle = "ha1711fa9g6162g4addgb7bfgd7e2b1b230c8",
-            Text = "Arx Sewers Lower Level",
+            Text = "Sewers Lower Level",
         },
         LevelID = "ARX_Main",
         Bounds = V(370, 669, 519, 558),
@@ -593,7 +593,7 @@ local regions = {
         ID = "Arx.IsbeilHideout",
         NameHandle = T{
             Handle = "hb0647507g26c5g4f6bg90ffg8c49f63ef0ec",
-            Text = "Arx Isbeil's Hideout",
+            Text = "Isbeil's Hideout",
         },
         LevelID = "ARX_Main",
         Bounds = V(257, 694, 323, 602),
@@ -630,7 +630,7 @@ local regions = {
         ID = "Arx.Cathedral",
         NameHandle = T{
             Handle = "hc65bcb04g6710g422eg879cg5210e943749c",
-            Text = "Arx Cathedral Path of Blood",
+            Text = "Cathedral Path of Blood",
         },
         LevelID = "ARX_Main",
         Bounds = V(281, 493, 321, 436),
