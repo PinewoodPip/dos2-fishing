@@ -182,7 +182,7 @@ function CollectionLog.GetFishes()
 end
 
 ---Returns the complete tooltip for a fish.
----@param fishID string
+---@param fishID Features.Fishing.FishID
 ---@return TooltipLib_FormattedTooltip
 function CollectionLog.GetFishTooltip(fishID)
     local fish = Fishing.GetFish(fishID)

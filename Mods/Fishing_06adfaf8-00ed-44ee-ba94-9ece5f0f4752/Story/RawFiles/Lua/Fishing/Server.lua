@@ -47,7 +47,7 @@ function Fishing.CatchFish(char, fish)
 end
 
 ---Marks a fish type as having been caught in this playthrough.
----@param fishID string
+---@param fishID Features.Fishing.FishID
 function Fishing.MarkFishTypeAsCaught(fishID)
     local fishCaught, _ = Fishing.GetUniqueFishCaught()
     local wasCaught = fishCaught[fishID]

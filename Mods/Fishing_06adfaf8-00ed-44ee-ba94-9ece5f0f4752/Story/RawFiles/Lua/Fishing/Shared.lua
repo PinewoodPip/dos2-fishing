@@ -5,13 +5,13 @@ local V = Vector.Create
 
 ---@class Features.Fishing : Feature
 local Fishing = {
-    _Fish = {}, ---@type table<string, Features.Fishing.Fish>
+    _Fish = {}, ---@type table<Features.Fishing.FishID, Features.Fishing.Fish>
     _FishBehaviours = {}, ---@type table<Features.Fishing.Fish.BehaviourType, Features.Fishing.Fish.Behaviour>
     _RegionsByLevel = DefaultTable.Create({}), ---@type DataStructures_DefaultTable<string, Features.Fishing.Region[]>
-    _FishesByLevel = DefaultTable.Create({}), ---@type table<string, set<string>> Maps level ID to fish IDs that can be found in that level.
-    _FishToRegions = DefaultTable.Create({}), ---@type table<string, set<string>> Maps fish ID to regions where it can be found.
-    _RootTemplateToFish = {}, ---@type table<GUID.ItemTemplate, string>
-    _RegionsByID = {}, ---@type table<string, Features.Fishing.Region>
+    _FishesByLevel = DefaultTable.Create({}), ---@type table<string, set<Features.Fishing.FishID>> Maps level ID to fish IDs that can be found in that level.
+    _FishToRegions = DefaultTable.Create({}), ---@type table<Features.Fishing.FishID, set<Features.Fishing.RegionID>> Maps fish ID to regions where it can be found.
+    _RootTemplateToFish = {}, ---@type table<GUID.ItemTemplate, Features.Fishing.FishID>
+    _RegionsByID = {}, ---@type table<Features.Fishing.RegionID, Features.Fishing.Region>
     _CharactersFishing = Set.Create(), -- Not synchronized across clients!
 
     NETMSG_STARTED_FISHING = "Features.Fishing.NetMsgs.CharacterStartedFishing",
@@ -285,12 +285,12 @@ Fishing.LEVEL_NAME_TSKHANDLES = {
 ---------------------------------------------
 
 ---@class Features.Fishing.NetMsg.CharacterStartedFishing : NetLib_Message_Character
----@field RegionID string
----@field FishID string
+---@field RegionID Features.Fishing.RegionID
+---@field FishID Features.Fishing.FishID
 
 ---@class Features.Fishing.NetMsg.CharacterStoppedFishing : NetLib_Message_Character
 ---@field Reason Features.Fishing.MinigameExitReason
----@field CaughtFishID string? `nil` unless the minigame was won.
+---@field CaughtFishID Features.Fishing.FishID? `nil` unless the minigame was won.
 
 ---@class Features.Fishing.Hook.IsFishingRod
 ---@field Character Character
@@ -315,19 +315,22 @@ Fishing.LEVEL_NAME_TSKHANDLES = {
 ---------------------------------------------
 
 ---@class Features.Fishing.NetMsgs.CharacterStartedFishing : NetLib_Message_Character
----@field RegionID string
+---@field RegionID Features.Fishing.RegionID
 ---@field TargetPosition vec3
 
 ---@class Features.Fishing.NetMsgs.CharacterStoppedFishing : NetLib_Message_Character
 ---@field Reason Features.Fishing.MinigameExitReason
----@field CaughtFishID string?
+---@field CaughtFishID Features.Fishing.FishID?
 
 ---@class Features.Fishing.NetMsgs.CharacterEncounteredFish : NetLib_Message_Character
----@field FishID string
+---@field FishID Features.Fishing.FishID
 
 ---------------------------------------------
 -- CLASSES
 ---------------------------------------------
+
+---@alias Features.Fishing.FishID string
+---@alias Features.Fishing.RegionID string
 
 ---@alias Features.Fishing.MinigameExitReason "Success"|"Failure"|"Cancelled"|"ReeledInTooEarly"
 
@@ -434,7 +437,7 @@ local _Region = {
 }
 
 ---@class Features.Fishing.Region.FishEntry
----@field ID string ID of the fish.
+---@field ID Features.Fishing.FishID ID of the fish.
 ---@field Weight number Relative chance for the fish to be picked.
 
 ---------------------------------------------
@@ -477,7 +480,7 @@ function Fishing.RegisterRegion(data)
 end
 
 ---Returns whether a fish can be caught in the given level.
----@param fishID string
+---@param fishID Features.Fishing.FishID
 ---@param levelID string
 ---@return boolean
 function Fishing.IsFishAvailable(fishID, levelID)
@@ -485,11 +488,11 @@ function Fishing.IsFishAvailable(fishID, levelID)
 end
 
 ---Returns the regions that a fish can be caught in.
----@param fishID string
----@return table<string, Features.Fishing.Region>
+---@param fishID Features.Fishing.FishID
+---@return table<Features.Fishing.RegionID, Features.Fishing.Region>
 function Fishing.GetFishRegions(fishID)
     local regionIDs = Fishing._FishToRegions[fishID]
-    local regions = {} ---@type table<string, Features.Fishing.Region>
+    local regions = {} ---@type table<Features.Fishing.RegionID, Features.Fishing.Region>
     for regionID,_ in pairs(regionIDs) do
         regions[regionID] = Fishing.GetRegion(regionID)
     end
@@ -516,7 +519,7 @@ function Fishing.GetRegions(levelID)
     return Fishing._RegionsByLevel[levelID]
 end
 
----@param id string
+---@param id Features.Fishing.RegionID
 ---@return Features.Fishing.Region?
 function Fishing.GetRegion(id)
     return Fishing._RegionsByID[id]
@@ -549,9 +552,9 @@ function Fishing.IsFishing(char)
 end
 
 ---Returns the amount of each fish that char has caught.
----@overload fun(char: Character, fishID: string): integer
+---@overload fun(char: Character, fishID: Features.Fishing.FishID): integer
 ---@param char Character
----@return table<string, integer> -- Maps fish ID to catch count.
+---@return table<Features.Fishing.FishID, integer> -- Maps fish ID to catch count.
 function Fishing.GetFishCatchCount(char, fishID)
     local fishCounts = Fishing:GetUserVariable(char, Fishing.USERVAR_FISH_CAUGHT) or {}
     if fishID then -- ID overload.
@@ -574,14 +577,14 @@ function Fishing.GetTotalFishCaught(char)
 end
 
 ---Returns the total amount of times each fish has been encountered.
----@return table<string, integer?> -- Maps fish ID to times encountered (`nil` if unencountered).
+---@return table<Features.Fishing.FishID, integer?> -- Maps fish ID to times encountered (`nil` if unencountered).
 function Fishing.GetTotalFishEncounters()
     return Fishing:GetModVariable(Mod.GUIDS.FISHING, Fishing.MODVAR_FISHES_ENCOUNTERED) or {}
 end
 
 ---Increments the amount of fish caught by char.
 ---@param char Character
----@param fishID string
+---@param fishID Features.Fishing.FishID
 ---@param count integer? Defaults to 1.
 function Fishing.AddFishCatchCount(char, fishID, count)
     count = count or 1
@@ -592,7 +595,7 @@ function Fishing.AddFishCatchCount(char, fishID, count)
 end
 
 ---Increments the encounter counter for a fish.
----@param fishID string
+---@param fishID Features.Fishing.FishID
 function Fishing.AddFishEncounter(fishID)
     local encounters = Fishing.GetTotalFishEncounters()
     encounters[fishID] = (encounters[fishID] or 0) + 1
@@ -600,7 +603,7 @@ function Fishing.AddFishEncounter(fishID)
 end
 
 ---Returns the fish types that were caught in this playthrough.
----@return set<string>, integer -- Fish IDs and count.
+---@return set<Features.Fishing.FishID>, integer -- Fish IDs and count.
 function Fishing.GetUniqueFishCaught()
     local uniqueFishCaught = Fishing:GetModVariable(Mod.GUIDS.FISHING, Fishing.MODVAR_UNIQUE_FISH_CAUGHT) or {}
     local count = 0
@@ -611,7 +614,7 @@ function Fishing.GetUniqueFishCaught()
 end
 
 ---Returns whether a fishing region has been used at least once.
----@param regionID string
+---@param regionID Features.Fishing.RegionID
 ---@return boolean
 function Fishing.IsRegionDiscovered(regionID)
     local discoveredRegions = Fishing:GetModVariable(Mod.GUIDS.FISHING, Fishing.MODVAR_REGIONS_DISCOVERED)
@@ -619,7 +622,7 @@ function Fishing.IsRegionDiscovered(regionID)
 end
 
 ---Marks a fishing region as being known to the party.
----@param regionID string
+---@param regionID Features.Fishing.RegionID
 function Fishing.MarkRegionAsDiscovered(regionID)
     local discoveredRegions = Fishing:GetModVariable(Mod.GUIDS.FISHING, Fishing.MODVAR_REGIONS_DISCOVERED)
     discoveredRegions[regionID] = true
@@ -658,7 +661,7 @@ function Fishing.GetAbilityRequirements(level)
     return requirements
 end
 
----@param id string
+---@param id Features.Fishing.FishID
 ---@return Features.Fishing.Fish?
 function Fishing.GetFish(id)
     return Fishing._Fish[id]
@@ -672,7 +675,7 @@ function Fishing.GetFishByTemplate(templateID)
     return Fishing.GetFish(fishID)
 end
 
----@return table<string, Features.Fishing.Fish>
+---@return table<Features.Fishing.FishID, Features.Fishing.Fish>
 function Fishing.GetFishes()
     return Fishing._Fish
 end
