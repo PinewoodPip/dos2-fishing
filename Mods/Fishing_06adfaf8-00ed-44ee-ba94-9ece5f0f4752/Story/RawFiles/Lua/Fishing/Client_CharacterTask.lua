@@ -4,6 +4,7 @@ local Input = Client.Input
 
 ---@class Features.Fishing
 local Fishing = GetFeature("Features.Fishing")
+local TSK = Fishing.TranslatedStrings
 Fishing._CharacterTasks = {} ---@type table<CharacterHandle, Features.Fishing.CharacterTask>
 
 ---@class Features.Fishing.CharacterTask : UserspaceCharacterTaskCallbacks
@@ -46,8 +47,9 @@ function _Task:SetCursor()
 
     if self.IsPreviewing then
         cc.MouseCursor = "CursorWand_Ground"
+        local cursorText = TSK.Tooltip_ClickToFish:GetString()
 
-        Tooltip.ShowMouseTextTooltip(Fishing.TSK["CharacterTask_MouseTextTooltip"], Vector.Create(30, 20))
+        Tooltip.ShowMouseTextTooltip(cursorText, Vector.Create(30, 20))
     end
 end
 

@@ -353,7 +353,7 @@ Fishing.Events.CharacterStoppedFishing:Subscribe(function (ev)
             local keybinds = Input.GetActionBindings(CollectionLog.InputActions.OpenCollectionLog.ID)
             local keybind = keybinds[1]
             if keybind then
-                subTitle = Text.Format(Fishing.TSK["Toast_Success_Subtitle"], {
+                subTitle = TSK.Notification_CollectionLogHint:Format({
                     FormatArgs = {
                         Input.StringifyBinding(keybind, true)
                     }
@@ -361,7 +361,7 @@ Fishing.Events.CharacterStoppedFishing:Subscribe(function (ev)
             end
         end
 
-        NotificationUI.ShowIconNotification(ev.CaughtFish:GetName(), ev.CaughtFish:GetIcon(), nil, Fishing.TSK["Toast_Success"], subTitle, "UI_Notification_ReceiveAbility")
+        NotificationUI.ShowIconNotification(ev.CaughtFish:GetName(), ev.CaughtFish:GetIcon(), nil, TSK.Notification_FishCaught:GetString(), subTitle, "UI_Notification_ReceiveAbility")
     elseif ev.Reason == "Failure" then
         NotificationUI.ShowWarning(TSK.Notification_Minigame_Failure:GetString(), nil, "UI_Handling_Fail")
     elseif ev.Reason == "ReeledInTooEarly" then

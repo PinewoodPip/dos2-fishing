@@ -6,6 +6,7 @@ local V = Vector.Create
 
 ---@class Features.Fishing
 local Fishing = GetFeature("Features.Fishing")
+local TSK = Fishing.TranslatedStrings
 local UI = Generic.Create("Features.Fishing") ---@class Features.Fishing.UI : GenericUI_Instance
 Fishing.UI = UI
 UI:Hide()
@@ -408,7 +409,7 @@ function Fishing:__Setup()
     progressBar:SetSize(0, 0)
     UI.Elements.ProgressBar = progressBar
 
-    local tutorialText = TextPrefab.Create(UI, "TutorialText", panel, Text.Format(Fishing.TSK["MinigameTutorialHint"], {Color = Color.WHITE}), "Left", V(300, 200))
+    local tutorialText = TextPrefab.Create(UI, "TutorialText", panel, TSK.Label_MinigameTutorial:Format({Color = Color.WHITE}), "Left", V(300, 200))
     tutorialText:SetStroke(Color.Create(Color.BLACK), 1, 1, 15, 1)
     tutorialText:SetPosition(UI.SIZE[1] + 10, 0)
     UI.Elements.TutorialText = tutorialText

@@ -223,25 +223,25 @@ local Fishing = {
             ContextDescription = [[Tooltip for Fishermancy ability]],
         },
 
-        ["hcced1bb7ge818g4803gbf45gf0644370163f"] = {
+        Label_MinigameTutorial = {
+            Handle = "hcced1bb7ge818g4803gbf45gf0644370163f",
             Text = "Hold left-click to raise the bar,\nlet go to have it fall.\n\nKeep the bar by the fish until the yellow bar fills up!",
             ContextDescription = "Tutorial message",
-            LocalKey = "MinigameTutorialHint",
         },
-        ["h25bb86bcge5edg4a61g9ebdgce438fa04de1"] = {
+        Notification_FishCaught = {
+            Handle = "h25bb86bcge5edg4a61g9ebdgce438fa04de1",
             Text = "Fish Caught!",
             ContextDescription = "Toast notification for minigame success",
-            LocalKey = "Toast_Success",
         },
-        ["h13c51b21g9d2bg4489g9e4bg460b162e8b3c"] = {
+        Notification_CollectionLogHint = {
+            Handle = "h13c51b21g9d2bg4489g9e4bg460b162e8b3c",
             Text = "Press %s to open the collection log.",
             ContextDescription = "Toast notification for minigame success, when catching new types of fish",
-            LocalKey = "Toast_Success_Subtitle",
         },
-        ["h26c81552g4b40g4f9bg88c5g0380578c6964"] = {
-            Text = "Click to start fishing.",
+        Tooltip_ClickToFish = {
+            Handle = "h26c81552g4b40g4f9bg88c5g0380578c6964",
+            Text = "Click to cast your rod.",
             ContextDescription = "Mouseover text for fishable areas",
-            LocalKey = "CharacterTask_MouseTextTooltip",
         },
     },
 
