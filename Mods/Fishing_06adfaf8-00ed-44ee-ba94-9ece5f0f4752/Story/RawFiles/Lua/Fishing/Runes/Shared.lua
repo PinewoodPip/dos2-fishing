@@ -3,6 +3,17 @@ local Fishing = GetFeature("Features.Fishing")
 
 ---@class Features.Fishing.Runes : Feature
 local Runes = {
+    -- Slots that accept fish runes.
+    ---@type set<ItemSlot>
+    ITEM_SLOT_WHITELIST = {
+        ["Helmet"] = true,
+        ["Breast"] = true,
+        ["Leggings"] = true,
+        ["Belt"] = true,
+        ["Boots"] = true,
+        ["Gloves"] = true,
+    },
+
     TranslatedStrings = {
         Label_FishRune = {
             Handle = "h51d68a3cg1f4cg4ed2gb01ag1ce7c50a811b",
@@ -13,6 +24,11 @@ local Runes = {
             Handle = "h699aa192g51efg46acgadb7g69da8828850b",
             Text = "Cannot equip.",
             ContextDescription = [[Tooltip for invalid rune slots for fish runes]],
+        },
+        MsgBox_WrongRuneSlot_Body = {
+            Handle = "ha7b764eegee70g4dc4g8409g12a4b25dc6bc",
+            Text = "This fish essence does not work in this item slot.<br>I should remove it.",
+            ContextDescription = [[Message box when equipping fish runes in the wrong slot]],
         },
         Label_Descended = {
             Handle = "h95783f9cgad6bg4e87g87f6g8aaab72b4f1e",
@@ -63,6 +79,15 @@ function Runes.GetFish(rune)
         templateID = rune.RootTemplate
     end
     return Fishing.GetFishByTemplate(templateID)
+end
+
+---Returns whether an item is valid for inserting fish runes.
+---Ignores whether the item has rune slots.
+---@param item Item
+---@return boolean
+function Runes.CanEquipFishRune(item)
+    local itemSlot = Item.GetItemSlot(item)
+    return itemSlot and Runes.ITEM_SLOT_WHITELIST[itemSlot] or false
 end
 
 ---Returns whether an item is a fish rune.
