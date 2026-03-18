@@ -63,13 +63,8 @@ function _Bobber:Update(deltaTime)
 end
 
 ---@override
-function _Bobber:OnCollideWith(otherObject, deltaTime)
+function _Bobber:OnCollideWith(otherObject, _)
     if otherObject.Type == "Fish" then
-        -- Add progress. The drain must be offset.
-        local drain = UI.GetProgressDrain()
-
-        UI.AddProgress((drain + UI.PROGRESS_PER_SECOND) * deltaTime / 1000)
-
         self._IsCollidingWithFish = true
 
         -- Play sound when entering fish range

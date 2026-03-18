@@ -38,6 +38,11 @@ local Fishing = {
     CURSOR_WATER_SEARCH_RADIUS = 1.0,
     WATER_MAX_DISTANCE = 7.5, -- Distance to water (or fishing areas) that a character must be within for fishing to be available.
 
+    TUNING = {
+        BASE_STARTING_PROGRESS = 0.45, -- As fraction of required progress.
+        BASE_PROGRESS_DRAIN = 0.1,
+    },
+
     ABILITY_SCHOOL_COLOR = "86a4f7", ---@type htmlcolor
     ABILITY_SCHOOL_FISH_PER_LEVEL = 15, -- Amount of fish that has to be caught per level in the Fishermancy ability.
     ABILITY_SCHOOL_FISH_PER_LEVEL_GROWTH = 5, -- Extra amount of fish that need to be caught per level in the Fishermancy ability, for each level after the first.
@@ -353,7 +358,8 @@ Fishing.LEVEL_NAME_TSKHANDLES = {
 ---@field Transitions table<Features.Fishing.GameObject.Fish.StateClassName, Features.Fishing.Fish.Behaviour.Transition[]> Maps current state to possible transitions.
 
 ---@class Features.Fishing.Fish : I_Identifiable, I_Describable
----@field Icon string? Defaults to the template's icon.
+---@field Icon icon? Defaults to the template's icon.
+---@field UndiscoveredIcon icon?
 ---@field Rarity ItemLib_Rarity
 ---@field TemplateID GUID.ItemTemplate GUID for the tier 1 fish rune template. **Mostly for backwards compatibility; see `Templates` field.**
 ---@field RootTemplates table<integer, GUID.ItemTemplate> Maps fish rune tier to the corresponding template.
@@ -544,6 +550,21 @@ function Fishing.GetRegionName(region, appendLevel)
     return name
 end
 
+---Returns progress drain per second for char.
+---@param char Character?
+---@return number
+function Fishing.GetProgressDrain(char)
+    local multiplier = 1 -- TODO
+
+    return Fishing.TUNING.BASE_PROGRESS_DRAIN * multiplier
+end
+
+---Returns the starting fish capture progress for char.
+---@param char Character?
+---@return number -- Normalized.
+function Fishing.GetStartingProgress(char)
+    return Fishing.TUNING.BASE_STARTING_PROGRESS
+end
 ---Returns the name of a level.
 ---@param levelID string
 ---@return string
@@ -617,6 +638,14 @@ function Fishing.GetUniqueFishCaught()
         count = count + 1
     end
     return uniqueFishCaught, count
+end
+
+---Returns whether a fish has been ever caught by the party.
+---@param fishID Features.Fishing.FishID
+---@return boolean
+function Fishing.IsFishDiscovered(fishID)
+    local uniqueFishCaught = Fishing:GetModVariable(Mod.GUIDS.FISHING, Fishing.MODVAR_UNIQUE_FISH_CAUGHT)
+    return uniqueFishCaught[fishID]
 end
 
 ---Returns whether a fishing region has been used at least once.

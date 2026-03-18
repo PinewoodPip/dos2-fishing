@@ -19,9 +19,7 @@ Fishing.FISH_BITE_DELAY_RANGE = {3.2, 6.5} -- Time range (in seconds) for how lo
 Fishing.FISH_BITE_DURATION = 0.4 -- Duration the player has to react to a bite before the fish gets away, in seconds.
 
 -- Reeling phase tuning
-Fishing.STARTING_PROGRESS = 0.45 -- As fraction of required progress.
 Fishing.BASE_PROGRESS_REQUIRED = 1
-Fishing.PROGRESS_DRAIN = 0.1
 Fishing.BITE_ALERT_EFFECT = "PIP_FX_ExclamationMark"
 Fishing.BITE_ALERT_SOUND = "UI_Handling_Lockpick_Stop"
 Fishing.SPLASH_EFFECT_INTERVAL = 1 -- Interval between small splash effects during the waiting-for-bite phase, in seconds.
@@ -60,7 +58,6 @@ Fishing.Hooks.CanStartFishing = Fishing:AddSubscribableHook("CanStartFishing") -
 ---@class Features.Fishing.GameStates.Fishing : Features.Fishing.GameState
 ---@field Type "Fishing"
 ---@field CurrentFish Features.Fishing.Fish
----@field Progress number
 
 ---------------------------------------------
 -- METHODS
@@ -200,7 +197,6 @@ function Fishing.ReelIn(char)
             Type = "Fishing",
             CharacterHandle = char.Handle,
             CurrentFish = fish,
-            Progress = Fishing.STARTING_PROGRESS * fish.Endurance,
             TargetPosition = state.TargetPosition,
         }
         Net.PostToServer(Fishing.NETMSG_ENCOUNTERED_FISH, {

@@ -97,12 +97,14 @@ function UI.Start(char)
     UI.CreateGameObject("Features.Fishing.GameObject.Bobber", "Bobber", UI.BLOBBER_SIZE)
 
     -- Initialize fish and place it around the middle point
-    local fish = UI.CreateGameObject("Features.Fishing.GameObject.Fish", "Fish", UI.FISH_SIZE)
+    local fish = UI.CreateGameObject("Features.Fishing.GameObject.Fish", "Fish", UI.FISH_SIZE) ---@cast fish Features.Fishing.GameObject.Fish
     fish.Descriptor = state.CurrentFish
     local initialStateClass = Fishing.GetBehaviour(state.CurrentFish.Behaviour).InitialState
     local initialState = fish:CreateState(initialStateClass)
     fish:SetState(initialState)
     fish:GetState().Position = UI.GetBobberUpperBound() / 2
+    fish:SetProgress(Fishing.GetStartingProgress(char) * fish:GetRequiredProgress())
+    UI._FishGameObject = fish
 
     UI.UpdatePosition()
     UI.UpdateProgressBar()
@@ -138,9 +140,9 @@ end
 ---@see Features.Fishing.UI.Hooks.GetProgressDrain
 ---@return number
 function UI.GetProgressDrain()
-    local drain = Fishing.PROGRESS_DRAIN
     local char = UI.GetCharacter()
     local state = UI.GetGameState()
+    local drain = Fishing.GetProgressDrain(char)
     local hook = UI.Hooks.GetProgressDrain:Throw({
         GameState = state,
         Character = char,
@@ -153,26 +155,31 @@ end
 ---Adds progress towards catching the fish.
 ---@param progress number
 function UI.AddProgress(progress)
-    local state = UI.GetGameState()
-    local requiredProgress = UI.GetRequiredProgress()
-    local newProgress = state.Progress + progress
-
-    state.Progress = math.clamp(newProgress, 0, requiredProgress)
+    local fish = UI.GetFishGameObject()
+    local requiredProgress = fish:GetRequiredProgress()
+    local newProgress = fish:AddProgress(progress)
 
     UI.UpdateProgressBar()
 
-    if newProgress >= requiredProgress then -- Uses the pre-clamped value to avoid floating point issues.
+    if newProgress >= requiredProgress then
         UI.Cleanup("Success")
     elseif newProgress <= 0 then
         UI.Cleanup("Failure")
     end
 end
 
----Returns how much progress is required to catch the current fish.
+---Returns the gameobject of the fish being caught.
+---@return Features.Fishing.GameObject.Fish
+function UI.GetFishGameObject()
+    return UI._FishGameObject
+end
+
+---Returns how much progress is required to catch a game object.
+---@param capturable Features.Fishing.Minigame.GameObjects.Capturable? Defaults to the current fish.
 ---@returns number
-function UI.GetRequiredProgress()
-    local state = UI.GetGameState()
-    return Fishing.BASE_PROGRESS_REQUIRED * state.CurrentFish.Endurance
+function UI.GetRequiredProgress(capturable)
+    capturable = capturable or UI.GetFishGameObject()
+    return capturable:GetRequiredProgress()
 end
 
 ---@param reason Features.Fishing.MinigameExitReason
@@ -196,9 +203,10 @@ end
 
 ---Updates the progress bar widget.
 function UI.UpdateProgressBar()
-    local state = UI.GetGameState()
+    local fish = UI.GetFishGameObject()
+    local char = UI.GetCharacter()
     local element = UI:GetElementByID("ProgressBar") ---@type GenericUI_Element_Color
-    local relativeProgress = state.Progress / UI.GetRequiredProgress()
+    local relativeProgress = fish.Progress / fish:GetRequiredProgress()
     local length = relativeProgress * UI.SIZE[2]
 
     element:SetColor(Color.CreateFromHex(Color.LARIAN.YELLOW))

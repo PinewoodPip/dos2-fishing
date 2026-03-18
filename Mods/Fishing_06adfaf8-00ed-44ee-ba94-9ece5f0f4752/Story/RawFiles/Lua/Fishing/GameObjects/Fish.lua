@@ -2,8 +2,10 @@
 local Fishing = GetFeature("Features.Fishing")
 local UI = Fishing.UI ---@class Features.Fishing.UI
 
----@class Features.Fishing.GameObject.Fish : Features.Fishing.GameObject
+---@class Features.Fishing.GameObject.Fish : Features.Fishing.Minigame.GameObjects.Capturable
+---@field GetElement fun(self):GenericUI_Element_IggyIcon
 ---@field Descriptor Features.Fishing.Fish
+---@field _IsCollidingWithBobber boolean
 local _Fish = {
     Type = "Fish",
     MovementState = nil, ---@type Features.Fishing.GameObject.Fish.State
@@ -15,7 +17,7 @@ local _Fish = {
     STATE_CHANGE_COOLDOWN_RANDOM_FACTOR = 0.4, -- Random deviation for state duration, as a fraction of `BASE_CYCLE_TIME`.
     BASE_TWEEN_DURATION = 1.5, -- Base tween duration in seconds, scaled down by fish Difficulty; higher Difficulty results in shorter tween states.
 }
-Inherit(_Fish, UI._GameObjectClass)
+Inherit(_Fish, UI._CapturableGameObjectClass)
 UI.RegisterGameObject("Features.Fishing.GameObject.Fish", _Fish)
 
 local MovementStates = {
@@ -28,10 +30,24 @@ local MovementStates = {
 -- METHODS
 ---------------------------------------------
 
+---@override
 function _Fish:Update(deltaTime)
     local seconds = deltaTime / 1000
     self.MovementState:Update(seconds)
     self:TransitionState()
+    self._IsCollidingWithBobber = false
+end
+
+---@override
+---@param deltaTime number In milliseconds.
+function _Fish:LateUpdate(deltaTime)
+    UI._CapturableGameObjectClass.LateUpdate(self, deltaTime)
+end
+
+---@override
+---@return number
+function _Fish:GetRequiredProgress()
+    return Fishing.BASE_PROGRESS_REQUIRED * self.Descriptor.Endurance
 end
 
 ---Returns a randomized state duration in seconds, scaled by fish Difficulty.
@@ -70,6 +86,12 @@ function _Fish:CreateState(stateClassName)
     return class:Create(self:_RandomStateDuration())
 end
 
+---@override
+function _Fish:UpdatePosition()
+    local element = self:GetElement()
+    element:SetPosition(UI.BLOBBER_AREA_SIZE[1] / 2, UI.BLOBBER_AREA_SIZE[2] - self.State.Position - element:GetSize()[2] / 2)
+end
+
 ---Picks a target state using weighted random selection over a list of transitions.
 ---@param transitions Features.Fishing.Fish.Behaviour.Transition[]
 ---@return Features.Fishing.GameObject.Fish.StateClassName
@@ -95,6 +117,11 @@ function _Fish:SetState(state)
     self.MovementState = state
     self.MovementState:SetFish(self)
     UI:DebugLog("Fish changed state to", state:GetClassName())
+end
+
+---@override
+function _Fish:OnCollideWith(otherObject, deltaTime)
+    UI._CapturableGameObjectClass.OnCollideWith(self, otherObject, deltaTime)
 end
 
 ---Returns a random tweening function for the Tweening state.
