@@ -46,6 +46,7 @@ local Fishing = {
 
         CASTING_RANGE_PER_TELEKINESIS = 0.2,
         BITE_DELAY_REDUCTION_PER_PERSUASION = 0.05,
+        EXTRA_CATCH_CHANCE_PER_BARTERING = 0.04,
     },
 
     ABILITY_SCHOOL_COLOR = "86a4f7", ---@type htmlcolor
@@ -124,6 +125,11 @@ local Fishing = {
             Handle = "h9b68207cg7fb6g4860g89d4g8b04d1bd289f",
             Text = "Fishing spot discovered: %s",
             ContextDescription = [[Notification when fishing in a new region; param is region name]],
+        },
+        Notification_ExtraCatch = {
+            Handle = "hace75aecgf1beg4cbagb718ge9188833511f",
+            Text = "Extra Catch!",
+            ContextDescription = [[Notification when receiving an extra fish from the Bartering bonus]],
         },
         Notification_Minigame_Success = {
             Handle = "h35cacdc8g0b2ag46f4gb003g3122d32bfecc",
@@ -566,13 +572,22 @@ end
 
 ---Returns the bite delay range for char.
 ---@param char Character
----@return number, number
+---@return number, number -- Min range, max range, in seconds.
 function Fishing.GetBiteDelayRange(char)
     local minDelay, maxDelay = table.unpack(Fishing.TUNING.BASE_FISH_BITE_DELAY_RANGE)
     local persuasion = char.Stats.Persuasion
     local reduction = Fishing.TUNING.BITE_DELAY_REDUCTION_PER_PERSUASION * persuasion
     local multiplier = math.max(0, 1 - reduction)
     return minDelay * multiplier, maxDelay * multiplier
+end
+
+---Returns the chance for char to receive an extra copy of the caught fish on successful catches.
+---@param char Character
+---@return number
+function Fishing.GetExtraCatchChance(char)
+    local bartering = char.Stats.Barter
+    local chance = Fishing.TUNING.EXTRA_CATCH_CHANCE_PER_BARTERING * bartering
+    return chance
 end
 
 ---Returns progress drain per second for char.

@@ -20,6 +20,11 @@ local Tooltips = {
             Text = "Increases how far you can cast your rod by %s%% per point.",
             ContextDescription = [[Tooltip for Telekinesis bonus; param is amount per point]],
         },
+        Label_AbilityBonus_Bartering = {
+            Handle = "haa12aa21g4b0ag4511ga2f5gd77002014197",
+            Text = "Grants a %s%% chance to catch an additional fish of the same kind.",
+            ContextDescription = [[Tooltip for Bartering bonus; param is amount per point]],
+        },
     },
 }
 RegisterFeature("Fishing.Tooltips", Tooltips)
@@ -40,6 +45,11 @@ Tooltips.ABILITY_BONUSES = {
         local value = Fishing.TUNING.CASTING_RANGE_PER_TELEKINESIS * 100
         value = Text.RemoveTrailingZeros(value)
         return TSK.Label_AbilityBonus_Telekinesis:Format(value)
+    end,
+    [Tooltip.ABILITY_IDS.BARTERING] = function (_)
+        local value = Fishing.TUNING.EXTRA_CATCH_CHANCE_PER_BARTERING * 100
+        value = Text.RemoveTrailingZeros(value)
+        return TSK.Label_AbilityBonus_Bartering:Format(value)
     end,
 }
 

@@ -27,6 +27,15 @@ function Fishing.CatchFish(char, fish)
     Osi.CharacterStatusText(charGUID, TSK.Notification_Minigame_Success:GetString())
     Osi.PlayAnimation(charGUID, Fishing.SUCCESS_ANIMATION, "")
     local fishItemGUID = Osi.ItemTemplateAddTo(fish.TemplateID, charGUID, 1, 1)
+
+    -- Roll for an extra catch
+    local extraCatchChance = Fishing.GetExtraCatchChance(char)
+    if math.random() <= extraCatchChance then
+        Osi.ItemTemplateAddTo(fish.TemplateID, charGUID, 1, 1)
+        Osi.CharacterStatusText(char.MyGuid, TSK.Notification_ExtraCatch:Format({
+            Color = Color.LARIAN.LIGHT_BLUE,
+        })) -- TODO play some kaching sound fx too
+    end
     local oldFishermancy = Fishing.GetAbilityScore(char)
 
     -- Track stats
