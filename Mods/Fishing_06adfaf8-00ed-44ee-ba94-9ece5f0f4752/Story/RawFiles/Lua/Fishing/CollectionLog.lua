@@ -117,7 +117,7 @@ local TSK = CollectionLog.TranslatedStrings
 
 local InputActions = {
     Open = CollectionLog:RegisterInputAction("OpenCollectionLog", {
-        Name = "Fishing: Open Collection Log",
+        NameHandle = TSK.InputAction_OpenCollectionLog_Name.Handle,
         DefaultInput1 = {Keys = {"lshift", "f"}}
     })
 }
