@@ -403,10 +403,9 @@ end
 ---@param slot GenericUI_Prefab_HotbarSlot
 ---@param fish Features.Fishing.Fish
 function Section:__UpdateElement(_, slot, fish)
-    local template = Ext.Template.GetRootTemplate(fish.TemplateID) ---@cast template ItemTemplate
     local char = Client.GetCharacter()
     local wasCaught = Fishing.GetFishCatchCount(char, fish.ID) > 0
-    local icon = wasCaught and template.Icon or fish.UndiscoveredIcon
+    local icon = wasCaught and fish:GetIcon() or fish.UndiscoveredIcon
     local tooltip = wasCaught and CollectionLog.GetFishTooltip(fish.ID) or CollectionLog.GetUncaughtFishTooltip()
 
     slot:SetIcon(icon)

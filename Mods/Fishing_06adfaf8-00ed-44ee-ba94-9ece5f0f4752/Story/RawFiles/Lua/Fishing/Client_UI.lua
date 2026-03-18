@@ -218,7 +218,7 @@ end
 ---Updates the icon of the fish element.
 function UI.UpdateFishIcon()
     local state = UI.GetGameState()
-    local icon = Fishing.IsFishDiscovered(state.CurrentFish.ID) and state.CurrentFish.Icon or state.CurrentFish.UndiscoveredIcon
+    local icon = Fishing.IsFishDiscovered(state.CurrentFish.ID) and state.CurrentFish:GetIcon() or state.CurrentFish.UndiscoveredIcon
     UI.Elements.FishIcon:SetIcon(icon, UI.FISH_ICON_SIZE:unpack())
 end
 

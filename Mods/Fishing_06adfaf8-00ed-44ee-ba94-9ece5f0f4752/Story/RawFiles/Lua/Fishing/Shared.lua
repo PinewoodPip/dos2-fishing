@@ -369,7 +369,7 @@ Fishing.LEVEL_NAME_TSKHANDLES = {
 ---@field Transitions table<Features.Fishing.GameObject.Fish.StateClassName, Features.Fishing.Fish.Behaviour.Transition[]> Maps current state to possible transitions.
 
 ---@class Features.Fishing.Fish : I_Identifiable, I_Describable
----@field Icon icon? Defaults to the template's icon.
+---@field Icon icon? Override for the fish's icon, used instead of the template's.
 ---@field UndiscoveredIcon icon?
 ---@field Rarity ItemLib_Rarity
 ---@field TemplateID GUID.ItemTemplate GUID for the tier 1 fish rune template. **Mostly for backwards compatibility; see `Templates` field.**
@@ -385,7 +385,6 @@ local _Fish = {
 ---@return string
 function _Fish:GetIcon()
     local itemTemplate = Ext.Template.GetTemplate(self.TemplateID) ---@type ItemTemplate
-
     return self.Icon or itemTemplate.Icon
 end
 
