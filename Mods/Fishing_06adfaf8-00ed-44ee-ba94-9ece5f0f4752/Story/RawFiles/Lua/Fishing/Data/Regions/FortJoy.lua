@@ -16,7 +16,7 @@ local regions = {
         ID = "FJ.StartingBeach",
         NameHandle = "h5ad7c407g7364g4a4dg9ca4g07ee2b7d9e5e", -- "Fort Joy Beach"
         LevelID = "FJ_FortJoy_Main",
-        Bounds = Vector.Create(128, 410, 216, 189),
+        Bounds = Vector.Create(128, 410, 228, 189),
         Fish = {
             -- TODO add more
             {
