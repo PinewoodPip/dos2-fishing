@@ -406,14 +406,14 @@ function Section:__UpdateElement(_, slot, fish)
     local template = Ext.Template.GetRootTemplate(fish.TemplateID) ---@cast template ItemTemplate
     local char = Client.GetCharacter()
     local wasCaught = Fishing.GetFishCatchCount(char, fish.ID) > 0
-    local icon = wasCaught and template.Icon or "unknown"
+    local icon = wasCaught and template.Icon or fish.UndiscoveredIcon
     local tooltip = wasCaught and CollectionLog.GetFishTooltip(fish.ID) or CollectionLog.GetUncaughtFishTooltip()
 
     slot:SetIcon(icon)
     slot:SetCanDragDrop(false)
     slot:SetRarityIcon(Item.GetRarityIcon("Unique"))
     slot:SetTooltip("Custom", tooltip)
-    slot:SetEnabled(wasCaught)
+    slot:SetEnabled(true) -- No need to disable the slot for undiscovered fish (would just make the icons harder to read)
 end
 
 ---Opens the Codex to the Fishing section.

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<save>
+    <header version="2" />
+    <version major="3" minor="6" revision="6" build="0" />
+    <region id="IconUVList">
+        <node id="root">
+            <children>
+                <node id="IconUV">
+                    <attribute id="MapKey" value="bf8be683-9250-400b-a070-61f1d173ea94_9423013524223038499-Class_Wizard_Lizards_(Icon_Lizard_Female)" type="22" />
+                    <attribute id="U1" value="0.00195313" type="6" />
+                    <attribute id="U2" value="0.310547" type="6" />
+                    <attribute id="V1" value="0.00390625" type="6" />
+                    <attribute id="V2" value="0.777344" type="6" />
+                </node>
+                <node id="IconUV">
+                    <attribute id="MapKey" value="c80b85f8-d7e6-4967-ae7f-b2db399ddbfd_10111111542476104753-GEN_Brutes_Knife_(Icon_Human_Male)" type="22" />
+                    <attribute id="U1" value="0.314453" type="6" />
+                    <attribute id="U2" value="0.623047" type="6" />
+                    <attribute id="V1" value="0.00390625" type="6" />
+                    <attribute id="V2" value="0.777344" type="6" />
+                </node>
+                <node id="IconUV">
+                    <attribute id="MapKey" value="ed930554-96d6-40d4-88c2-711942e0b399_9662508185163923459-MaleHero_(Icon_Human_Male)" type="22" />
+                    <attribute id="U1" value="0.626953" type="6" />
+                    <attribute id="U2" value="0.935547" type="6" />
+                    <attribute id="V1" value="0.00390625" type="6" />
+                    <attribute id="V2" value="0.777344" type="6" />
+                </node>
+            </children>
+        </node>
+    </region>
+    <region id="TextureAtlasInfo">
+        <node id="root">
+            <children>
+                <node id="TextureAtlasIconSize">
+                    <attribute id="Height" value="100" type="4" />
+                    <attribute id="Width" value="80" type="4" />
+                </node>
+                <node id="TextureAtlasPath">
+                    <attribute id="Path" value="Assets/Textures/Icons/Generated_06adfaf8-00ed-44ee-ba94-9ece5f0f4752_Icons.dds" type="20" />
+                    <attribute id="UUID" value="7d4a431d-5343-4a15-89ad-f86adc2e8f3c" type="22" />
+                </node>
+                <node id="TextureAtlasTextureSize">
+                    <attribute id="Height" value="128" type="4" />
+                    <attribute id="Width" value="256" type="4" />
+                </node>
+            </children>
+        </node>
+    </region>
+</save>

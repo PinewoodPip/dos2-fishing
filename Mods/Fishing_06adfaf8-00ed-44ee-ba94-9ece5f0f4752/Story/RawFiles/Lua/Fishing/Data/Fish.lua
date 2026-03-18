@@ -18,6 +18,7 @@ local fishes = {
             Text = "A common shell. Many have awashed these shores, with many more yet to come. Free thinkers they are not.",
         },
         TemplateID = "0b65b8bb-d88c-48df-bd66-3fa66060fb52",
+        UndiscoveredIcon = "PIP_Fish_Item_HAR_Shell_A_Silhouette",
         RootTemplates = {
             [1] = "0b65b8bb-d88c-48df-bd66-3fa66060fb52",
             [2] = "1a7a1781-16d2-4a9e-b951-83278da32761",
@@ -37,6 +38,7 @@ local fishes = {
             Text = "A shell that has not forgotten its origins; it has embraced them. By returning to origin, it's able to hold onto what it deems dearest - its sea.",
         },
         TemplateID = "c5514b5f-e468-4908-a63d-0c33c07dadc4",
+        UndiscoveredIcon = "PIP_Fish_Item_HAR_Shell_B_Silhouette",
         RootTemplates = {
             [1] = "c5514b5f-e468-4908-a63d-0c33c07dadc4",
             [2] = "e6238394-7620-40bd-bb00-5fce47c6ebf8",
@@ -57,6 +59,7 @@ local fishes = {
             ContextDescription = [[Fish description for Handkerchief; feel free to rewrite the description if the "pun" is inapplicable]],
         },
         TemplateID = "bc16aace-2992-46cd-982b-264b4507c2b6",
+        UndiscoveredIcon = "PIP_Fish_Item_LOOT_Handkerchief_A_Silhouette",
         RootTemplates = {
             [1] = "bc16aace-2992-46cd-982b-264b4507c2b6",
             [2] = "acf17f4c-f050-43a7-a77d-0bb1e13863f6",
@@ -76,6 +79,7 @@ local fishes = {
             Text = "Long and meandering, this scarf always seems to slip off your neck, almost like an eel. A handmade one would surely work better.",
         },
         TemplateID = "72fd73e8-0331-4409-b822-7b092e0ceb1c",
+        UndiscoveredIcon = "PIP_Fish_Item_ARM_Scarf_A_Blue_Silhouette",
         RootTemplates = {
             [1] = "72fd73e8-0331-4409-b822-7b092e0ceb1c",
             [2] = "907f5151-1bdf-43f6-b879-19afd55d55ab",
@@ -95,6 +99,7 @@ local fishes = {
             Text = "By the coralflow workflow, its branches are clearly distinguished: main, developing, triage, released...",
         },
         TemplateID = "36da05e4-65d7-4c01-9ef0-190db1154bb6",
+        UndiscoveredIcon = "PIP_Fish_Item_LOOT_Antler_A_Magic_Silhouette",
         RootTemplates = {
             [1] = "36da05e4-65d7-4c01-9ef0-190db1154bb6",
             [2] = "d41459f8-00c8-4e89-bd8f-af2a313d6280",
@@ -114,6 +119,7 @@ local fishes = {
             Text = "A pearl blessed by the mermaids, and most importantly, the mercy of the many source hunters who returned it to the sea.",
         },
         TemplateID = "7a52514d-ec8d-4674-b60b-44589de635dd",
+        UndiscoveredIcon = "PIP_Fish_Item_HAR_ShellPearl_Big_A_Silhouette",
         RootTemplates = {
             [1] = "7a52514d-ec8d-4674-b60b-44589de635dd",
             [2] = "fbb1b159-9f4d-457d-abb8-bcf8211ee519",
@@ -134,6 +140,7 @@ local fishes = {
             Text = "A polygonous invertebrate, often mistakenly mixed into potions. Unsuccessful potions.",
         },
         TemplateID = "9c508a76-4e09-4747-a889-efcf8d18bb14",
+        UndiscoveredIcon = "PIP_Fish_Item_HAR_Starfish_A_Silhouette",
         RootTemplates = {
             [1] = "9c508a76-4e09-4747-a889-efcf8d18bb14",
             [2] = "3521e8ae-d7ed-41bf-82ca-997a8ac2471a",
@@ -154,6 +161,7 @@ local fishes = {
             Text = "A conch that has adapted to the art of war. If fighting is sure to result in victory, then it must fight.",
         },
         TemplateID = "9ef3ea02-d89e-4e9a-abfe-980303207c6b",
+        UndiscoveredIcon = "PIP_Fish_Item_HAR_Shell_Big_B_Silhouette",
         RootTemplates = {
             [1] = "9ef3ea02-d89e-4e9a-abfe-980303207c6b",
             [2] = "88fb0660-2ff5-436f-a2d6-eb8b5e366e26",
@@ -174,6 +182,7 @@ local fishes = {
             Text = "Though certainly more usable, the sea washed away all their backstory as well. Yet perhaps this paves the way for new fantasies and speculation.",
         },
         TemplateID = "36308031-2f2b-4ea7-abe3-6f4aaddc3dc2",
+        UndiscoveredIcon = "PIP_Fish_Item_ARM_Panty_A_Dirty_Silhouette",
         RootTemplates = {
             [1] = "36308031-2f2b-4ea7-abe3-6f4aaddc3dc2",
             [2] = "e37e86a4-94cc-44bc-8898-69453d1845e2",
@@ -194,6 +203,7 @@ local fishes = {
             Text = "A curious fruit. You've heard of them before, yet they look nothing like how everyone else explained them to you. Surprisingly hard to digest.",
         },
         TemplateID = "bd05132f-a9f7-48a1-a9e1-ca8a47c95b01",
+        UndiscoveredIcon = "PIP_Fish_Item_HAR_Pearl_A_Silhouette",
         RootTemplates = {
             [1] = "bd05132f-a9f7-48a1-a9e1-ca8a47c95b01",
             [2] = "09e6a179-8d09-4d65-9923-46f83ebf4b57",
@@ -214,6 +224,7 @@ local fishes = {
             Text = "One could consider this specimen an outlier. It's clearly dead, and yet very much real - right here in your hands, not heaven nor hell.",
         },
         TemplateID = "0cca7d41-cb49-4956-b74f-6bc257212526",
+        UndiscoveredIcon = "PIP_Fish_Item_JUNK_FishSkeleton_A_Silhouette",
         RootTemplates = {
             [1] = "0cca7d41-cb49-4956-b74f-6bc257212526",
             [2] = "714d4223-126b-4b8b-bc75-7a7672068853",
@@ -233,6 +244,7 @@ local fishes = {
             Text = "Though born as twins and always living in pairs, these specimens often end up travelling mismatched. Yet rarely in stench outmatched.",
         },
         TemplateID = "83236aea-ab5b-486d-896d-73072996ec08",
+        UndiscoveredIcon = "PIP_Fish_Item_LOOT_Socks_A_Dirty_Silhouette",
         RootTemplates = {
             [1] = "83236aea-ab5b-486d-896d-73072996ec08",
             [2] = "b046303a-7b37-4885-90e5-02cb6cd56172",
@@ -252,6 +264,7 @@ local fishes = {
             Text = "Its colors flash in a harmonized sequence. Other fauna appears attuned to them, obeying them to know when to stop to avoid collisions at intersections.",
         },
         TemplateID = "07fd4252-bcfe-4b30-870b-34e6ed306b85",
+        UndiscoveredIcon = "PIP_Fish_CrystalCoral_Silhouette",
         RootTemplates = {
             [1] = "07fd4252-bcfe-4b30-870b-34e6ed306b85",
             [2] = "eabf87e3-bb81-4981-bc2e-29a4d2514312",
@@ -272,6 +285,7 @@ local fishes = {
             Text = "Crumbling and cracked, this piece can not be the creator's finest. Likely far less than the sum of its parts.",
         },
         TemplateID = "b38e07ef-2ac7-4bdb-9a1c-cf0aadc475e2",
+        UndiscoveredIcon = "PIP_Fish_Junk_Silhouette",
         RootTemplates = {
             [1] = "b38e07ef-2ac7-4bdb-9a1c-cf0aadc475e2",
             [2] = "0f7765a6-35ff-407c-ac58-0e636953eed2",
@@ -291,6 +305,7 @@ local fishes = {
             Text = "A slippery specimen that assaults from the back. Its scales make for quite the snack over an enclosed fire.",
         },
         TemplateID = "29983563-3ade-467f-8d9e-ff59f3446df9",
+        UndiscoveredIcon = "PIP_Fish_Item_CON_Food_Corn_A_Silhouette",
         RootTemplates = {
             [1] = "29983563-3ade-467f-8d9e-ff59f3446df9",
             [2] = "940152a7-8183-4f0f-822f-9bc383fed057",
@@ -311,6 +326,7 @@ local fishes = {
             Text = "They don't taste as good as you expected. But the one above looks promising.",
         },
         TemplateID = "c95533e6-92b0-48a7-b7d9-8a9012bd9b07",
+        UndiscoveredIcon = "PIP_Fish_MoonJellies_Silhouette",
         RootTemplates = {
             [1] = "c95533e6-92b0-48a7-b7d9-8a9012bd9b07",
             [2] = "95d6a457-1033-4c52-a96f-97ba1d3217a4",
@@ -330,6 +346,7 @@ local fishes = {
             Text = "These pocket-sized jellies were only able to conglomerate into your hook with the power of friendship.",
         },
         TemplateID = "0105e2ce-98e5-4fc9-9552-8c30f4b22dc7",
+        UndiscoveredIcon = "PIP_Fish_SeaGooseberry_Silhouette",
         RootTemplates = {
             [1] = "0105e2ce-98e5-4fc9-9552-8c30f4b22dc7",
             [2] = "082aa3e2-2e40-4725-a01e-6a1104637d35",
@@ -350,6 +367,7 @@ local fishes = {
             ContextDescription = [[Tooltip for Descent Navigation Key treasure; the unkown typo is intentional (from Ameranth), denoted by "(sic)"]],
         },
         TemplateID = "c9c8ad3b-9ee6-46c2-a5b0-8a228c57619a",
+        UndiscoveredIcon = "PIP_Fish_Item_Quest_HorrorSleepKey_Silhouette",
         RootTemplates = {
             [1] = "c9c8ad3b-9ee6-46c2-a5b0-8a228c57619a",
             [2] = "cbda7ded-767a-496a-9309-c1208a7375ba",
@@ -370,6 +388,7 @@ local fishes = {
             Text = "A shell of particularly low durability, yet brimming with extraordinary enchantability.",
         },
         TemplateID = "85ea72e9-85fa-4338-8bf8-c50d4746f30e",
+        UndiscoveredIcon = "PIP_Fish_Item_HAR_Shell_Big_A_Silhouette",
         RootTemplates = {
             [1] = "85ea72e9-85fa-4338-8bf8-c50d4746f30e",
             [2] = "42b5fbb5-04a6-4bcf-98b2-27b98fd85f87",
@@ -389,6 +408,7 @@ local fishes = {
             Text = "The ground pickle almost sounds like it was a good invention after tasting this one.",
         },
         TemplateID = "b248d058-e2c4-465b-9fbe-479980b5df05",
+        UndiscoveredIcon = "PIP_Fish_Item_TOOL_Whetstone_A_Silhouette",
         RootTemplates = {
             [1] = "b248d058-e2c4-465b-9fbe-479980b5df05",
             [2] = "476f6c2c-8549-4211-ac89-33555360e82a",
@@ -408,6 +428,7 @@ local fishes = {
             Text = "A drifting algae. The lack of effective underwater mowing techniques results in them overcrowding beaches.",
         },
         TemplateID = "6d7b4477-85f1-4ec7-97bb-55c14a959e12",
+        UndiscoveredIcon = "PIP_Fish_Seaweed_Silhouette",
         RootTemplates = {
             [1] = "6d7b4477-85f1-4ec7-97bb-55c14a959e12",
             [2] = "09472f09-7a76-4ee7-ad45-d80f994a0bb0",
@@ -428,6 +449,7 @@ local fishes = {
             Text = "Dried seaweed, packed and rolled up for ease of transport. You can tell this idea will go places.",
         },
         TemplateID = "293f7126-7871-4970-b1be-8639d8bbb54b",
+        UndiscoveredIcon = "PIP_Fish_SeabedRoll_Silhouette",
         RootTemplates = {
             [1] = "293f7126-7871-4970-b1be-8639d8bbb54b",
             [2] = "0f7bf403-81e0-4e6c-bc91-50b8c5f7ea6c",
@@ -447,6 +469,7 @@ local fishes = {
             Text = "Pitiful souls of those long lost to the torrents. Fated to but two destinies: to seed knowledge for those to come, or to leech from all.",
         },
         TemplateID = "0d547d36-340b-45f4-a9c4-c601fef20c31",
+        UndiscoveredIcon = "PIP_Fish_TorrentedSoul_Silhouette",
         RootTemplates = {
             [1] = "0d547d36-340b-45f4-a9c4-c601fef20c31",
             [2] = "f0019d16-a533-428b-ac74-275be009cb72",
@@ -467,6 +490,7 @@ local fishes = {
             Text = "Life is full of surprises. Some surprises repeat. It's best not to assume you won't fish up another fucking wasp nest in the future.",
         },
         TemplateID = "ad130829-18f7-47f8-be8a-c211fb03d9be",
+        UndiscoveredIcon = "PIP_Fish_Item_CONT_Nest_A_Silhouette",
         RootTemplates = {
             [1] = "ad130829-18f7-47f8-be8a-c211fb03d9be",
             [2] = "f36026c6-392e-407c-aeb4-bb845c3c0d19",
@@ -487,6 +511,7 @@ local fishes = {
             Text = "A gift from one of the few beings that values legacy. One crab's obsolete claw is another man's treasure.",
         },
         TemplateID = "367cd086-70d6-40d8-9d67-5e740c3a26bf",
+        UndiscoveredIcon = "PIP_Fish_Item_LOOT_Claw_Crab_A_Silhouette",
         RootTemplates = {
             [1] = "367cd086-70d6-40d8-9d67-5e740c3a26bf",
             [2] = "eca2146b-6780-4717-9b35-551409aff63f",
@@ -507,6 +532,7 @@ local fishes = {
             Text = "This is a wooden bucket. But there's more - this one already came pre-filled when you fished it up. Dear god...",
         },
         TemplateID = "ccd5a301-1c5b-4e23-a66e-d6de28d2a6ca",
+        UndiscoveredIcon = "PIP_Fish_Item_FUR_Bucket_A_Water_Silhouette",
         RootTemplates = {
             [1] = "ccd5a301-1c5b-4e23-a66e-d6de28d2a6ca",
             [2] = "e9467a24-4974-4657-a116-efb7093c1261",
@@ -527,6 +553,7 @@ local fishes = {
             Text = "A leaf of a water lily. Gorgeous where you got it from, a bit awkward in your backpack. Perhaps you could make an idyllic pond of your own.",
         },
         TemplateID = "88fb39e1-80be-4134-970b-8e216c14481e",
+        UndiscoveredIcon = "PIP_Fish_LilyPad_Silhouette",
         RootTemplates = {
             [1] = "88fb39e1-80be-4134-970b-8e216c14481e",
             [2] = "99b0219f-3fe0-46b3-9594-8c67cf0cb208",
@@ -547,6 +574,7 @@ local fishes = {
             Text = "Spiky and sentient, its lack of a success catching flies has left it frustrated and rude. Towards you.",
         },
         TemplateID = "f203717d-c226-46c2-83f3-f7c371816380",
+        UndiscoveredIcon = "PIP_Fish_Aldrovanda_Silhouette",
         RootTemplates = {
             [1] = "f203717d-c226-46c2-83f3-f7c371816380",
             [2] = "83e9a079-6726-4b63-ad54-f06ddef0e324",
@@ -567,6 +595,7 @@ local fishes = {
             Text = "The look on its face gives it all away: these just aren't a good storage method for anything.",
         },
         TemplateID = "25df0fdd-5825-43ce-b68c-5b6ac5beb640",
+        UndiscoveredIcon = "PIP_Fish_Blobfish_Silhouette",
         RootTemplates = {
             [1] = "25df0fdd-5825-43ce-b68c-5b6ac5beb640",
             [2] = "efdc54b7-18a5-4baa-a76d-b0e98b8cc170",
@@ -587,6 +616,7 @@ local fishes = {
             Text = "You could put together a solid cleaving weapon with a blade like this. If only crafting were real.",
         },
         TemplateID = "b7dfe5c3-b97a-48b9-b951-00e784a94fc9",
+        UndiscoveredIcon = "PIP_Fish_Item_UNI_PART_DIY_Axe_Head_Silhouette",
         RootTemplates = {
             [1] = "b7dfe5c3-b97a-48b9-b951-00e784a94fc9",
             [2] = "a74626f8-c757-457f-8278-36fa24e35924",
@@ -607,6 +637,7 @@ local fishes = {
             Text = "A doll used in some kind of ritual. People aren't very open about owning them.",
         },
         TemplateID = "0e5517fd-8072-4dd6-91c3-dda9362d7a2b",
+        UndiscoveredIcon = "PIP_Fish_Item_Goblins_Totem_A_Silhouette",
         RootTemplates = {
             [1] = "0e5517fd-8072-4dd6-91c3-dda9362d7a2b",
             [2] = "727afa34-1f62-4662-a782-38dcceb864a8",
@@ -627,6 +658,7 @@ local fishes = {
             Text = "In its prime, this painting would've been worth a fortune. The fish depicted is little more than bones now, though.",
         },
         TemplateID = "bb14222f-5d29-4d30-ab25-a0dc9f8cde3f",
+        UndiscoveredIcon = "PIP_Fish_FishPainting_Silhouette",
         RootTemplates = {
             [1] = "bb14222f-5d29-4d30-ab25-a0dc9f8cde3f",
             [2] = "6fd96df9-d6fc-4350-896a-171a268d8496",
@@ -647,6 +679,7 @@ local fishes = {
             Text = "You deal with these all the time, so why do the ones from the sea creep you out? It's not the smell, it's not the look, it's not the feel. Maybe it's the fact that this one was still alive before you fished it out.",
         },
         TemplateID = "62b40302-0708-413d-8632-684a77962bcd",
+        UndiscoveredIcon = "PIP_Fish_Item_Quest_Headless_Nick_Head_A_Silhouette",
         RootTemplates = {
             [1] = "62b40302-0708-413d-8632-684a77962bcd",
             [2] = "50c4e662-5a83-4cbb-922f-5f905b62a533",
@@ -667,6 +700,7 @@ local fishes = {
             Text = "A rare rose that grows only in emerging streams. The turquoise petals smell like sparkling slush and pristine bathtubs.",
         },
         TemplateID = "556e0b21-8db5-4f91-9b92-ab8c088ee6b7",
+        UndiscoveredIcon = "PIP_Fish_FloodRose_Silhouette",
         RootTemplates = {
             [1] = "556e0b21-8db5-4f91-9b92-ab8c088ee6b7",
             [2] = "c1ed5ca3-9da1-4196-9ebe-038b845a0aea",
@@ -687,6 +721,7 @@ local fishes = {
             Text = "An essential mineral; to get salty is to be living a good life.",
         },
         TemplateID = "ddf213ab-1f45-4f7a-987c-f7496630c947",
+        UndiscoveredIcon = "PIP_Fish_Item_LOOT_Ash_Pile_A_Silhouette",
         RootTemplates = {
             [1] = "ddf213ab-1f45-4f7a-987c-f7496630c947",
             [2] = "22593b79-9fb9-4ab0-8023-c1c60f004b45",
@@ -707,6 +742,7 @@ local fishes = {
             Text = "It's empty? Perhaps someone got to it first, or perhaps it's just trolling. Either way rude of someone to have contributed an empty bottle.",
         },
         TemplateID = "edeb3a42-6b45-4618-b0ca-9cde19a92604",
+        UndiscoveredIcon = "PIP_Fish_Item_TOOL_StinkBom_A_Silhouette",
         RootTemplates = {
             [1] = "edeb3a42-6b45-4618-b0ca-9cde19a92604",
             [2] = "c5f9503a-f517-4d08-9961-6662ac8557fc",
@@ -727,6 +763,7 @@ local fishes = {
             Text = "There's possibly up to 8 more of these near where it came from. You flagged the spot to sweep them later.",
         },
         TemplateID = "b69cfc00-1570-4fe0-afca-612e1288e0d0",
+        UndiscoveredIcon = "PIP_Fish_Item_PUZ_Trap_Mine_A_Blue_Silhouette",
         RootTemplates = {
             [1] = "b69cfc00-1570-4fe0-afca-612e1288e0d0",
             [2] = "70df565b-b877-49a5-964f-9204679b2291",
@@ -747,6 +784,7 @@ local fishes = {
             Text = "A bar of soap that's been naturally formed in a cave. The quality far surpasses the mass-conjured ones off the shelves.",
         },
         TemplateID = "e7d8e36e-9126-42ad-be26-ae784d05440b",
+        UndiscoveredIcon = "PIP_Fish_Item_FUR_Washsoap_A_Silhouette",
         RootTemplates = {
             [1] = "e7d8e36e-9126-42ad-be26-ae784d05440b",
             [2] = "19a9f62a-86cc-4581-9f73-36ba87edcacd",
@@ -767,6 +805,7 @@ local fishes = {
             Text = "Long and scary, this single tooth is mere foreshadowing for what's to come (for you) if you keep being nosy about seas where you don't belong.",
         },
         TemplateID = "c9ea6c04-5d7b-4733-aa27-f6aa4ab8bd5a",
+        UndiscoveredIcon = "PIP_Fish_Item_LOOT_Tusk_A_Silhouette",
         RootTemplates = {
             [1] = "c9ea6c04-5d7b-4733-aa27-f6aa4ab8bd5a",
             [2] = "195acb1d-0a4c-482d-9495-c8e73ba89e73",
@@ -787,6 +826,7 @@ local fishes = {
             Text = "A ring with many jewels, said to have been worn by a renown witch of old. There's supposedly as many of them as jewels on each different one.",
         },
         TemplateID = "672d4807-70f6-462a-87e6-878ac2546bd0",
+        UndiscoveredIcon = "PIP_Fish_Item_Quest_Icara_Ring_A_Silhouette",
         RootTemplates = {
             [1] = "672d4807-70f6-462a-87e6-878ac2546bd0",
             [2] = "62f8b223-b8fe-41a6-8906-d53cdd67a92e",
@@ -808,6 +848,7 @@ local fishes = {
             ContextDescription = [[Description for Sea Pork; "Seven" refers to the seven divines]],
         },
         TemplateID = "5b9840b7-db3a-4202-a970-dafa97dfc638",
+        UndiscoveredIcon = "PIP_Fish_Item_CON_Food_RoastedPork_A_Silhouette",
         RootTemplates = {
             [1] = "5b9840b7-db3a-4202-a970-dafa97dfc638",
             [2] = "d5905a4a-7031-4c87-be74-b0312258a7ba",
@@ -828,6 +869,7 @@ local fishes = {
             Text = "An elongated pouch. Its original purpose is hard to deduce, but it now appears to be very convenient for transporting arrows.",
         },
         TemplateID = "1f281ebd-b8ec-48f0-b2b0-e32acbe71f85",
+        UndiscoveredIcon = "PIP_Fish_Item_WPN_Goblins_Quiver_A_Silhouette",
         RootTemplates = {
             [1] = "1f281ebd-b8ec-48f0-b2b0-e32acbe71f85",
             [2] = "b2193dda-b2f5-46b4-97d6-7f6c73c4b56d",
@@ -848,6 +890,7 @@ local fishes = {
             Text = "Threads strongly infused with Source and said to heal every ailment imaginable, but only once. For this reason, the vast majority of them have survived to this day unused.",
         },
         TemplateID = "65cc0ad3-9296-4dd9-ad35-dfe47bc5a0ad",
+        UndiscoveredIcon = "PIP_Fish_Item_Quest_Pebble_Star_A_Silhouette",
         RootTemplates = {
             [1] = "65cc0ad3-9296-4dd9-ad35-dfe47bc5a0ad",
             [2] = "beb280d6-87bf-4fff-9bfa-b9f7d91e8f6e",
@@ -868,6 +911,7 @@ local fishes = {
             Text = "A very random drop. You can't help but wonder what its creator was thinking.",
         },
         TemplateID = "028b6e15-30b9-4c7a-81b7-b4c4f9fa82df",
+        UndiscoveredIcon = "PIP_Fish_Item_LOOT_Buffalo_Amulet_A_Silhouette",
         RootTemplates = {
             [1] = "028b6e15-30b9-4c7a-81b7-b4c4f9fa82df",
             [2] = "44c2bbc3-70cd-4c88-a67d-0e4974d82187",
@@ -888,6 +932,7 @@ local fishes = {
             Text = "A composite of florets, and common prey of otariidae, et al.",
         },
         TemplateID = "c9f7f6af-0770-4fc0-a4ec-f3cbbe33ebcc",
+        UndiscoveredIcon = "PIP_Fish_SeaDandelion_Silhouette",
         RootTemplates = {
             [1] = "c9f7f6af-0770-4fc0-a4ec-f3cbbe33ebcc",
             [2] = "48c30b5d-1045-48d0-bcc8-f5756718a910",
@@ -908,6 +953,7 @@ local fishes = {
             Text = "Shivering, yet somehow sturdy. Seems to endlessly turn a constant level of inertia, even when resisted.",
         },
         TemplateID = "9a13346b-63cc-42e4-9dc7-f04da5846cb2",
+        UndiscoveredIcon = "PIP_Fish_TemporalGear_Silhouette",
         RootTemplates = {
             [1] = "9a13346b-63cc-42e4-9dc7-f04da5846cb2",
             [2] = "85362d1f-3d44-41d1-bcdf-eb594afdefac",
@@ -928,6 +974,7 @@ local fishes = {
             Text = "Damp clamp of leaves. Makes rocks look considerably cooler.",
         },
         TemplateID = "505d83a0-8001-4f86-975a-e007f19c7891",
+        UndiscoveredIcon = "PIP_Fish_Moss_Silhouette",
         RootTemplates = {
             [1] = "505d83a0-8001-4f86-975a-e007f19c7891",
             [2] = "adde4104-2be9-4afe-a85e-434ee933a2cf",
@@ -948,6 +995,7 @@ local fishes = {
             Text = [["There is truth, and there is the perception of it. You will find out later which of the two has been the helmsman of the course you steer."]],
         },
         TemplateID = "57e298f1-533a-481f-9743-ef03364e73b4",
+        UndiscoveredIcon = "PIP_Fish_Item_ARM_Panty_A_Zandalor_Silhouette",
         RootTemplates = {
             [1] = "57e298f1-533a-481f-9743-ef03364e73b4",
             [2] = "df2d15bc-1e30-4192-9858-913513300f26",
@@ -968,6 +1016,7 @@ local fishes = {
             Text = [[A starfish strongly infused with magic, its source generation possibly lasting for months. They are said to "set potion" on those who consume them.]],
         },
         TemplateID = "8f6ba58a-b68f-436d-828f-3802def990f0",
+        UndiscoveredIcon = "PIP_Fish_SourceInfusedStarfish_Silhouette",
         RootTemplates = {
             [1] = "8f6ba58a-b68f-436d-828f-3802def990f0",
             [2] = "a636c46d-713a-4c39-8856-0ab852856fdc",
@@ -988,6 +1037,7 @@ local fishes = {
             Text = "But a relic of a bygone trend. Adventurers used to collect these quite proudly before reasoning was invented.",
         },
         TemplateID = "e869b3a4-adb1-4c4a-8a49-b52e0424049f",
+        UndiscoveredIcon = "PIP_Fish_Item_TOOL_Voodoodoll_E_Silhouette",
         RootTemplates = {
             [1] = "e869b3a4-adb1-4c4a-8a49-b52e0424049f",
             [2] = "284204ff-0731-4ad0-a09a-1db6b4d7089f",
@@ -1008,6 +1058,7 @@ local fishes = {
             Text = "A portable spike ball. Once thrown at someone, taking it out is much more hurtful than becoming one with it.",
         },
         TemplateID = "fe731665-4318-462c-b384-a7f8b38444e5",
+        UndiscoveredIcon = "PIP_Fish_Hurchin_Silhouette",
         RootTemplates = {
             [1] = "fe731665-4318-462c-b384-a7f8b38444e5",
             [2] = "55dbc1b7-ddb9-41c0-b3d6-cae666363f81",
@@ -1028,6 +1079,7 @@ local fishes = {
             Text = "This fish used to be an angler just like you, before it took a hook to its fins.",
         },
         TemplateID = "132a0eff-89df-4ea4-a0a6-47fc7e45cfac",
+        UndiscoveredIcon = "PIP_Fish_AnglerFish_Silhouette",
         RootTemplates = {
             [1] = "132a0eff-89df-4ea4-a0a6-47fc7e45cfac",
             [2] = "6795d3bc-aac0-4ffb-9ed8-c091d7adaf56",
@@ -1048,6 +1100,7 @@ local fishes = {
             Text = "A species that designed itself for wielding to combat. All part of its parasitic mastermind plan to transcend beyond the aquatic habitat.",
         },
         TemplateID = "d098bb0e-fe5a-4b9c-90f0-84b278daf071",
+        UndiscoveredIcon = "PIP_Fish_Item_CON_Food_Fish_F_Silhouette",
         RootTemplates = {
             [1] = "d098bb0e-fe5a-4b9c-90f0-84b278daf071",
             [2] = "9f572208-d1de-4c49-9f24-864562be6a50",
@@ -1068,6 +1121,7 @@ local fishes = {
             Text = "A particularly dear item. With one of these in your backpack, you feel confident all your interfaces are significantly improved. Years of dedication and support from Godwoken all over Rivellon have made it into something truly special, and an unforgettable part of their journeys.",
         },
         TemplateID = "9b6827a3-9f44-4179-803b-cf6deb9e943a",
+        UndiscoveredIcon = "PIP_Fish_epipe_Silhouette",
         RootTemplates = {
             [1] = "9b6827a3-9f44-4179-803b-cf6deb9e943a",
             [2] = "a22df636-6d19-490d-9d8b-372ba717b289",
@@ -1088,6 +1142,7 @@ local fishes = {
             Text = "In ancient times, such books were said to be the only way to tweak things to your liking. By having them speak to you. Seriously.",
         },
         TemplateID = "bda440bc-8218-4c6a-9ed6-124944b2507c",
+        UndiscoveredIcon = "PIP_Fish_Item_BOOK_TenebriumHowTo_Silhouette",
         RootTemplates = {
             [1] = "bda440bc-8218-4c6a-9ed6-124944b2507c",
             [2] = "2d0820ea-c29e-4cdd-93e5-056fa855cc1c",
@@ -1108,6 +1163,7 @@ local fishes = {
             Text = "The frog does not speak to you. Not yet. It is waiting for your approval by the council.",
         },
         TemplateID = "3aa90d30-60f2-465d-aa39-3cb35f2d6f04",
+        UndiscoveredIcon = "PIP_Fish_Portrait_Animals_Frog_Merman_A_Silhouette",
         RootTemplates = {
             [1] = "3aa90d30-60f2-465d-aa39-3cb35f2d6f04",
             [2] = "c5190fa1-8fe5-467b-9d8d-6ed038a8548b",
@@ -1128,6 +1184,7 @@ local fishes = {
             Text = "A divisive widget. Many find its perpetual stimulation a blessing, others, a curse.",
         },
         TemplateID = "bacdad7a-2ddb-4b6c-936a-424f4b32ae22",
+        UndiscoveredIcon = "PIP_Fish_Item_PUZ_Lever_Valve_A_Silhouette",
         RootTemplates = {
             [1] = "bacdad7a-2ddb-4b6c-936a-424f4b32ae22",
             [2] = "edaad663-40a7-4500-b42a-2712d80c7d34",
@@ -1148,6 +1205,7 @@ local fishes = {
             Text = "Quite the elusive specimen; these took notes from fish and learnt to breathe water to hide from foragers. They were not aware of fishing beforehand.",
         },
         TemplateID = "aba4a9bf-0779-4d07-b201-cb6247e641e5",
+        UndiscoveredIcon = "PIP_Fish_GilledMushroom_Silhouette",
         RootTemplates = {
             [1] = "aba4a9bf-0779-4d07-b201-cb6247e641e5",
             [2] = "3c8689d9-6c80-446a-a25e-717a60cf4887",
@@ -1168,6 +1226,7 @@ local fishes = {
             Text = "Wise people know a drawing allows for more legal loopholes than a thousand words. This letter cleverly keeps the owner's legacy away from the literate grasp of the law, by showing where it is instead of what it is.",
         },
         TemplateID = "f8b54ffe-2275-444f-8beb-305b464376a3",
+        UndiscoveredIcon = "PIP_Fish_Item_BOOK_Letter_Map_A_Silhouette",
         RootTemplates = {
             [1] = "f8b54ffe-2275-444f-8beb-305b464376a3",
             [2] = "84af748d-8ca3-4945-b1cf-45103e29ae63",
@@ -1188,6 +1247,7 @@ local fishes = {
             Text = "A common edible fish of white meat, typically occupying deep waters and deep stomachs.",
         },
         TemplateID = "e9789fb1-7cf3-45c8-918f-c8d056938e44",
+        UndiscoveredIcon = "PIP_Fish_Pomfret_Silhouette",
         RootTemplates = {
             [1] = "e9789fb1-7cf3-45c8-918f-c8d056938e44",
             [2] = "a3878d78-db92-46ad-9517-953477f516e9",
@@ -1208,6 +1268,7 @@ local fishes = {
             Text = "Subspecies of trout that have become aware of their single life, and that they should live with no regrets.",
         },
         TemplateID = "a4ae0f15-9326-454f-8e4b-515a593bd0b5",
+        UndiscoveredIcon = "PIP_Fish_Item_CON_Food_Fish_A_Silhouette",
         RootTemplates = {
             [1] = "a4ae0f15-9326-454f-8e4b-515a593bd0b5",
             [2] = "93040f06-aa2f-4a6d-ad66-da75b49e547d",
@@ -1228,6 +1289,7 @@ local fishes = {
             Text = "A full-on ship with all amenities included (except the crew)!!! It's crazy to think how many people voted against it.",
         },
         TemplateID = "b7acdcab-3c9f-4361-ad9f-6d77ab963c0b",
+        UndiscoveredIcon = "PIP_Fish_Item_LOOT_Humans_Warship_Replica_A_Silhouette",
         RootTemplates = {
             [1] = "b7acdcab-3c9f-4361-ad9f-6d77ab963c0b",
             [2] = "54accc4f-7692-4c5e-8532-f6271a77dd45",
@@ -1248,6 +1310,7 @@ local fishes = {
             Text = "A ship that's suspiciously small. Though functional, it's unclear who would've helmed it. Ants?",
         },
         TemplateID = "2b71a6da-4bef-4340-b7c5-a6c6375648d4",
+        UndiscoveredIcon = "PIP_Fish_Item_LOOT_Lizards_Siege_Warship_Replica_A_Silhouette",
         RootTemplates = {
             [1] = "2b71a6da-4bef-4340-b7c5-a6c6375648d4",
             [2] = "588aa6fc-603b-4f6a-b0ba-2ed1b4cd17ec",
@@ -1268,6 +1331,7 @@ local fishes = {
             Text = "A decent-looking water pitcher. With good persuasion, you could pitch it to just about anyone who doesn't need one.",
         },
         TemplateID = "e7face96-91f3-403d-ae13-68097f825773",
+        UndiscoveredIcon = "PIP_Fish_Item_FUR_Rich_Pitcher_A_Silhouette",
         RootTemplates = {
             [1] = "e7face96-91f3-403d-ae13-68097f825773",
             [2] = "94de4912-760a-4805-bc88-007835cb0a36",
@@ -1288,6 +1352,7 @@ local fishes = {
             Text = "Being not in the mood is no longer a real excuse with these. You get to skip the wait and get right to the good part!",
         },
         TemplateID = "154d293b-694c-4991-aea4-30a095b090a2",
+        UndiscoveredIcon = "PIP_Fish_PremoldedCheese_Silhouette",
         RootTemplates = {
             [1] = "154d293b-694c-4991-aea4-30a095b090a2",
             [2] = "6fc77148-d173-44c2-a724-ab272101e85f",
@@ -1308,6 +1373,7 @@ local fishes = {
             Text = "It's invigorating to think about how much inconvenience you're actively causing by owning this. Now there's a pot out there that cannot be closed.",
         },
         TemplateID = "bae1c58f-b1f6-44fc-90ee-8e7ed9b31b3e",
+        UndiscoveredIcon = "PIP_Fish_Item_CONT_Barrel_A_Lid_A_Silhouette",
         RootTemplates = {
             [1] = "bae1c58f-b1f6-44fc-90ee-8e7ed9b31b3e",
             [2] = "072b4d0a-1580-4c15-b5fb-7069d68ba400",
@@ -1328,6 +1394,7 @@ local fishes = {
             Text = "A fish summoned from another world. Its time is ticking, and you'd better show it the best parts of Rivellon while it's here. Your favorite fishing spot, maybe?",
         },
         TemplateID = "8ed3ce7d-6694-4114-bb99-1e802f5d79a3",
+        UndiscoveredIcon = "PIP_Fish_Riftling_Silhouette",
         RootTemplates = {
             [1] = "8ed3ce7d-6694-4114-bb99-1e802f5d79a3",
             [2] = "1bc6dbac-c775-4605-9457-475a1dfc54f0",
@@ -1348,6 +1415,7 @@ local fishes = {
             Text = "Yet another variety of a ball of spikes. This one a lot trickier to handle, as once you let go off it, the laws of gravity only allow it to go up.",
         },
         TemplateID = "313023ca-41bf-4781-ac17-ad102d08005b",
+        UndiscoveredIcon = "PIP_Fish_Item_PUZ_Trap_Mine_A_Yellow_Silhouette",
         RootTemplates = {
             [1] = "313023ca-41bf-4781-ac17-ad102d08005b",
             [2] = "b1e1e30d-3d98-4192-9fda-d4c07cc182b5",
@@ -1368,6 +1436,7 @@ local fishes = {
             Text = "A great future companion. But how will you get it through the border?",
         },
         TemplateID = "3fd1f2ad-e2de-40ec-9348-176c62f3d772",
+        UndiscoveredIcon = "PIP_Fish_Reptile_Silhouette",
         RootTemplates = {
             [1] = "3fd1f2ad-e2de-40ec-9348-176c62f3d772",
             [2] = "dc9df527-206b-4632-b009-de27349678b9",
@@ -1389,6 +1458,7 @@ local fishes = {
             Text = "A carnivorous, somewhat dangerous kind. And with danger always comes great loot inside.",
         },
         TemplateID = "445d0bee-b1d7-4f28-b4c2-18cf02632200",
+        UndiscoveredIcon = "PIP_Fish_Piranha_Silhouette",
         RootTemplates = {
             [1] = "445d0bee-b1d7-4f28-b4c2-18cf02632200",
             [2] = "3f925f4f-19b0-4a97-b267-a2c3748a050a",
@@ -1409,6 +1479,7 @@ local fishes = {
             Text = "A ray-finned fish. Over 150 subspecies exist, and they all breed with each other quite hard.",
         },
         TemplateID = "dc888c65-6d68-4597-af24-41b9489ca8eb",
+        UndiscoveredIcon = "PIP_Fish_Porgy_Silhouette",
         RootTemplates = {
             [1] = "dc888c65-6d68-4597-af24-41b9489ca8eb",
             [2] = "efa44da5-1fc6-4533-8f63-b657762d8a45",
@@ -1429,6 +1500,7 @@ local fishes = {
             Text = "Freshwater fish that are the bane of many unprepared adventurers, as their long-range beam can highly effectively take out uninformed bypassers.",
         },
         TemplateID = "edde3c85-cbd3-42cb-9567-567497473691",
+        UndiscoveredIcon = "PIP_Fish_Item_CON_Food_Fish_C_Silhouette",
         RootTemplates = {
             [1] = "edde3c85-cbd3-42cb-9567-567497473691",
             [2] = "2c21568c-1a84-48f9-bf9e-9ccb507e1901",
@@ -1449,6 +1521,7 @@ local fishes = {
             Text = "You dredged this lost soul from the deep. It seems content with just being with company again at last. Would releasing it even be the moral thing to do?",
         },
         TemplateID = "c92b0f3a-a938-4dab-b639-ecd8102a8a47",
+        UndiscoveredIcon = "PIP_Fish_Item_PUZ_Source_Jar_A_Silhouette",
         RootTemplates = {
             [1] = "c92b0f3a-a938-4dab-b639-ecd8102a8a47",
             [2] = "a918a5e0-006b-40c0-b6cf-c64ff53f470e",
@@ -1469,6 +1542,7 @@ local fishes = {
             Text = "A class of fish schooled in sourcery. Very old sourcery. You can tell they know a lot about source rushing - should you tell them?",
         },
         TemplateID = "86eecf19-fdff-492f-81f5-695ac4662e93",
+        UndiscoveredIcon = "PIP_Fish_Item_LOOT_Scraps_LiveWood_VoidTouched_A_Silhouette",
         RootTemplates = {
             [1] = "86eecf19-fdff-492f-81f5-695ac4662e93",
             [2] = "3fabc90f-2343-47cf-adf2-d9d229a87413",
@@ -1489,6 +1563,7 @@ local fishes = {
             Text = "It's never wise to adventure without a backup plan for when your wishes run out. Carrying these is just common sense.",
         },
         TemplateID = "fa648321-84f5-4658-abda-35a1d20ccf5b",
+        UndiscoveredIcon = "PIP_Fish_Item_LOOT_DjinnLamp_A_Silhouette",
         RootTemplates = {
             [1] = "fa648321-84f5-4658-abda-35a1d20ccf5b",
             [2] = "88eddcd3-359c-48ec-b47f-355e2c4e2fb3",
@@ -1509,6 +1584,7 @@ local fishes = {
             Text = "A fish that has not been exposed to the elements, but rather embraced them, becoming fortified and immune to being teleported.",
         },
         TemplateID = "853c1ec4-44cb-4bd7-8fa3-8a0377355f8d",
+        UndiscoveredIcon = "PIP_Fish_Rockfish_Silhouette",
         RootTemplates = {
             [1] = "853c1ec4-44cb-4bd7-8fa3-8a0377355f8d",
             [2] = "6f55f2e2-f592-4adc-a079-3c48690078db",
@@ -1529,6 +1605,7 @@ local fishes = {
             Text = "Some things are best left unfished.",
         },
         TemplateID = "63a1d6eb-9e21-4997-82b2-87fa040131b3",
+        UndiscoveredIcon = "PIP_Fish_Sludge_Silhouette",
         RootTemplates = {
             [1] = "63a1d6eb-9e21-4997-82b2-87fa040131b3",
             [2] = "9bd58c82-f059-461a-9bdb-5954c8e0396f",
@@ -1549,6 +1626,7 @@ local fishes = {
             Text = "Art imitates nature. In this case, it seems the art of life imitated a wooden bow.",
         },
         TemplateID = "f8f9df3f-6db4-4908-9e67-69cbbbc6b6e1",
+        UndiscoveredIcon = "PIP_Fish_StringFish_Silhouette",
         RootTemplates = {
             [1] = "f8f9df3f-6db4-4908-9e67-69cbbbc6b6e1",
             [2] = "4ea8d60a-d880-4ae0-ab68-605981bafdc7",
@@ -1569,6 +1647,7 @@ local fishes = {
             Text = "Small but deadly in the right hands. You could bring a pocket full of these to a fight. Your right pocket. That way you could pull them out with your right hands.",
         },
         TemplateID = "e1ff43c5-b5a1-4b3e-ac28-18ea1851927d",
+        UndiscoveredIcon = "PIP_Fish_Swordine_Silhouette",
         RootTemplates = {
             [1] = "e1ff43c5-b5a1-4b3e-ac28-18ea1851927d",
             [2] = "d9d7290c-7e6e-40c9-a4b5-8e67109ddf89",
@@ -1589,6 +1668,7 @@ local fishes = {
             Text = "Morbid curiosity keeps tempting you to take a peek into this flickering light - to see how your journey ends. With such insight, maybe you could end it better.",
         },
         TemplateID = "c4032bb5-9c30-4b63-bde9-3d8a667b2a52",
+        UndiscoveredIcon = "PIP_Fish_LightAtTheEnd_Silhouette",
         RootTemplates = {
             [1] = "c4032bb5-9c30-4b63-bde9-3d8a667b2a52",
             [2] = "0deb479b-2639-4985-90cd-c1152e1bd3d9",
@@ -1609,6 +1689,7 @@ local fishes = {
             Text = "Silverware with microscopic fishes on it that were otherwise completely unknown and unfishable until the invention of plates.",
         },
         TemplateID = "6d828b59-1439-4dc8-b045-69375f261679",
+        UndiscoveredIcon = "PIP_Fish_Petri_Silhouette",
         RootTemplates = {
             [1] = "6d828b59-1439-4dc8-b045-69375f261679",
             [2] = "0ef32078-23e8-4c1f-876a-ff7e89278723",
@@ -1629,6 +1710,7 @@ local fishes = {
             Text = "Similar to spiky shells, these have learnt to fight back predators, but smarter instead of harder.",
         },
         TemplateID = "0a6537b9-d25e-4615-adfc-3664bad98971",
+        UndiscoveredIcon = "PIP_Fish_Item_HAR_Shell_B_PilgrimsShell_Silhouette",
         RootTemplates = {
             [1] = "0a6537b9-d25e-4615-adfc-3664bad98971",
             [2] = "2dc5d7ee-466f-40a6-9212-96c76ae1ccae",
@@ -1649,6 +1731,7 @@ local fishes = {
             Text = "Teach a man to fish and he'll eat for a day. Teach him vertical scaling and he'll peak in high school.",
         },
         TemplateID = "bcc3f515-9f52-4873-9d32-8f99524a3dd7",
+        UndiscoveredIcon = "PIP_Fish_Item_FUR_Humans_FishFactory_Barrel_B_Silhouette",
         RootTemplates = {
             [1] = "bcc3f515-9f52-4873-9d32-8f99524a3dd7",
             [2] = "3beb0622-9930-4049-9133-a1176fab3c58",
@@ -1669,6 +1752,7 @@ local fishes = {
             Text = "A variant of the snapper that can theoretically create fire by snapping its fins. Theoretically, due to environmental factors that get in the way.",
         },
         TemplateID = "d34559fe-70e0-49cd-a10e-918b20912e98",
+        UndiscoveredIcon = "PIP_Fish_Item_CON_Food_Fish_B_Silhouette",
         RootTemplates = {
             [1] = "d34559fe-70e0-49cd-a10e-918b20912e98",
             [2] = "24bd597e-a9d9-4a54-bba5-3dec0a238738",
@@ -1689,6 +1773,7 @@ local fishes = {
             Text = "You went quite out of your way to catch it, and yet, you can't help but feel you're on the wrong track.",
         },
         TemplateID = "60aea63a-a991-4a4d-bfdf-b711b0110628",
+        UndiscoveredIcon = "PIP_Fish_RedHerring_Silhouette",
         RootTemplates = {
             [1] = "60aea63a-a991-4a4d-bfdf-b711b0110628",
             [2] = "1882efc9-377b-4190-af8f-9b2bfcfa44e8",
@@ -1709,6 +1794,7 @@ local fishes = {
             Text = "A group of sardines that clinged onto your hook all at once. For ease of logistics and taxes, you decided to interpret them as a single unit. A macro fish.",
         },
         TemplateID = "78944354-d4bf-42c9-b027-d9628f844354",
+        UndiscoveredIcon = "PIP_Fish_Item_CONT_Fishpile_A_Silhouette",
         RootTemplates = {
             [1] = "78944354-d4bf-42c9-b027-d9628f844354",
             [2] = "2344cb5d-9bc5-40b7-9718-0c6c4abd597d",
@@ -1729,6 +1815,7 @@ local fishes = {
             Text = "A small fish migrating from legacy oceans. Did not come with its original packaging.",
         },
         TemplateID = "f9a179cf-d45b-4db6-9323-2dc0b2a2dc92",
+        UndiscoveredIcon = "PIP_Fish_Item_CON_Food_Fish_E_Silhouette",
         RootTemplates = {
             [1] = "f9a179cf-d45b-4db6-9323-2dc0b2a2dc92",
             [2] = "c91b55f2-c846-4738-9f95-a1977f6e8c55",
@@ -1749,6 +1836,7 @@ local fishes = {
             Text = "A bald aberration that dwells in moist caves and bosses people around. All your opinions are their own. Always have been.",
         },
         TemplateID = "2ead8fd3-dc37-4064-99ca-4d075db0c897",
+        UndiscoveredIcon = "PIP_Fish_Item_Quest_COR_Goblins_Grunt_A_Head_Silhouette",
         RootTemplates = {
             [1] = "2ead8fd3-dc37-4064-99ca-4d075db0c897",
             [2] = "5774a7db-50a6-4f6e-bbd7-0d724afe8b32",
@@ -1769,6 +1857,7 @@ local fishes = {
             Text = [[A long, slimy fish that lives in dark waters and can spell "aerotheurge" correctly.]],
         },
         TemplateID = "efccb705-f51f-4d34-bbe3-1e9c3fcbcf7b",
+        UndiscoveredIcon = "PIP_Fish_Item_LOOT_Rat_Tail_A_Silhouette",
         RootTemplates = {
             [1] = "efccb705-f51f-4d34-bbe3-1e9c3fcbcf7b",
             [2] = "a0b4fd4a-64dc-48d9-aa95-bdb368e4abc1",
@@ -1789,6 +1878,7 @@ local fishes = {
             Text = "Conches that are lawfully evil. Many necronchmasters have tried to turn them, but their stubberness is unmatched - they will only ever commit crimes that are legal.",
         },
         TemplateID = "59b35035-fceb-4673-a089-e3f956a61f86",
+        UndiscoveredIcon = "PIP_Fish_Item_HAR_Shell_Big_C_Silhouette",
         RootTemplates = {
             [1] = "59b35035-fceb-4673-a089-e3f956a61f86",
             [2] = "2bfed145-efcf-4ed6-8785-58f921c890c9",
@@ -1809,6 +1899,7 @@ local fishes = {
             Text = "A void-touched fish that has never been caught at night. Their only weakness is the other part of the day.",
         },
         TemplateID = "3e59c0fa-dc33-4ec3-849b-07c67c46664d",
+        UndiscoveredIcon = "PIP_Fish_Nightfarer_Silhouette",
         RootTemplates = {
             [1] = "3e59c0fa-dc33-4ec3-849b-07c67c46664d",
             [2] = "c8da644f-31a2-4782-86e7-a667760d529a",
@@ -1829,6 +1920,7 @@ local fishes = {
             Text = "An eel that has lost all grip on reality from prolonged contact with the void. It desires nothing but to continue sharing nonsense with its colleagues, in a private stream you cannot access.",
         },
         TemplateID = "2d76c20d-ed93-4862-9248-b2d983be588b",
+        UndiscoveredIcon = "PIP_Fish_GripSlipper_Silhouette",
         RootTemplates = {
             [1] = "2d76c20d-ed93-4862-9248-b2d983be588b",
             [2] = "3a59cb7f-8e4c-4197-b1fb-665ef01dcd9d",
@@ -1849,6 +1941,7 @@ local fishes = {
             Text = "A fish that has been immersed in the void and lost all its identifying features.",
         },
         TemplateID = "c823c188-308d-4f4c-a27a-03086efba15e",
+        UndiscoveredIcon = "PIP_Fish_VoidwokenNondescriptFish_Silhouette",
         RootTemplates = {
             [1] = "c823c188-308d-4f4c-a27a-03086efba15e",
             [2] = "89a347bf-051e-4590-afd0-3907dc82a250",

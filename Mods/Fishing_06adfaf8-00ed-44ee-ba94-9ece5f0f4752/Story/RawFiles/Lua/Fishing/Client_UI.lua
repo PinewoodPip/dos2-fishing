@@ -207,10 +207,11 @@ function UI.UpdateProgressBar()
     -- element:SetPositionRelativeToParent("BottomRight", 5, -length) -- TODO investigate issue
 end
 
+---Updates the icon of the fish element.
 function UI.UpdateFishIcon()
     local state = UI.GetGameState()
-
-    UI.Elements.Fish:SetIcon(state.CurrentFish:GetIcon(), UI.FISH_ICON_SIZE:unpack())
+    local icon = Fishing.IsFishDiscovered(state.CurrentFish.ID) and state.CurrentFish.Icon or state.CurrentFish.UndiscoveredIcon
+    UI.Elements.FishIcon:SetIcon(icon, UI.FISH_ICON_SIZE:unpack())
 end
 
 ---Returns whether it's the player's first time playing the minigame.
