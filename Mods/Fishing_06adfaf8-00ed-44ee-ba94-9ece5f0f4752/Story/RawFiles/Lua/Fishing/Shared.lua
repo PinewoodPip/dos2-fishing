@@ -39,8 +39,10 @@ local Fishing = {
     WATER_MAX_DISTANCE = 7.5, -- Distance to water (or fishing areas) that a character must be within for fishing to be available.
 
     TUNING = {
+        BASE_FISH_BITE_DELAY_RANGE = {3.2, 6.5},
         BASE_STARTING_PROGRESS = 0.45, -- As fraction of required progress.
         BASE_PROGRESS_DRAIN = 0.1,
+        BITE_DELAY_REDUCTION_PER_PERSUASION = 0.05,
     },
 
     ABILITY_SCHOOL_COLOR = "86a4f7", ---@type htmlcolor
@@ -548,6 +550,17 @@ function Fishing.GetRegionName(region, appendLevel)
         name = string.format("%s (%s)", name, levelName)
     end
     return name
+end
+
+---Returns the bite delay range for char.
+---@param char Character
+---@return number, number
+function Fishing.GetBiteDelayRange(char)
+    local minDelay, maxDelay = table.unpack(Fishing.TUNING.BASE_FISH_BITE_DELAY_RANGE)
+    local persuasion = char.Stats.Persuasion
+    local reduction = Fishing.TUNING.BITE_DELAY_REDUCTION_PER_PERSUASION * persuasion
+    local multiplier = math.max(0, 1 - reduction)
+    return minDelay * multiplier, maxDelay * multiplier
 end
 
 ---Returns progress drain per second for char.

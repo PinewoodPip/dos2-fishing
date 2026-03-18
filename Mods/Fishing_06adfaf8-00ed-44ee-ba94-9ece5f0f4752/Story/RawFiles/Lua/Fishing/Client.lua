@@ -15,7 +15,6 @@ Fishing.SKILL_ABILITY_ICON = "PIP_Fishing_SkillAbility"
 Fishing.CURSOR_PLANE_FALLBACK_HEIGHT = 2 -- Picker height difference with the character past which the casting position logic will fallback to raycasting onto a plane below the character. See `GetCastingPosition()`.
 
 -- Bite phase tuning
-Fishing.FISH_BITE_DELAY_RANGE = {3.2, 6.5} -- Time range (in seconds) for how long it can take for a fish to bite after the player starts fishing.
 Fishing.FISH_BITE_DURATION = 0.4 -- Duration the player has to react to a bite before the fish gets away, in seconds.
 
 -- Reeling phase tuning
@@ -100,7 +99,7 @@ function Fishing.Start(char)
     else
         local canFish, reason = Fishing.CanFish(char)
         if canFish then
-            local minBiteTime, maxBiteTime = table.unpack(Fishing.FISH_BITE_DELAY_RANGE)
+            local minBiteTime, maxBiteTime = Fishing.GetBiteDelayRange(char)
             local biteTimeRange = maxBiteTime - minBiteTime
             local biteTime = minBiteTime + math.random() * biteTimeRange
 

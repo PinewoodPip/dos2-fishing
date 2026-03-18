@@ -49,6 +49,7 @@ local scripts = {
     {ScriptSet = "Fishing/Runes"},
     {ScriptSet = "Fishing/Skills"},
     {ScriptSet = "Fishing/Trader"},
+    "Fishing/Tooltips/Client.lua",
     "Fishing/ControllerSupportWarning/Client.lua",
 }
 for _,script in ipairs(scripts) do

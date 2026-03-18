@@ -1,0 +1,58 @@
+
+local Tooltip = Client.Tooltip
+local Fishing = GetFeature("Features.Fishing")
+
+---@type Feature
+local Tooltips = {
+    TranslatedStrings = {
+        Label_AbilityBonus = {
+            Handle = "h86e13650g0d88g43c1g934cg46ebd92d23a7",
+            Text = "Bonuses while fishing:",
+            ContextDescription = [[Tooltip for abilities that give bonuses while fishing]],
+        },
+        Label_AbilityBonus_Persuasion = {
+            Handle = "h58acdf6dg8928g4287g8210gc3cf6d3aca5d",
+            Text = "Decreases the time until fish bite by %s%% per point.",
+            ContextDescription = [[Tooltip for Persuasion bonus; param is amount per point]],
+        },
+    },
+}
+RegisterFeature("Fishing.Tooltips", Tooltips)
+local TSK = Tooltips.TranslatedStrings
+
+---@class Features.Fishing.Tooltips.AbilityBonusEntry
+---@field Label TextLib_TranslatedString
+---@field Getter fun(char:Character):number
+
+---@type table<AbilityType, fun(char:Character):string>
+Tooltips.ABILITY_BONUSES = {
+    [Tooltip.ABILITY_IDS.PERSUASION] = function (_)
+        local value = Fishing.TUNING.BITE_DELAY_REDUCTION_PER_PERSUASION * 100
+        value = Text.RemoveTrailingZeros(value)
+        return TSK.Label_AbilityBonus_Persuasion:Format(value)
+    end,
+}
+
+---------------------------------------------
+-- EVENT LISTENERS
+---------------------------------------------
+
+-- Show ability bonuses for the fishing minigame.
+local function FormatTooltipBonus(str)
+    local prefix = TSK.Label_AbilityBonus:GetString() .. "<br><img src='Icon_BulletPoint'> "
+    return Text.Format(prefix .. str, {
+        Color = Color.LARIAN.LIGHT_BLUE,
+    })
+end
+Tooltip.Hooks.RenderAbilityTooltip:Subscribe(function (ev)
+    print(ev.AbilityID)
+    local abilityBonusGetter = Tooltips.ABILITY_BONUSES[ev.AbilityID]
+    if abilityBonusGetter then
+        local char = Client.GetCharacter()
+        local bonusStr = abilityBonusGetter(char)
+        ev.Tooltip:InsertElement({
+            Type = "ItemDescription",
+            Label = FormatTooltipBonus(bonusStr),
+        })
+    end
+end)
