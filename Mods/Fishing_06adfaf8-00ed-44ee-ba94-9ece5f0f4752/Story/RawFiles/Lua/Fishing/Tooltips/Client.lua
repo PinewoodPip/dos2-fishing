@@ -7,13 +7,18 @@ local Tooltips = {
     TranslatedStrings = {
         Label_AbilityBonus = {
             Handle = "h86e13650g0d88g43c1g934cg46ebd92d23a7",
-            Text = "Bonuses while fishing:",
+            Text = "Fishing bonuses:",
             ContextDescription = [[Tooltip for abilities that give bonuses while fishing]],
         },
         Label_AbilityBonus_Persuasion = {
             Handle = "h58acdf6dg8928g4287g8210gc3cf6d3aca5d",
             Text = "Decreases the time until fish bite by %s%% per point.",
             ContextDescription = [[Tooltip for Persuasion bonus; param is amount per point]],
+        },
+        Label_AbilityBonus_Telekinesis = {
+            Handle = "h89e56530gf511g4019g9715gfeaa57f41719",
+            Text = "Increases how far you can cast your rod by %s%% per point.",
+            ContextDescription = [[Tooltip for Telekinesis bonus; param is amount per point]],
         },
     },
 }
@@ -30,6 +35,11 @@ Tooltips.ABILITY_BONUSES = {
         local value = Fishing.TUNING.BITE_DELAY_REDUCTION_PER_PERSUASION * 100
         value = Text.RemoveTrailingZeros(value)
         return TSK.Label_AbilityBonus_Persuasion:Format(value)
+    end,
+    [Tooltip.ABILITY_IDS.TELEKINESIS] = function (_)
+        local value = Fishing.TUNING.CASTING_RANGE_PER_TELEKINESIS * 100
+        value = Text.RemoveTrailingZeros(value)
+        return TSK.Label_AbilityBonus_Telekinesis:Format(value)
     end,
 }
 

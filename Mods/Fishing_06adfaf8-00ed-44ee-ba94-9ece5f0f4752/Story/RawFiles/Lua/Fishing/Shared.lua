@@ -39,9 +39,12 @@ local Fishing = {
     WATER_MAX_DISTANCE = 7.5, -- Distance to water (or fishing areas) that a character must be within for fishing to be available.
 
     TUNING = {
+        BASE_CASTING_RANGE = 7.5,
         BASE_FISH_BITE_DELAY_RANGE = {3.2, 6.5},
         BASE_STARTING_PROGRESS = 0.45, -- As fraction of required progress.
         BASE_PROGRESS_DRAIN = 0.1,
+
+        CASTING_RANGE_PER_TELEKINESIS = 0.2,
         BITE_DELAY_REDUCTION_PER_PERSUASION = 0.05,
     },
 
@@ -550,6 +553,15 @@ function Fishing.GetRegionName(region, appendLevel)
         name = string.format("%s (%s)", name, levelName)
     end
     return name
+end
+
+---Returns the maximum rod casting distance for char.
+---@param char Character
+---@return number -- In meters.
+function Fishing.GetCastingRange(char)
+    local telekinesis = char.Stats.Telekinesis
+    local growth = Fishing.TUNING.CASTING_RANGE_PER_TELEKINESIS * telekinesis
+    return Fishing.TUNING.BASE_CASTING_RANGE * (1 + growth)
 end
 
 ---Returns the bite delay range for char.

@@ -410,7 +410,8 @@ Fishing.Hooks.CanStartFishing:Subscribe(function (ev)
     -- Check distance to target fishing point
     local charPos = V(char.WorldPos[1], char.WorldPos[3])
     local distanceToCursor = Vector.GetLength(cursorPos2D - charPos)
-    if distanceToCursor > Fishing.WATER_MAX_DISTANCE then
+    local maxCastingRange = Fishing.GetCastingRange(char)
+    if distanceToCursor > maxCastingRange then
         reason = TSK.Notification_CantFish_TooFar:GetString()
     end
 

@@ -88,7 +88,14 @@ Fishing.Events.CharacterStartedFishing:Subscribe(function (ev)
     local x, y, z = table.unpack(ev.TargetPosition)
     local dummyItemGUID = Osi.CreateItemTemplateAtPosition(Item.TEMPLATES.GOLD, x, y, z) -- Gold template conveniently has no destroy visuals.
     Osi.CharacterLookAt(char.MyGuid, dummyItemGUID, 1)
-    Osi.ItemDestroy(dummyItemGUID)
+
+    -- Play telekinesis beam effect if the casting range was boosted
+    local castingRange = Vector.GetLength(V(char.WorldPos) - ev.TargetPosition)
+    if castingRange > Fishing.TUNING.BASE_CASTING_RANGE then
+        Osi.PlayBeamEffect(char.MyGuid, dummyItemGUID, Item.TELEKINESIS_BEAM_EFFECT, "Dummy_R_Hand", "Dummy_Root")
+    end
+
+    Osi.ItemDestroy(dummyItemGUID) -- Not immediate; processed at the end of tick, thus it's safe to use the GUID throughout this listener.
 
     Fishing.PlayAnimation(char) -- Should be done after facing the target, as characters cannot turn during an animation.
 
