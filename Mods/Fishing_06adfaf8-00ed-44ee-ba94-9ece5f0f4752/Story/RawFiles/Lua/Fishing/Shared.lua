@@ -237,7 +237,7 @@ local Fishing = {
 
         Label_MinigameTutorial = {
             Handle = "hcced1bb7ge818g4803gbf45gf0644370163f",
-            Text = "Hold left-click to raise the bar,\nlet go to have it fall.\n\nKeep the bar by the fish until the yellow bar fills up!",
+            Text = "Hold Left-Click to raise the bobber,<br>let go to have it fall.<br><br>Keep the bobber by the fish until the right bar fills up!",
             ContextDescription = "Tutorial message",
         },
         Notification_FishCaught = {

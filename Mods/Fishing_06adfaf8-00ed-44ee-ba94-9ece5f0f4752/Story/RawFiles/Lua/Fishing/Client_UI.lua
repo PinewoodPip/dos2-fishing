@@ -57,10 +57,13 @@ UI.SIZE = V(50, 500)
 UI.FISH_SIZE = V(48, 48) -- Game object size.
 UI.FISH_ICON_SIZE = V(48, 48)
 UI.TREASURE_CHEST_SIZE = V(48, 48)
-UI.BOBBER_AREA_SIZE = V(40, 490)
-UI.BOBBER_WIDTH = 40
+UI.BOBBER_AREA_SIZE = V(40, 500)
+UI.BOBBER_WIDTH = 32
 UI.BOBBER_COLOR = Color.CreateFromHex(Color.LARIAN.POISON_GREEN)
 UI.BOBBER_COLLISION_COLOR = Color.CreateFromHex(Color.LARIAN.GREEN)
+
+UI.FRAME_TEXTURE = "a5a4c748-ed5b-49ee-8de0-a924b7e529d1"
+UI.FRAME_SIZE = UI.BOBBER_AREA_SIZE + V(68 * 2, 110)
 
 -- Physics & tuning
 UI.PHYSICS_EXPONENT = 1.8 -- Exponent applied to acceleration (both player & gravity).
@@ -70,7 +73,7 @@ UI.MAX_VELOCITY = 220
 UI.MAX_ACCELERATION = 150
 UI.CLICK_ACCELERATION_BOOST = 0 -- TODO add cooldown?
 UI.PROGRESS_PER_SECOND = 0.15
-UI.PROGRESS_BAR_WIDTH = 5
+UI.PROGRESS_BAR_WIDTH = 20
 UI.TUTORIAL_PROGRESS_DRAIN_MULTIPLIER = 0.5
 
 ---------------------------------------------
@@ -260,11 +263,11 @@ function UI.UpdateProgressBar()
     local fish = UI.GetFishGameObject()
     local element = UI:GetElementByID("ProgressBar") ---@type GenericUI_Element_Color
     local relativeProgress = fish.Progress / fish:GetRequiredProgress()
-    local length = relativeProgress * UI.SIZE[2]
+    local length = relativeProgress * UI.SIZE[2] * 1.05
 
-    element:SetColor(Color.CreateFromHex(Color.LARIAN.YELLOW))
+    element:SetColor(Color.CreateFromHex("6AB2DA"))
     element:SetSize(UI.PROGRESS_BAR_WIDTH, length)
-    element:SetPosition(UI.SIZE[1], UI.SIZE[2] - length)
+    element:SetPosition(UI.FRAME_SIZE[1] - 120 + UI.SIZE[1], UI.SIZE[2] - length + 70)
 end
 
 ---Updates the icon of the fish element.
@@ -502,11 +505,30 @@ function Fishing:__Setup()
 
     local panel = UI:CreateElement("Root", "GenericUI_Element_TiledBackground")
     panel:SetBackground("Black", UI.SIZE:unpack())
-    panel:SetAlpha(0.5)
+    panel:SetAlpha(0)
+    UI.Root = panel
+
+    local backdropShadow = panel:AddChild("BackdropShadow", "GenericUI_Element_TiledBackground")
+    backdropShadow:SetBackground("Black", V(90, UI.BOBBER_AREA_SIZE[2] + 35):unpack())
+    -- backdropShadow:Move(30, 20)
+    backdropShadow:SetAlpha(0.5)
+
+    -- Progress bar
+    local progressBar = panel:AddChild("ProgressBar", "GenericUI_Element_Color")
+    progressBar:SetSize(0, 0)
+    UI.Elements.ProgressBar = progressBar
+
+    local frameBG = panel:AddChild("BobberAreaBG", "GenericUI_Element_Texture")
+    frameBG:SetTexture(UI.FRAME_TEXTURE, UI.FRAME_SIZE)
 
     local bobberArea = panel:AddChild("BobberArea", "GenericUI_Element_TiledBackground")
     bobberArea:SetBackground("Black", UI.BOBBER_AREA_SIZE:unpack())
-    bobberArea:SetPositionRelativeToParent("Center")
+    bobberArea:SetAlpha(0, false)
+    bobberArea:SetPositionRelativeToParent("Center", -10, -40)
+    backdropShadow:SetPositionRelativeToParent("Center", -15 + 10, -40 + 40)
+
+    local gameObjectsContainer = bobberArea:AddChild("GameObjectsContainer", "GenericUI_Element_Empty")
+    UI.GameObjectsContainer = gameObjectsContainer
 
     local bobber = bobberArea:AddChild("Bobber", "GenericUI_Element_Color")
     bobber:SetSize(V(UI.BOBBER_WIDTH, 40):unpack()) -- Placeholder height; will be set upon starting the minigame.
@@ -516,25 +538,21 @@ function Fishing:__Setup()
     local fish = bobberArea:AddChild("Fish", "GenericUI_Element_Empty")
     local fishIcon = fish:AddChild("FishIcon", "GenericUI_Element_IggyIcon")
     fishIcon:SetIcon("Item_CON_Food_Fish_B", UI.FISH_ICON_SIZE:unpack())
-    fishIcon:Move(-UI.FISH_ICON_SIZE[1]/2, UI.FISH_ICON_SIZE[2]/2) -- Center the icon in the fish element
+    fishIcon:Move(-UI.FISH_ICON_SIZE[1]/2 - 5, UI.FISH_ICON_SIZE[2]/2) -- Center the icon in the fish element
     UI.Elements.Fish = fish
     UI.Elements.FishIcon = fishIcon
 
     local treasureChest = bobberArea:AddChild("TreasureChest", "GenericUI_Element_Empty")
     local treasureChestIcon = treasureChest:AddChild("TreasureChestIcon", "GenericUI_Element_IggyIcon")
     treasureChestIcon:SetIcon("Item_CONT_Humans_Citz_Chest_A", UI.TREASURE_CHEST_SIZE:unpack()) -- TODO extract icon var
-    treasureChestIcon:Move(-UI.TREASURE_CHEST_SIZE[1]/2, UI.TREASURE_CHEST_SIZE[2]/2)
+    treasureChestIcon:Move(-UI.TREASURE_CHEST_SIZE[1]/2 - 5, UI.TREASURE_CHEST_SIZE[2]/2)
     treasureChest:SetVisible(false)
     UI.Elements.TreasureChest = treasureChest
     UI.Elements.TreasureChestIcon = treasureChestIcon
 
-    local progressBar = panel:AddChild("ProgressBar", "GenericUI_Element_Color")
-    progressBar:SetSize(0, 0)
-    UI.Elements.ProgressBar = progressBar
-
     local tutorialText = TextPrefab.Create(UI, "TutorialText", panel, TSK.Label_MinigameTutorial:Format({Color = Color.WHITE}), "Left", V(300, 200))
-    tutorialText:SetStroke(Color.Create(Color.BLACK), 1, 1, 15, 1)
-    tutorialText:SetPosition(UI.SIZE[1] + 10, 0)
+    tutorialText:SetStroke(Color.Create(Color.BLACK), 1, 1, 25, 15)
+    tutorialText:SetPositionRelativeToParent("Right", tutorialText:GetWidth(), 0)
     UI.Elements.TutorialText = tutorialText
 
     UI:Hide()
