@@ -375,13 +375,13 @@ Fishing.LEVEL_NAME_TSKHANDLES = {
 ---@alias Features.Fishing.Fish.BehaviourType string
 
 ---@class Features.Fishing.Fish.Behaviour.Transition
----@field TargetState Features.Fishing.GameObject.Fish.StateClassName
+---@field TargetState Features.Fishing.GameObject.MovementState.ClassName
 ---@field Weight number Relative chance for this transition to be picked.
 
 ---@class Features.Fishing.Fish.Behaviour
 ---@field Type Features.Fishing.Fish.BehaviourType
----@field InitialState Features.Fishing.GameObject.Fish.StateClassName
----@field Transitions table<Features.Fishing.GameObject.Fish.StateClassName, Features.Fishing.Fish.Behaviour.Transition[]> Maps current state to possible transitions.
+---@field InitialState Features.Fishing.GameObject.MovementState.ClassName
+---@field Transitions table<Features.Fishing.GameObject.MovementState.ClassName, Features.Fishing.Fish.Behaviour.Transition[]> Maps current state to possible transitions.
 
 ---@class Features.Fishing.TreasureChest
 ---@field ID Features.Fishing.TreasureChestID?

@@ -5,9 +5,9 @@ local Fishing = GetFeature("Features.Fishing")
 ---@alias Features.Fishing.Fish.BehaviourType "Chill"|"Aggressive"|"Sinker"|"Floater"|"Unpredictable"
 
 local STATES = {
-    FLOATING = "Features.Fishing.GameObject.Fish.States.Floating",
-    SINKING = "Features.Fishing.GameObject.Fish.States.Sinking",
-    TWEENING = "Features.Fishing.GameObject.Fish.States.Tweening",
+    FLOATING = "Features.Fishing.GameObject.MovementStates.Floating",
+    SINKING = "Features.Fishing.GameObject.MovementStates.Sinking",
+    TWEENING = "Features.Fishing.GameObject.MovementStates.Tweening",
 }
 -- Aliases for transitions with weight 1.
 local BASE_TRANSITIONS = {
