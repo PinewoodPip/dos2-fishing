@@ -313,7 +313,7 @@ function Fishing.Stop(char, reason)
         CharacterNetID = char.NetID,
         Reason = reason,
         CaughtFishID = fish and fish.ID or nil,
-        CaughtChestID = state.SpawnedChest and state.SpawnedChest.ID or nil,
+        CaughtChestID = state.CaughtChest and state.SpawnedChest.ID or nil,
     })
 
     Fishing._CharactersFishing:Remove(char.Handle)
