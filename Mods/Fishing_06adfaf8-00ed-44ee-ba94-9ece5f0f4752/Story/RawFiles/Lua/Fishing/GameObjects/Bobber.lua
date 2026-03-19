@@ -13,6 +13,8 @@ local _Bobber = {
     -- UI_Game_Reward_MoveCursor soft
     RAISE_SOUND = "UI_Game_Reward_MoveCursor", -- UI_Game_Dialog_Open has variation, nice swoosh, maybe use for fish leaving the zone
     RAISE_SOUND_COOLDOWN = 0.27, -- In seconds.
+    BOTTOM_BOUNCE_FACTOR = 0.9, -- Fraction of downward speed converted into upward upon bouncing from the bottom.
+    MIN_BOUNCE_SPEED = 12, -- Minimum velocity required for the bobber to bounce when reaching the bottom.
     FISH_ENTER_SOUND = "UI_Game_PartyFormation_PickUp", -- Sound to play when the bobber enters a fish's range.
     FISH_EXIT_SOUND = "UI_Game_Dialog_Open", -- Sound to play when the bobber exits a fish's range.
 }
@@ -56,9 +58,21 @@ function _Bobber:Update(deltaTime)
     state.Velocity = state.Velocity + acceleration * seconds
     state.Velocity = math.clamp(state.Velocity, -UI.MAX_VELOCITY, UI.MAX_VELOCITY)
 
-    state.Position = math.clamp(state.Position + state.Velocity * seconds, 0, UI.GetBobberUpperBound())
+    local upperBound = UI.GetBobberUpperBound() -- TODO use gameobject method
+    state.Position = math.clamp(state.Position + state.Velocity * seconds, 0, upperBound)
 
-    if state.Position <= 0 or state.Position >= UI.GetBobberUpperBound() then -- TODO use gameobject method
+    -- Bounce when reaching the bottom
+    if state.Position <= 0 then
+        if state.Velocity < 0 then
+            local upBounceSpeed = -state.Velocity
+            if upBounceSpeed >= self.MIN_BOUNCE_SPEED then
+                state.Velocity = math.min(upBounceSpeed * self.BOTTOM_BOUNCE_FACTOR, UI.MAX_VELOCITY)
+            else
+                state.Velocity = 0
+            end
+        end
+        state.Acceleration = 0
+    elseif state.Position >= upperBound then
         state.Velocity = 0
         state.Acceleration = 0
     end
