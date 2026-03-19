@@ -35,6 +35,11 @@ local Tooltips = {
             Text = "Increases the starting capture progress by %s%% per point.",
             ContextDescription = [[Tooltip for Leadership bonus; param is amount per point]],
         },
+        Label_AbilityBonus_Perseverance = {
+            Handle = "hefb50da5g094dg4734ga12eg26844a9118a2",
+            Text = "Decreases capture progress drain when not reeling in the fish by %s%% per point.",
+            ContextDescription = [[Tooltip for Perseverance bonus; param is amount per point]],
+        },
     },
 }
 RegisterFeature("Fishing.Tooltips", Tooltips)
@@ -71,6 +76,11 @@ Tooltips.ABILITY_BONUSES = {
         value = Text.RemoveTrailingZeros(value)
         return TSK.Label_AbilityBonus_Leadership:Format(value)
     end,
+    [Tooltip.ABILITY_IDS.PERSEVERANCE] = function (_)
+        local value = Fishing.TUNING.PROGRESS_DRAIN_REDUCTION_PER_PERSEVERANCE * 100
+        value = Text.RemoveTrailingZeros(value)
+        return TSK.Label_AbilityBonus_Perseverance:Format(value)
+    end
 }
 
 ---------------------------------------------

@@ -52,6 +52,8 @@ local Fishing = {
         CASTING_RANGE_PER_TELEKINESIS = 0.2,
         BITE_DELAY_REDUCTION_PER_PERSUASION = 0.05,
         EXTRA_CATCH_CHANCE_PER_BARTERING = 0.04,
+        PROGRESS_DRAIN_REDUCTION_PER_PERSEVERANCE = 0.015,
+
         TREASURE_CHEST_SPAWN_DELAY_RANGE = {3.0, 5.0}, -- Time delay range before a chest spawns, in seconds.
         TREASURE_CHEST_BASE_SPAWN_CHANCE = 0.01,
         TREASURE_CHEST_CHANCE_PER_LUCK = 0.03,
@@ -611,8 +613,9 @@ end
 ---@param char Character?
 ---@return number
 function Fishing.GetProgressDrain(char)
-    local multiplier = 1 -- TODO
-
+    local perseverance = char.Stats.Perseverance
+    local reduction = Fishing.TUNING.PROGRESS_DRAIN_REDUCTION_PER_PERSEVERANCE * perseverance
+    local multiplier = math.max(0, 1 - reduction)
     return Fishing.TUNING.BASE_PROGRESS_DRAIN * multiplier
 end
 
