@@ -179,7 +179,7 @@ local Fishing = {
         },
         Notification_CantFish_TooFar = {
             Handle = "ha875440cgfcb2g4231g8747gca7fe6c661d9",
-            Text = "That's too far for my fishing rod!",
+            Text = "I can't cast my rod that far!",
             ContextDescription = [[Notification when trying to fish too far from the character]],
         },
         Notification_CantFish_NoRod = {

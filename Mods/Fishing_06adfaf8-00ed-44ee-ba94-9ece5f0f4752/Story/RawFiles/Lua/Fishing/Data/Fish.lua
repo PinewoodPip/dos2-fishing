@@ -714,11 +714,11 @@ local fishes = {
     ["Salt"] = {
         NameHandle = T{
             Handle = "hf7465499g7d67g410ag8fefga4424a44fcf5",
-            Text = "Salt",
+            Text = "Rivellonian Salt",
         },
         DescriptionHandle = T{
             Handle = "hd26f6d57gcd96g4830g96f1ge11286021445",
-            Text = "An essential mineral; to get salty is to be living a good life.",
+            Text = "An essential mineral; to get salty at times is to be living a good life.",
         },
         TemplateID = "ddf213ab-1f45-4f7a-987c-f7496630c947",
         UndiscoveredIcon = "PIP_Fish_Item_LOOT_Ash_Pile_A_Silhouette",
@@ -1181,7 +1181,7 @@ local fishes = {
         },
         DescriptionHandle = T{
             Handle = "hf8516715g387dg42a4g8f89gba705280b611",
-            Text = "A divisive widget. Many find its perpetual stimulation a blessing, others, a curse.",
+            Text = "A divisive widget. Many find its perpetual stimulation a blessing, others, a scourge, a devil, a misery, a blight, a hex, a curse.",
         },
         TemplateID = "bacdad7a-2ddb-4b6c-936a-424f4b32ae22",
         UndiscoveredIcon = "PIP_Fish_Item_PUZ_Lever_Valve_A_Silhouette",
