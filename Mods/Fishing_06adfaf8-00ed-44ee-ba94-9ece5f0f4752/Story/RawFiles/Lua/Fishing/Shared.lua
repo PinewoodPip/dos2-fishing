@@ -42,7 +42,8 @@ local Fishing = {
     TUNING = {
         BASE_CASTING_RANGE = 7.5,
         BASE_FISH_BITE_DELAY_RANGE = {3.2, 6.5},
-        BASE_STARTING_PROGRESS = 0.45, -- As fraction of required progress.
+        BASE_STARTING_PROGRESS = 0.4, -- As fraction of required progress.
+        STARTING_PROGRESS_PER_LEADERSHIP = 0.01,
         BASE_PROGRESS_DRAIN = 0.1,
 
         BASE_BOBBER_SIZE = 37,
@@ -619,7 +620,9 @@ end
 ---@param char Character?
 ---@return number -- Normalized.
 function Fishing.GetStartingProgress(char)
-    return Fishing.TUNING.BASE_STARTING_PROGRESS
+    local leadership = char.Stats.Leadership
+    local bonus = Fishing.TUNING.STARTING_PROGRESS_PER_LEADERSHIP * leadership
+    return Fishing.TUNING.BASE_STARTING_PROGRESS + bonus
 end
 
 ---Returns char's bobber collider size.

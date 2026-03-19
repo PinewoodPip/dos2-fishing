@@ -30,6 +30,11 @@ local Tooltips = {
             Text = "Increases the chance to encounter treasure while fishing by %s%% per point.",
             ContextDescription = [[Tooltip for Lucky Charm bonus; param is amount per point]],
         },
+        Label_AbilityBonus_Leadership = {
+            Handle = "h1a4340dfg8f95g4739gb94ag1b109c5e876b",
+            Text = "Increases the starting capture progress by %s%% per point.",
+            ContextDescription = [[Tooltip for Leadership bonus; param is amount per point]],
+        },
     },
 }
 RegisterFeature("Fishing.Tooltips", Tooltips)
@@ -60,6 +65,11 @@ Tooltips.ABILITY_BONUSES = {
         local value = Fishing.TUNING.TREASURE_CHEST_CHANCE_PER_LUCK * 100
         value = Text.RemoveTrailingZeros(value)
         return TSK.Label_AbilityBonus_LuckyCharm:Format(value)
+    end,
+    [Tooltip.ABILITY_IDS.LEADERSHIP] = function (_)
+        local value = Fishing.TUNING.STARTING_PROGRESS_PER_LEADERSHIP * 100
+        value = Text.RemoveTrailingZeros(value)
+        return TSK.Label_AbilityBonus_Leadership:Format(value)
     end,
 }
 
