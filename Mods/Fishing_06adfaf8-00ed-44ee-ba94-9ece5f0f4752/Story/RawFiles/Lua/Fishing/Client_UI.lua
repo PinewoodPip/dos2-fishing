@@ -76,6 +76,7 @@ UI.CLICK_ACCELERATION_BOOST = 0 -- TODO add cooldown?
 UI.PROGRESS_PER_SECOND = 0.15
 UI.PROGRESS_BAR_WIDTH = 20
 UI.TUTORIAL_PROGRESS_DRAIN_MULTIPLIER = 0.5
+UI.TREASURE_CHEST_EARLY_SPAWN_PROGRESS_THRESHOLD = 0.8 -- Progress threshold past which a queued chest will spawn immediately, skipping the timer.
 
 ---------------------------------------------
 -- EVENTS/HOOKS
@@ -171,6 +172,16 @@ function UI.AddProgress(progress)
     local newProgress = fish:AddProgress(progress)
 
     UI.UpdateProgressBar()
+
+    -- If a chest is queued but not yet spawned, spawn it immediately
+    -- if progress crosses a threshold so the player cannot miss it.
+    if UI._TreasureChestSpawnTimerID and not UI.GetTreasureChestGameObject() then
+        local relativeProgress = newProgress / requiredProgress
+        if relativeProgress >= UI.TREASURE_CHEST_EARLY_SPAWN_PROGRESS_THRESHOLD then
+            UI._CancelChestSpawnTimer()
+            UI.SpawnTreasureChest()
+        end
+    end
 
     if newProgress >= requiredProgress then
         UI.Cleanup("Success")
@@ -423,16 +434,17 @@ function UI._TryQueueTreasureChest()
     end
 end
 
+---Cancels the pending treasure chest spawn timer, if any.
+function UI._CancelChestSpawnTimer()
+    if not UI._TreasureChestSpawnTimerID then return end
+    local timer = Timer.GetTimer(UI._TreasureChestSpawnTimerID)
+    if timer then timer:Cancel() end
+    UI._TreasureChestSpawnTimerID = nil
+end
+
 ---Removes the current treasure chest or its spawn timer, if any.
 function UI._ClearTreasureChest()
-    -- Remove spawn timer
-    if UI._TreasureChestSpawnTimerID then
-        local timer = Timer.GetTimer(UI._TreasureChestSpawnTimerID)
-        if timer then
-            timer:Cancel()
-        end
-        UI._TreasureChestSpawnTimerID = nil
-    end
+    UI._CancelChestSpawnTimer()
     -- Remove game object
     if UI._TreasureChestGameObject then
         UI.RemoveGameObject(UI._TreasureChestGameObject)
