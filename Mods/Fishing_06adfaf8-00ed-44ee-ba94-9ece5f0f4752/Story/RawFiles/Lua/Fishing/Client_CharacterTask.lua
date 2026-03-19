@@ -41,14 +41,13 @@ end
 
 function _Task:Attached() end
 
--- Called once per tick while the task has priority.
+-- Updates the cursor once per tick while the task is previewing.
 function _Task:SetCursor()
     local cc = Ext.UI.GetCursorControl()
-
     if self.IsPreviewing then
-        cc.MouseCursor = "CursorWand_Ground"
-        local cursorText = TSK.Tooltip_ClickToFish:GetString()
-
+        local isTooFar = self:TargetPosIsTooFar()
+        local cursorText = isTooFar and TSK.Notification_CantFish_TooFar:GetString() or TSK.Tooltip_ClickToFish:GetString()
+        cc.MouseCursor = isTooFar and "CursorWand_Warning" or "CursorWand_Ground"
         Tooltip.ShowMouseTextTooltip(cursorText, Vector.Create(30, 20))
     end
 end
@@ -61,7 +60,7 @@ end
 
 -- Necessary for preview to be entered. Called when the priority is highest.
 function _Task:CanEnter()
-    return self:HasValidTargetPos()
+    return self:HasValidTargetPos() or self:TargetPosIsTooFar()
 end
 
 function _Task:CanExit()
@@ -83,30 +82,41 @@ function _Task:Exit() end
 
 function _Task:MeetsRequirements()
     local char = self:GetCharacter()
-
     return self:HasValidTargetPos() and Fishing.HasFishingRodEquipped(char) and Character.IsUnsheathed(char)
 end
 
-function _Task:GetPriority(previousPriority)
-    if previousPriority < 9999 and self:MeetsRequirements() then
-        return 9999
-    end
-
-    return -99
+---Returns whether the task can enter the preview state.
+---@return boolean
+function _Task:CanPreview()
+    local char = self:GetCharacter()
+    local hasRod = Fishing.HasFishingRodEquipped(char) and Character.IsUnsheathed(char)
+    local region = Fishing.GetRegionAt(char.WorldPos)
+    return hasRod and region and Fishing.IsCursorNearWater(region) or false
 end
 
-function _Task:GetDescription()
-    return "Fish! For fish." -- Not used anywhere afaik.
+function _Task:GetPriority(previousPriority)
+    return previousPriority < 9999 and self:CanPreview() and 9999 or -99
 end
 
 function _Task:GetExecutePriority(_)
     return 9999
 end
 
+function _Task:GetDescription()
+    return "Fish! For fish." -- Not used anywhere afaik.
+end
+
 function _Task:HasValidTargetPos()
     local char = Character.Get(self.CharacterHandle)
     local region = Fishing.GetRegionAt(char.WorldPos)
     return region ~= nil and (Fishing.CanFish(char))
+end
+
+---Returns whether the target position is fishable but out of the character's casting range.
+---@return boolean
+function _Task:TargetPosIsTooFar()
+    local canFish, reason = Fishing.CanFish(self:GetCharacter())
+    return not canFish and reason == Fishing.TranslatedStrings.Notification_CantFish_TooFar:GetString()
 end
 
 function _Task:HasValidTarget()
