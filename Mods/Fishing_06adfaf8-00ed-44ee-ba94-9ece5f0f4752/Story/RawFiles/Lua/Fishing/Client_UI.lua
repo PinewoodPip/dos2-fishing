@@ -62,6 +62,8 @@ UI.BOBBER_AREA_SIZE = V(40, 500)
 UI.BOBBER_WIDTH = 32
 UI.BOBBER_COLOR = Color.CreateFromHex(Color.LARIAN.POISON_GREEN)
 UI.BOBBER_COLLISION_COLOR = Color.CreateFromHex(Color.LARIAN.GREEN)
+UI.PROGRESS_BAR_COLOR_LOW = Color.CreateFromHex("1A3D5C")
+UI.PROGRESS_BAR_COLOR_HIGH = Color.CreateFromHex("87C4E6")
 
 UI.FRAME_TEXTURE = "a5a4c748-ed5b-49ee-8de0-a924b7e529d1"
 UI.FRAME_SIZE = UI.BOBBER_AREA_SIZE + V(68 * 2, 110)
@@ -285,7 +287,7 @@ function UI.UpdateProgressBar()
     local relativeProgress = fish.Progress / fish:GetRequiredProgress()
     local length = relativeProgress * UI.SIZE[2] * 1.05
 
-    element:SetColor(Color.CreateFromHex("6AB2DA"))
+    element:SetColor(Color.Lerp(UI.PROGRESS_BAR_COLOR_LOW, UI.PROGRESS_BAR_COLOR_HIGH, relativeProgress))
     element:SetSize(UI.PROGRESS_BAR_WIDTH, length)
     element:SetPosition(UI.FRAME_SIZE[1] - 120 + UI.SIZE[1], UI.SIZE[2] - length + 70)
 end
