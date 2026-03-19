@@ -1,5 +1,6 @@
 local Generic = Client.UI.Generic
 local TextPrefab = Generic.GetPrefab("GenericUI_Prefab_Text")
+local Notification = Client.UI.Notification
 local PlayerInfo = Client.UI.PlayerInfo
 local Minimap = Client.UI.Minimap
 local V = Vector.Create
@@ -203,6 +204,9 @@ function UI.SpawnTreasureChest()
     UI._TreasureChestGameObject = chest
     UI.Elements.TreasureChestIcon:SetIcon(chestTemplate.Icon, UI.TREASURE_CHEST_SIZE:unpack())
     UI.AddGameObject(chest)
+
+    -- Show notification
+    Notification.ShowNotification(TSK.Notification_TreasureChestSpawned:GetString())
 
     Net.PostToServer(Fishing.NETMSG_FOUND_TREASURE_CHEST, {
         CharacterNetID = UI.GetCharacter().NetID,

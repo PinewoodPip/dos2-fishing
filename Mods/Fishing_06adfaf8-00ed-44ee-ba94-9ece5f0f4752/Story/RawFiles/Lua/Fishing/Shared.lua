@@ -193,6 +193,11 @@ local Fishing = {
             Text = "Something's on the hook!",
             ContextDescription = [[Notification when a fish bites, during the 1st phase of the minigame]],
         },
+        Notification_TreasureChestSpawned = {
+            Handle = "h2b584efbg7353g49c9g9f0bg25c1c3bdd843",
+            Text = "Treasure has appeared!",
+            ContextDescription = [[Notification when a treasure chest spawns during the minigame]],
+        },
         Notification_FishermancyLevelUp = {
             Handle = "h60a4c23ega10dg48f7g9d15g9eba6fe26c03",
             Text = "Fishermancy Level Up!",
