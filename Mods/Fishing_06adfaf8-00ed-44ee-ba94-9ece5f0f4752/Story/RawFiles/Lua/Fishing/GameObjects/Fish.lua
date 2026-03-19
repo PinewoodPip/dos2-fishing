@@ -1,5 +1,6 @@
 
 local Fishing = GetFeature("Features.Fishing")
+local _Capturable = Fishing:GetClass("Features.Fishing.Minigame.GameObjects.Capturable")
 local UI = Fishing.UI ---@class Features.Fishing.UI
 
 ---@class Features.Fishing.GameObject.Fish : Features.Fishing.Minigame.GameObjects.Capturable
@@ -17,7 +18,7 @@ local _Fish = {
     STATE_CHANGE_COOLDOWN_RANDOM_FACTOR = 0.4, -- Random deviation for state duration, as a fraction of `BASE_CYCLE_TIME`.
     BASE_TWEEN_DURATION = 1.5, -- Base tween duration in seconds, scaled down by fish Difficulty; higher Difficulty results in shorter tween states.
 }
-Inherit(_Fish, UI._CapturableGameObjectClass)
+Fishing:RegisterClass("Features.Fishing.GameObject.Fish", _Fish, {"Features.Fishing.Minigame.GameObjects.Capturable"})
 UI.RegisterGameObject("Features.Fishing.GameObject.Fish", _Fish)
 
 local MovementStates = {
@@ -30,6 +31,20 @@ local MovementStates = {
 -- METHODS
 ---------------------------------------------
 
+---Creates a Fish game object.
+---@param descriptor Features.Fishing.Fish
+---@param elementID string
+---@param size Vector2
+---@param state Features.Fishing.GameObject.State
+---@return Features.Fishing.GameObject.Fish
+function _Fish:Create(descriptor, elementID, size, state)
+    local instance = _Capturable.Create(self, elementID, size, state) ---@cast instance Features.Fishing.GameObject.Fish
+    instance.Descriptor = descriptor
+    instance._IsCollidingWithBobber = false
+    instance:SetState(instance:CreateState("Features.Fishing.GameObject.Fish.States.Sinking"))
+    return instance
+end
+
 ---@override
 function _Fish:Update(deltaTime)
     local seconds = deltaTime / 1000
@@ -41,7 +56,7 @@ end
 ---@override
 ---@param deltaTime number In milliseconds.
 function _Fish:LateUpdate(deltaTime)
-    UI._CapturableGameObjectClass.LateUpdate(self, deltaTime)
+    _Capturable.LateUpdate(self, deltaTime)
 end
 
 ---@override

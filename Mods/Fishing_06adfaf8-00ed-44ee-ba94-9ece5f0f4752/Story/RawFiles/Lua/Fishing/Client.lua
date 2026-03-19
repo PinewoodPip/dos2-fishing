@@ -235,7 +235,7 @@ function Fishing.GetCastingPosition()
     local charPos = Vector.Create(char.WorldPos)
     local cursorPos = Pointer.GetWalkablePosition()
     local heightDifference = charPos[2] - cursorPos[2]
-    -- If there's not much height difference, use the pointeer pos directly
+    -- If there's not much height difference, use the pointer pos directly
     if heightDifference <= Fishing.CURSOR_PLANE_FALLBACK_HEIGHT then
         return cursorPos
     else

@@ -79,7 +79,6 @@ UI.TUTORIAL_PROGRESS_DRAIN_MULTIPLIER = 0.5
 ---@field Character EclCharacter
 ---@field Fish Features.Fishing.Fish
 
-
 ---------------------------------------------
 -- METHODS
 ---------------------------------------------
@@ -92,19 +91,20 @@ function UI.Start(char)
 
     -- Create bobber
     local bobberSize = Fishing.GetBobberSize(char)
-    UI.CreateGameObject("Features.Fishing.GameObject.Bobber", "Bobber", V(UI.BOBBER_WIDTH, bobberSize))
+    local bobber = UI.GAME_OBJECT_CLASSES.BOBBER:Create("Bobber", V(UI.BOBBER_WIDTH, bobberSize), UI._GameObjectStateClass:Create())
     UI.BobberElement:SetSize(V(UI.BOBBER_WIDTH, bobberSize):unpack())
     UI._CurrentBobberSize = bobberSize -- Cached to avoid it from changing throughout the minigame if char's bobber size stat changes.
+    UI.AddGameObject(bobber)
 
     -- Initialize fish and place it around the middle point
-    local fish = UI.CreateGameObject("Features.Fishing.GameObject.Fish", "Fish", UI.FISH_SIZE) ---@cast fish Features.Fishing.GameObject.Fish
-    fish.Descriptor = state.CurrentFish
+    local fish = UI.GAME_OBJECT_CLASSES.FISH:Create(state.CurrentFish, "Fish", UI.FISH_SIZE, UI._GameObjectStateClass:Create())
     local initialStateClass = Fishing.GetBehaviour(state.CurrentFish.Behaviour).InitialState
     local initialState = fish:CreateState(initialStateClass)
     fish:SetState(initialState)
     fish:GetState().Position = UI.GetBobberUpperBound() / 2
     fish:SetProgress(Fishing.GetStartingProgress(char) * fish:GetRequiredProgress())
     UI._FishGameObject = fish
+    UI.AddGameObject(fish)
 
     UI.UpdatePosition()
     UI.UpdateProgressBar()
@@ -188,6 +188,7 @@ function UI.Cleanup(reason)
 
     UI._GameState = nil
     UI._GameObjects = {}
+    UI._FishGameObject = nil
 
     GameState.Events.RunningTick:Unsubscribe("Features.Fishing.UI.Tick")
 
@@ -289,18 +290,21 @@ function UI.RegisterGameObject(className, class)
     UI._GameObjectClasses[className] = class
 end
 
----@generic T
----@param className `T`
----@param elementID string
----@param size Vector2D
----@return T
-function UI.CreateGameObject(className, elementID, size)
-    local class = UI._GameObjectClasses[className]
-    local gameObject = class:Create(elementID, size, UI._GameObjectStateClass.Create())
-
+---Adds a game object to the minigame.
+---@param gameObject Features.Fishing.GameObject
+function UI.AddGameObject(gameObject)
     table.insert(UI._GameObjects, gameObject)
+end
 
-    return gameObject
+---Removes a game object from the minigame.
+---@param gameObject Features.Fishing.GameObject
+function UI.RemoveGameObject(gameObject)
+    for i=#UI._GameObjects,1,-1 do
+        if UI._GameObjects[i] == gameObject then
+            table.remove(UI._GameObjects, i)
+            break
+        end
+    end
 end
 
 ---@param deltaTime number In milliseconds.
@@ -340,9 +344,8 @@ end
 Client.Input.Events.MouseButtonPressed:Subscribe(function (ev)
     if ev.InputID == "left2" then
         for _,gameObject in ipairs(UI.GetGameObjects()) do
-            if gameObject.Type == "Bobber" then
+            if gameObject:GetClassName() == "Features.Fishing.GameObject.Bobber" then
                 local state = gameObject:GetState()
-
                 state.Acceleration = state.Acceleration + UI.CLICK_ACCELERATION_BOOST
             end
         end
@@ -392,6 +395,13 @@ end)
 ---------------------------------------------
 
 function Fishing:__Setup()
+    -- Cache classes
+    UI.GAME_OBJECT_CLASSES = {
+        BOBBER = Fishing:GetClass("Features.Fishing.GameObject.Bobber"),
+        FISH = Fishing:GetClass("Features.Fishing.GameObject.Fish"),
+        TREASURE_CHEST = Fishing:GetClass("Features.Fishing.GameObject.TreasureChest"),
+    }
+
     local panel = UI:CreateElement("Root", "GenericUI_Element_TiledBackground")
     panel:SetBackground("Black", UI.SIZE:unpack())
     panel:SetAlpha(0.5)

@@ -4,6 +4,8 @@ local UI = Fishing.UI ---@class Features.Fishing.UI
 
 ---@class Features.Fishing.GameObject.Bobber : Features.Fishing.GameObject
 ---@field GetElement fun(self):GenericUI_Element_Color
+---@field _IsCollidingWithFish boolean
+---@field _RaiseSoundCooldown number
 local _Bobber = {
     Type = "Bobber",
 
@@ -13,12 +15,26 @@ local _Bobber = {
     RAISE_SOUND_COOLDOWN = 0.27, -- In seconds.
     FISH_ENTER_SOUND = "UI_Game_PartyFormation_PickUp", -- Sound to play when the bobber enters a fish's range.
     FISH_EXIT_SOUND = "UI_Game_Dialog_Open", -- Sound to play when the bobber exits a fish's range.
-
-    _IsCollidingWithFish = false,
-    _RaiseSoundCooldown = 0,
 }
-Inherit(_Bobber, UI._GameObjectClass)
+Fishing:RegisterClass("Features.Fishing.GameObject.Bobber", _Bobber, {"Features.Fishing.GameObject"})
 UI.RegisterGameObject("Features.Fishing.GameObject.Bobber", _Bobber)
+
+---------------------------------------------
+-- METHODS
+---------------------------------------------
+
+---Creates a Bobber game object.
+---@param elementID string
+---@param size Vector2
+---@param state Features.Fishing.GameObject.State
+---@return Features.Fishing.GameObject.Bobber
+function _Bobber:Create(elementID, size, state)
+    local tbl = UI._GameObjectClass.Create(self, elementID, size, state)
+    ---@cast tbl Features.Fishing.GameObject.Bobber
+    tbl._IsCollidingWithFish = false
+    tbl._RaiseSoundCooldown = 0
+    return tbl
+end
 
 ---@param deltaTime number In milliseconds.
 function _Bobber:Update(deltaTime)
@@ -64,7 +80,8 @@ end
 
 ---@override
 function _Bobber:OnCollideWith(otherObject, _)
-    if otherObject.Type == "Fish" then
+    local className = otherObject:GetClassName()
+    if className == "Features.Fishing.GameObject.Fish" or className == "Features.Fishing.GameObject.TreasureChest" then
         self._IsCollidingWithFish = true
 
         -- Play sound when entering fish range
