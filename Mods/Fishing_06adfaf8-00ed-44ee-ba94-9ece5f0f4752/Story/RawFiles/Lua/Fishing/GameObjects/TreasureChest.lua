@@ -11,7 +11,7 @@ local _TreasureChest = {
     ---@type Features.Fishing.Fish
     Descriptor = {
         Difficulty = 0.7,
-        Endurance = 1.2,
+        Endurance = 0.7,
     },
 
     BASE_CYCLE_TIME = 1.6,
