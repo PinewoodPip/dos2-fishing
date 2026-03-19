@@ -57,6 +57,7 @@ Fishing.Hooks.CanStartFishing = Fishing:AddSubscribableHook("CanStartFishing") -
 ---@class Features.Fishing.GameStates.Fishing : Features.Fishing.GameState
 ---@field Type "Fishing"
 ---@field CurrentFish Features.Fishing.Fish
+---@field SpawnedChest Features.Fishing.TreasureChest?
 ---@field CaughtChest boolean
 
 ---------------------------------------------
@@ -301,16 +302,18 @@ function Fishing.Stop(char, reason)
         end
     end
 
+    -- Throw events
     Fishing.Events.CharacterStoppedFishing:Throw({
         Character = char,
         Reason = reason,
         CaughtFish = fish,
+        CaughtChest = state.SpawnedChest,
     })
-
     Net.PostToServer(Fishing.NETMSG_STOPPED_FISHING, {
         CharacterNetID = char.NetID,
         Reason = reason,
         CaughtFishID = fish and fish.ID or nil,
+        CaughtChestID = state.SpawnedChest and state.SpawnedChest.ID or nil,
     })
 
     Fishing._CharactersFishing:Remove(char.Handle)

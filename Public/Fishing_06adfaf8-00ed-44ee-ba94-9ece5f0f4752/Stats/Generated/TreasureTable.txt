@@ -27,3 +27,23 @@ MinLevel "-30"
 MaxLevel "0"
 new subtable "3,1;2,1"
 object category "I_PIP_Fishing_FishingRod",1,0,0,0,0,0,0,0
+
+new treasuretable "PIP_Fishing_Treasure_Food"
+new subtable "3,1"
+object category "Food",9,0,0,0,0,0,0,0
+
+new treasuretable "PIP_Fishing_Treasure_Potions"
+new subtable "2,2;3,1"
+object category "T_ST_AllPotions",1,0,0,0,0,0,0,0
+
+new treasuretable "PIP_Fishing_Treasure_OffensiveConsumables"
+new subtable "1,1;2,1"
+object category "T_ST_Arrows",1,0,0,0,0,0,0,0
+new subtable "1,1;2,1"
+object category "T_ST_Grenades",1,0,0,0,0,0,0,0
+
+new treasuretable "PIP_Fishing_Treasure_Magical"
+new subtable "2,1;1,2"
+object category "T_ST_Scroll",1,0,0,0,0,0,0,0
+new subtable "1,3;2,1"
+object category "Rune",1,0,0,0,0,0,0,0

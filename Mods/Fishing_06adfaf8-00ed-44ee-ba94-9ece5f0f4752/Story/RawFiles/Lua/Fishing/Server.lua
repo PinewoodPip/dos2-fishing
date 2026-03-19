@@ -121,6 +121,13 @@ Osiris.RegisterSymbolListener("StoryEvent", 2, "after", function (obj, event)
     end
 end)
 
+-- Play Lucky Charm FX when a character encounters a chest.
+Net.RegisterListener(Fishing.NETMSG_FOUND_TREASURE_CHEST, function (payload)
+    local char = payload:GetCharacter()
+    Osi.PlayEffect(char.MyGuid, Item.LUCKY_CHARM_EFFECT, Item.LUCKY_CHARM_EFFECT_BONE)
+    Osi.CharacterPlayHUDSound(char.MyGuid, "UI_LuckyFind")
+end)
+
 -- Untag characters when they finish fishing.
 Fishing.Events.CharacterStoppedFishing:Subscribe(function (ev)
     local state = Fishing._CharacterStates[ev.Character.Handle]
@@ -134,8 +141,19 @@ Fishing.Events.CharacterStoppedFishing:Subscribe(function (ev)
     -- Success/failure feedback
     if ev.Reason == "Success" then
         local caughtFish = ev.CaughtFish
+        local caughtChest = ev.CaughtChest
+
+        -- Catch fish
         Fishing.CatchFish(char, caughtFish)
         Osi.PlayScaledEffectAtPosition(Fishing.FISH_SPLASH_EFFECT, 3, table.unpack(state.TargetPosition + Fishing.TARGET_POS_EFFECT_OFFSET))
+
+        -- Catch treasure chest
+        if caughtChest then
+            local treasureTable = caughtChest.TreasureTable
+            local chestGUID = Osi.CreateItemTemplateAtPosition(caughtChest.Template, table.unpack(state.TargetPosition))
+            Osi.GenerateTreasure(chestGUID, treasureTable, char.Stats.Level, char.MyGuid)
+            Osi.ItemToInventory(chestGUID, char.MyGuid, 1, 0, 1)
+        end
     elseif ev.Reason == "Failure" then
         Osiris.PlayAnimation(char, Fishing.FAILURE_ANIMATION, "")
     end
@@ -163,6 +181,7 @@ Net.RegisterListener(Fishing.NETMSG_STOPPED_FISHING, function (payload)
         Character = char,
         Reason = payload.Reason,
         CaughtFish = payload.CaughtFishID and Fishing.GetFish(payload.CaughtFishID) or nil,
+        CaughtChest = payload.CaughtChestID and Fishing.GetTreasureChest(payload.CaughtChestID) or nil,
     })
     Fishing._CharacterStates[char.Handle] = nil
 end)

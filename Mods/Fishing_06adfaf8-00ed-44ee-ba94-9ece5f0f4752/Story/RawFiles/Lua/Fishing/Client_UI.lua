@@ -192,11 +192,22 @@ function UI.SpawnTreasureChest()
         UI:__Error("SpawnTreasureChest", "Treasure chest already exists")
         return
     end
+    local chestDescriptor = Fishing.GetRandomTreasureChest()
+    local chestTemplate = Ext.Template.GetTemplate(chestDescriptor.Template) ---@cast chestTemplate ItemTemplate
+    local state = UI.GetGameState()
+    state.SpawnedChest = chestDescriptor
+
+    -- Create game object
     local chest = UI.GAME_OBJECT_CLASSES.TREASURE_CHEST:Create("TreasureChest", UI.TREASURE_CHEST_SIZE, UI._GameObjectStateClass:Create())
     chest:GetState().Position = math.random() * UI.GetBobberUpperBound()
     UI._TreasureChestGameObject = chest
-    UI.Elements.TreasureChest:SetVisible(true)
+    UI.Elements.TreasureChestIcon:SetIcon(chestTemplate.Icon, UI.TREASURE_CHEST_SIZE:unpack())
     UI.AddGameObject(chest)
+
+    Net.PostToServer(Fishing.NETMSG_FOUND_TREASURE_CHEST, {
+        CharacterNetID = UI.GetCharacter().NetID,
+        TreasureChestID = chestDescriptor.ID,
+    })
 end
 
 ---Marks the current treasure chest as caught and removes it.
@@ -208,6 +219,7 @@ function UI.CaptureTreasureChest()
     local state = UI.GetGameState()
     state.CaughtChest = true
     UI._ClearTreasureChest()
+    UI:PlaySound("UI_Gen_Default")
 end
 
 ---Returns how much progress is required to catch a game object.
@@ -331,6 +343,7 @@ end
 ---@param gameObject Features.Fishing.GameObject
 function UI.AddGameObject(gameObject)
     table.insert(UI._GameObjects, gameObject)
+    gameObject:UpdatePosition()
     gameObject:GetElement():SetVisible(true)
 end
 
@@ -505,7 +518,6 @@ function Fishing:__Setup()
 
     local treasureChest = bobberArea:AddChild("TreasureChest", "GenericUI_Element_Empty")
     local treasureChestIcon = treasureChest:AddChild("TreasureChestIcon", "GenericUI_Element_IggyIcon")
-    treasureChestIcon:SetSize(UI.TREASURE_CHEST_SIZE:unpack())
     treasureChestIcon:SetIcon("Item_CONT_Humans_Citz_Chest_A", UI.TREASURE_CHEST_SIZE:unpack()) -- TODO extract icon var
     treasureChestIcon:Move(-UI.TREASURE_CHEST_SIZE[1]/2, UI.TREASURE_CHEST_SIZE[2]/2)
     treasureChest:SetVisible(false)

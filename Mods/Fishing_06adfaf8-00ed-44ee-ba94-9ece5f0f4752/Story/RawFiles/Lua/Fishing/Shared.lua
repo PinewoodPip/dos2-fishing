@@ -17,6 +17,7 @@ local Fishing = {
     NETMSG_STARTED_FISHING = "Features.Fishing.NetMsgs.CharacterStartedFishing",
     NETMSG_STOPPED_FISHING = "Features.Fishing.NetMsgs.CharacterStoppedFishing",
     NETMSG_ENCOUNTERED_FISH = "Features.Fishing.NetMsgs.CharacterEncounteredFish",
+    NETMSG_FOUND_TREASURE_CHEST = "Features.Fishing.NetMsgs.CharacterFoundTreasureChest",
 
     MODVAR_UNIQUE_FISH_CAUGHT = "PlaythroughUniqueFishCaught",
     MODVAR_REGIONS_DISCOVERED = "RegionsDiscovered",
@@ -252,8 +253,8 @@ local Fishing = {
     },
 
     Events = {
-        CharacterStartedFishing = {}, ---@type Event<Features.Fishing.Event.CharacterStartedFishing>
-        CharacterStoppedFishing = {}, ---@type Event<Features.Fishing.Event.CharacterStoppedFishing>
+        CharacterStartedFishing = {}, ---@type Event<Features.Fishing.Events.CharacterStartedFishing>
+        CharacterStoppedFishing = {}, ---@type Event<Features.Fishing.Events.CharacterStoppedFishing>
         FishDiscovered = {}, ---@type Event<Features.Fishing.Events.FishDiscovered> -- **Server-only.**
     },
     Hooks = {
@@ -312,28 +313,21 @@ Fishing.LEVEL_NAME_TSKHANDLES = {
 -- EVENTS
 ---------------------------------------------
 
----@class Features.Fishing.NetMsg.CharacterStartedFishing : NetLib_Message_Character
----@field RegionID Features.Fishing.RegionID
----@field FishID Features.Fishing.FishID
-
----@class Features.Fishing.NetMsg.CharacterStoppedFishing : NetLib_Message_Character
----@field Reason Features.Fishing.MinigameExitReason
----@field CaughtFishID Features.Fishing.FishID? `nil` unless the minigame was won.
-
----@class Features.Fishing.Hook.IsFishingRod
+---@class Features.Fishing.Hooks.IsFishingRod
 ---@field Character Character
 ---@field Item Item
 ---@field IsFishingRod boolean Hookable. Defaults to false.
 
----@class Features.Fishing.Event.CharacterStartedFishing
+---@class Features.Fishing.Events.CharacterStartedFishing
 ---@field Character Character
 ---@field Region Features.Fishing.Region
 ---@field TargetPosition vec3
 
----@class Features.Fishing.Event.CharacterStoppedFishing
+---@class Features.Fishing.Events.CharacterStoppedFishing
 ---@field Character Character
 ---@field Reason Features.Fishing.MinigameExitReason
 ---@field CaughtFish Features.Fishing.Fish? The fish caught, if any.
+---@field CaughtChest Features.Fishing.TreasureChest? The chest caught, if any.
 
 ---@class Features.Fishing.Events.FishDiscovered
 ---@field Fish Features.Fishing.Fish
@@ -344,14 +338,19 @@ Fishing.LEVEL_NAME_TSKHANDLES = {
 
 ---@class Features.Fishing.NetMsgs.CharacterStartedFishing : NetLib_Message_Character
 ---@field RegionID Features.Fishing.RegionID
+---@field FishID Features.Fishing.FishID
 ---@field TargetPosition vec3
 
 ---@class Features.Fishing.NetMsgs.CharacterStoppedFishing : NetLib_Message_Character
 ---@field Reason Features.Fishing.MinigameExitReason
----@field CaughtFishID Features.Fishing.FishID?
+---@field CaughtFishID Features.Fishing.FishID? `nil` unless the minigame was won.
+---@field CaughtChestID Features.Fishing.TreasureChestID? `nil` unless a treasure chest was caught.
 
 ---@class Features.Fishing.NetMsgs.CharacterEncounteredFish : NetLib_Message_Character
 ---@field FishID Features.Fishing.FishID
+
+---@class Features.Fishing.NetMsgs.CharacterFoundTreasureChest : NetLib_Message_Character
+---@field TreasureChestID Features.Fishing.TreasureChestID
 
 ---------------------------------------------
 -- CLASSES
@@ -359,6 +358,7 @@ Fishing.LEVEL_NAME_TSKHANDLES = {
 
 ---@alias Features.Fishing.FishID string
 ---@alias Features.Fishing.RegionID string
+---@alias Features.Fishing.TreasureChestID string
 
 ---@alias Features.Fishing.MinigameExitReason "Success"|"Failure"|"Cancelled"|"ReeledInTooEarly"
 
@@ -373,6 +373,12 @@ Fishing.LEVEL_NAME_TSKHANDLES = {
 ---@field Type Features.Fishing.Fish.BehaviourType
 ---@field InitialState Features.Fishing.GameObject.Fish.StateClassName
 ---@field Transitions table<Features.Fishing.GameObject.Fish.StateClassName, Features.Fishing.Fish.Behaviour.Transition[]> Maps current state to possible transitions.
+
+---@class Features.Fishing.TreasureChest
+---@field ID Features.Fishing.TreasureChestID?
+---@field Template GUID.ItemTemplate
+---@field TreasureTable string
+---@field SpawnWeight number? Defaults to 1.
 
 ---@class Features.Fishing.Fish : I_Identifiable, I_Describable
 ---@field Icon icon? Override for the fish's icon, used instead of the template's.
@@ -627,7 +633,7 @@ end
 function Fishing.GetTreasureChestChance(char)
     local luck = math.max(0, char.Stats.Luck or 0)
     local chance = Fishing.TUNING.TREASURE_CHEST_BASE_SPAWN_CHANCE + luck * Fishing.TUNING.TREASURE_CHEST_CHANCE_PER_LUCK
-    return 100 or chance
+    return chance
 end
 
 ---Returns the name of a level.
