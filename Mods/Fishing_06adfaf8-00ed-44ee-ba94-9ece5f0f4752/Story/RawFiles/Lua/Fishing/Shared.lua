@@ -902,7 +902,7 @@ end, {StringID = "DefaultImplementation"})
 -- Console command to print fish availability across the regions.
 -- Useful to analyze distributions of fish across the maps & regions.
 Ext.RegisterConsoleCommand("fishavailability", function (_)
-    local availability = {} ---@type table<string, {Acts: table<string, integer>, Total: integer, Regions: table<string, string>}>
+    local availability = {} ---@type table<string, {Rarity: ItemLib_Rarity, Acts: table<string, integer>, Total: integer, Regions: table<string, string>}>
     for _,fish in pairs(Fishing.GetFishes()) do
         availability[fish.ID] = {
             Acts = {},
@@ -917,6 +917,8 @@ Ext.RegisterConsoleCommand("fishavailability", function (_)
         for _,fishEntry in ipairs(region.Fish) do
             local fishAvailability = availability[fishEntry.ID]
             if fishAvailability then
+                local fish = Fishing.GetFish(fishEntry.ID)
+                fishAvailability.Rarity = fish.Rarity
                 fishAvailability.Regions[region.ID] = Text.Round(fishEntry.Weight, 2)
                 fishAvailability.Acts[level] = (fishAvailability.Acts[level] or 0) + 1
                 fishAvailability.Total = fishAvailability.Total + 1
