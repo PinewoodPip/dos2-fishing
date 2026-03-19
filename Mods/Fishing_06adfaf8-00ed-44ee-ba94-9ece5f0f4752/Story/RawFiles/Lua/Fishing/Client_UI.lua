@@ -242,9 +242,9 @@ function UI.Cleanup(reason)
     local state = UI.GetGameState()
 
     UI._GameState = nil
-    UI._GameObjects = {}
     UI._FishGameObject = nil
     UI._ClearTreasureChest()
+    UI._GameObjects = {}
 
     GameState.Events.RunningTick:Unsubscribe("Features.Fishing.UI.Tick")
 
@@ -357,11 +357,11 @@ end
 ---Removes a game object from the minigame.
 ---@param gameObject Features.Fishing.GameObject
 function UI.RemoveGameObject(gameObject)
-    for i=#UI._GameObjects,1,-1 do
-        if UI._GameObjects[i] == gameObject then
+    for i,otherObj in ipairs(UI._GameObjects) do
+        if otherObj == gameObject then
             gameObject:GetElement():SetVisible(false)
             table.remove(UI._GameObjects, i)
-            break
+            return
         end
     end
 end
