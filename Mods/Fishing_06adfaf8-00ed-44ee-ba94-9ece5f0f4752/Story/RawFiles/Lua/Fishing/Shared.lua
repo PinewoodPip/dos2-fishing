@@ -53,6 +53,7 @@ local Fishing = {
         BITE_DELAY_REDUCTION_PER_PERSUASION = 0.05,
         EXTRA_CATCH_CHANCE_PER_BARTERING = 0.04,
         PROGRESS_DRAIN_REDUCTION_PER_PERSEVERANCE = 0.015,
+        PROGRESS_DRAIN_REDUCTION_PER_THIEVERY = 0.04,
 
         TREASURE_CHEST_SPAWN_DELAY_RANGE = {3.0, 5.0}, -- Time delay range before a chest spawns, in seconds.
         TREASURE_CHEST_BASE_SPAWN_CHANCE = 0.01,
@@ -617,6 +618,15 @@ function Fishing.GetProgressDrain(char)
     local reduction = Fishing.TUNING.PROGRESS_DRAIN_REDUCTION_PER_PERSEVERANCE * perseverance
     local multiplier = math.max(0, 1 - reduction)
     return Fishing.TUNING.BASE_PROGRESS_DRAIN * multiplier
+end
+
+---Returns the progress drain multiplier applied while the bobber is colliding with a treasure chest, based on char's Thievery.
+---@param char Character
+---@return number
+function Fishing.GetTreasureChestProgressDrainMultiplier(char)
+    local thievery = char.Stats.Thievery
+    local reduction = Fishing.TUNING.PROGRESS_DRAIN_REDUCTION_PER_THIEVERY * thievery
+    return math.max(0, 1 - reduction)
 end
 
 ---Returns the starting fish capture progress for char.

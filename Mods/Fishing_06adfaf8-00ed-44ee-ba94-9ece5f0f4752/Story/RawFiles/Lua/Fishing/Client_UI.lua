@@ -45,6 +45,7 @@ UI._GameObjectClasses = {} ---@type table<string, Features.Fishing.GameObject>
 UI._GameObjectStateClass = nil ---@type Features.Fishing.GameObject.State
 UI._TreasureChestSpawnTimerID = nil ---@type string?
 UI._TreasureChestGameObject = nil ---@type Features.Fishing.GameObject.TreasureChest?
+UI._BobberGameObject = nil ---@type Features.Fishing.GameObject.Bobber?
 
 UI.USE_LEGACY_HOOKS = false
 UI.Hooks.GetProgressDrain = UI:AddSubscribableHook("GetProgressDrain") ---@type Event<Features.Fishing.UI.Hooks.GetProgressDrain>
@@ -102,6 +103,7 @@ function UI.Start(char)
     UI.BobberElement:SetSize(V(UI.BOBBER_WIDTH, bobberSize):unpack())
     UI._CurrentBobberSize = bobberSize -- Cached to avoid it from changing throughout the minigame if char's bobber size stat changes.
     UI.AddGameObject(bobber)
+    UI._BobberGameObject = bobber
 
     -- Initialize fish and place it around the middle point
     local fish = UI.GAME_OBJECT_CLASSES.FISH:Create(state.CurrentFish, "Fish", UI.FISH_SIZE, UI._GameObjectStateClass:Create())
@@ -189,6 +191,12 @@ function UI.GetTreasureChestGameObject()
     return UI._TreasureChestGameObject
 end
 
+---Returns the gameobject of the bobber.
+---@return Features.Fishing.GameObject.Bobber?
+function UI.GetBobberGameObject()
+    return UI._BobberGameObject
+end
+
 ---Spawns the treasure chest in the minigame.
 ---**Throws if a chest already exists.**
 function UI.SpawnTreasureChest()
@@ -243,6 +251,7 @@ function UI.Cleanup(reason)
 
     UI._GameState = nil
     UI._FishGameObject = nil
+    UI._BobberGameObject = nil
     UI._ClearTreasureChest()
     UI._GameObjects = {}
 
@@ -488,6 +497,15 @@ end
 UI.Hooks.GetProgressDrain:Subscribe(function (ev)
     if UI.IsTutorial() then
         ev.Drain = ev.Drain * UI.TUTORIAL_PROGRESS_DRAIN_MULTIPLIER
+    end
+end)
+
+-- Apply Thievery reduction while the bobber is colliding with a treasure chest.
+UI.Hooks.GetProgressDrain:Subscribe(function (ev)
+    local bobber = UI.GetBobberGameObject()
+    local chest = UI.GetTreasureChestGameObject()
+    if bobber and chest and bobber:IsCollidingWith(chest) then
+        ev.Drain = ev.Drain * Fishing.GetTreasureChestProgressDrainMultiplier(ev.Character)
     end
 end)
 

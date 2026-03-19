@@ -40,6 +40,11 @@ local Tooltips = {
             Text = "Decreases capture progress drain when not reeling in the fish by %s%% per point.",
             ContextDescription = [[Tooltip for Perseverance bonus; param is amount per point]],
         },
+        Label_AbilityBonus_Thievery = {
+            Handle = "h3b7e91a4g5f2cg4d8agb1e6g8c042f73d9a1",
+            Text = "Decreases capture progress drain while reeling in treasure by %s%% per point.",
+            ContextDescription = [[Tooltip for Thievery bonus; param is amount per point]],
+        },
     },
 }
 RegisterFeature("Fishing.Tooltips", Tooltips)
@@ -80,7 +85,12 @@ Tooltips.ABILITY_BONUSES = {
         local value = Fishing.TUNING.PROGRESS_DRAIN_REDUCTION_PER_PERSEVERANCE * 100
         value = Text.RemoveTrailingZeros(value)
         return TSK.Label_AbilityBonus_Perseverance:Format(value)
-    end
+    end,
+    [Tooltip.ABILITY_IDS.THIEVERY] = function (_)
+        local value = Fishing.TUNING.PROGRESS_DRAIN_REDUCTION_PER_THIEVERY * 100
+        value = Text.RemoveTrailingZeros(value)
+        return TSK.Label_AbilityBonus_Thievery:Format(value)
+    end,
 }
 
 ---------------------------------------------
