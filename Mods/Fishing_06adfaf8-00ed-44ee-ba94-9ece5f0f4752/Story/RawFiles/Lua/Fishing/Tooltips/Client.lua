@@ -25,6 +25,11 @@ local Tooltips = {
             Text = "Grants a %s%% chance to catch an additional fish of the same kind.",
             ContextDescription = [[Tooltip for Bartering bonus; param is amount per point]],
         },
+        Label_AbilityBonus_LuckyCharm = {
+            Handle = "ha41eebdbg24b8g4d5cg9fb6gc6c454027260",
+            Text = "Increases the chance to encounter treasure while fishing by %s%% per point.",
+            ContextDescription = [[Tooltip for Lucky Charm bonus; param is amount per point]],
+        },
     },
 }
 RegisterFeature("Fishing.Tooltips", Tooltips)
@@ -51,6 +56,11 @@ Tooltips.ABILITY_BONUSES = {
         value = Text.RemoveTrailingZeros(value)
         return TSK.Label_AbilityBonus_Bartering:Format(value)
     end,
+    [Tooltip.ABILITY_IDS.LUCKY_CHARM] = function (_)
+        local value = Fishing.TUNING.TREASURE_CHEST_CHANCE_PER_LUCK * 100
+        value = Text.RemoveTrailingZeros(value)
+        return TSK.Label_AbilityBonus_LuckyCharm:Format(value)
+    end,
 }
 
 ---------------------------------------------
@@ -65,7 +75,6 @@ local function FormatTooltipBonus(str)
     })
 end
 Tooltip.Hooks.RenderAbilityTooltip:Subscribe(function (ev)
-    print(ev.AbilityID)
     local abilityBonusGetter = Tooltips.ABILITY_BONUSES[ev.AbilityID]
     if abilityBonusGetter then
         local char = Client.GetCharacter()
