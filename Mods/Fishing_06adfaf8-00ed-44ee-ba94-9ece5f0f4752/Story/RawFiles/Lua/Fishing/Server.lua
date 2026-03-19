@@ -21,12 +21,23 @@ Fishing.FISH_SPLASH_EFFECT = "PIP_FX_LargeSplash"
 ---Grants the fish item to char and increments statistics.
 ---@param char EsvCharacter
 ---@param fish Features.Fishing.Fish
+---@param fromPos vec3? If set, the fish will tween from this position into the character; otherwise it will be added to the inventory immediately.
 ---@return GUID
-function Fishing.CatchFish(char, fish)
+function Fishing.CatchFish(char, fish, fromPos)
     local charGUID = char.MyGuid
     Osi.CharacterStatusText(charGUID, TSK.Notification_Minigame_Success:GetString())
     Osi.PlayAnimation(charGUID, Fishing.SUCCESS_ANIMATION, "")
-    local fishItemGUID = Osi.ItemTemplateAddTo(fish.TemplateID, charGUID, 1, 1)
+    local fishItemGUID = Osi.CreateItemTemplateAtPosition(fish.TemplateID, fromPos[1], fromPos[2], fromPos[3])
+
+    -- Animate the fish coming from the pos into the character
+    if fromPos then
+        Osi.ItemMoveToPosition(fishItemGUID, char.WorldPos[1], char.WorldPos[2], char.WorldPos[3], 10, 1, "", 0)
+        Timer.Start(1, function ()
+            Osi.ItemToInventory(fishItemGUID, charGUID, 1, 0, 1)
+        end)
+    else
+        Osi.ItemToInventory(fishItemGUID, charGUID, 1, 0, 1)
+    end
 
     -- Roll for an extra catch
     local extraCatchChance = Fishing.GetExtraCatchChance(char)
@@ -144,7 +155,7 @@ Fishing.Events.CharacterStoppedFishing:Subscribe(function (ev)
         local caughtChest = ev.CaughtChest
 
         -- Catch fish
-        Fishing.CatchFish(char, caughtFish)
+        Fishing.CatchFish(char, caughtFish, state.TargetPosition)
         Osi.PlayScaledEffectAtPosition(Fishing.FISH_SPLASH_EFFECT, 3, table.unpack(state.TargetPosition + Fishing.TARGET_POS_EFFECT_OFFSET))
 
         -- Catch treasure chest
@@ -152,7 +163,14 @@ Fishing.Events.CharacterStoppedFishing:Subscribe(function (ev)
             local treasureTable = caughtChest.TreasureTable
             local chestGUID = Osi.CreateItemTemplateAtPosition(caughtChest.Template, table.unpack(state.TargetPosition))
             Osi.GenerateTreasure(chestGUID, treasureTable, char.Stats.Level, char.MyGuid)
-            Osi.ItemToInventory(chestGUID, char.MyGuid, 1, 0, 1)
+
+            -- Tween it from the water to near the character
+            local charPos = char.WorldPos
+            local x, y, z = Osi.FindValidPosition(charPos[1], charPos[2], charPos[3], 4, chestGUID)
+            if not x then
+                x, y, z = charPos[1], charPos[2], charPos[3]
+            end
+            Osi.ItemMoveToPosition(chestGUID, x, y, z, 10, 1, "", 0)
         end
     elseif ev.Reason == "Failure" then
         Osiris.PlayAnimation(char, Fishing.FAILURE_ANIMATION, "")
