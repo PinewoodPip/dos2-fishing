@@ -36,7 +36,7 @@ local Fishing = {
         ["5a14df6e-8e63-425c-9802-1916d630212e"] = true, -- Yellow bobber.
     },
     WATER_SEARCH_RADIUS = 2.5,
-    CURSOR_WATER_SEARCH_RADIUS = 1.0,
+    CURSOR_WATER_SEARCH_RADIUS = 0.5,
     WATER_MAX_DISTANCE = 7.5, -- Distance to water (or fishing areas) that a character must be within for fishing to be available.
 
     TUNING = {
