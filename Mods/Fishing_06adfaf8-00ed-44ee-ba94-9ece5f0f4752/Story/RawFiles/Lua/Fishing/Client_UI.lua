@@ -51,10 +51,10 @@ UI.Hooks.GetProgressDrain = UI:AddSubscribableHook("GetProgressDrain") ---@type 
 ---------------------------------------------
 
 UI.SIZE = V(50, 500)
-UI.BLOBBER_AREA_SIZE = V(40, 490)
-UI.BLOBBER_SIZE = V(40, 70)
-UI.FISH_SIZE = V(32, 32)
-UI.FISH_ICON_SIZE = V(32, 32)
+UI.FISH_SIZE = V(48, 48) -- Game object size.
+UI.FISH_ICON_SIZE = V(48, 48)
+UI.BOBBER_AREA_SIZE = V(40, 490)
+UI.BOBBER_WIDTH = 40
 UI.BOBBER_COLOR = Color.CreateFromHex(Color.LARIAN.POISON_GREEN)
 UI.BOBBER_COLLISION_COLOR = Color.CreateFromHex(Color.LARIAN.GREEN)
 
@@ -84,18 +84,17 @@ UI.TUTORIAL_PROGRESS_DRAIN_MULTIPLIER = 0.5
 -- METHODS
 ---------------------------------------------
 
----@return GenericUI_Instance
-function Fishing.GetUI()
-    return Fishing.UI
-end
-
 ---Initializes & shows the minigame UI for char.
 ---@param char EclCharacter
 function UI.Start(char)
     UI._CharacterHandle = char.Handle
     local state = UI.GetGameState()
 
-    UI.CreateGameObject("Features.Fishing.GameObject.Bobber", "Bobber", UI.BLOBBER_SIZE)
+    -- Create bobber
+    local bobberSize = Fishing.GetBobberSize(char)
+    UI.CreateGameObject("Features.Fishing.GameObject.Bobber", "Bobber", V(UI.BOBBER_WIDTH, bobberSize))
+    UI.BobberElement:SetSize(V(UI.BOBBER_WIDTH, bobberSize):unpack())
+    UI._CurrentBobberSize = bobberSize -- Cached to avoid it from changing throughout the minigame if char's bobber size stat changes.
 
     -- Initialize fish and place it around the middle point
     local fish = UI.CreateGameObject("Features.Fishing.GameObject.Fish", "Fish", UI.FISH_SIZE) ---@cast fish Features.Fishing.GameObject.Fish
@@ -205,7 +204,6 @@ end
 ---Updates the progress bar widget.
 function UI.UpdateProgressBar()
     local fish = UI.GetFishGameObject()
-    local char = UI.GetCharacter()
     local element = UI:GetElementByID("ProgressBar") ---@type GenericUI_Element_Color
     local relativeProgress = fish.Progress / fish:GetRequiredProgress()
     local length = relativeProgress * UI.SIZE[2]
@@ -213,7 +211,6 @@ function UI.UpdateProgressBar()
     element:SetColor(Color.CreateFromHex(Color.LARIAN.YELLOW))
     element:SetSize(UI.PROGRESS_BAR_WIDTH, length)
     element:SetPosition(UI.SIZE[1], UI.SIZE[2] - length)
-    -- element:SetPositionRelativeToParent("BottomRight", 5, -length) -- TODO investigate issue
 end
 
 ---Updates the icon of the fish element.
@@ -283,7 +280,7 @@ end
 
 ---@return number
 function UI.GetBobberUpperBound()
-    return UI.BLOBBER_AREA_SIZE[2] - UI.BLOBBER_SIZE[2]
+    return UI.BOBBER_AREA_SIZE[2] - UI._CurrentBobberSize
 end
 
 ---@param className string
@@ -327,6 +324,12 @@ function UI.UpdateGameObjects(deltaTime)
     for _,gameObject in ipairs(UI._GameObjects) do
         gameObject:LateUpdate(deltaTime)
     end
+end
+
+---Returns the minigame UI instance.
+---@return GenericUI_Instance
+function Fishing.GetUI()
+    return Fishing.UI
 end
 
 ---------------------------------------------
@@ -394,16 +397,20 @@ function Fishing:__Setup()
     panel:SetAlpha(0.5)
 
     local bobberArea = panel:AddChild("BobberArea", "GenericUI_Element_TiledBackground")
-    bobberArea:SetBackground("Black", UI.BLOBBER_AREA_SIZE:unpack())
+    bobberArea:SetBackground("Black", UI.BOBBER_AREA_SIZE:unpack())
     bobberArea:SetPositionRelativeToParent("Center")
 
     local bobber = bobberArea:AddChild("Bobber", "GenericUI_Element_Color")
-    bobber:SetSize(UI.BLOBBER_SIZE:unpack())
+    bobber:SetSize(V(UI.BOBBER_WIDTH, 40):unpack()) -- Placeholder height; will be set upon starting the minigame.
     bobber:SetColor(UI.BOBBER_COLOR)
+    UI.BobberElement = bobber
 
-    local fish = bobberArea:AddChild("Fish", "GenericUI_Element_IggyIcon")
-    fish:SetIcon("Item_CON_Food_Fish_B", UI.FISH_ICON_SIZE:unpack())
+    local fish = bobberArea:AddChild("Fish", "GenericUI_Element_Empty")
+    local fishIcon = fish:AddChild("FishIcon", "GenericUI_Element_IggyIcon")
+    fishIcon:SetIcon("Item_CON_Food_Fish_B", UI.FISH_ICON_SIZE:unpack())
+    fishIcon:Move(-UI.FISH_ICON_SIZE[1]/2, UI.FISH_ICON_SIZE[2]/2) -- Center the icon in the fish element
     UI.Elements.Fish = fish
+    UI.Elements.FishIcon = fishIcon
 
     local progressBar = panel:AddChild("ProgressBar", "GenericUI_Element_Color")
     progressBar:SetSize(0, 0)

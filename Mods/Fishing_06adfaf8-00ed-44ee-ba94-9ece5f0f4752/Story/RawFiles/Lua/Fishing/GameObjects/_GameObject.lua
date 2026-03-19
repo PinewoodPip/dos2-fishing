@@ -63,13 +63,17 @@ function _GameObject:Update(deltaTime) error("Not implemented") end
 ---@diagnostic disable-next-line: unused-local
 function _GameObject:LateUpdate(deltaTime) end
 
+---Returns whether the object is intersecting with another one.
 ---@param otherObject Features.Fishing.GameObject
 ---@return boolean
 function _GameObject:IsCollidingWith(otherObject)
     local myState = self:GetState()
+    local myBound = self:GetUpperBound()
+    local myPos = myState.Position
     local otherState = otherObject:GetState()
-
-    return myState.Position < (otherObject:GetUpperBound()) and self:GetUpperBound() >= otherState.Position
+    local otherBound = otherObject:GetUpperBound()
+    local otherPos = otherState.Position
+    return (myPos < otherBound and myBound >= otherPos) or (myPos >= otherPos and myPos < otherBound) or (otherPos < myBound and otherPos >= myPos)
 end
 
 ---@diagnostic disable: unused-local

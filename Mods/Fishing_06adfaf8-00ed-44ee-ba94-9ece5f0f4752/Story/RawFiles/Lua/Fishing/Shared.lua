@@ -44,6 +44,9 @@ local Fishing = {
         BASE_STARTING_PROGRESS = 0.45, -- As fraction of required progress.
         BASE_PROGRESS_DRAIN = 0.1,
 
+        BASE_BOBBER_SIZE = 37,
+        MAX_BOBBER_SIZE = 80, -- Size at max Fishermancy level.
+
         CASTING_RANGE_PER_TELEKINESIS = 0.2,
         BITE_DELAY_REDUCTION_PER_PERSUASION = 0.05,
         EXTRA_CATCH_CHANCE_PER_BARTERING = 0.04,
@@ -604,6 +607,17 @@ end
 function Fishing.GetStartingProgress(char)
     return Fishing.TUNING.BASE_STARTING_PROGRESS
 end
+
+---Returns char's bobber collider size.
+---@param char Character
+---@return number
+function Fishing.GetBobberSize(char)
+    local fishermancy = Fishing.GetMaxAbilityScore() or Fishing.GetAbilityScore(char)
+    local maxFishermancy = Fishing.GetMaxAbilityScore()
+    local sizeBonus = (Fishing.TUNING.MAX_BOBBER_SIZE - Fishing.TUNING.BASE_BOBBER_SIZE) * (fishermancy / maxFishermancy)
+    return Fishing.TUNING.BASE_BOBBER_SIZE + sizeBonus
+end
+
 ---Returns the name of a level.
 ---@param levelID string
 ---@return string
@@ -715,6 +729,8 @@ function Fishing.GetAbilityScore(char)
         score = score + 1
         requirements = Fishing.GetAbilityRequirements(score + 1)
     end
+    return score
+end
 
 ---Returns the maximum Fishermancy level that can be reached with the amount of unique fish that exist.
 ---@return integer

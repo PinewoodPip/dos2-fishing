@@ -89,7 +89,7 @@ end
 ---@override
 function _Fish:UpdatePosition()
     local element = self:GetElement()
-    element:SetPosition(UI.BLOBBER_AREA_SIZE[1] / 2, UI.BLOBBER_AREA_SIZE[2] - self.State.Position - element:GetSize()[2] / 2)
+    element:SetPosition(UI.BOBBER_AREA_SIZE[1] / 2, UI.BOBBER_AREA_SIZE[2] - self.State.Position - element:GetSize()[2] / 2)
 end
 
 ---Picks a target state using weighted random selection over a list of transitions.
