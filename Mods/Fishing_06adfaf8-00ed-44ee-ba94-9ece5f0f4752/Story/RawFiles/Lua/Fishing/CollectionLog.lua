@@ -368,7 +368,22 @@ function Section:Update(_)
     end
     local lossRate = totalEncounters > 0 and (100 - Fishing.GetTotalFishCaught(char) / totalEncounters * 100) or 0
     local statLabels = self.StatLabels
-    statLabels.FishDiscovered:SetValue(string.format("%d/%d", uniqueFishCaught, totalFishes))
+    local fishDiscoveredValue = string.format("%d/%d", uniqueFishCaught, totalFishes)
+    local actFilter = CollectionLog:GetSettingValue(CollectionLog.Settings.ActFilter)
+    if actFilter ~= "Any" then
+        -- Append region-specific discovered fish count
+        local regionTotal, regionCaught = 0, 0
+        for _,fish in pairs(Fishing.GetFishes()) do
+            if Fishing.IsFishAvailable(fish.ID, actFilter) then
+                regionTotal = regionTotal + 1
+                if Fishing.GetFishCatchCount(char, fish.ID) > 0 then
+                    regionCaught = regionCaught + 1
+                end
+            end
+        end
+        fishDiscoveredValue = string.format("%s (%d/%d)", fishDiscoveredValue, regionCaught, regionTotal)
+    end
+    statLabels.FishDiscovered:SetValue(fishDiscoveredValue)
     statLabels.TotalCatches:SetValue(Fishing.GetTotalFishCaught(char) .. "") -- TODO use a party-wide catch stat?
     statLabels.TotalEncounters:SetValue(totalEncounters .. "")
     statLabels.LossRate:SetValue(string.format("%s%%", Text.Round(lossRate, 2)))
