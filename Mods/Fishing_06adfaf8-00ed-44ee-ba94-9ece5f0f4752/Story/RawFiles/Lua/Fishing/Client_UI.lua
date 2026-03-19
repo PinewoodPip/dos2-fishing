@@ -42,6 +42,8 @@ UI._GameObjects = {} ---@type Features.Fishing.GameObject[]
 UI._GameObjectClass = nil ---@type Features.Fishing.GameObject
 UI._GameObjectClasses = {} ---@type table<string, Features.Fishing.GameObject>
 UI._GameObjectStateClass = nil ---@type Features.Fishing.GameObject.State
+UI._TreasureChestSpawnTimerID = nil ---@type string?
+UI._TreasureChestGameObject = nil ---@type Features.Fishing.GameObject.TreasureChest?
 
 UI.USE_LEGACY_HOOKS = false
 UI.Hooks.GetProgressDrain = UI:AddSubscribableHook("GetProgressDrain") ---@type Event<Features.Fishing.UI.Hooks.GetProgressDrain>
@@ -53,6 +55,7 @@ UI.Hooks.GetProgressDrain = UI:AddSubscribableHook("GetProgressDrain") ---@type 
 UI.SIZE = V(50, 500)
 UI.FISH_SIZE = V(48, 48) -- Game object size.
 UI.FISH_ICON_SIZE = V(48, 48)
+UI.TREASURE_CHEST_SIZE = V(48, 48)
 UI.BOBBER_AREA_SIZE = V(40, 490)
 UI.BOBBER_WIDTH = 40
 UI.BOBBER_COLOR = Color.CreateFromHex(Color.LARIAN.POISON_GREEN)
@@ -110,6 +113,8 @@ function UI.Start(char)
     UI.UpdateProgressBar()
     UI.UpdateFishIcon()
     UI.UpdateTutorialText()
+    UI._ClearTreasureChest()
+    UI._TryQueueTreasureChest()
 
     -- Animate opening
     UI.Root:Tween(UI.OPEN_TWEEN)
@@ -174,6 +179,37 @@ function UI.GetFishGameObject()
     return UI._FishGameObject
 end
 
+---Returns the gameobject of the treasure chest, if any.
+---@return Features.Fishing.GameObject.TreasureChest?
+function UI.GetTreasureChestGameObject()
+    return UI._TreasureChestGameObject
+end
+
+---Spawns the treasure chest in the minigame.
+---**Throws if a chest already exists.**
+function UI.SpawnTreasureChest()
+    if UI.GetTreasureChestGameObject() then
+        UI:__Error("SpawnTreasureChest", "Treasure chest already exists")
+        return
+    end
+    local chest = UI.GAME_OBJECT_CLASSES.TREASURE_CHEST:Create("TreasureChest", UI.TREASURE_CHEST_SIZE, UI._GameObjectStateClass:Create())
+    chest:GetState().Position = math.random() * UI.GetBobberUpperBound()
+    UI._TreasureChestGameObject = chest
+    UI.Elements.TreasureChest:SetVisible(true)
+    UI.AddGameObject(chest)
+end
+
+---Marks the current treasure chest as caught and removes it.
+function UI.CaptureTreasureChest()
+    if not UI.GetTreasureChestGameObject() then
+        UI:__Error("CaptureTreasureChest", "No treasure chest")
+        return
+    end
+    local state = UI.GetGameState()
+    state.CaughtChest = true
+    UI._ClearTreasureChest()
+end
+
 ---Returns how much progress is required to catch a game object.
 ---@param capturable Features.Fishing.Minigame.GameObjects.Capturable? Defaults to the current fish.
 ---@returns number
@@ -189,6 +225,7 @@ function UI.Cleanup(reason)
     UI._GameState = nil
     UI._GameObjects = {}
     UI._FishGameObject = nil
+    UI._ClearTreasureChest()
 
     GameState.Events.RunningTick:Unsubscribe("Features.Fishing.UI.Tick")
 
@@ -294,6 +331,7 @@ end
 ---@param gameObject Features.Fishing.GameObject
 function UI.AddGameObject(gameObject)
     table.insert(UI._GameObjects, gameObject)
+    gameObject:GetElement():SetVisible(true)
 end
 
 ---Removes a game object from the minigame.
@@ -301,6 +339,7 @@ end
 function UI.RemoveGameObject(gameObject)
     for i=#UI._GameObjects,1,-1 do
         if UI._GameObjects[i] == gameObject then
+            gameObject:GetElement():SetVisible(false)
             table.remove(UI._GameObjects, i)
             break
         end
@@ -327,6 +366,48 @@ function UI.UpdateGameObjects(deltaTime)
     -- Invoke LateUpdate
     for _,gameObject in ipairs(UI._GameObjects) do
         gameObject:LateUpdate(deltaTime)
+    end
+
+    -- Capture chests
+    local chest = UI.GetTreasureChestGameObject()
+    if chest and chest.Progress >= chest:GetRequiredProgress() then
+        UI.CaptureTreasureChest()
+    end
+end
+
+----Sets up the timer to spawn a treasure chest, if the random roll for a chest succeeds.
+---**Will remove any existing chests first.**
+function UI._TryQueueTreasureChest()
+    UI._ClearTreasureChest()
+    local char = UI.GetCharacter()
+
+    -- Spawn chest after a delay
+    if math.random() <= Fishing.GetTreasureChestChance(char) then
+        local minDelay, maxDelay = table.unpack(Fishing.TUNING.TREASURE_CHEST_SPAWN_DELAY_RANGE)
+        local delay = minDelay + math.random() * (maxDelay - minDelay)
+        local timerID = "Fishing.UI.TreasureChestSpawn." .. char.MyGuid
+        UI._TreasureChestSpawnTimerID = timerID
+        Timer.Start(timerID, delay, function (_)
+            UI._TreasureChestSpawnTimerID = nil
+            UI.SpawnTreasureChest()
+        end)
+    end
+end
+
+---Removes the current treasure chest or its spawn timer, if any.
+function UI._ClearTreasureChest()
+    -- Remove spawn timer
+    if UI._TreasureChestSpawnTimerID then
+        local timer = Timer.GetTimer(UI._TreasureChestSpawnTimerID)
+        if timer then
+            timer:Cancel()
+        end
+        UI._TreasureChestSpawnTimerID = nil
+    end
+    -- Remove game object
+    if UI._TreasureChestGameObject then
+        UI.RemoveGameObject(UI._TreasureChestGameObject)
+        UI._TreasureChestGameObject = nil
     end
 end
 
@@ -421,6 +502,15 @@ function Fishing:__Setup()
     fishIcon:Move(-UI.FISH_ICON_SIZE[1]/2, UI.FISH_ICON_SIZE[2]/2) -- Center the icon in the fish element
     UI.Elements.Fish = fish
     UI.Elements.FishIcon = fishIcon
+
+    local treasureChest = bobberArea:AddChild("TreasureChest", "GenericUI_Element_Empty")
+    local treasureChestIcon = treasureChest:AddChild("TreasureChestIcon", "GenericUI_Element_IggyIcon")
+    treasureChestIcon:SetSize(UI.TREASURE_CHEST_SIZE:unpack())
+    treasureChestIcon:SetIcon("Item_CONT_Humans_Citz_Chest_A", UI.TREASURE_CHEST_SIZE:unpack()) -- TODO extract icon var
+    treasureChestIcon:Move(-UI.TREASURE_CHEST_SIZE[1]/2, UI.TREASURE_CHEST_SIZE[2]/2)
+    treasureChest:SetVisible(false)
+    UI.Elements.TreasureChest = treasureChest
+    UI.Elements.TreasureChestIcon = treasureChestIcon
 
     local progressBar = panel:AddChild("ProgressBar", "GenericUI_Element_Color")
     progressBar:SetSize(0, 0)

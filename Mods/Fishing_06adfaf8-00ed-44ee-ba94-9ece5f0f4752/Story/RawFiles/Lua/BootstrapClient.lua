@@ -37,6 +37,7 @@ local scripts = {
             "Fishing/GameObjects/States/Sinking.lua",
             "Fishing/GameObjects/States/Tweening.lua",
             "Fishing/GameObjects/Fish.lua",
+            "Fishing/GameObjects/TreasureChest.lua",
             "Fishing/GameObjects/Bobber.lua",
 
             "Fishing/Client_CharacterTask.lua",

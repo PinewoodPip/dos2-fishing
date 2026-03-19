@@ -50,6 +50,9 @@ local Fishing = {
         CASTING_RANGE_PER_TELEKINESIS = 0.2,
         BITE_DELAY_REDUCTION_PER_PERSUASION = 0.05,
         EXTRA_CATCH_CHANCE_PER_BARTERING = 0.04,
+        TREASURE_CHEST_SPAWN_DELAY_RANGE = {3.0, 5.0}, -- Time delay range before a chest spawns, in seconds.
+        TREASURE_CHEST_BASE_SPAWN_CHANCE = 0.01,
+        TREASURE_CHEST_CHANCE_PER_LUCK = 0.03,
     },
 
     ABILITY_SCHOOL_COLOR = "86a4f7", ---@type htmlcolor
@@ -616,6 +619,15 @@ function Fishing.GetBobberSize(char)
     local maxFishermancy = Fishing.GetMaxAbilityScore()
     local sizeBonus = (Fishing.TUNING.MAX_BOBBER_SIZE - Fishing.TUNING.BASE_BOBBER_SIZE) * (fishermancy / maxFishermancy)
     return Fishing.TUNING.BASE_BOBBER_SIZE + sizeBonus
+end
+
+---Returns the chance for a treasure chest to spawn in the minigame.
+---@param char Character
+---@return number
+function Fishing.GetTreasureChestChance(char)
+    local luck = math.max(0, char.Stats.Luck or 0)
+    local chance = Fishing.TUNING.TREASURE_CHEST_BASE_SPAWN_CHANCE + luck * Fishing.TUNING.TREASURE_CHEST_CHANCE_PER_LUCK
+    return 100 or chance
 end
 
 ---Returns the name of a level.

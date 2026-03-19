@@ -57,6 +57,7 @@ Fishing.Hooks.CanStartFishing = Fishing:AddSubscribableHook("CanStartFishing") -
 ---@class Features.Fishing.GameStates.Fishing : Features.Fishing.GameState
 ---@field Type "Fishing"
 ---@field CurrentFish Features.Fishing.Fish
+---@field CaughtChest boolean
 
 ---------------------------------------------
 -- METHODS
@@ -196,6 +197,7 @@ function Fishing.ReelIn(char)
             Type = "Fishing",
             CharacterHandle = char.Handle,
             CurrentFish = fish,
+            CaughtChest = false,
             TargetPosition = state.TargetPosition,
         }
         Net.PostToServer(Fishing.NETMSG_ENCOUNTERED_FISH, {
