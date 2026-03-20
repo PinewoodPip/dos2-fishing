@@ -56,6 +56,15 @@ Tooltip.Hooks.RenderItemTooltip:Subscribe(function (ev)
     end
 end)
 
+-- Reduce skill tooltip font size in EE, for consistency with other skills.
+Tooltip.Hooks.RenderSkillTooltip:Subscribe(function (ev)
+    local skillID = ev.SkillID
+    if Skills.FISHERMANCY_SKILLS[skillID] and EpicEncounters.IsEnabled() then
+        local skillDescription = ev.Tooltip:GetFirstElement("SkillDescription")
+        skillDescription.Label = Text.Format(skillDescription.Label, {Size = 19})
+    end
+end)
+
 -- Show Source Infusion descriptions in EE.
 Tooltip.Hooks.RenderSkillTooltip:Subscribe(function (ev)
     local infusionDescriptions = Skills.SOURCE_INFUSION_TSKS[ev.SkillID]
