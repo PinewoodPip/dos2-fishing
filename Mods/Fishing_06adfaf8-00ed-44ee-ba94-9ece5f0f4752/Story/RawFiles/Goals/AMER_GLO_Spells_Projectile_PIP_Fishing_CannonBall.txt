@@ -15,7 +15,7 @@ _InfusCount > 1
 AND
 CharacterGetAbility(_Char, "EarthSpecialist", _Geomancer)
 THEN
-PROC_AMER_TempStat_FlexStat_Add_StatScaling(_Char, "Stat", "DAMAGEBOOST", "Ability", "EarthSpecialist", 65.0, 12.0, 2000, "SkillCast");
+PROC_AMER_TempStat_FlexStat_Add_StatScaling(_Char, "Stat", "DAMAGEBOOST", "Ability", "EarthSpecialist", 40.0, 8.0, 2000, "SkillCast");
 PROC_AMER_TempStat_ExtendedStat_Add(_Char, "PIP_CannonBall_PushDistance", "", "", "", (REAL)_Geomancer, 2000, "SkillCast");
 
 
