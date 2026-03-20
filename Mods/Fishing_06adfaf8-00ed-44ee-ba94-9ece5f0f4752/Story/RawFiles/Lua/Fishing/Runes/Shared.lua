@@ -59,7 +59,7 @@ RegisterFeature("Fishing.Runes", Runes)
 ---@param value any
 ---@return boolean
 local function IsItemObject(value)
-    return GetExtType(value) == "EclItem" or GetExtType(value) == "EsvItem"
+    return GetExtType(value) == "ecl::Item" or GetExtType(value) == "esv::Item"
 end
 
 ---------------------------------------------
