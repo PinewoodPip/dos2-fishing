@@ -27,7 +27,7 @@ RealProduct(_WarfareReal, -0.1, _WarfareDistanceBonus)
 AND
 RealSubtract(_WarfareDistanceBonus, 0.5, _DistanceBonus)
 THEN
-PROC_AMER_Source_Infusion_AddRefund(_Char, 0, 1);
+PROC_AMER_Source_Infusion_AddRefund(_Char, 1, 0);
 PROC_AMER_TempStat_ExtendedStat_Add(_Char, "PIP_ReelIn_DamageDistance", "", "", "", _DistanceBonus, 2000, "SkillCast");
 
 // Source Infusion 3
