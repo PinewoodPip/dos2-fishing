@@ -1,5 +1,6 @@
 
 local Fishing = GetFeature("Features.Fishing")
+local isEE = EpicEncounters.IsEnabled()
 
 ---@class Features.Fishing.Skills
 local Skills = GetFeature("Features.Fishing.Skills")
@@ -11,6 +12,7 @@ local Skills = GetFeature("Features.Fishing.Skills")
 -- Cast effect: nearby allies cast a lesser version on a random enemy they can see.
 Osiris.RegisterSymbolListener("CharacterUsedSkillAtPosition", 7, "after", function (casterGUID, _, _, _, skillID, _, _)
     if skillID ~= "Projectile_PIP_Fishing_BlueFireball" then return end
+    if isEE then return end -- In EE this effect is delegated to a Source Infusion instead.
     local allies = Skills.GetCombatAllies(Character.Get(casterGUID))
     for _,ally in ipairs(allies) do
         local allyFishermancy = Fishing.GetAbilityScore(ally)

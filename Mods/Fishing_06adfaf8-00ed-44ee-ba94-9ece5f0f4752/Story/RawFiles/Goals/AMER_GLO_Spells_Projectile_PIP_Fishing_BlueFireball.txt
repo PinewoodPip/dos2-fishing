@@ -1,0 +1,84 @@
+Version 1
+SubGoalCombiner SGC_AND
+INITSECTION
+
+KBSECTION
+
+// Source Infusion 1
+
+QRY QRY_AMER_Source_Infusion_SkillPreCast((CHARACTERGUID)_Char, "Projectile_PIP_Fishing_BlueFireball", 1)
+THEN
+PROC_AMER_TempStat_FlexStat_Add_StatScaling(_Char, "Stat", "DAMAGEBOOST", "Ability", "FireSpecialist", 25.0, 4.0, 2000, "SkillCast");
+
+// Source Infusion 2
+
+QRY QRY_AMER_Source_Infusion_SkillPreCast((CHARACTERGUID)_Char, "Projectile_PIP_Fishing_BlueFireball", (INTEGER)_InfusCount)
+AND
+_InfusCount > 1
+THEN
+PROC_AMER_TempStat_FlexStat_Add_StatScaling(_Char, "Stat", "DAMAGEBOOST", "Ability", "FireSpecialist", 40.0, 8.0, 2000, "SkillCast");
+
+// Source Infusion 2 Ritual reaction
+
+QRY QRY_AMER_Source_Infusion_SkillCast_PerTarget((CHARACTERGUID)_Char, "Projectile_PIP_Fishing_BlueFireball", (GUIDSTRING)_Target, (REAL)_X, (REAL)_Y, (REAL)_Z, (INTEGER)_InfusCount)
+AND
+_InfusCount > 1
+THEN
+PROC_AMER_Source_Infusion_RitualRequest(_Char, _X, _Y, _Z, _Char, 13.0, "InfusionRitual_PIP_BlueFireBall_2", "", "FireSpecialist", 1, "skill_cast_target_voodoo_01_cast", 0, 0);
+
+
+PROC PROC_AMER_Reaction_Fire((CHARACTERGUID)_Char, (CHARACTERGUID)_Target, (REAL)_X, (REAL)_Y, (REAL)_Z, "InfusionRitual_PIP_BlueFireBall_2", (STRING)_RequestID, (INTEGER)_RitualBool)
+THEN
+PlayEffect(_Char, "RS3_FX_Skills_Earth_Cast_Target_Earth_Root_01", "");
+PROC_AMER_GEN_IterateCharsAroundObject(_Char, 13.0, _Char, 42, "PIP_SourceInfusion_BlueFireBall_2");	//Living enemies _Char can see within 13m of _Char.
+
+PROC PROC_AMER_GEN_IterateCharsAroundObject_Iterated((INTEGER)_RequestID, "PIP_SourceInfusion_BlueFireBall_2", (CHARACTERGUID)_SourceChar, (CHARACTERGUID)_Char)
+THEN
+PROC_PIP_Source_Infusion_BlueFireBallRandTarget(_SourceChar, _Char);
+
+PROC PROC_AMER_GEN_IterateCharsAroundObject_Finished((INTEGER)_RequestID, "PIP_SourceInfusion_BlueFireBall_2", (CHARACTERGUID)_SourceChar)
+AND
+DB_PIP_Source_Infusion_BlueFireBallRandomTarget(_SourceChar, _Target)
+AND
+GetPosition(_Target, _X, _Y, _Z)
+THEN
+NOT DB_PIP_Source_Infusion_BlueFireBallRandomTarget(_SourceChar, _Target);
+PROC_AMER_GEN_ShootProjectileAtPos(_SourceChar, _X, _Y, _Z, "Projectile_PIP_Fishing_BlueFireball_AllyReaction");
+
+
+// Replace target randomly when another one is found
+PROC PROC_PIP_Source_Infusion_BlueFireBallRandTarget((CHARACTERGUID)_SourceChar, (CHARACTERGUID)_Char)
+AND
+DB_PIP_Source_Infusion_BlueFireBallRandomTarget(_SourceChar, _Target)
+AND
+QRY_AMER_GEN_RandomSuccess(50)
+THEN
+NOT DB_PIP_Source_Infusion_BlueFireBallRandomTarget(_SourceChar, _Target);
+DB_PIP_Source_Infusion_BlueFireBallRandomTarget(_SourceChar, _Char);
+
+// Set target if no other was found yet
+PROC PROC_PIP_Source_Infusion_BlueFireBallRandTarget((CHARACTERGUID)_SourceChar, (CHARACTERGUID)_Char)
+AND
+NOT DB_PIP_Source_Infusion_BlueFireBallRandomTarget(_SourceChar, _)
+THEN
+DB_PIP_Source_Infusion_BlueFireBallRandomTarget(_SourceChar, _Char);
+
+// Source Infusion 3
+
+QRY QRY_AMER_Source_Infusion_SkillCast((CHARACTERGUID)_Char, "Projectile_PIP_Fishing_BlueFireball", (INTEGER)_InfusCount)
+AND
+_InfusCount > 2
+AND
+QRY_AMER_Source_Infusion_KickerCost(_Char, 3)
+THEN
+PROC_AMER_GEN_IterateCharsAroundObject(_Char, 13.0, _Char, 42, "PIP_SourceInfusion_BlueFireBall_3");	//Visible living enemies.
+
+
+PROC PROC_AMER_GEN_IterateCharsAroundObject_Iterated((INTEGER)_RequestID, "PIP_SourceInfusion_BlueFireBall_3", (CHARACTERGUID)_SourceChar, (CHARACTERGUID)_Char)
+THEN
+PROC_AMER_GEN_ShootProjectileAt(_SourceChar, _Char, "Projectile_PIP_Fishing_BlueFireball");
+
+EXITSECTION
+
+ENDEXITSECTION
+ParentTargetEdge "AMER_GLO_Spells_Pyrokinetic"
