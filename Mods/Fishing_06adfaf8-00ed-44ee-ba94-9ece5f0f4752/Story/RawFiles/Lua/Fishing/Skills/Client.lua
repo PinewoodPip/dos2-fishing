@@ -6,6 +6,9 @@ local Tooltip = Client.Tooltip
 local Skills = GetFeature("Features.Fishing.Skills")
 local TSK = Skills.TranslatedStrings
 
+Skills.POTION_TSKHANDLE = "hae185f7aga216g43afg82b3gaf96a75a7890" -- "Potion"
+Skills.SET_PROPERTY_TSKHANDLE = "h233bf83cg2204g4f14gb46agad27f95deb43" -- "Set [1].[2][3]"
+
 -- Maps skillbook string key to its Fishermancy skill.
 ---@type table<string, skill>
 Skills._SKILLBOOK_STRING_KEYS = {
@@ -49,6 +52,25 @@ Tooltip.Hooks.RenderItemTooltip:Subscribe(function (ev)
         local weightElement = tooltip:GetFirstElement("ItemWeight")
         if weightElement then
             tooltip:RemoveElement(weightElement)
+        end
+    end
+end)
+
+-- Replace "Set Potion" labels with descriptions of the scripted status effects.
+Tooltip.Hooks.RenderSkillTooltip:Subscribe(function (ev)
+    local skillPropertyTSK = Skills.SKILL_PROPERTIES[ev.SkillID]
+    if skillPropertyTSK then
+        local tooltip = ev.Tooltip
+        local setPotionElements = tooltip:GetFirstElement("SkillProperties")
+        if setPotionElements then
+            local potionLabel = Text.GetTranslatedString(Skills.POTION_TSKHANDLE)
+            local setPotionLabel = Text.FormatLarianTranslatedString(Skills.SET_PROPERTY_TSKHANDLE, potionLabel, "", "")
+            for _,prop in pairs(setPotionElements.Properties) do
+                if prop.Label == setPotionLabel then
+                    prop.Label = skillPropertyTSK:GetString()
+                    break
+                end
+            end
         end
     end
 end)

@@ -24,6 +24,21 @@ local Skills = {
             Text = "%s Skillbook",
             ContextDescription = [[Item name for skillbooks; param is the skill name]],
         },
+        Label_SkillProperty_Push = {
+            Handle = "h81e9467fg5475g407agb8afg2e7eab29b164",
+            Text = "Pushes targets back.",
+            ContextDescription = [[Tooltip for cannonball skill effect]],
+        },
+        Label_SkillProperty_ReelIn = {
+            Handle = "hf37f3b85g628fg47cdg898ag02fa0efadb1f",
+            Text = "Reels in targets.",
+            ContextDescription = [[Tooltip for reel-in skill effect]],
+        },
+        Label_SkillProperty_Sashimi = {
+            Handle = "h00e143a8g2b5dg466cg8848g7de7bda87915",
+            Text = "Processes targets into sashimi.",
+            ContextDescription = [[Tooltip for sashimi skill effect]],
+        },
 
         Skill_BlueFireball_DisplayName = {
             Handle = "h63cc250fg2bfeg4c3cgb888gbd8d5beb1be4",
@@ -286,6 +301,15 @@ local Skills = {
     },
 }
 RegisterFeature("Features.Fishing.Skills", Skills)
+local TSK = Skills.TranslatedStrings
+
+-- Maps skills to the TSK for their custom skill property.
+---@type table<skill, TextLib_TranslatedString>
+Skills.SKILL_PROPERTIES = {
+    ["Target_PIP_Fishing_ReelIn"] = TSK.Label_SkillProperty_ReelIn,
+    ["Target_PIP_Fishing_Sashimi"] = TSK.Label_SkillProperty_Sashimi,
+    ["Projectile_PIP_Fishing_CannonBall"] = TSK.Label_SkillProperty_Push,
+}
 
 ---------------------------------------------
 -- CUSTOM REQUIREMENTS
