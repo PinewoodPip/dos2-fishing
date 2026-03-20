@@ -312,36 +312,6 @@ local Skills = {
             Text = "(requires %d %s)",
             ContextDescription = [[Tooltip for Source Infusions; params are ability score and ability type]],
         },
-        SourceInfusion_BlueFireBall_1 = {
-            Handle = "h1ee6f732g370ag49aega344g42d455c76628",
-            Text = "+25% damage (+4% per Pyrokinetic) while casting.",
-            ContextDescription = [[Blue Fireball Source Infusion 1 tooltip]],
-        },
-        SourceInfusion_BlueFireBall_2 = {
-            Handle = "h0fa415f0g1b5ag4f89gbfe0g415029832b3f",
-            Text = "+40% damage (+8% per Pyrokinetic) while casting. Allies within 13m of your target, who have at least 1 Pyrokinetic try to cast Blue Fireball with reduced damage as a free ritual reaction at a random visible enemy within 13m of them.",
-            ContextDescription = [[Blue Fireball Source Infusion 2 tooltip]],
-        },
-        SourceInfusion_BlueFireBall_3 = {
-            Handle = "h08b0a406g668ag403eg82bag059eb9eb03f0",
-            Text = "<font color='c80030'>Pay 3 more AP:</font> Cast again on every visible enemy within 13m.",
-            ContextDescription = [[Blue Fireball Source Infusion 3 tooltip]],
-        },
-        SourceInfusion_CannonBall_1 = {
-            Handle = "h433adf49gbc57g42d2ga57cga268a085b53e",
-            Text = "+25% damage (+4% per Geomancer) while casting.",
-            ContextDescription = [[Cannonball skill Source Infusion 1 tooltip]],
-        },
-        SourceInfusion_CannonBall_2 = {
-            Handle = "h0810e51bg7c61g437agac83g537db5fa98da",
-            Text = "+40% damage (+8% per Geomancer) and +1m push distance per Geomancer while casting.",
-            ContextDescription = [[Cannonball skill Source Infusion 2 tooltip]],
-        },
-        SourceInfusion_CannonBall_3 = {
-            Handle = "h65c6c5b5g2745g4442ga70bg5b9db0322037",
-            Text = "Allies within 13m, who have at least 1 Geomancer try to cast Shoot Canon Ball as a free ritual reaction at all visible enemies within 13m of them. <font color='c80030'>Pay 3 more AP:</font> Cast again on all visible enemies within 13m.",
-            ContextDescription = [[Cannonball skill Source Infusion 3 tooltip]],
-        },
     },
 }
 RegisterFeature("Features.Fishing.Skills", Skills)
@@ -353,27 +323,6 @@ Skills.SKILL_PROPERTIES = {
     ["Target_PIP_Fishing_ReelIn"] = TSK.Label_SkillProperty_ReelIn,
     ["Target_PIP_Fishing_Sashimi"] = TSK.Label_SkillProperty_Sashimi,
     ["Projectile_PIP_Fishing_CannonBall"] = TSK.Label_SkillProperty_Push,
-}
-
--- Maps skills to their Source Infusion descriptions.
----@type table<skill, TextLib_TranslatedString[]>
-Skills.SOURCE_INFUSION_TSKS = {
-    ["Projectile_PIP_Fishing_CannonBall"] = {
-        TSK.SourceInfusion_CannonBall_1,
-        TSK.SourceInfusion_CannonBall_2,
-        TSK.SourceInfusion_CannonBall_3,
-    },
-    ["Projectile_PIP_Fishing_BlueFireball"] = {
-        TSK.SourceInfusion_BlueFireBall_1,
-        TSK.SourceInfusion_BlueFireBall_2,
-        TSK.SourceInfusion_BlueFireBall_3,
-    },
-}
-
--- Maps SI level to their requirement of the skill's associated ability.
-Skills.SOURCE_INFUSION_LEVEL_TO_ABILITY_REQUIREMENT = {
-    [2] = 5,
-    [3] = 9,
 }
 
 ---@type table<SkillAbility, TextLib_TranslatedString>
