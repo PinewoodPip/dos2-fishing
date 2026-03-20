@@ -95,10 +95,11 @@ Tooltip.Hooks.RenderSkillTooltip:Subscribe(function (ev)
 end, {EnabledFunctor = EpicEncounters.IsEnabled})
 
 -- Replace "Set Potion" labels with descriptions of the scripted status effects.
-Tooltip.Hooks.RenderSkillTooltip:Subscribe(function (ev)
-    local skillPropertyTSK = Skills.SKILL_PROPERTIES[ev.SkillID]
+---@param tooltip TooltipLib_FormattedTooltip
+---@param skill skill
+local function ReplaceSetPotionLabels(tooltip, skill)
+    local skillPropertyTSK = Skills.SKILL_PROPERTIES[skill]
     if skillPropertyTSK then
-        local tooltip = ev.Tooltip
         local setPotionElements = tooltip:GetFirstElement("SkillProperties")
         if setPotionElements then
             local potionLabel = Text.GetTranslatedString(Skills.POTION_TSKHANDLE)
@@ -110,6 +111,18 @@ Tooltip.Hooks.RenderSkillTooltip:Subscribe(function (ev)
                 end
             end
         end
+    end
+end
+Tooltip.Hooks.RenderSkillTooltip:Subscribe(function (ev)
+    if Skills.IsFishermancySkill(ev.SkillID) then
+        ReplaceSetPotionLabels(ev.Tooltip, ev.SkillID)
+    end
+end)
+Tooltip.Hooks.RenderItemTooltip:Subscribe(function (ev)
+    local item = ev.Item
+    local skillbookAction = Item.GetUseActions(item, "SkillBook")[1] ---@cast skillbookAction SkillBookActionData
+    if skillbookAction and Skills.IsFishermancySkill(skillbookAction.SkillID) then
+        ReplaceSetPotionLabels(ev.Tooltip, skillbookAction.SkillID)
     end
 end)
 
