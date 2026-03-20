@@ -25,9 +25,10 @@ Fishing.FISH_SPLASH_EFFECT = "PIP_FX_LargeSplash"
 ---@return GUID
 function Fishing.CatchFish(char, fish, fromPos)
     local charGUID = char.MyGuid
+    local spawnPos = fromPos or char.WorldPos
     Osi.CharacterStatusText(charGUID, TSK.Notification_Minigame_Success:GetString())
     Osi.PlayAnimation(charGUID, Fishing.SUCCESS_ANIMATION, "")
-    local fishItemGUID = Osi.CreateItemTemplateAtPosition(fish.TemplateID, fromPos[1], fromPos[2], fromPos[3])
+    local fishItemGUID = Osi.CreateItemTemplateAtPosition(fish.TemplateID, spawnPos[1], spawnPos[2], spawnPos[3])
 
     -- Animate the fish coming from the pos into the character
     if fromPos then
