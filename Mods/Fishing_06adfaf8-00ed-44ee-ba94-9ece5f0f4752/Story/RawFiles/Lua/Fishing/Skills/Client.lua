@@ -56,6 +56,35 @@ Tooltip.Hooks.RenderItemTooltip:Subscribe(function (ev)
     end
 end)
 
+-- Show Source Infusion descriptions in EE.
+Tooltip.Hooks.RenderSkillTooltip:Subscribe(function (ev)
+    local infusionDescriptions = Skills.SOURCE_INFUSION_TSKS[ev.SkillID]
+    if infusionDescriptions then
+        local skillDescription = ev.Tooltip:GetFirstElement("SkillDescription")
+        local skill = Stats.Get("StatsLib_StatsEntry_SkillData", ev.SkillID)
+        local skillSchool = skill.Ability
+        local schoolName = Skills.ABILITY_TO_NAME_TSK[skillSchool]:GetString()
+
+        ---@type string[]
+        local lines = {
+            TSK.Label_SourceInfusions:Format({Color = Skills.SOURCE_INFUSION_COLOR}),
+        }
+        for i,tsk in ipairs(infusionDescriptions) do
+            local level = Skills.SOURCE_INFUSION_LEVEL_TO_ABILITY_REQUIREMENT[i]
+            local requirement = level and (" " .. TSK.Label_SourceInfusionRequirement:Format(level, schoolName)) or ""
+            local line = Text.Format("%d%s: ", {
+                FormatArgs = {i, requirement},
+                Color = Skills.SOURCE_INFUSION_COLOR,
+            })
+            table.insert(lines, Text.Format(line .. tsk:GetString(), {
+                Size = 17,
+            }))
+        end
+
+        skillDescription.Label = skillDescription.Label .. "<br><br>" .. table.concat(lines, "<br>")
+    end
+end, {EnabledFunctor = EpicEncounters.IsEnabled})
+
 -- Replace "Set Potion" labels with descriptions of the scripted status effects.
 Tooltip.Hooks.RenderSkillTooltip:Subscribe(function (ev)
     local skillPropertyTSK = Skills.SKILL_PROPERTIES[ev.SkillID]

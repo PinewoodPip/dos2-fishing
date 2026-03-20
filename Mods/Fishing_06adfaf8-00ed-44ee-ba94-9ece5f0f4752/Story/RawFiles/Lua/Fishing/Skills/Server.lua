@@ -70,6 +70,18 @@ function Skills.ExplodeProjectile(caster, skillID, target)
     Osi.NRD_ProjectileLaunch()
 end
 
+---Returns an extended stat's value for char.
+---@param char EsvCharacter
+---@param stat string
+---@param param1 string?
+---@param param2 string?
+---@param param3 string?
+function Skills.GetExtendedStat(char, stat, param1, param2, param3)
+    local tuples = Osi.DB_AMER_ExtendedStat_AddedStat:Get(char.MyGuid, stat, param1, param2, param3, nil)
+    local valueTuple = tuples and tuples[1] or nil
+    return valueTuple and valueTuple[6] or 0
+end
+
 ---------------------------------------------
 -- EVENT LISTENERS
 ---------------------------------------------

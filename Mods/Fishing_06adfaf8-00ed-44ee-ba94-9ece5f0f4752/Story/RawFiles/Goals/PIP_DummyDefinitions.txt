@@ -1,0 +1,56 @@
+Version 1
+SubGoalCombiner SGC_AND
+INITSECTION
+
+GoalCompleted;
+
+KBSECTION
+
+// Dummy definitions of EE APIs so that compilation does not fail when it is not active.
+
+QRY QRY_AMER_Source_Infusion_SkillPreCast((CHARACTERGUID)_Char, (STRING)_Skill, (INTEGER)_InfusCount)
+AND
+0 != 0
+THEN
+DB_NOOP();
+
+QRY QRY_AMER_Source_Infusion_KickerCost((CHARACTERGUID)_Char, (INTEGER)_KickerCost)
+AND
+0 != 0
+THEN
+DB_NOOP();
+
+PROC PROC_AMER_TempStat_FlexStat_Add_StatScaling((CHARACTERGUID)_Char, (STRING)_Stat, (STRING)_ScalingType, (STRING)_ScalingSource, (STRING)_StatName, (REAL)_Param1, (REAL)_Param2, (INTEGER)_Timer, (STRING)_TimerKey)
+THEN
+DB_NOOP();
+
+PROC PROC_AMER_GEN_IterateCharsAroundObject((CHARACTERGUID)_Char, (REAL)_Radius, (CHARACTERGUID)_Char2, (INTEGER)_Flags, (STRING)_RequestID)
+THEN
+DB_NOOP();
+
+PROC PROC_AMER_Source_Infusion_RitualRequest((CHARACTERGUID)_Char, (CHARACTERGUID)_Char2, (CHARACTERGUID)_Char3, (REAL)_Radius, (STRING)_RequestID, (STRING)_Whatever, (STRING)_Ability, (INTEGER)_SomeInt, (STRING)_Animation, (INTEGER)_Flags1, (INTEGER)_Flags2)
+THEN
+DB_NOOP();
+
+PROC PROC_AMER_GEN_ShootProjectileAt((CHARACTERGUID)_SourceChar, (CHARACTERGUID)_Char, (STRING)_Skill)
+THEN
+DB_NOOP();
+
+QRY QRY_AMER_Source_Infusion_SkillCast((CHARACTERGUID)_Char, (STRING)_Skill, (INTEGER)_InfusCount)
+AND
+0 != 0
+THEN
+DB_NOOP();
+
+PROC PROC_AMER_GEN_IterateCharsAroundObject_Iterated((INTEGER)_RequestID, (STRING)_Skill, (CHARACTERGUID)_SourceChar, (CHARACTERGUID)_Char)
+THEN
+DB_NOOP();
+
+PROC PROC_AMER_Reaction_Fire((CHARACTERGUID)_Char, (CHARACTERGUID)_Target, (REAL)_X, (REAL)_Y, (REAL)_Z, (STRING)_Ritual, (STRING)_RequestID, (INTEGER)_RitualBool)
+THEN
+DB_NOOP();
+
+EXITSECTION
+
+ENDEXITSECTION
+ParentTargetEdge "__Start"

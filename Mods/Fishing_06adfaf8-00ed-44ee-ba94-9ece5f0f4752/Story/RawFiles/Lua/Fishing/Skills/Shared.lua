@@ -1,5 +1,6 @@
 
 local Fishing = GetFeature("Features.Fishing")
+local CommonStrings = Text.CommonStrings
 
 ---@class Features.Fishing.Skills : Feature
 local Skills = {
@@ -17,6 +18,8 @@ local Skills = {
         ["Summon_PIP_Fishing_Swashbuckler"] = "Necromancy",
         ["Shout_PIP_Fishing_TurnOnTheTides"] = "Summoning",
     },
+
+    SOURCE_INFUSION_COLOR = "46B195",
 
     TranslatedStrings = {
         Label_Skillbook = {
@@ -298,6 +301,32 @@ local Skills = {
             ContextDescription = [[Status tooltip for "With the Currents"]],
             StringKey = "PIP_FISHING_WITH_THE_CURRENT_Description",
         },
+
+        Label_SourceInfusions = {
+            Handle = "h2e21d306gd493g49ddg99ecg23d0973d421b",
+            Text = "Source Infusions:",
+            ContextDescription = [[Tooltip for skills in EE]],
+        },
+        Label_SourceInfusionRequirement = {
+            Handle = "h4877ab7dgdc86g4187g8a46gab32870fe0e6",
+            Text = "(requires %d %s)",
+            ContextDescription = [[Tooltip for source infusions; params are ability score and ability type]],
+        },
+        SourceInfusion_CannonBall_1 = {
+            Handle = "h433adf49gbc57g42d2ga57cga268a085b53e",
+            Text = "+25% damage (+4% per Geomancer) while casting.",
+            ContextDescription = [[Cannonball skill source infusion 1]],
+        },
+        SourceInfusion_CannonBall_2 = {
+            Handle = "h0810e51bg7c61g437agac83g537db5fa98da",
+            Text = "+40% damage (+8% per Geomancer) and +1m push distance per Geomancer while casting.",
+            ContextDescription = [[Cannonball skill source infusion 2]],
+        },
+        SourceInfusion_CannonBall_3 = {
+            Handle = "h65c6c5b5g2745g4442ga70bg5b9db0322037",
+            Text = "Allies within 15m, who have at least 1 Geomancer try to cast Shoot Canon Ball as a free ritual reaction at all visible enemies within 13m of them. <font color='c80030'>Pay 3 more AP:</font> Cast again on all visible enemies within 13m.",
+            ContextDescription = [[Cannonball skill source infusion 3]],
+        },
     },
 }
 RegisterFeature("Features.Fishing.Skills", Skills)
@@ -309,6 +338,35 @@ Skills.SKILL_PROPERTIES = {
     ["Target_PIP_Fishing_ReelIn"] = TSK.Label_SkillProperty_ReelIn,
     ["Target_PIP_Fishing_Sashimi"] = TSK.Label_SkillProperty_Sashimi,
     ["Projectile_PIP_Fishing_CannonBall"] = TSK.Label_SkillProperty_Push,
+}
+
+-- Maps skills to their Source Infusion descriptions.
+---@type table<skill, TextLib_TranslatedString[]>
+Skills.SOURCE_INFUSION_TSKS = {
+    ["Projectile_PIP_Fishing_CannonBall"] = {
+        TSK.SourceInfusion_CannonBall_1,
+        TSK.SourceInfusion_CannonBall_2,
+        TSK.SourceInfusion_CannonBall_3,
+    },
+}
+
+-- Maps SI level to their requirement of the skill's associated ability.
+Skills.SOURCE_INFUSION_LEVEL_TO_ABILITY_REQUIREMENT = {
+    [2] = 5,
+    [3] = 9,
+}
+
+---@type table<SkillAbility, TextLib_TranslatedString>
+Skills.ABILITY_TO_NAME_TSK = {
+    ["Air"] = CommonStrings.Aerotheurge,
+    ["Earth"] = CommonStrings.Geomancer,
+    ["Fire"] = CommonStrings.Pyrokinetic,
+    ["Water"] = CommonStrings.Hydrosophist,
+    ["Warrior"] = CommonStrings.Warfare,
+    ["Rogue"] = CommonStrings.Scoundrel,
+    ["Summoning"] = CommonStrings.Summoning,
+    ["Polymorph"] = CommonStrings.Polymorph,
+    ["Death"] = CommonStrings.Necromancer,
 }
 
 ---------------------------------------------

@@ -30,6 +30,11 @@ Osiris.RegisterSymbolListener("CharacterStatusApplied", 3, "after", function (ta
     local sourceFishermancy = Fishing.GetAbilityScore(source)
     local maxKnockbackDistance = Skills.CANNON_BALL_TUNING.BASE_KNOCKBACK_DISTANCE + sourceFishermancy * Skills.CANNON_BALL_TUNING.KNOCKBACK_DISTANCE_PER_FISHERMANCY
 
+    -- Add SI2+ bonus knockback
+    if EpicEncounters.IsEnabled() then
+        maxKnockbackDistance = maxKnockbackDistance + Skills.GetExtendedStat(source, "PIP_CannonBall_PushDistance")
+    end
+
     -- Push target as far as possible in the direction of the projectile
     local dir = Vector.GetNormalized(targetPos - sourcePos)
     local posStep = dir * Skills.CANNON_BALL_TUNING.POSITION_SEARCH_STEP
