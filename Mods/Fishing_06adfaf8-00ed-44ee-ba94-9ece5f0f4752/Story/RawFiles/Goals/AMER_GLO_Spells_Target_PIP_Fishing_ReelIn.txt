@@ -1,0 +1,55 @@
+Version 1
+SubGoalCombiner SGC_AND
+INITSECTION
+
+KBSECTION
+
+// Source Infusion 1
+
+QRY QRY_AMER_Source_Infusion_SkillCast_PerTarget((CHARACTERGUID)_Char, "Target_PIP_Fishing_ReelIn", (CHARACTERGUID)_Target, (REAL)_X, (REAL)_Y, (REAL)_Z, (INTEGER)_InfusCount)
+AND
+_InfusCount > 0
+THEN
+PROC_AMER_TempStat_FlexStat_Add_StatScaling(_Char, "Stat", "ACCURACYBOOST", "Ability", "WarriorLore", 5.0, 1.0, 2000, "SkillCast");
+ApplyStatus(_Target, "AMER_ATAXIA_APPLY", 12.0, 0, _Char);
+
+// Source Infusion 2
+
+QRY QRY_AMER_Source_Infusion_SkillPreCast_PerTarget((CHARACTERGUID)_Char, "Target_PIP_Fishing_ReelIn", (CHARACTERGUID)_Target, (REAL)_X, (REAL)_Y, (REAL)_Z, (INTEGER)_InfusCount)
+AND
+_InfusCount > 1
+AND
+CharacterGetAbility(_Char, "WarriorLore", _Warfare)
+AND
+Real(_Warfare, _WarfareReal)
+AND
+RealProduct(_WarfareReal, -0.1, _WarfareDistanceBonus)
+AND
+RealSubtract(_WarfareDistanceBonus, 0.5, _DistanceBonus)
+THEN
+PROC_AMER_Source_Infusion_AddRefund(_Char, 0, 1);
+PROC_AMER_TempStat_ExtendedStat_Add(_Char, "PIP_ReelIn_DamageDistance", "", "", "", _DistanceBonus, 2000, "SkillCast");
+
+// Source Infusion 3
+
+QRY QRY_AMER_Source_Infusion_SkillCast((CHARACTERGUID)_Char, "Target_PIP_Fishing_ReelIn", (INTEGER)_InfusCount)
+AND
+_InfusCount > 2
+AND
+QRY_AMER_Source_Infusion_KickerCost(_Char, 3)
+THEN
+PROC_AMER_GEN_IterateCharsAroundObject(_Char, 13.0, _Char, 42, "PIP_SourceInfusion_ReelIn_3");	//Living enemies _Char can see within 13m of _Char.
+
+PROC PROC_AMER_GEN_IterateCharsAroundObject_Iterated((INTEGER)_RequestID, "PIP_SourceInfusion_ReelIn_3", (CHARACTERGUID)_Char, (CHARACTERGUID)_Target)
+THEN
+// PROC_AMER_GEN_Shoot_Delayed("Explosion", _Char, _Target, "Projectile_PIP_SCRIPT_ReelIn", 100); // Freezes the server somehow.
+PROC_PIP_Fishing_ReelIn(_Char, _Target);
+
+PROC PROC_PIP_Fishing_ReelIn((CHARACTERGUID)_Source, (CHARACTERGUID)_Target)
+THEN
+DB_NOOP(); // Handled in Lua.
+
+EXITSECTION
+
+ENDEXITSECTION
+ParentTargetEdge "AMER_GLO_Spells_Warfare"

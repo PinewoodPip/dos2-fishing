@@ -1,8 +1,20 @@
 
 ---@class Features.Fishing.Skills
 local Skills = GetFeature("Features.Fishing.Skills")
+local TSK = Skills.TranslatedStrings
 
 -- Register TSKs
+TSK.Label_SourceInfusions = Skills:RegisterTranslatedString({
+    Handle = "h2e21d306gd493g49ddg99ecg23d0973d421b",
+    Text = "Source Infusions:",
+    ContextDescription = [[Tooltip for skills in EE]],
+})
+TSK.Label_SourceInfusionRequirement = Skills:RegisterTranslatedString({
+    Handle = "h4877ab7dgdc86g4187g8a46gab32870fe0e6",
+    Text = "(requires %d %s)",
+    ContextDescription = [[Tooltip for Source Infusions; params are ability score and ability type]],
+})
+
 ---@type table<skill, TextLib_TranslatedString[]>
 local SourceInfusionTSKs = {
     ["Projectile_PIP_Fishing_BlueFireball"] = {
@@ -32,7 +44,21 @@ local SourceInfusionTSKs = {
             Handle = "h65c6c5b5g2745g4442ga70bg5b9db0322037",
             Text = "Allies within 13m, who have at least 1 Geomancer try to cast Shoot Canon Ball as a free ritual reaction at all visible enemies within 13m of them. <font color='c80030'>Pay 3 more AP:</font> Cast again on all visible enemies within 13m.",
         },
-    }
+    },
+    ["Target_PIP_Fishing_ReelIn"] = {
+        {
+            Handle = "h4c0461bbgc6e3g4a5eg859cg13c14d077c7b",
+            Text = "+5% accuracy (+1% per Warfare) while casting. Apply up to Slowed III to target for 2 turns.",
+        },
+        {
+            Handle = "h3da30147gca72g4e45gaafeg11eec60d860b",
+            Text = "-0.5m (-0.1m per Warfare) distance threshold for dealing damage while reeling in. Recover 1AP.",
+        },
+        {
+            Handle = "h8ca33dc7gb437g4ca0g910cge14f5baf5469",
+            Text = "<font color='c80030'>Pay 3 more AP:</font> Cast again on all visible enemies within 15m.",
+        },
+    },
 }
 for skill,tsks in pairs(SourceInfusionTSKs) do
     for _,tskData in ipairs(tsks) do
@@ -70,7 +96,7 @@ Skills.EE_STATS_OVERRIDES = {
     ["Target_PIP_Fishing_ReelIn"] = {
         ActionPoints = 4,
         SkillPropertyRemap = {
-            ["CRIPPLED"] = "AMER_SLOWED_APPLY",
+            ["CRIPPLED"] = "", -- Applied via SI1 instead.
         },
     },
     ["Projectile_PIP_Fishing_CannonBall"] = {

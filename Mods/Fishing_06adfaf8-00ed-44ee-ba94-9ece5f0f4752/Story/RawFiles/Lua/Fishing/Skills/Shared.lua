@@ -87,7 +87,7 @@ local Skills = {
         },
         Skill_ReelIn_Description = {
             Handle = "h0999dbacgde3eg430ag8071gee3d46d1aeab",
-            Text = "Reel in a big catch, dealing [1] and pulling targets towards your position.<br>Targets receive piercing damage every 4m travelled (-0.2m per Fishermancy) while being reeled in.",
+            Text = "Reel in a big catch, dealing [1] and pulling targets towards your position.<br>Targets receive piercing damage every 5m travelled (-0.2m per Fishermancy) while being reeled in.",
             ContextDescription = [[Skill tooltip for "Reel In"]],
             StringKey = "Target_PIP_Fishing_ReelIn_Description",
         },
@@ -300,17 +300,6 @@ local Skills = {
             Text = "TODO",
             ContextDescription = [[Status tooltip for "With the Currents"]],
             StringKey = "PIP_FISHING_WITH_THE_CURRENT_Description",
-        },
-
-        Label_SourceInfusions = {
-            Handle = "h2e21d306gd493g49ddg99ecg23d0973d421b",
-            Text = "Source Infusions:",
-            ContextDescription = [[Tooltip for skills in EE]],
-        },
-        Label_SourceInfusionRequirement = {
-            Handle = "h4877ab7dgdc86g4187g8a46gab32870fe0e6",
-            Text = "(requires %d %s)",
-            ContextDescription = [[Tooltip for Source Infusions; params are ability score and ability type]],
         },
     },
 }
