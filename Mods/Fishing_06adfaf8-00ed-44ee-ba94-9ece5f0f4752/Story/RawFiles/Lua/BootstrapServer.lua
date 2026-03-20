@@ -33,6 +33,7 @@ local scripts = {
             "Fishing/Skills/Scripts/TurnOnTheTides.lua",
         }
     },
+    {Script = "Fishing/Skills/Shared_EE.lua", RequiresEE = true},
     {ScriptSet = "Fishing/Trader"},
 }
 for _,script in ipairs(scripts) do
