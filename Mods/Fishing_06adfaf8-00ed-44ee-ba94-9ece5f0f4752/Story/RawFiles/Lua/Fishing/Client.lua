@@ -225,7 +225,8 @@ end
 ---@param region Features.Fishing.Region? If provided, the region's `FishableSurfaceType` will be used instead of "Deepwater".
 function Fishing.IsCursorNearWater(region)
     local surface = region and region.FishableSurfaceType or nil
-    return Fishing.IsPositionNearWater(Fishing.GetCastingPosition(), Fishing.CURSOR_WATER_SEARCH_RADIUS, surface)
+    local castingPos = Fishing.GetCastingPosition()
+    return Fishing.IsPositionNearWater(castingPos, Fishing.CURSOR_WATER_SEARCH_RADIUS, surface) or Fishing.IsPositionInFishableArea(castingPos)
 end
 
 ---Returns the fishing position of the cursor.
@@ -279,6 +280,22 @@ function Fishing.IsPositionNearWater(position, searchRadius, waterSurface)
     local surfaceFlags = Ext.Enums.ESurfaceFlag[waterSurface or "Deepwater"]
     local foundCell = grid:SearchForCell(position[1], position[3], searchRadius or Fishing.WATER_SEARCH_RADIUS, surfaceFlags.__Value, 0)
     return foundCell
+end
+
+---Returns whether the position is within a region and a fishable area.
+---@param pos vec3
+---@return boolean
+function Fishing.IsPositionInFishableArea(pos)
+    local region = Fishing.GetRegionAt(pos)
+    if not region then return false end
+    local posX, posZ = pos[1], pos[3]
+    for _,bounds in ipairs(region.FishingAreas or EMPTY) do
+        local boundsX, boundsY, boundsW, boundsH = table.unpack(bounds)
+        if posX >= boundsX and posX <= boundsX + boundsW and posZ >= boundsY and posZ <= boundsY + boundsH then
+            return true
+        end
+    end
+    return false
 end
 
 ---Finishes the fishing minigame for char.
@@ -397,16 +414,9 @@ Fishing.Hooks.CanStartFishing:Subscribe(function (ev)
     -- Check for manually-defined fishing areas
     local cursorPos = Fishing.GetCastingPosition()
     local cursorPos2D = V(cursorPos[1], cursorPos[3])
-    local cursorX, cursorY = cursorPos2D[1], cursorPos2D[2]
     if not canFish and ev.Region.FishingAreas then
         -- Check if the cursor is within any of the fishing areas defined for the region.
-        for _,bounds in ipairs(ev.Region.FishingAreas) do
-            local boundsX, boundsY, boundsW, boundsH = table.unpack(bounds)
-            if cursorX >= boundsX and cursorX <= boundsX + boundsW and cursorY >= boundsY and cursorY <= boundsY + boundsH then
-                canFish = true
-                break
-            end
-        end
+        canFish = Fishing.IsPositionInFishableArea(cursorPos)
     end
     if not canFish then
         reason = TSK.Notification_CantFish_NoWater:GetString()
