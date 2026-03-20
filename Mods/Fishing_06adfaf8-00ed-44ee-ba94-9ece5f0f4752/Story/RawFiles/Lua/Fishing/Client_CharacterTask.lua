@@ -91,7 +91,8 @@ function _Task:CanPreview()
     local char = self:GetCharacter()
     local hasRod = Fishing.HasFishingRodEquipped(char) and Character.IsUnsheathed(char)
     local region = Fishing.GetRegionAt(char.WorldPos)
-    return hasRod and region and Fishing.IsCursorNearWater(region) or false
+    local skillState = Character.GetCurrentSkill(char)
+    return not skillState and hasRod and region and Fishing.IsCursorNearWater(region) or false
 end
 
 function _Task:GetPriority(previousPriority)
