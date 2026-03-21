@@ -1,0 +1,54 @@
+Version 1
+SubGoalCombiner SGC_AND
+INITSECTION
+
+KBSECTION
+
+// Source Infusion 1
+
+// Grant increased splash range and duration.
+QRY QRY_AMER_Source_Infusion_SkillPreCast((CHARACTERGUID)_Char, "Shout_PIP_Fishing_TurnOnTheTides", (INTEGER)_InfusCount)
+AND
+_InfusCount > 0
+THEN
+PROC_AMER_TempStat_ExtendedStat_Add(_Char, "Status_AddDuration", "PIP_Fishing_TurnOnTheTides", "", "", 1.0); // +1 turn duration.
+PROC_AMER_TempStat_ExtendedStat_Add(_Char, "Status_AddDuration", "PIP_Fishing_TurnOnTheTides_Hero", "", "", 1.0);
+PROC_AMER_TempStat_StatusMod_AddExtendedStat(_Char, "PIP_Fishing_TurnOnTheTides", "PIP_TurnedOnTides_ProjectileReplacement", "Projectile_PIP_Fishing_TurnOnTheTides_ScriptedDamage_Infus1", "1", "", 2.0, "PIP_Fishing_TurnOnTheTides_Infus", 0, 2000, "SkillCast"); // Replace projectile with one with a AoE variant.
+PROC_AMER_TempStat_StatusMod_AddExtendedStat(_Char, "PIP_Fishing_TurnOnTheTides_Hero", "PIP_TurnedOnTides_ProjectileReplacement", "Projectile_PIP_Fishing_TurnOnTheTides_ScriptedDamage_Infus1", "1", "", 2.0, "PIP_Fishing_TurnOnTheTides_Infus", 0, 2000, "SkillCast"); // Also buff the hero version.
+
+// Source Infusion 2
+
+// Apply to allied heroes.
+QRY QRY_AMER_Source_Infusion_SkillPreCast((CHARACTERGUID)_Char, "Shout_PIP_Fishing_TurnOnTheTides", (INTEGER)_InfusCount)
+AND
+_InfusCount > 1
+AND
+CharacterGetAbility(_Char, "EarthSpecialist", _Geomancer)
+THEN
+PROC_AMER_GEN_IterateCharsAroundObject(_Char, 13.0, _Char, 76, "PIP_SourceInfusion_TurnOnTheTides"); //Living non-summon allies of _Char within 13m, including self.
+
+PROC PROC_AMER_GEN_IterateCharsAroundObject_Iterated((INTEGER)_RequestID, "PIP_SourceInfusion_TurnOnTheTides", (CHARACTERGUID)_SourceChar, (CHARACTERGUID)_Char)
+THEN
+ApplyStatus(_Char, "PIP_Fishing_TurnOnTheTides_Hero", 18.0, 1, _SourceChar); // Must be a separate status to distinguish from applications on summons for the Hydrosophist SI bonus.
+
+// Grant +1 Hydrosophist to summons.
+QRY QRY_AMER_Source_Infusion_SkillPreCast((CHARACTERGUID)_Char, "Shout_PIP_Fishing_TurnOnTheTides", (INTEGER)_InfusCount)
+AND
+_InfusCount > 1
+THEN
+PROC_AMER_TempStat_StatusMod_AddFlexStat(_Char, "PIP_Fishing_TurnOnTheTides", "Ability", "WaterSpecialist", 1.0, "PIP_Fishing_TurnOnTheTides_Infus", 0);
+
+// Source Infusion 3
+
+// Grant +1 splash on turn start.
+QRY QRY_AMER_Source_Infusion_SkillPreCast((CHARACTERGUID)_Char, "Shout_PIP_Fishing_TurnOnTheTides", (INTEGER)_InfusCount)
+AND
+_InfusCount > 0
+THEN
+PROC_AMER_TempStat_StatusMod_AddExtendedStat(_Char, "PIP_Fishing_TurnOnTheTides", "PIP_TurnedOnTides_SplashCount", "", "", "", 1.0, "PIP_Fishing_TurnOnTheTides_Infus", 0, 2000, "SkillCast");
+PROC_AMER_TempStat_StatusMod_AddExtendedStat(_Char, "PIP_Fishing_TurnOnTheTides_Hero", "PIP_TurnedOnTides_SplashCount", "", "", "", 1.0, "PIP_Fishing_TurnOnTheTides_Infus", 0, 2000, "SkillCast"); // Also apply to the hero variant.
+
+EXITSECTION
+
+ENDEXITSECTION
+ParentTargetEdge "AMER_GLO_Spells_Summoning"

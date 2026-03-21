@@ -73,6 +73,20 @@ local SourceInfusionTSKs = {
             Text = "With the Currents grants +1 turn duration to Seaburn applied. Recover 1SP.",
         },
     },
+    ["Shout_PIP_Fishing_TurnOnTheTides"] = {
+        {
+            Handle = "h69fa4245g06abg4744g90cegc21a3df89592",
+            Text = "+2m splash range to Turned On Tides. +1 turn duration.",
+        },
+        {
+            Handle = "hcf05c040g7901g4512ga643gc8952e18fb2f",
+            Text = "Also apply to allied heroes within 13m, including self. Turned On Tides grants +1 Hydrosophist to summons.",
+        },
+        {
+            Handle = "h95e991d4g1047g45bdg8d6dgb4b28dc1f01f",
+            Text = "Turned On Tides creates +1 splash at the start of turn.",
+        },
+    },
 }
 for skill,tsks in pairs(SourceInfusionTSKs) do
     for _,tskData in ipairs(tsks) do

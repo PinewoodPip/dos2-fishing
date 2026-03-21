@@ -71,15 +71,27 @@ function Skills.ExplodeProjectile(caster, skillID, target)
 end
 
 ---Returns an extended stat's value for char.
+---**Will return the first tuple if the params match multiple sources.**
 ---@param char EsvCharacter
 ---@param stat string
 ---@param param1 string?
 ---@param param2 string?
 ---@param param3 string?
 function Skills.GetExtendedStat(char, stat, param1, param2, param3)
+    local extendedStats = Skills.GetExtendedStats(char, stat, param1, param2, param3)
+    return extendedStats[1] and extendedStats[1][6] or 0
+end
+
+---Returns all the values of an extended stat for char that match the parameters.
+---@param char EsvCharacter
+---@param stat string
+---@param param1 string?
+---@param param2 string?
+---@param param3 string?
+---@return OsirisValue[]
+function Skills.GetExtendedStats(char, stat, param1, param2, param3)
     local tuples = Osi.DB_AMER_ExtendedStat_AddedStat:Get(char.MyGuid, stat, param1, param2, param3, nil)
-    local valueTuple = tuples and tuples[1] or nil
-    return valueTuple and valueTuple[6] or 0
+    return tuples
 end
 
 ---------------------------------------------

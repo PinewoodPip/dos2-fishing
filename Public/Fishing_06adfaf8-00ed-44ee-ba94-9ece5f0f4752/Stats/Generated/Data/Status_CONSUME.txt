@@ -59,6 +59,12 @@ data "StatusEffect" "RS3_FX_GP_Status_WaterImmunity_Root_01,KeepRot:Dummy_Root"
 data "StackId" "Stack_PIP_Fishing_TurnOnTheTides"
 data "StackPriority" "1"
 
+new entry "PIP_Fishing_TurnOnTheTides_Hero"
+type "StatusData"
+data "StatusType" "CONSUME"
+using "PIP_Fishing_TurnOnTheTides"
+data "StackPriority" "2"
+
 new entry "PIP_FISHING_TRY_SASHIMI"
 type "StatusData"
 data "StatusType" "CONSUME"
