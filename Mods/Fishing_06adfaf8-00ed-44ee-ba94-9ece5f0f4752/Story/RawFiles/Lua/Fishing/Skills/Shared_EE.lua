@@ -59,6 +59,20 @@ local SourceInfusionTSKs = {
             Text = "<font color='c80030'>Pay 3 more AP:</font> Cast again on all visible enemies within 15m.",
         },
     },
+    ["Shout_PIP_Fishing_WithTheCurrents"] = {
+        {
+            Handle = "h7bf03231g8669g4705gb52cge1f51507a071",
+            Text = "Apply 1 Battered to targets struck. +1 turn duration.",
+        },
+        {
+            Handle = "h3ca36071gd8abg4296g806cg04c68e54126b",
+            Text = "With the Currents now also activates on turn start and grants +1 turn duration to Seaburn applied.",
+        },
+        {
+            Handle = "h983dde22gc37bg4386g94b4gee4b87209d9f",
+            Text = "With the Currents grants +1 turn duration to Seaburn applied. Recover 1SP.",
+        },
+    },
 }
 for skill,tsks in pairs(SourceInfusionTSKs) do
     for _,tskData in ipairs(tsks) do

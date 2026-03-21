@@ -1,0 +1,50 @@
+Version 1
+SubGoalCombiner SGC_AND
+INITSECTION
+
+KBSECTION
+
+// Source Infusion 1
+
+// Add status duration and enable B/H direct manipulation statuses
+QRY QRY_AMER_Source_Infusion_SkillCast((CHARACTERGUID)_Char, "Shout_PIP_Fishing_WithTheCurrents", (INTEGER)_InfusCount)
+AND
+_InfusCount > 0
+THEN
+PROC_AMER_TempStat_StatusMod_AddExtendedStat(_Char, "PIP_FISHING_WITH_THE_CURRENT_INFUS1", "BatteredHarried_DirectManipStatuses_Activate", "0", "1", "", 1.0, "PIP_Fishing_WithTheCurrents_Infus", 1, 2000, "SkillCast");
+CharacterUseSkill(_Char, "Shout_PIP_Fishing_WithTheCurrents_Infus_1", _Char, 1, 1, 1); 
+
+
+// Source Infusion 2
+
+// Pulse on turn start
+PROC PROC_AMER_Spells_SkillPreCast((CHARACTERGUID)_Char, "Shout_PIP_Fishing_WithTheCurrents", (INTEGER)_InfusCount, (STRING)_Type, (STRING)_Element)
+AND
+_InfusCount > 1
+THEN
+PROC_AMER_TempStat_StatusMod_AddExtendedStat(_Char, "PIP_FISHING_WITH_THE_CURRENT_INFUS1", "Shoot_OnTurn", "Explosion", "Projectile_PIP_Fishing_WithTheCurrents_ActiveDefense_Script_Aura", "PIP_WithTheCurrents", 1.0, "PIP_Fishing_WithTheCurrents_Infus2", 1, 2000, "SkillCast"); //_SelfBool param is 1 because stat's property of SELF: status application applies with source as NULL. Must be applied to the SI1 status variant.
+
+// Add +turn duration to Seaburn applications
+PROC PROC_AMER_Spells_SkillPreCast((CHARACTERGUID)_Char, "Shout_PIP_Fishing_WithTheCurrents", (INTEGER)_InfusCount, (STRING)_Type, (STRING)_Element)
+AND
+_InfusCount > 1
+AND
+IntegerSubtract(_InfusCount, 1, _ExtraTurns) // +1 for SI2, +2 for SI3.
+AND
+Real(_ExtraTurns, _ExtraTurnsReal)
+THEN
+PROC_AMER_TempStat_StatusMod_AddExtendedStat(_Char, "PIP_FISHING_WITH_THE_CURRENT_INFUS1", "Status_AddDuration", "PIP_FISHING_SEABURN", "", "", _ExtraTurnsReal, "PIP_Fishing_WithTheCurrents_Infus3", 1, 2000, "SkillCast"); // Must be applied to the SI status variant.
+
+// Source Infusion 3
+
+// Refund 1 SP
+QRY QRY_AMER_Source_Infusion_SkillCast((CHARACTERGUID)_Char, "Shout_PIP_Fishing_WithTheCurrents", (INTEGER)_InfusCount)
+AND
+_InfusCount > 2
+THEN
+PROC_AMER_Source_Infusion_AddRefund(_Char, 0, 1);
+
+EXITSECTION
+
+ENDEXITSECTION
+ParentTargetEdge "AMER_GLO_Spells_Hydrosophist"
