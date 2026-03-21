@@ -1,0 +1,29 @@
+Version 1
+SubGoalCombiner SGC_AND
+INITSECTION
+
+KBSECTION
+
+// Fire reaction when seaburn detonates on a visible enemy.
+PROC PROC_PIP_Seaburn_Detonate((CHARACTERGUID)_Target, (CHARACTERGUID)_StatusSource)
+AND
+DB_AMER_ExtendedStat_AddedStat(_Char, "PIP_ThrowingKnifeSeaBurnReaction", _Extraprop1, _Extraprop2, _Extraprop3, _Count)
+AND
+QRY_AMER_GEN_OncePerTurn(_Char, "PIP_ThrowingKnifeSeaBurnReaction")
+AND
+CharacterCanSee(_Char, _Target, 1)
+AND
+CharacterIsEnemy(_Char, _Target, 1)
+THEN
+PROC_AMER_Reaction_Request(_Char, _Target, "PIP_Swashbuckler_ThrowingKnife", "", "skill_attack_projectile_02_cast", 0);
+PROC_AMER_GEN_OncePerTurn_Store(_Char, "PIP_ThrowingKnifeSeaBurnReaction");
+
+PROC PROC_AMER_Reaction_Fire((CHARACTERGUID)_Char, (CHARACTERGUID)_Target, (REAL)_X, (REAL)_Y, (REAL)_Z, "PIP_Swashbuckler_ThrowingKnife", (STRING)_RequestID, (INTEGER)_RitualBool)
+THEN
+PROC_AMER_GEN_ShootProjectileAt(_Char, _Target, "Projectile_ThrowingKnife");
+PlayEffect(_Char, "RS3_FX_Skills_Void_Prepare_Weapon_Root_01", "");
+
+EXITSECTION
+
+ENDEXITSECTION
+ParentTargetEdge "AMER_GEN_Stats_ExtendedStats"

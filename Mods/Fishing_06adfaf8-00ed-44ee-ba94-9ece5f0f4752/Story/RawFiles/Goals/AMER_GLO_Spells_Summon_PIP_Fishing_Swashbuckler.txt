@@ -1,0 +1,43 @@
+Version 1
+SubGoalCombiner SGC_AND
+INITSECTION
+
+KBSECTION
+
+// Source Infusion 1
+
+// Grant Chloroform and Decaying Touch.
+QRY QRY_AMER_Source_Infusion_SkillPreCast((CHARACTERGUID)_Char, "Summon_PIP_Fishing_Swashbuckler", (INTEGER)_InfusCount)
+AND
+_InfusCount > 0
+THEN
+PROC_AMER_Summoning_AddFlexStatToNext(_Char, "PIP_Fishing_Summon_Swashbuckler_c720f925-92e6-4c3e-9221-a24dcbc074a1", "Spell", "Projectile_Chloroform", 1.0, 1);
+PROC_AMER_Summoning_AddFlexStatToNext(_Char, "PIP_Fishing_Summon_Swashbuckler_c720f925-92e6-4c3e-9221-a24dcbc074a1", "Spell", "Target_DecayingTouch", 1.0, 1);
+
+
+// Source Infusion 2
+
+// Grant 2SP and 1 turn of Source Generation.
+QRY QRY_AMER_Source_Infusion_SkillPreCast((CHARACTERGUID)_Char, "Summon_PIP_Fishing_Swashbuckler", (INTEGER)_InfusCount)
+AND
+_InfusCount > 1
+THEN
+PROC_AMER_Summoning_AddExtendedStatToNext(_Char, "PIP_Fishing_Summon_Swashbuckler_c720f925-92e6-4c3e-9221-a24dcbc074a1", "InstantEffect", "AddSP", "", "", 2.0, 1);
+PROC_AMER_Summoning_AddKeywordStatToNext(_Char, "PIP_Fishing_Summon_Swashbuckler_c720f925-92e6-4c3e-9221-a24dcbc074a1", "SourceGeneration", 1);
+PROC_AMER_Summoning_AddExtendedStatToNext(_Char, "PIP_Fishing_Summon_Swashbuckler_c720f925-92e6-4c3e-9221-a24dcbc074a1", "SourceGen_AddTurns", "", "", "", 1.0, 1);
+PROC_AMER_Summoning_AddFlexStatToNext(_Char, "PIP_Fishing_Summon_Swashbuckler_c720f925-92e6-4c3e-9221-a24dcbc074a1", "Spell", "Shout_SourceInfusion", 1.0, 1); // Add Source Infuse skill to make SP usable
+
+
+// Source Infusion 3
+
+// Swashbuckler can now emulate Throw Knives as a free reaction against targets on which Seaburn detonates.
+QRY QRY_AMER_Source_Infusion_SkillPreCast((CHARACTERGUID)_Char, "Summon_PIP_Fishing_Swashbuckler", (INTEGER)_InfusCount)
+AND
+_InfusCount > 2
+THEN
+PROC_AMER_Summoning_AddExtendedStatToNext(_Char, "PIP_Fishing_Summon_Swashbuckler_c720f925-92e6-4c3e-9221-a24dcbc074a1", "PIP_ThrowingKnifeSeaBurnReaction", "", "", "", 1.0, 1);
+
+EXITSECTION
+
+ENDEXITSECTION
+ParentTargetEdge "AMER_GLO_Spells_Summoning"

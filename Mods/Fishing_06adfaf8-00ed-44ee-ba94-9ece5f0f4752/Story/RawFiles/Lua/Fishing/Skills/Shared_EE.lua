@@ -87,6 +87,20 @@ local SourceInfusionTSKs = {
             Text = "Turned On Tides creates +1 splash at the start of turn.",
         },
     },
+    ["Summon_PIP_Fishing_Swashbuckler"] = {
+        {
+            Handle = "h334c05c7gc993g480dga990g8f5a51a1df23",
+            Text = "Swashbuckler can now cast Chloroform and Decaying Touch.",
+        },
+        {
+            Handle = "h11754f02g2291g4608gaf51g2a341599d8a7",
+            Text = "Swashbuckler gains 2 Source Points and 1 turn of Source Generation.",
+        },
+        {
+            Handle = "h6c669bd1g956eg4598g84a4g35d3c1966e46",
+            Text = "Once per turn, Swashbuckler can now emulate Throw Knives as a free reaction against enemies it can see on which Seaburn detonates.",
+        },
+    }
 }
 for skill,tsks in pairs(SourceInfusionTSKs) do
     for _,tskData in ipairs(tsks) do

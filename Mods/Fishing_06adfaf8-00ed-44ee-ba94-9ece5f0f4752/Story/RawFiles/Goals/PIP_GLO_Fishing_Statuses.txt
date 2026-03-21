@@ -1,0 +1,15 @@
+Version 1
+SubGoalCombiner SGC_AND
+INITSECTION
+
+KBSECTION
+
+// Hook into this to perform effects when Seaburn detonates.
+PROC PROC_PIP_Seaburn_Detonate((CHARACTERGUID)_Target, (CHARACTERGUID)_StatusSource)
+THEN
+DB_NOOP();
+
+EXITSECTION
+
+ENDEXITSECTION
+ParentTargetEdge "__Start"
