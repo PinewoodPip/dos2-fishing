@@ -1,0 +1,67 @@
+Version 1
+SubGoalCombiner SGC_AND
+INITSECTION
+
+// Should be sufficient to just register these the first time the goal runs,
+// as they can only be sourced from SIs.
+DB_AMER_Spells_IDOverride("Projectile_PIP_Fishing_DeployFishnets_Empowered_1", "Projectile_PIP_Fishing_DeployFishnets");
+DB_AMER_Spells_IDOverride("Projectile_PIP_Fishing_DeployFishnets_Empowered_2", "Projectile_PIP_Fishing_DeployFishnets");
+
+KBSECTION
+
+// Register each thrown trap to the caster.
+PROC PROC_AMER_Spells_SkillCast((CHARACTERGUID)_Char, "Projectile_PIP_Fishing_DeployFishnets", (INTEGER)_InfusCount, (STRING)_Type, (STRING)_Element)
+AND
+NOT DB_AMER_Spells_IDOverride_Current(_Char, "Projectile_PIP_Fishing_DeployFishnets_Empowered_1", _)
+AND
+NOT DB_AMER_Spells_IDOverride_Current(_Char, "Projectile_PIP_Fishing_DeployFishnets_Empowered_2", _)
+THEN
+PROC_AMER_Spells_OwnerQueue_Add(_Char); // Amount of owners to push to the queue should match the AmountOfTargets of the skill!
+PROC_AMER_Spells_OwnerQueue_Add(_Char);
+PROC_AMER_Spells_OwnerQueue_Add(_Char);
+PROC_AMER_Spells_OwnerQueue_Add(_Char);
+
+// Empowered variant have 2 & 3 traps thrown respectively.
+PROC PROC_AMER_Spells_SkillCast((CHARACTERGUID)_Char, "Projectile_PIP_Fishing_DeployFishnets", (INTEGER)_InfusCount, (STRING)_Type, (STRING)_Element)
+AND
+DB_AMER_Spells_IDOverride_Current(_Char, "Projectile_PIP_Fishing_DeployFishnets_Empowered_1", _)	
+THEN
+PROC_AMER_Spells_OwnerQueue_Add(_Char); // Amount of owners to push to the queue should match the AmountOfTargets of the skill!
+PROC_AMER_Spells_OwnerQueue_Add(_Char);
+
+PROC PROC_AMER_Spells_SkillCast((CHARACTERGUID)_Char, "Projectile_PIP_Fishing_DeployFishnets", (INTEGER)_InfusCount, (STRING)_Type, (STRING)_Element)
+AND
+DB_AMER_Spells_IDOverride_Current(_Char, "Projectile_PIP_Fishing_DeployFishnets_Empowered_2", _)	
+THEN
+PROC_AMER_Spells_OwnerQueue_Add(_Char); // Amount of owners to push to the queue should match the AmountOfTargets of the skill!
+PROC_AMER_Spells_OwnerQueue_Add(_Char);
+PROC_AMER_Spells_OwnerQueue_Add(_Char);
+
+// Source Infusion 1
+
+// Grant Empowered Deploy Fishnets
+QRY QRY_AMER_Source_Infusion_SkillCast((CHARACTERGUID)_Char, "Projectile_PIP_Fishing_DeployFishnets", 1)
+THEN
+ApplyStatus(_Char, "PIP_FISHING_DEPLOYFISHNETS_INFUS_1", 12.0, 0, _Char);
+
+// Source Infusion 2
+
+// Grant a better Empowered Deploy Fishnets, with longer duration
+QRY QRY_AMER_Source_Infusion_SkillCast((CHARACTERGUID)_Char, "Projectile_PIP_Fishing_DeployFishnets", 2)
+THEN
+ApplyStatus(_Char, "PIP_FISHING_DEPLOYFISHNETS_INFUS_2", 18.0, 0, _Char);
+
+// Source Infusion 3
+
+// Grant Trawling Grindset, allowing the character to perform Predator reactions on enemies they can see when they are damaged by fishnets.
+QRY QRY_AMER_Source_Infusion_SkillCast((CHARACTERGUID)_Char, "Projectile_PIP_Fishing_DeployFishnets", (INTEGER)_InfusCount)
+AND
+_InfusCount > 2
+THEN
+PROC_AMER_TempStat_StatusMod_AddExtendedStat(_Char, "PIP_Fishing_TrawlingGrindset", "PIP_Predator_ACT_Fishnets", "", "", "", 1.0, "PIP_Fishing_DeployFishnets_Infus3", 1, 2000, "SkillCast");
+ApplyStatus(_Char, "PIP_Fishing_TrawlingGrindset", 24.0, 0, _Char);
+
+EXITSECTION
+
+ENDEXITSECTION
+ParentTargetEdge "AMER_GLO_Spells_Huntsman"

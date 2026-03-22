@@ -32,6 +32,7 @@ local scripts = {
             "Fishing/Skills/Scripts/ReelIn.lua",
             "Fishing/Skills/Scripts/CannonBall.lua",
             "Fishing/Skills/Scripts/TurnOnTheTides.lua",
+            "Fishing/Skills/Scripts/DeployFishnets.lua",
         }
     },
     {Script = "Fishing/Skills/Shared_EE.lua", RequiresEE = true},

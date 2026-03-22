@@ -123,9 +123,15 @@ local Skills = {
         },
         Skill_DeployFishnets_Description = {
             Handle = "h4b9d4d07g868eg49e0g8532g301e913d7012",
-            Text = "Reach for your equipment and deploy [1] fish nets at target positions. Each fish net takes 1 turn to activate; after arming, enemies approaching will trigger the fishnet, dealing [2] damage to enemies within [3], applying Disarmed for 1 turn and creating a web surface.",
+            Text = "Reach for your trawling equipment and deploy [1] fishnets at target positions. Each fishnet takes 1 turn to arm. Once armed, enemies approaching will trigger the fishnet, dealing [2] damage to enemies within [3], applying Disarmed for 1 turn and creating a web surface.",
             ContextDescription = [[Skill tooltip for "Deploy Fishnets"]],
             StringKey = "Projectile_PIP_Fishing_DeployFishnets_Description",
+        },
+        Skill_EmpoweredDeployFishnets_DisplayName = {
+            Handle = "h93c1876cg976dg4e7bg8903gf39fbce4ac61",
+            Text = "Empowered Deploy Fishnets",
+            ContextDescription = [[Skill name (granted by Source Infusion)]],
+            StringKey = "Projectile_PIP_Fishing_DeployFishnets_Empowered_DisplayName",
         },
         Skill_CrabPinch_DisplayName = {
             Handle = "h01a13c16g65bag4241ga135g202f845fa140",
@@ -229,6 +235,18 @@ local Skills = {
             ContextDescription = [[Skill tooltip for "Turn on The Tides"]],
             StringKey = "Shout_PIP_Fishing_TurnOnTheTides_Description",
         },
+        Status_EmpoweredDeployFishnets_DisplayName = {
+            Handle = "h8d7c83f9g402ag4173g84d2gf4d3cfffcaa0",
+            Text = "Empowered Deploy Fishnets",
+            ContextDescription = [[Status name (from Deploy Fishnets source infusion)]],
+            StringKey = "PIP_FISHING_DEPLOYFISHNETS_INFUS_DisplayName",
+        },
+        Status_EmpoweredDeployFishnets_Description = {
+            Handle = "h40fedafeg971bg48cegb01egb3f5181cee84",
+            Text = "Is able to cast Empowered Deploy Fishnets.",
+            ContextDescription = [[Tooltip for "Empowered Deploy Fishnets" status]],
+            StringKey = "PIP_FISHING_DEPLOYFISHNETS_INFUS_Description",
+        },
         Status_TurnOnTheTides_DisplayName = {
             Handle = "h146da339gbae2g453dgb25bgb8d1d4d73b12",
             Text = "Turned On Tides",
@@ -240,6 +258,18 @@ local Skills = {
             Text = "Character causes a burst of waves at the start of their turn, dealing water damage to enemies near them.",
             ContextDescription = [[Tooltip for "Turned On Tides" status]],
             StringKey = "PIP_Fishing_TurnOnTheTides_Description",
+        },
+        Status_TrawlingGrindset_DisplayName = {
+            Handle = "he5ed6437gcc18g4d16gbd4fg3c7fb5b5f112",
+            Text = "Trawling Grindset",
+            ContextDescription = [[Status name (from Deploy Fishnets source infusion)]],
+            StringKey = "PIP_Fishing_TrawlingGrindset_DisplayName",
+        },
+        Status_TrawlingGrindset_Description = {
+            Handle = "hc0bf708eg4e5ag49a3gbc87gc8080804778f",
+            Text = "Predator reactions can be performed on enemies you can see when they are damaged by fishnets.",
+            ContextDescription = [[Tooltip for "Trawling Grindset" status]],
+            StringKey = "PIP_Fishing_TrawlingGrindset_Description",
         },
         Status_CrabForm_DisplayName = {
             Handle = "h246a2d29g33b1g4befgb733g2dea55daefae",
@@ -328,6 +358,7 @@ Skills.ABILITY_TO_NAME_TSK = {
     ["Water"] = CommonStrings.Hydrosophist,
     ["Warrior"] = CommonStrings.Warfare,
     ["Rogue"] = CommonStrings.Scoundrel,
+    ["Ranger"] = CommonStrings.Huntsman,
     ["Summoning"] = CommonStrings.Summoning,
     ["Polymorph"] = CommonStrings.Polymorph,
     ["Death"] = CommonStrings.Necromancer,

@@ -1,0 +1,24 @@
+Version 1
+SubGoalCombiner SGC_AND
+INITSECTION
+
+KBSECTION
+
+// Predator reactions can be performed on enemies damaged by fishnets.
+PROC PROC_PIP_DamagedByFishnets((CHARACTERGUID)_Target)
+AND
+DB_AMER_ExtendedStat_AddedStat(_Char, "PIP_Predator_ACT_Fishnets", _Extraprop1, _Extraprop2, _Extraprop3, _Count)
+AND
+QRY_AMER_GEN_OncePerTurn(_Char, "PIP_Predator_ACT_Fishnets")
+AND
+CharacterCanSee(_Char, _Target, 1)
+AND
+CharacterIsEnemy(_Char, _Target, 1)
+THEN
+PROC_AMER_Reaction_Request(_Char, _Target, "AMER_Predator", "PIP_Predator_ACT_Fishnets", "", 1);
+PROC_AMER_GEN_OncePerTurn_Store(_Char, "PIP_Predator_ACT_Fishnets");
+
+EXITSECTION
+
+ENDEXITSECTION
+ParentTargetEdge "AMER_GEN_Stats_ExtendedStats"

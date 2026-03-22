@@ -115,6 +115,20 @@ local SourceInfusionTSKs = {
             Text = "Crab Form gains Spellcaster Finesse and +40% invested Finesse. Recover 1 SP.",
         },
     },
+    ["Projectile_PIP_Fishing_DeployFishnets"] = {
+        {
+            Handle = "h7cd22ec4g0a15g4c29g947cg21a36ee25099",
+            Text = "Gain an Empowered Deploy Fishnets skill for 2 turns that has 1 turn cooldown, deploys 2 fishnets and costs 2AP.",
+        },
+        {
+            Handle = "hefd9bbe7g564eg4a99g9bcegfa89e853fc28",
+            Text = "Empowered Deploy Fishnets can now be cast for 3 turns and deploys 3 fishnets.",
+        },
+        {
+            Handle = "h1a0c48f0g71b0g43eag8b1bgaccb259a57a6",
+            Text = "Gain Trawling Grindset for 4 turns: once per turn, Predator reactions can be performed on enemies you can see when they are damaged by fishnets.",
+        },
+    },
 }
 for skill,tsks in pairs(SourceInfusionTSKs) do
     for _,tskData in ipairs(tsks) do
@@ -135,6 +149,7 @@ Skills.EE_STATS_OVERRIDES = {
     },
     ["Projectile_PIP_Fishing_DeployFishnets"] = {
         ActionPoints = 4,
+        AmountOfTargets = 4, -- Reduced since the skill has 0SP base cost in EE.
     },
     ["Target_PIP_Fishing_Sashimi"] = {
         ActionPoints = 5,
@@ -176,6 +191,9 @@ for skill,tsks in pairs(SourceInfusionTSKs) do
         Skills.SOURCE_INFUSION_TSKS[skill][i] = tsk
     end
 end
+-- Also show SIs for Empowered skill variants.
+Skills.SOURCE_INFUSION_TSKS["Projectile_PIP_Fishing_DeployFishnets_Empowered_1"] = Skills.SOURCE_INFUSION_TSKS["Projectile_PIP_Fishing_DeployFishnets"]
+Skills.SOURCE_INFUSION_TSKS["Projectile_PIP_Fishing_DeployFishnets_Empowered_2"] = Skills.SOURCE_INFUSION_TSKS["Projectile_PIP_Fishing_DeployFishnets"]
 
 -- Maps SI level to their requirement of the skill's associated ability.
 Skills.SOURCE_INFUSION_LEVEL_TO_ABILITY_REQUIREMENT = {
