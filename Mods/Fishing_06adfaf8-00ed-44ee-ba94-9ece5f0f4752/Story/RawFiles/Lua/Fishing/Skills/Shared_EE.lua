@@ -129,6 +129,20 @@ local SourceInfusionTSKs = {
             Text = "Gain Trawling Grindset for 4 turns: once per turn, Predator reactions can be performed on enemies you can see when they are damaged by fishnets.",
         },
     },
+    ["Target_PIP_Fishing_Sashimi"] = {
+        {
+            Handle = "hc4514440g22cbg4882g93c4g70b72d808243",
+            Text = "+5% accuracy (+1% per Scoundrel) while casting. +20% damage (+4% per Scoundrel) while casting.",
+        },
+        {
+            Handle = "hc59f11e5g89c7g4976g9091gf34e8055f0ec",
+            Text = "+40% damage (+8% per Scoundrel) while casting.",
+        },
+        {
+            Handle = "hb3001d98g2552g48bdgbcebg0948583ca05d",
+            Text = "Attempt to sneak after casting. If your target dies while casting this skill, gain Slashimi for 3 turns: once per turn per target, your basic attack applies Seaburn for 1 turn.",
+        },
+    }
 }
 for skill,tsks in pairs(SourceInfusionTSKs) do
     for _,tskData in ipairs(tsks) do

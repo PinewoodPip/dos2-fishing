@@ -337,6 +337,18 @@ local Skills = {
             ContextDescription = [[Status tooltip for "With the Currents"]],
             StringKey = "PIP_FISHING_WITH_THE_CURRENT_Description",
         },
+        Status_Slashimi_DisplayName = {
+            Handle = "h4a23246fgf03dg4300gb36cg77cc96c50e96",
+            Text = "Slashimi",
+            ContextDescription = [[Status name (from Prepare Sashimi)]],
+            StringKey = "PIP_FISHING_SLASHIMI_DisplayName",
+        },
+        Status_Slashimi_Description = {
+            Handle = "hd5f37fd8gce04g4e74gb8a0gc4c0030bb876",
+            Text = "Once per turn per target, your basic attack applies Seaburn for 1 turn.",
+            ContextDescription = [[Status tooltip for "Slashimi"]],
+            StringKey = "PIP_FISHING_SLASHIMI_Description",
+        },
     },
 }
 RegisterFeature("Features.Fishing.Skills", Skills)

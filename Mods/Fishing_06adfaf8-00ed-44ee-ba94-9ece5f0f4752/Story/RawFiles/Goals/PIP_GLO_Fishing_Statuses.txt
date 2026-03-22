@@ -18,6 +18,14 @@ THEN
 PROC_AMER_UI_Ascension_SpecialLogic_Add(_Char, "", -1.0);
 NOT DB_PIP_Fishing_HasCrabInfusMageFin(_Char);
 
+// Prepare Sashimi SI3: if target dies while casting, gain Slashimi for X turns.
+PROC PROC_AMER_ExtendedStat_ProcOnDeath((CHARACTERGUID)_Char, (CHARACTERGUID)_Source, "PIP_Source_Infusion_PrepareSashimi", (REAL)_Amount)
+AND
+RealProduct(_Amount, 6.0, _Duration)
+THEN
+ApplyStatus(_Source, "PIP_FISHING_SLASHIMI", _Duration, 0, _Source);
+PROC_AMER_TempStat_StatusMod_AddExtendedStat(_Source, "PIP_FISHING_SLASHIMI", "PIP_SeaburnOnHit", "", "", "", 1.0, "PIP_Fishing_PrepareSashimi_Infus3", 1); // Should be called after applying the status (since we're not using SkillCast timer).
+
 EXITSECTION
 
 ENDEXITSECTION
