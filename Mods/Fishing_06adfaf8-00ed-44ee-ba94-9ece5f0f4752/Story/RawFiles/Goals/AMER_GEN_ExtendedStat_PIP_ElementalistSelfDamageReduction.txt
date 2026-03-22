@@ -1,0 +1,24 @@
+Version 1
+SubGoalCombiner SGC_AND
+INITSECTION
+
+KBSECTION
+
+// Apply Elementalist self-damage reduction.
+PROC PROC_AMER_KeywordStat_Elementalist_Feedback_GetMultiplier_Manip((CHARACTERGUID)_Char)
+AND
+DB_AMER_ExtendedStat_AddedStat(_Char, "PIP_ElementalistSelfDamageReduction", _Extraprop1, _Extraprop2, _Extraprop3, _Amount)
+AND
+DB_AMER_GEN_OUTPUT_Real(_OldMultiplier)
+AND
+RealSubtract(_OldMultiplier, _Amount, _NewMultiplier)
+AND
+RealMax(_NewMultiplier, 0.0, _NewMultiplierClamped)
+THEN
+NOT DB_AMER_GEN_OUTPUT_Real(_OldMultiplier);
+DB_AMER_GEN_OUTPUT_Real(_NewMultiplierClamped);
+
+EXITSECTION
+
+ENDEXITSECTION
+ParentTargetEdge "AMER_GEN_Stats_ExtendedStats"

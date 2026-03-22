@@ -100,7 +100,21 @@ local SourceInfusionTSKs = {
             Handle = "h6c669bd1g956eg4598g84a4g35d3c1966e46",
             Text = "Once per turn, Swashbuckler can now emulate Throw Knives as a free reaction against enemies it can see on which Seaburn detonates.",
         },
-    }
+    },
+    ["Shout_PIP_Fishing_ReturnToCrab"] = {
+        {
+            Handle = "haf5374f7gbfbag4e89gb5f9gf8530a33f1a2",
+            Text = "Apply up to Terrified III to enemies within 10m upon transforming. +1 turn duration.",
+        },
+        {
+            Handle = "hfabd6671g159ag4a76g8ef7gb8e606a53b8e",
+            Text = "Crab Form gains an Empowered Crab Dance skill that has 0 cooldown. +1 turn duration.",
+        },
+        {
+            Handle = "hece1e35bg617ag4171g9708gf0226556867f",
+            Text = "Crab Form gains Spellcaster Finesse and +40% invested Finesse. Recover 1 SP.",
+        },
+    },
 }
 for skill,tsks in pairs(SourceInfusionTSKs) do
     for _,tskData in ipairs(tsks) do

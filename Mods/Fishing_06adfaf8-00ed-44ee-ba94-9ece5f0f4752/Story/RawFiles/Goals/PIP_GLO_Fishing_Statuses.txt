@@ -9,6 +9,15 @@ PROC PROC_PIP_Seaburn_Detonate((CHARACTERGUID)_Target, (CHARACTERGUID)_StatusSou
 THEN
 DB_NOOP();
 
+// Return to Crab SI3: remove Spellcaster Finesse when status expires.
+// This hook is necessary as there's no way to bind SpecialLogic to a status.
+PROC PROC_AMER_GEN_FilteredStatus_Removed((CHARACTERGUID)_Char, (CHARACTERGUID)_Source, "PIP_Polymorphed_Crab")
+AND
+DB_PIP_Fishing_HasCrabInfusMageFin(_Char)
+THEN
+PROC_AMER_UI_Ascension_SpecialLogic_Add(_Char, "", -1.0);
+NOT DB_PIP_Fishing_HasCrabInfusMageFin(_Char);
+
 EXITSECTION
 
 ENDEXITSECTION

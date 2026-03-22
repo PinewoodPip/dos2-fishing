@@ -1,0 +1,50 @@
+Version 1
+SubGoalCombiner SGC_AND
+INITSECTION
+
+KBSECTION
+
+// Source Infusion 1
+
+// Increase duration and apply Terrified to nearby enemies.
+QRY QRY_AMER_Source_Infusion_SkillPreCast((CHARACTERGUID)_Char, "Shout_PIP_Fishing_ReturnToCrab", (INTEGER)_InfusCount)
+AND
+_InfusCount > 0
+THEN
+PROC_AMER_TempStat_ExtendedStat_Add(_Char, "Status_AddDuration", "PIP_Polymorphed_Crab", "", "", 1.0, 2000, "SkillCast");
+PROC_AMER_GEN_CharacterCauseExplosion(_Char, _Char, "Projectile_PIP_Fishing_Script_ReturnToCrab_Infus");
+
+// Source Infusion 2
+
+// Grant Empowered Crab Dance and increase duration.
+QRY QRY_AMER_Source_Infusion_SkillCast((CHARACTERGUID)_Char, "Shout_PIP_Fishing_ReturnToCrab", (INTEGER)_InfusCount)
+AND
+_InfusCount > 1
+THEN
+PROC_AMER_TempStat_ExtendedStat_Add(_Char, "Status_AddDuration", "PIP_Polymorphed_Crab", "", "", 1.0, 2000, "SkillCast");
+PROC_AMER_TempStat_StatusMod_AddFlexStat(_Char, "PIP_Polymorphed_Crab", "Spell", "Shout_PIP_Fishing_CrabDance_Empowered", 1.0, "PIP_ReturnToCrab_Infus_2", 1);
+
+// Source Infusion 3
+
+// Grant Spellcaster Finesse, recover SP and reduce Elementalist self-damage.
+QRY QRY_AMER_Source_Infusion_SkillCast((CHARACTERGUID)_Char, "Shout_PIP_Fishing_ReturnToCrab", (INTEGER)_InfusCount)
+AND
+_InfusCount > 2
+THEN
+PROC_AMER_Source_Infusion_AddRefund(_Char, 0, 1);
+PROC_AMER_TempStat_StatusMod_AddExtendedStat(_Char, "PIP_Polymorphed_Crab", "PercAttributeIncrease", "Finesse", "", "", 40.0, "PIP_Fishing_ReturnToCrab_Infus3", 1, 2000, "SkillCast");
+// PROC_AMER_TempStat_StatusMod_AddExtendedStat(_Char, "PIP_Polymorphed_Crab", "PIP_ElementalistSelfDamageReduction", "", "", "", 0.5, "PIP_ReturnToCrab_Infus_3", 1, 2000, "SkillCast"); // Old effect; scrapped as the reaction seems to be buggy while Polymorphed (will stack infinitely)
+
+QRY QRY_AMER_Source_Infusion_SkillCast((CHARACTERGUID)_Char, "Shout_PIP_Fishing_ReturnToCrab", (INTEGER)_InfusCount)
+AND
+_InfusCount > 2
+AND
+NOT DB_PIP_Fishing_HasCrabInfusMageFin(_Char) // Prevent stacking this effect if the SI is triggered again while the status is still active. We can't bind SpecialLogic to a status, thus we must track this ourselves.
+THEN
+PROC_AMER_UI_Ascension_SpecialLogic_Add(_Char, "", 1.0); // Will be removed by the PIP_GLO_Fishing_Statuses script.
+DB_PIP_Fishing_HasCrabInfusMageFin(_Char);
+
+EXITSECTION
+
+ENDEXITSECTION
+ParentTargetEdge "AMER_GLO_Spells_Polymorph"

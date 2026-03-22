@@ -99,7 +99,7 @@ local Skills = {
         },
         Skill_ReturnToCrab_Description = {
             Handle = "ha744eb2cg180eg4594g9fffg7e613e0a21b6",
-            Text = "Abandon modernity and return to your primordial origin, becoming crab.<br>Crab form is immune to surfaces and clouds and knows Crab Pinch & Punch, Breath of Fresh Sea Air, Burrow, Crab Dance, and can evolve back into your former form.",
+            Text = "Abandon modernity and return to your primordial origin, becoming crab.<br>Crab form is immune to surfaces and clouds and knows Crab Pinch & Punch, Breath of Fresh Sea Air, Burrow, Crab Dance, and can devolve back into your former form.",
             ContextDescription = [[Skill tooltip for "Return to Crab"]],
             StringKey = "Shout_PIP_Fishing_ReturnToCrab_Description",
         },
@@ -162,6 +162,12 @@ local Skills = {
             Text = "Perform a crabistic ritual dance, inspiring allies and reminding them of what truly matters.",
             ContextDescription = [[Skill tooltip for "Crab Dance"]],
             StringKey = "Shout_PIP_Fishing_CrabDance_Description",
+        },
+        Skill_EmpoweredCrabDance_DisplayName = {
+            Handle = "hd1da4f02g7ff4g4f57g8a91g9a4577d2a31d",
+            Text = "Empowered Crab Dance",
+            ContextDescription = [[Skill tooltip for "Empowered Crab Dance" (granted by Source Infusion)]],
+            StringKey = "Shout_PIP_Fishing_CrabDance_Empowered_DisplayName",
         },
         Skill_CannonBall_DisplayName = {
             Handle = "hcf883158g721eg4daeg98beg0d979e8f86c2",
