@@ -136,6 +136,7 @@ end
 ---Returns the minigame state model.
 ---@return Features.Fishing.GameStates.Fishing?
 function UI.GetGameState()
+    if not UI._CharacterHandle then return nil end
     local char = Character.Get(UI._CharacterHandle)
     if not char then return nil end
     local state = Fishing.GetState(char) ---@cast state Features.Fishing.GameStates.Fishing
@@ -146,7 +147,6 @@ end
 function UI.GetCharacter()
     local state = UI.GetGameState()
     local char = state and Character.Get(state.CharacterHandle) ---@type EclCharacter
-
     return char
 end
 
@@ -262,6 +262,7 @@ end
 function UI.Cleanup(reason)
     local state = UI.GetGameState()
 
+    UI._CharacterHandle = nil
     UI._GameState = nil
     UI._FishGameObject = nil
     UI._BobberGameObject = nil
@@ -493,6 +494,8 @@ end)
 
 ---@param ev GameStateLib_Event_RunningTick
 function UI._OnTick(ev)
+    if not UI.GetGameState() or not UI.GetCharacter() then return end -- Necessary as the listener gets to fire one last time after exiting the minigame.
+
     -- Drain progress.
     UI.AddProgress(-UI.GetProgressDrain() * ev.DeltaTime / 1000)
 
