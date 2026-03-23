@@ -79,7 +79,8 @@ function _Bobber:Update(deltaTime)
 
     -- Update visuals
     local element = self:GetElement()
-    element:SetColor(wasColliding and UI.BOBBER_COLLISION_COLOR or UI.BOBBER_COLOR)
+    local bobberColor = Fishing.GetBobberColor(UI.GetCharacter())
+    element:SetColor(wasColliding and bobberColor.HighlightColor or bobberColor.NormalColor)
 
     -- Play sound when reeling in
     self._RaiseSoundCooldown = self._RaiseSoundCooldown - seconds

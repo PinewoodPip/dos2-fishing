@@ -35,6 +35,21 @@ local Fishing = {
         ["483ecb63-b01a-4452-be65-904d9ff03554"] = true, -- Red/white bobber.
         ["5a14df6e-8e63-425c-9802-1916d630212e"] = true, -- Yellow bobber.
     },
+    ---@type table<GUID, Features.Fishing.BobberColor>
+    VISUAL_TEMPLATE_TO_BOBBER_COLOR = {
+        ["c7639619-4c44-44a3-af53-81275a80af15"] = {
+            NormalColor = Color.CreateFromHex(Color.LARIAN.POISON_GREEN),
+            HighlightColor = Color.CreateFromHex(Color.LARIAN.GREEN),
+        },
+        ["483ecb63-b01a-4452-be65-904d9ff03554"] = {
+            NormalColor = Color.CreateFromHex("BFBFBF"),
+            HighlightColor = Color.CreateFromHex("D8D8D8"),
+        },
+        ["5a14df6e-8e63-425c-9802-1916d630212e"] = {
+            NormalColor = Color.CreateFromHex(Color.LARIAN.GOLD),
+            HighlightColor = Color.CreateFromHex(Color.LARIAN.YELLOW),
+        },
+    },
     WATER_SEARCH_RADIUS = 2.5,
     CURSOR_WATER_SEARCH_RADIUS = 0.5,
     WATER_MAX_DISTANCE = 7.5, -- Distance to water (or fishing areas) that a character must be within for fishing to be available.
@@ -373,6 +388,10 @@ Fishing.LEVEL_NAME_TSKHANDLES = {
 
 ---@diagnostic disable-next-line: duplicate-doc-alias
 ---@alias Features.Fishing.Fish.BehaviourType string
+
+---@class Features.Fishing.BobberColor
+---@field NormalColor RGBColor
+---@field HighlightColor RGBColor
 
 ---@class Features.Fishing.Fish.Behaviour.Transition
 ---@field TargetState Features.Fishing.GameObject.MovementState.ClassName
@@ -885,6 +904,19 @@ function Fishing.HasFishingRodEquipped(char)
         hasRod = Fishing.IsFishingRod(item)
     end
     return hasRod
+end
+
+---Returns the bobber colors of char, if they have a fishing rod equipped.
+---@see Features.Fishing.VISUAL_TEMPLATE_TO_BOBBER_COLOR
+---@param char Character
+---@return Features.Fishing.BobberColor? -- `nil` if the character has no fishing rod.
+function Fishing.GetBobberColor(char)
+    local rod = Item.GetEquippedItem(char, "Weapon")
+    if not rod or not Fishing.IsFishingRod(rod) then return nil end
+    return Fishing.VISUAL_TEMPLATE_TO_BOBBER_COLOR[rod.CurrentTemplate.VisualTemplate] or {
+        NormalColor = Color.CreateFromHex(Color.LARIAN.POISON_GREEN),
+        HighlightColor = Color.CreateFromHex(Color.LARIAN.GREEN),
+    }
 end
 
 ---------------------------------------------

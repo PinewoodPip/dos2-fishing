@@ -60,8 +60,6 @@ UI.FISH_ICON_SIZE = V(48, 48)
 UI.TREASURE_CHEST_SIZE = V(48, 48)
 UI.BOBBER_AREA_SIZE = V(40, 500)
 UI.BOBBER_WIDTH = 32
-UI.BOBBER_COLOR = Color.CreateFromHex(Color.LARIAN.POISON_GREEN)
-UI.BOBBER_COLLISION_COLOR = Color.CreateFromHex(Color.LARIAN.GREEN)
 UI.PROGRESS_BAR_COLOR_LOW = Color.CreateFromHex("1A3D5C")
 UI.PROGRESS_BAR_COLOR_HIGH = Color.CreateFromHex("87C4E6")
 
@@ -567,7 +565,7 @@ function Fishing:__Setup()
 
     local bobber = bobberArea:AddChild("Bobber", "GenericUI_Element_Color")
     bobber:SetSize(V(UI.BOBBER_WIDTH, 40):unpack()) -- Placeholder height; will be set upon starting the minigame.
-    bobber:SetColor(UI.BOBBER_COLOR)
+    bobber:SetColor(Color.Create(0, 0, 0)) -- Will be overwritten later based on rod equipped.
     UI.BobberElement = bobber
 
     local fish = bobberArea:AddChild("Fish", "GenericUI_Element_Empty")
