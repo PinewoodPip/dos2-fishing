@@ -194,6 +194,9 @@ Skills.EE_STATS_OVERRIDES = {
         ActionPoints = 4,
         ["Magic Cost"] = 0,
     },
+    ["Shout_PIP_Fishing_SwashbucklingAura"] = {
+        ActionPoints = 4,
+    }
 }
 
 -- Maps skills to their Source Infusion descriptions.

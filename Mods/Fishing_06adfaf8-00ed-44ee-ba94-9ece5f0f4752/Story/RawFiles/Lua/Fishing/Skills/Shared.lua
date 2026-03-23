@@ -195,7 +195,7 @@ local Skills = {
         },
         Skill_SwashbucklingAura_Description = {
             Handle = "h0ee5e72agfda1g42c6gbfc9g40260ed83780",
-            Text = "TODO",
+            Text = "Character is imbued with the swashbuckling spirit.",
             ContextDescription = [[Skill tooltip for "Swashbuckling Spirit" (necromancer summon)]],
             StringKey = "Shout_PIP_Fishing_SwashbucklingAura_Description",
         },
@@ -333,7 +333,7 @@ local Skills = {
         },
         Status_WithTheCurrent_Description = {
             Handle = "h62dd5ff4g57e7g4525gaf99g6924095308a2",
-            Text = "TODO",
+            Text = "Approaching hostiles will be bitten by fish.",
             ContextDescription = [[Status tooltip for "With the Currents"]],
             StringKey = "PIP_FISHING_WITH_THE_CURRENT_Description",
         },
