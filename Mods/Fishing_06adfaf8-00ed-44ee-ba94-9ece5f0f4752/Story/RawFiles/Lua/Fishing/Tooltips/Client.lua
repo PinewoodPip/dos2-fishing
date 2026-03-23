@@ -45,6 +45,11 @@ local Tooltips = {
             Text = "Decreases capture progress drain while reeling in treasure by %s%% per point.",
             ContextDescription = [[Tooltip for Thievery bonus; param is amount per point]],
         },
+        Label_AbilityBonus_Thievery_DerpysTweaks = {
+            Handle = "h9e825113ged7dg4f0dg88ceg90e26cf396dd",
+            Text = "Increases the chance to encounter treasure while fishing by %s%% per point and decreases capture progress drain while reeling in treasure by %s%% per point.",
+            ContextDescription = [[Tooltip for Thievery bonus with Derpy's Tweaks; first param is chance increase per point, second param is drain reduction per point]],
+        },
     },
 }
 RegisterFeature("Fishing.Tooltips", Tooltips)
@@ -72,7 +77,7 @@ Tooltips.ABILITY_BONUSES = {
         return TSK.Label_AbilityBonus_Bartering:Format(value)
     end,
     [Tooltip.ABILITY_IDS.LUCKY_CHARM] = function (_)
-        local value = Fishing.TUNING.TREASURE_CHEST_CHANCE_PER_LUCK * 100
+        local value = Fishing.TUNING.TREASURE_CHEST_CHANCE_PER_ABILITY * 100
         value = Text.RemoveTrailingZeros(value)
         return TSK.Label_AbilityBonus_LuckyCharm:Format(value)
     end,
@@ -87,9 +92,17 @@ Tooltips.ABILITY_BONUSES = {
         return TSK.Label_AbilityBonus_Perseverance:Format(value)
     end,
     [Tooltip.ABILITY_IDS.THIEVERY] = function (_)
-        local value = Fishing.TUNING.PROGRESS_DRAIN_REDUCTION_PER_THIEVERY * 100
-        value = Text.RemoveTrailingZeros(value)
-        return TSK.Label_AbilityBonus_Thievery:Format(value)
+        if Mod.IsLoaded(Mod.GUIDS.EE_DERPY) then -- If Derpy's is enabled, we shift the treasure spawn bonus to Thievery to compensate for Lucky Charm being removed.
+            local chanceValue = Fishing.TUNING.TREASURE_CHEST_CHANCE_PER_ABILITY * 100
+            local drainValue = Fishing.TUNING.PROGRESS_DRAIN_REDUCTION_PER_THIEVERY * 100
+            chanceValue = Text.RemoveTrailingZeros(chanceValue)
+            drainValue = Text.RemoveTrailingZeros(drainValue)
+            return TSK.Label_AbilityBonus_Thievery_DerpysTweaks:Format(chanceValue, drainValue)
+        else
+            local value = Fishing.TUNING.PROGRESS_DRAIN_REDUCTION_PER_THIEVERY * 100
+            value = Text.RemoveTrailingZeros(value)
+            return TSK.Label_AbilityBonus_Thievery:Format(value)
+        end
     end,
 }
 

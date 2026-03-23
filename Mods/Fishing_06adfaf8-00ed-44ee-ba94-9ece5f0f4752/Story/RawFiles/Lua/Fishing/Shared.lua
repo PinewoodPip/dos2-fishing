@@ -57,7 +57,7 @@ local Fishing = {
 
         TREASURE_CHEST_SPAWN_DELAY_RANGE = {3.0, 5.0}, -- Time delay range before a chest spawns, in seconds.
         TREASURE_CHEST_BASE_SPAWN_CHANCE = 0.01,
-        TREASURE_CHEST_CHANCE_PER_LUCK = 0.03,
+        TREASURE_CHEST_CHANCE_PER_ABILITY = 0.03,
     },
 
     ABILITY_SCHOOL_COLOR = "86a4f7", ---@type htmlcolor
@@ -652,8 +652,9 @@ end
 ---@param char Character
 ---@return number
 function Fishing.GetTreasureChestChance(char)
-    local luck = math.max(0, char.Stats.Luck or 0)
-    local chance = Fishing.TUNING.TREASURE_CHEST_BASE_SPAWN_CHANCE + luck * Fishing.TUNING.TREASURE_CHEST_CHANCE_PER_LUCK
+    local abilityScore = Mod.IsLoaded(Mod.GUIDS.EE_DERPY) and char.Stats.Thievery or char.Stats.Luck -- Lucky Charm is removed in Derpy, thus we need to shift the effect to a different ability.
+    local luck = math.max(0, abilityScore or 0)
+    local chance = Fishing.TUNING.TREASURE_CHEST_BASE_SPAWN_CHANCE + luck * Fishing.TUNING.TREASURE_CHEST_CHANCE_PER_ABILITY
     return chance
 end
 
