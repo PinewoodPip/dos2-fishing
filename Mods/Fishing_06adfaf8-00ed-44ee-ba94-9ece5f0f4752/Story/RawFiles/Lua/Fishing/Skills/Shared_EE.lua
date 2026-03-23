@@ -196,7 +196,13 @@ Skills.EE_STATS_OVERRIDES = {
     },
     ["Shout_PIP_Fishing_SwashbucklingAura"] = {
         ActionPoints = 4,
-    }
+    },
+    ["Target_PIP_Fishing_CrabPinch"] = {
+        ActionPoints = 4,
+        SkillPropertyRemap = {
+            ["WEAK"] = "AMER_WEAKENED_APPLY",
+        },
+    },
 }
 
 -- Maps skills to their Source Infusion descriptions.
