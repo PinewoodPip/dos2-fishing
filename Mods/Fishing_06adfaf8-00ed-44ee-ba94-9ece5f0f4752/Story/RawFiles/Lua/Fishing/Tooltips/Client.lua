@@ -1,9 +1,17 @@
 
+local CharacterSheet = Client.UI.CharacterSheet
+local Examine = Client.UI.Examine
 local Tooltip = Client.Tooltip
-local Fishing = GetFeature("Features.Fishing")
+local TooltipUI = Client.UI.Tooltip
+local Fishing = GetFeature("Features.Fishing") ---@class Features.Fishing
+local FishingTSK = Fishing.TranslatedStrings
 
 ---@type Feature
 local Tooltips = {
+    TSKHANDLE_BASE_VALUE_LABEL = "hbb9884d7g3b9ag43dfga88egdcc32db8bd74", -- "Base: [1]"
+    _FISHING_STAT_ID = -98,
+    _DUMMY_STAT_ID = 19, -- Polymorph ID. Used as a workaround to have the engine render the tooltip, as invalid IDs do not result in the tooltip invokes being called.
+
     TranslatedStrings = {
         Label_AbilityBonus = {
             Handle = "h86e13650g0d88g43c1g934cg46ebd92d23a7",
@@ -54,6 +62,7 @@ local Tooltips = {
 }
 RegisterFeature("Fishing.Tooltips", Tooltips)
 local TSK = Tooltips.TranslatedStrings
+local isRenderingFishingAbilityTooltip = false
 
 ---@class Features.Fishing.Tooltips.AbilityBonusEntry
 ---@field Label TextLib_TranslatedString
@@ -128,3 +137,135 @@ Tooltip.Hooks.RenderAbilityTooltip:Subscribe(function (ev)
         })
     end
 end)
+
+-- Show Fishing ability in the character sheet.
+CharacterSheet.Hooks.UpdateAbilityStats:Subscribe(function (ev)
+    local char = ev.Character
+    local score = Fishing.GetAbilityScore(char)
+    table.insert(ev.Stats, {
+        GroupID = 2, -- Skill abilities.
+        IsCivil = false,
+        StatID = Tooltips._FISHING_STAT_ID,
+        Label = FishingTSK.Label_SchoolName:GetString(),
+        ValueLabel = score,
+        -- Fishermancy cannot be invested into, thus these do not need to be filled in.
+        PlusButtonTooltip = "",
+        MinusButtonTooltip = "",
+    })
+end)
+
+-- Show Fishermancy ability in Examine UI.
+Examine.Hooks.GetUpdateData:Subscribe(function (ev)
+    local char = Examine.GetCharacter()
+    if not char then return end
+    local score = Fishing.GetAbilityScore(char)
+    if score <= 0 then return end
+    ev.Data:AddEntry(Examine.CATEGORIES.STATS, {
+        EntryType = Examine.ENTRY_TYPES.SECONDARY_STAT,
+        StatID = Tooltips._FISHING_STAT_ID,
+        Label = FishingTSK.Label_SchoolName:GetString(),
+        IconID = Examine.ICONS.UNKNOWN_CLASS, -- TODO
+        ValueLabel = score .. "",
+    })
+end)
+
+-- Hijack tooltip rendering when hovering over the ability in the character sheet.
+CharacterSheet:RegisterCallListener("showAbilityTooltip", function (ev)
+    local statID = ev.Args[1]
+    if statID == Tooltips._FISHING_STAT_ID then
+        -- Hijack the next tooltip render.
+        isRenderingFishingAbilityTooltip = true
+        ev.Args[1] = Tooltips._DUMMY_STAT_ID
+    else
+        -- Clear the previous icon override
+        TooltipUI:GetUI():ClearCustomIcon("tt_ability_" .. Tooltips._DUMMY_STAT_ID)
+    end
+end)
+
+-- Hijack tooltip rendering when hovering over the ability in the Examine UI.
+Examine:RegisterCallListener("showTooltip", function (ev)
+    -- _DS(ev.Function)
+    _D(ev.Args)
+    local statID = ev.Args[2]
+    if statID == Tooltips._FISHING_STAT_ID then
+        -- Hijack the next tooltip render.
+        isRenderingFishingAbilityTooltip = true
+        ev.Args[2] = Tooltips._DUMMY_STAT_ID
+    else
+        -- Clear the previous icon override
+        TooltipUI:GetUI():ClearCustomIcon("tt_ability_" .. Tooltips._DUMMY_STAT_ID)
+    end
+end)
+
+-- Render the school tooltip.
+Tooltip.Hooks.RenderAbilityTooltip:Subscribe(function (ev)
+    if isRenderingFishingAbilityTooltip and ev.AbilityID == Tooltips._DUMMY_STAT_ID then
+        local playerHandle = ev.UI:GetPlayerHandle()
+        local char = Ext.Utils.IsValidHandle(playerHandle) and Character.Get(playerHandle) or Client.GetCharacter() -- Need to check the UI player handle in case of UIs such as Examine.
+        local score = Fishing.GetAbilityScore(char)
+        local maxScore = Fishing.GetMaxAbilityScore()
+        local tooltip = ev.Tooltip
+        local header = tooltip:GetFirstElement("StatName")
+        local description = tooltip:GetFirstElement("AbilityDescription")
+        local baseValueLabel = tooltip:GetFirstElement("StatsBaseValue")
+        if not baseValueLabel then
+            baseValueLabel = {
+                Type = "StatsBaseValue",
+                Label = ""
+            }
+            tooltip:InsertElement(baseValueLabel)
+        end
+
+        -- Clear other elements (to avoid leakage of extra ones from the vanilla tooltip)
+        tooltip.Elements = {header, description, baseValueLabel}
+
+        -- Edit tooltip
+        header.Label = FishingTSK.Label_SchoolName:GetString()
+        description.Description = FishingTSK.Label_SchoolDescription:GetString() -- TODO set CurrentLevelEffect, NextLevelEffect, Description2 fields?
+        baseValueLabel.Label = Text.FormatLarianTranslatedString(Tooltips.TSKHANDLE_BASE_VALUE_LABEL, score)
+
+        -- Set icon
+        local tooltipUI = TooltipUI:GetUI()
+        tooltipUI:EnableCustomDraw()
+        tooltipUI:SetCustomIcon("tt_ability_" .. Tooltips._DUMMY_STAT_ID, Fishing.SKILL_ABILITY_ICON, 128, 128)
+
+        -- Add minigame hint
+        local minigameHint = FishingTSK.Label_FishingRodHint:Format({Color = Color.LARIAN.GREEN})
+        description.Description = description.Description .. "\n" .. minigameHint
+
+        -- Add leveling hint
+        if score ~= maxScore then
+            local _, uniqueFishCaught = Fishing.GetUniqueFishCaught()
+            local totalFishCaught = Fishing.GetTotalFishCaught(char)
+            local nextLevelRequirements = Fishing.GetAbilityRequirements(score + 1)
+            local requirementsLabels = {} ---@type string[]
+            local remainingUniqueFish = nextLevelRequirements.UniqueFishCaught - uniqueFishCaught
+            local remainingTotalFish = nextLevelRequirements.TotalFishCaught - totalFishCaught
+            if remainingUniqueFish > 0 then -- Unique fish requirement
+                table.insert(requirementsLabels, FishingTSK.Label_SchoolDescription_LevelingRequirement_UniqueCatches:Format(remainingUniqueFish))
+            end
+            if remainingTotalFish > 0 then -- Total catches requirement
+                table.insert(requirementsLabels, FishingTSK.Label_SchoolDescription_LevelingRequirement_TotalCatches:Format(remainingTotalFish))
+            end
+            tooltip:InsertElement({
+                Type = "StatsPointValue",
+                Label = FishingTSK.Label_SchoolDescriptionLevelingHint:Format({
+                    FormatArgs = {
+                        Text.Join(requirementsLabels, "\n")
+                    }
+                })
+            })
+        else
+            tooltip:InsertElement({
+                Type = "StatsPointValue",
+                Label = FishingTSK.Label_SchoolDescription_MaxLevel:GetString()
+            })
+        end
+
+        -- Rewrite the stat ID so that other tooltip listeners do not consider this as a vanilla skill ability.
+        ---@diagnostic disable-next-line: assign-type-mismatch
+        ev.AbilityID = Tooltips._FISHING_STAT_ID
+
+        isRenderingFishingAbilityTooltip = false
+    end
+end, {Priority = math.maxinteger})
