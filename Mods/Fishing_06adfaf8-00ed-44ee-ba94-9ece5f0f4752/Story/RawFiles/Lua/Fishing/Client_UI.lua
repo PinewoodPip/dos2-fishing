@@ -492,10 +492,9 @@ end)
 
 ---@param ev GameStateLib_Event_RunningTick
 function UI._OnTick(ev)
-    if not UI.GetGameState() or not UI.GetCharacter() then return end -- Necessary as the listener gets to fire one last time after exiting the minigame.
-
     -- Drain progress.
     UI.AddProgress(-UI.GetProgressDrain() * ev.DeltaTime / 1000)
+    if not UI.GetGameState() then return end -- Skip rest of the listener if the minigame ended as a result of adding progress.
 
     UI.UpdatePosition()
 
@@ -557,25 +556,26 @@ function Fishing:__Setup()
     local bobberArea = panel:AddChild("BobberArea", "GenericUI_Element_TiledBackground")
     bobberArea:SetBackground("Black", UI.BOBBER_AREA_SIZE:unpack())
     bobberArea:SetAlpha(0, false)
-    bobberArea:SetPositionRelativeToParent("Center", -10, -40)
+    bobberArea:SetPositionRelativeToParent("Center", -10, -47)
     backdropShadow:SetPositionRelativeToParent("Center", -15 + 10, -40 + 40)
 
     local gameObjectsContainer = bobberArea:AddChild("GameObjectsContainer", "GenericUI_Element_Empty")
     UI.GameObjectsContainer = gameObjectsContainer
+    gameObjectsContainer:SetSizeOverride(UI.BOBBER_AREA_SIZE)
 
-    local bobber = bobberArea:AddChild("Bobber", "GenericUI_Element_Color")
+    local bobber = gameObjectsContainer:AddChild("Bobber", "GenericUI_Element_Color")
     bobber:SetSize(V(UI.BOBBER_WIDTH, 40):unpack()) -- Placeholder height; will be set upon starting the minigame.
     bobber:SetColor(Color.Create(0, 0, 0)) -- Will be overwritten later based on rod equipped.
     UI.BobberElement = bobber
 
-    local fish = bobberArea:AddChild("Fish", "GenericUI_Element_Empty")
+    local fish = gameObjectsContainer:AddChild("Fish", "GenericUI_Element_Empty")
     local fishIcon = fish:AddChild("FishIcon", "GenericUI_Element_IggyIcon")
     fishIcon:SetIcon("Item_CON_Food_Fish_B", UI.FISH_ICON_SIZE:unpack())
     fishIcon:Move(-UI.FISH_ICON_SIZE[1]/2 - 5, UI.FISH_ICON_SIZE[2]/2) -- Center the icon in the fish element
     UI.Elements.Fish = fish
     UI.Elements.FishIcon = fishIcon
 
-    local treasureChest = bobberArea:AddChild("TreasureChest", "GenericUI_Element_Empty")
+    local treasureChest = gameObjectsContainer:AddChild("TreasureChest", "GenericUI_Element_Empty")
     local treasureChestIcon = treasureChest:AddChild("TreasureChestIcon", "GenericUI_Element_IggyIcon")
     treasureChestIcon:SetIcon("Item_CONT_Humans_Citz_Chest_A", UI.TREASURE_CHEST_SIZE:unpack()) -- TODO extract icon var
     treasureChestIcon:Move(-UI.TREASURE_CHEST_SIZE[1]/2 - 5, UI.TREASURE_CHEST_SIZE[2]/2)
