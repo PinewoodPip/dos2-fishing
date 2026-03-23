@@ -16,6 +16,7 @@ INIT
 	EXTERN FLOAT:%LifeTime=60.0
 	
 	INT:%Deployed=0
+	INT:%CombatTurnPassed=0
 	INT:%Warning=0
 	INT:%Exploded=0
 	
@@ -103,6 +104,21 @@ ON
 	OnTimer("TimeoutProximityMine")
 ACTIONS
 	ItemEvent(__Me,"Explode")
+
+EVENT ArmOnTurnStarted
+ON
+	OnTurn(_,__Me)
+ACTIONS
+	IF "c1"
+		IsEqual(%CombatTurnPassed,1)
+	THEN
+		Set(%Deployed, 1)
+		StartTimer("UpdateProximityMine",0.1,-1)
+		Transform(__Me, ITEMTEMPLATE:ITEMGUID_PIP_Fishing_Fishnet_Deployed_d492e86a-1949-433c-bf6c-07dbd2ed3244, "RS3_FX_Skills_Rogue_TrapActivate_01", 0)
+		SetCanFight(__Me,0)
+	ELSE
+		Set(%CombatTurnPassed, 1)
+	ENDIF
 	
 BEHAVIOUR
 REACTION ProximityMine_PeaceDeployment,101
@@ -121,15 +137,7 @@ BEHAVIOUR
 REACTION ProximityMine_CombatDeployment,101
 USAGE COMBAT
 ACTIONS
-	IF "c1"
-		IsEqual(%Deployed,0)
-	THEN
-		Set(%Deployed, 1)
-		Transform(__Me, ITEMTEMPLATE:ITEMGUID_PIP_Fishing_Fishnet_Deployed_d492e86a-1949-433c-bf6c-07dbd2ed3244, "RS3_FX_Skills_Rogue_TrapActivate_01", 0)
-		StartTimer("UpdateProximityMine",0.1,-1)
-		Sleep(0.1)
-		SetCanFight(__Me,0)
-	ENDIF
+	Sleep(0.1)
 	StopTimer("TimeoutProximityMine")
 	EndTurn(__Me)
 	
