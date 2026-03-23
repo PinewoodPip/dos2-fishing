@@ -157,7 +157,7 @@ Fishing.Events.CharacterStoppedFishing:Subscribe(function (ev)
 
         -- Catch fish
         Fishing.CatchFish(char, caughtFish, state.TargetPosition)
-        Osi.PlayScaledEffectAtPosition(Fishing.FISH_SPLASH_EFFECT, 3, table.unpack(state.TargetPosition + Fishing.TARGET_POS_EFFECT_OFFSET))
+        Osi.PlayScaledEffectAtPosition(Fishing.FISH_SPLASH_EFFECT, 1.5, table.unpack(state.TargetPosition + Fishing.TARGET_POS_EFFECT_OFFSET))
 
         -- Catch treasure chest
         if caughtChest then
