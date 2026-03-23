@@ -26,6 +26,22 @@ THEN
 ApplyStatus(_Source, "PIP_FISHING_SLASHIMI", _Duration, 0, _Source);
 PROC_AMER_TempStat_StatusMod_AddExtendedStat(_Source, "PIP_FISHING_SLASHIMI", "PIP_SeaburnOnHit", "", "", "", 1.0, "PIP_Fishing_PrepareSashimi_Infus3", 1); // Should be called after applying the status (since we're not using SkillCast timer).
 
+// Apply floating status to crab form.
+IF CharacterStatusApplied(_Char, "PIP_Polymorphed_Crab", (CHARACTERGUID)_Source)
+AND
+GetStatusTurns(_Char, "PIP_Polymorphed_Crab", _Turns)
+AND
+Real(_Turns, _TurnDuration)
+AND
+RealProduct(_TurnDuration, 6.0, _Duration)
+THEN
+ApplyStatus(_Char, "PIP_FISHING_CRAB_FLOATING", _Duration, 1, _Char);
+
+// Clear floating status when losing crab form.
+IF CharacterStatusRemoved(_Char, "PIP_Polymorphed_Crab", (CHARACTERGUID)_Source)
+THEN
+RemoveStatus(_Char, "PIP_FISHING_CRAB_FLOATING");
+
 EXITSECTION
 
 ENDEXITSECTION
