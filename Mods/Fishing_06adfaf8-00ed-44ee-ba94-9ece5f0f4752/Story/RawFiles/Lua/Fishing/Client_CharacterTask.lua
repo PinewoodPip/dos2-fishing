@@ -9,8 +9,10 @@ Fishing._CharacterTasks = {} ---@type table<CharacterHandle, Features.Fishing.Ch
 
 ---@class Features.Fishing.CharacterTask : UserspaceCharacterTaskCallbacks
 local _Task = {
+    RESTART_COOLDOWN = 400, -- Cooldown between stopping fishing and being able to fish again, in milliseconds.
     IsPreviewing = false,
     CharacterHandle = nil, ---@type ComponentHandle
+    RestartCooldown = 0,
 
     ID = "Epip_Feature_Fishing",
 }
@@ -165,12 +167,19 @@ Input.Events.KeyStateChanged:Subscribe(function (ev)
     local char = Client.GetCharacter()
     local task = char and Fishing._CharacterTasks[char.Handle]
     if task and task.IsPreviewing and task:MeetsRequirements() and not Client.IsCursorOverUI() then
-        -- Start fishing on release
-        if ev.State == "Released" then
+        local isOnCooldown = Ext.Utils.MonotonicTime() - task.RestartCooldown < task.RESTART_COOLDOWN
+        if not isOnCooldown and ev.State == "Released" then -- Start fishing on release
             Fishing.Start(char)
         end
         ev:Prevent() -- Prevent Pressed state as well to avoid side-effects.
     end
+end)
+
+-- Reset cooldown for being able to fish again after stopping fishing.
+Fishing.Events.CharacterStoppedFishing:Subscribe(function (ev)
+    local char = ev.Character
+    local task = Fishing._CharacterTasks[char.Handle]
+    task.RestartCooldown = Ext.Utils.MonotonicTime()
 end)
 
 -- Hide tooltips from tasks when the cursor hovers over a UI.
