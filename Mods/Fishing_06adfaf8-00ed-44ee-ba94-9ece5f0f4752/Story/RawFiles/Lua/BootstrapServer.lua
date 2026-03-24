@@ -28,7 +28,7 @@ local scripts = {
             "Fishing/Skills/Scripts/Seaburn.lua",
             "Fishing/Skills/Scripts/BlueFireball.lua",
             "Fishing/Skills/Scripts/BlowTheHornPipe.lua",
-            "Fishing/Skills/Scripts/Sashimi.lua",
+            "Fishing/Skills/Scripts/PrepareSashimi.lua",
             "Fishing/Skills/Scripts/ReelIn.lua",
             "Fishing/Skills/Scripts/CannonBall.lua",
             "Fishing/Skills/Scripts/TurnOnTheTides.lua",
