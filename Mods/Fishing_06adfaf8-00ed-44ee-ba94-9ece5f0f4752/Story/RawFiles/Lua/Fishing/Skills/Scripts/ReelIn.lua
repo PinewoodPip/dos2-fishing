@@ -11,6 +11,7 @@ Skills.REEL_IN_TUNING = {
     DAMAGE_DISTANCE_REDUCTION_PER_FISHERMANCY = 0.2, -- Damage distance reduction per Fishermancy point, in meters.
     VALID_POSITION_RADIUS = 4, -- Radius around the caster within which the target can be reeled to.
 }
+local TUNING = Skills.REEL_IN_TUNING
 
 ---------------------------------------------
 -- METHODS
@@ -23,7 +24,7 @@ Skills.REEL_IN_TUNING = {
 function Skills.ReelIn(char, target)
     -- Find position to pull to
     local sourceX, sourceY, sourceZ = Osi.GetPosition(char.MyGuid)
-    local x, y, z = Osi.FindValidPosition(sourceX, sourceY, sourceZ, Skills.REEL_IN_TUNING.VALID_POSITION_RADIUS, target.MyGuid)
+    local x, y, z = Osi.FindValidPosition(sourceX, sourceY, sourceZ, TUNING.VALID_POSITION_RADIUS, target.MyGuid)
     if not x then return end -- Do nothing if target couldn't be moved to a valid AI grid pos.
 
     -- Pull target to caster
@@ -31,14 +32,14 @@ function Skills.ReelIn(char, target)
 
     -- Apply damage to target while reeling in
     local sourceFishermancy = Fishing.GetAbilityScore(char)
-    local damageDistanceThreshold = Skills.REEL_IN_TUNING.BASE_DAMAGE_DISTANCE_THRESHOLD - sourceFishermancy * Skills.REEL_IN_TUNING.DAMAGE_DISTANCE_REDUCTION_PER_FISHERMANCY
+    local damageDistanceThreshold = TUNING.BASE_DAMAGE_DISTANCE_THRESHOLD - sourceFishermancy * TUNING.DAMAGE_DISTANCE_REDUCTION_PER_FISHERMANCY
 
     -- Apply Source Infusion 2 damage distance reduction
     if isEE then
         damageDistanceThreshold = damageDistanceThreshold + Skills.GetExtendedStat(char, "PIP_ReelIn_DamageDistance")
     end
 
-    Osi.NRD_ApplyDamageOnMove(target.MyGuid, Skills.REEL_IN_TUNING.DAMAGE_ON_MOVE_STATUS, char.MyGuid, 18, damageDistanceThreshold)
+    Osi.NRD_ApplyDamageOnMove(target.MyGuid, TUNING.DAMAGE_ON_MOVE_STATUS, char.MyGuid, 18, damageDistanceThreshold)
 
     local targetGUID = target.MyGuid
     local timer = Timer.Start(0.5, function (ev)
@@ -47,7 +48,7 @@ function Skills.ReelIn(char, target)
         target = Character.Get(targetGUID)
         if not target:GetStatus("SHOCKWAVE") then
             ev.Timer:Cancel()
-            Osi.RemoveStatus(targetGUID, Skills.REEL_IN_TUNING.DAMAGE_ON_MOVE_STATUS)
+            Osi.RemoveStatus(targetGUID, TUNING.DAMAGE_ON_MOVE_STATUS)
         end
     end)
     timer:SetRepeatCount(-1)

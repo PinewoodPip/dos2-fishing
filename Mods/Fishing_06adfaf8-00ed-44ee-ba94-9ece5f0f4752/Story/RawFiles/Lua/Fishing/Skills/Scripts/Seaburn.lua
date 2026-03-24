@@ -5,6 +5,7 @@ local Skills = GetFeature("Fishing.Skills")
 Skills.SEABURN_TUNING = {
     PROJECTILE_SKILL = "Projectile_PIP_Fishing_Seaburn_ScriptedDamage",
 }
+local TUNING = Skills.SEABURN_TUNING
 
 ---------------------------------------------
 -- EVENT LISTENERS
@@ -24,7 +25,7 @@ Ext.Events.StatusHitEnter:Subscribe(function (ev)
         if hasWaterDamage then
             -- Throw hooks and deal scripted damage.
             local statusSource = Character.Get(seaburnStatus.OwnerHandle)
-            Skills.ExplodeProjectile(attacker, Skills.SEABURN_TUNING.PROJECTILE_SKILL, defender)
+            Skills.ExplodeProjectile(attacker, TUNING.PROJECTILE_SKILL, defender)
             Osi.PROC_PIP_Seaburn_Detonate(defender.MyGuid, statusSource.MyGuid, attacker.MyGuid)
             if ev.Hit.Hit.CriticalHit then
                 Osi.PROC_PIP_Seaburn_Detonate_FromCrit(defender.MyGuid, statusSource.MyGuid, attacker.MyGuid)

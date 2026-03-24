@@ -7,6 +7,7 @@ local Skills = GetFeature("Fishing.Skills")
 Skills.HORNPIPE_TUNING = {
     SEABURN_EXTRA_DURATION = 6.0, -- In seconds.
 }
+local TUNING = Skills.HORNPIPE_TUNING
 
 ---------------------------------------------
 -- EVENT LISTENERS
@@ -56,8 +57,8 @@ Ext.Events.BeforeStatusApply:Subscribe(function (ev)
         if Ext.Utils.GetHandleType(sourceHandle) ~= "ServerCharacter" then return end
         local source = Character.Get(sourceHandle)
         if not source:GetStatus("PIP_Fishing_Hornpipe") then return end
-        status.LifeTime = status.LifeTime + Skills.HORNPIPE_TUNING.SEABURN_EXTRA_DURATION
-        status.CurrentLifeTime = status.CurrentLifeTime + Skills.HORNPIPE_TUNING.SEABURN_EXTRA_DURATION
+        status.LifeTime = status.LifeTime + TUNING.SEABURN_EXTRA_DURATION
+        status.CurrentLifeTime = status.CurrentLifeTime + TUNING.SEABURN_EXTRA_DURATION
         status.RequestClientSync = true
         status.RequestClientSync2 = true
     end

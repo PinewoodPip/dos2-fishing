@@ -13,6 +13,7 @@ Skills.CANNON_BALL_TUNING = {
     POSITION_SEARCH_ATTEMPTS = 250, -- Number of times to search for a valid position to pull the target to.
     POSITION_SEARCH_STEP = 0.25, -- Distance to step in the direction of the projectile when searching for a valid position, in meters.
 }
+local TUNING = Skills.CANNON_BALL_TUNING
 
 ---------------------------------------------
 -- EVENT LISTENERS
@@ -28,7 +29,7 @@ Osiris.RegisterSymbolListener("CharacterStatusApplied", 3, "after", function (ta
     local sourcePos = V(source.WorldPos)
     local targetPos = V(target.WorldPos)
     local sourceFishermancy = Fishing.GetAbilityScore(source)
-    local maxKnockbackDistance = Skills.CANNON_BALL_TUNING.BASE_KNOCKBACK_DISTANCE + sourceFishermancy * Skills.CANNON_BALL_TUNING.KNOCKBACK_DISTANCE_PER_FISHERMANCY
+    local maxKnockbackDistance = TUNING.BASE_KNOCKBACK_DISTANCE + sourceFishermancy * TUNING.KNOCKBACK_DISTANCE_PER_FISHERMANCY
 
     -- Add SI2+ bonus knockback
     if EpicEncounters.IsEnabled() then
@@ -37,21 +38,21 @@ Osiris.RegisterSymbolListener("CharacterStatusApplied", 3, "after", function (ta
 
     -- Push target as far as possible in the direction of the projectile
     local dir = Vector.GetNormalized(targetPos - sourcePos)
-    local posStep = dir * Skills.CANNON_BALL_TUNING.POSITION_SEARCH_STEP
+    local posStep = dir * TUNING.POSITION_SEARCH_STEP
     local pushPos = targetPos + posStep
-    local distanceTravelled = Skills.CANNON_BALL_TUNING.POSITION_SEARCH_STEP
-    local x, y, z = Osi.FindValidPosition(pushPos[1], pushPos[2], pushPos[3], Skills.CANNON_BALL_TUNING.VALID_POSITION_RADIUS, target.MyGuid)
-    local searchAttempts = Skills.CANNON_BALL_TUNING.POSITION_SEARCH_ATTEMPTS
+    local distanceTravelled = TUNING.POSITION_SEARCH_STEP
+    local x, y, z = Osi.FindValidPosition(pushPos[1], pushPos[2], pushPos[3], TUNING.VALID_POSITION_RADIUS, target.MyGuid)
+    local searchAttempts = TUNING.POSITION_SEARCH_ATTEMPTS
     local collided = false
     while x and not collided and searchAttempts > 0 and distanceTravelled < maxKnockbackDistance do
         local newPushPos = V(x, y, z) + posStep
-        local newX, newY, newZ = Osi.FindValidPosition(newPushPos[1], newPushPos[2], newPushPos[3], Skills.CANNON_BALL_TUNING.VALID_POSITION_RADIUS, target.MyGuid)
+        local newX, newY, newZ = Osi.FindValidPosition(newPushPos[1], newPushPos[2], newPushPos[3], TUNING.VALID_POSITION_RADIUS, target.MyGuid)
         if newX then
             x, y, z = newX, newY, newZ
         else
             collided = true
         end
-        distanceTravelled = distanceTravelled + Skills.CANNON_BALL_TUNING.POSITION_SEARCH_STEP
+        distanceTravelled = distanceTravelled + TUNING.POSITION_SEARCH_STEP
         searchAttempts = searchAttempts - 1
     end
     if not x then return end -- Do nothing if target couldn't be moved to a valid AI grid pos.
@@ -65,7 +66,7 @@ Osiris.RegisterSymbolListener("CharacterStatusApplied", 3, "after", function (ta
             target = Character.Get(targetGUID)
             if not target:GetStatus("SHOCKWAVE") then
                 source = Character.Get(causeeGUID)
-                Skills.ExplodeProjectile(source, Skills.CANNON_BALL_TUNING.IMPACT_SKILL, target)
+                Skills.ExplodeProjectile(source, TUNING.IMPACT_SKILL, target)
                 ev.Timer:Cancel()
             end
         end)
