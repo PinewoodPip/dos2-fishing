@@ -296,7 +296,7 @@ local Skills = {
         },
         Status_Seaburn_Description = {
             Handle = "h828e84d7g9080g4345g94e3gecbb1ac24bab",
-            Text = "Deals [1] every turn.<br>Reduces water and air resistance.",
+            Text = "When hit by water damage, Character takes Magic Armor damage and loses 1 turn of this status.<br>Duration cannot be refreshed.",
             ContextDescription = [[Status tooltip for "Seaburn"]],
             StringKey = "PIP_FISHING_SEABURN_Description",
         },

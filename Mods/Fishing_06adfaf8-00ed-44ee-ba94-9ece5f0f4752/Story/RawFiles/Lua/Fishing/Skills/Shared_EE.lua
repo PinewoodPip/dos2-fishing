@@ -14,6 +14,12 @@ TSK.Label_SourceInfusionRequirement = Skills:RegisterTranslatedString({
     Text = "(requires %d %s)",
     ContextDescription = [[Tooltip for Source Infusions; params are ability score and ability type]],
 })
+TSK.Status_Seaburn_Description_EE = Skills:RegisterTranslatedString({
+    Handle = "hc0ae3818gca63g4763g934bg8e3a6afed390",
+    Text = "When hit by water damage, Character receives 1 Harried stack and loses 1 turn of this status.<br>Duration cannot be refreshed.",
+    ContextDescription = [[Status tooltip for "Seaburn" in EE]],
+    StringKey = "PIP_FISHING_SEABURN_Description_EE",
+})
 
 ---@type table<skill, TextLib_TranslatedString[]>
 local SourceInfusionTSKs = {
@@ -274,5 +280,14 @@ Ext.Events.StatsLoaded:Subscribe(function (_)
                 end
             end
         end
+
+        -- Remove armor damage from Seaburn.
+        local seaburnSkill = Stats.Get("StatsLib_StatsEntry_SkillData", "Projectile_PIP_Fishing_Seaburn_ScriptedDamage")
+        seaburnSkill["Damage Multiplier"] = 0
+        seaburnSkill["Damage Range"] = 0
+
+        -- Replace Seaburn description.
+        local seaburnStatus = Stats.Get("StatsLib_StatsEntry_StatusData", "PIP_FISHING_SEABURN")
+        seaburnStatus.Description = TSK.Status_Seaburn_Description_EE.StringKey
     end
 end, {StringID = "Fishing.Skills.EE_Overrides"})

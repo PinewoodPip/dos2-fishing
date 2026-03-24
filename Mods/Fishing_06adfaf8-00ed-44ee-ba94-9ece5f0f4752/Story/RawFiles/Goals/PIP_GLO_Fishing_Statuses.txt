@@ -4,10 +4,11 @@ INITSECTION
 
 KBSECTION
 
+// Apply Harried when proccing Seaburn.
 // Hook into this to perform effects when Seaburn detonates.
-PROC PROC_PIP_Seaburn_Detonate((CHARACTERGUID)_Target, (CHARACTERGUID)_StatusSource)
+PROC PROC_PIP_Seaburn_Detonate((CHARACTERGUID)_Target, (CHARACTERGUID)_StatusSource, (CHARACTERGUID)_Attacker)
 THEN
-DB_NOOP();
+PROC_AMER_BatteredHarried_DirectManip(_Target, 1, 1, _Attacker);
 
 // Return to Crab SI3: remove Spellcaster Finesse when status expires.
 // This hook is necessary as there's no way to bind SpecialLogic to a status.
