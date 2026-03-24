@@ -1,0 +1,45 @@
+Version 1
+SubGoalCombiner SGC_AND
+INITSECTION
+
+KBSECTION
+
+// Source Infusion 1
+
+// Increase duration and grant water resistance.
+QRY QRY_AMER_Source_Infusion_SkillPreCast((CHARACTERGUID)_Char, "Shout_PIP_Fishing_Hornpipe", (INTEGER)_InfusCount)
+AND
+_InfusCount > 0
+THEN
+PROC_AMER_TempStat_StatusMod_AddFlexStat_Scaling(_Char, "PIP_Fishing_Hornpipe", "Stat", "WATERRESISTANCE", "Hornpipe_Infus1", 0, "Ability", "WaterSpecialist", 10.0, 1.0, 2000, "SkillCast");
+PROC_AMER_TempStat_ExtendedStat_Add(_Char, "Status_AddDuration", "PIP_Fishing_Hornpipe", "", "", 1.0, 2000, "SkillCast");
+
+// Source Infusion 2
+
+// Grant magic armor restoration when proccing Seaburn.
+QRY QRY_AMER_Source_Infusion_SkillPreCast((CHARACTERGUID)_Char, "Shout_PIP_Fishing_Hornpipe", (INTEGER)_InfusCount)
+AND
+_InfusCount > 1
+AND
+CharacterGetAbility(_Char, "WaterSpecialist", _Hydrosophist)
+AND
+Real(_Hydrosophist, _HydrosophistReal)
+AND
+RealSum(7.0, _HydrosophistReal, _ArmorRestoration)
+THEN
+PROC_AMER_TempStat_StatusMod_AddExtendedStat(_Char, "PIP_Fishing_Hornpipe", "PIP_ArmorRestorationOnSeaburnProc", "MagicArmor", "", "", _ArmorRestoration, "Hornpipe_Infus2", 0, 2000, "SkillCast");
+
+// Source Infusion 3
+
+// Grant critical chance and reduce Hydrosophist cooldowns when proccing Seaburn with crits.
+QRY QRY_AMER_Source_Infusion_SkillPreCast((CHARACTERGUID)_Char, "Shout_PIP_Fishing_Hornpipe", (INTEGER)_InfusCount)
+AND
+_InfusCount > 2
+THEN
+PROC_AMER_TempStat_StatusMod_AddFlexStat_Scaling(_Char, "PIP_Fishing_Hornpipe", "Stat", "CRITICALCHANCE", "Hornpipe_Infus3", 0, "Ability", "WaterSpecialist", 10.0, 1.0, 2000, "SkillCast");
+PROC_AMER_TempStat_StatusMod_AddExtendedStat(_Char, "PIP_Fishing_Hornpipe", "PIP_ReduceCooldownOnSeaburnProc", "WaterSpecialist", "", "", 6.0, "Hornpipe_Infus3", 0, 2000, "SkillCast");
+
+EXITSECTION
+
+ENDEXITSECTION
+ParentTargetEdge "AMER_GLO_Spells_Hydrosophist"

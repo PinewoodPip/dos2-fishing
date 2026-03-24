@@ -42,6 +42,11 @@ IF CharacterStatusRemoved(_Char, "PIP_Polymorphed_Crab", (CHARACTERGUID)_Source)
 THEN
 RemoveStatus(_Char, "PIP_FISHING_CRAB_FLOATING");
 
+// Ticks down char's cooldowns in the given school.
+PROC PROC_PIP_ReduceCooldowns((CHARACTERGUID)_Char, (STRING)_SkillAbility, (REAL)_LifeTime)
+THEN
+DB_NOOP(); // Implemented in Lua.
+
 EXITSECTION
 
 ENDEXITSECTION

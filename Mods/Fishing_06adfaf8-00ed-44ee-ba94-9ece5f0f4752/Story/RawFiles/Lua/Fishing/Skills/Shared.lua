@@ -63,7 +63,7 @@ local Skills = {
         },
         Skill_Hornpipe_Description = {
             Handle = "h3a713104g80b4g426ag8ed7ga2747320e096",
-            Text = "Get the voyage started on the right foot by blowing the hornpipe, applying Horned Pipe Spirit to allies in range.<br>Horned Pipe Spirit restores 1% Vitality and Magic Armor per point in the status owner's Fishermancy upon dealing a critical hit.",
+            Text = "Get the voyage started on the right foot by blowing the hornpipe, applying Horned Pipe Spirit to allies within [1].<br>Horned Pipe Spirit grants [2]% water resistance and increases the duration of Seaburn aplied by 1 turn.",
             ContextDescription = [[Skill tooltip for "Blow the Hornpipe"]],
             StringKey = "Shout_PIP_Fishing_Hornpipe_Description",
         },

@@ -142,7 +142,21 @@ local SourceInfusionTSKs = {
             Handle = "hb3001d98g2552g48bdgbcebg0948583ca05d",
             Text = "Attempt to sneak after casting. If your target dies while casting this skill, gain Slashimi for 3 turns: once per turn per target, your basic attack applies Seaburn for 1 turn.",
         },
-    }
+    },
+    ["Shout_PIP_Fishing_Hornpipe"] = {
+        {
+            Handle = "hee2435ebgceabg4e2dg85c2gcfb0ba89747e",
+            Text = "Horned Pipe Spirit grants +10% water resistance (+1% per Hydrosophist). +1 turn duration.",
+        },
+        {
+            Handle = "h6538ee15gdf35g4a81gadaeg4cdef5ba1a54",
+            Text = "Horned Pipe Spirit restores 7% (+1% per Hydrosophist) missing Magic Armor upon activating Seaburn.",
+        },
+        {
+            Handle = "hfdab024dge097g48b7gb48ag374b8451e257",
+            Text = "Horned Pipe Spirit grants +10% critical chance (+1% per Hydrosophist). While Horned Pipe Spirit is active, once per turn, activating Seaburn with critical hits reduces the cooldown of Hydrosophist skills by 1 turn.",
+        },
+    },
 }
 for skill,tsks in pairs(SourceInfusionTSKs) do
     for _,tskData in ipairs(tsks) do

@@ -5,7 +5,7 @@ INITSECTION
 KBSECTION
 
 // Fire reaction when seaburn detonates on a visible enemy.
-PROC PROC_PIP_Seaburn_Detonate((CHARACTERGUID)_Target, (CHARACTERGUID)_StatusSource)
+PROC PROC_PIP_Seaburn_Detonate((CHARACTERGUID)_Target, (CHARACTERGUID)_StatusSource, (CHARACTERGUID)_Attacker)
 AND
 DB_AMER_ExtendedStat_AddedStat(_Char, "PIP_ThrowingKnifeSeaBurnReaction", _Extraprop1, _Extraprop2, _Extraprop3, _Count)
 AND

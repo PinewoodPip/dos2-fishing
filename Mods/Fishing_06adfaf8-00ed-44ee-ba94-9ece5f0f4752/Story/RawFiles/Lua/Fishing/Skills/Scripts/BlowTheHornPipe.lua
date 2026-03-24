@@ -4,6 +4,10 @@ local Fishing = GetFeature("Features.Fishing")
 ---@class Features.Fishing.Skills
 local Skills = GetFeature("Features.Fishing.Skills")
 
+Skills.HORNPIPE_TUNING = {
+    SEABURN_EXTRA_DURATION = 6.0, -- In seconds.
+}
+
 ---------------------------------------------
 -- EVENT LISTENERS
 ---------------------------------------------
@@ -27,5 +31,34 @@ Ext.Events.StatusHitEnter:Subscribe(function (ev)
         Osi.CharacterSetHitpointsPercentage(attacker.MyGuid, currentHPPercentage + healAmount)
         Osi.CharacterSetMagicArmorPercentage(attacker.MyGuid, currentHPPercentage + healMagicArmorAmount)
         -- TODO some splash visual
+    end
+end)
+
+-- SI3 effect: reduce cooldowns of Hydrosophist skills when proccing Seaburn with crits.
+Osiris.RegisterSymbolListener("PROC_PIP_ReduceCooldowns", 3, "before", function (charGUID, skillAbility, lifetime)
+    local char = Character.Get(charGUID)
+    local skillManager = char.SkillManager
+    for _,skill in pairs(skillManager.Skills) do
+        local stat = Stats.Get("StatsLib_StatsEntry_SkillData", skill.SkillId)
+        local ability = Stats.SKILL_ABILITY_TO_STATISTIC[stat.Ability] -- Remap to SkillData ability IDs.
+        if ability == skillAbility then
+            skill.ActiveCooldown = math.max(0, skill.ActiveCooldown - lifetime)
+            skill.ShouldSyncCooldown = true
+        end
+    end
+end)
+
+-- Increase duration of Seaburn applied by characters with Hornpipe.
+Ext.Events.BeforeStatusApply:Subscribe(function (ev)
+    local status = ev.Status
+    if status.StatusId == "PIP_FISHING_SEABURN" then
+        local sourceHandle = status.StatusSourceHandle
+        if Ext.Utils.GetHandleType(sourceHandle) ~= "ServerCharacter" then return end
+        local source = Character.Get(sourceHandle)
+        if not source:GetStatus("PIP_Fishing_Hornpipe") then return end
+        status.LifeTime = status.LifeTime + Skills.HORNPIPE_TUNING.SEABURN_EXTRA_DURATION
+        status.CurrentLifeTime = status.CurrentLifeTime + Skills.HORNPIPE_TUNING.SEABURN_EXTRA_DURATION
+        status.RequestClientSync = true
+        status.RequestClientSync2 = true
     end
 end)
