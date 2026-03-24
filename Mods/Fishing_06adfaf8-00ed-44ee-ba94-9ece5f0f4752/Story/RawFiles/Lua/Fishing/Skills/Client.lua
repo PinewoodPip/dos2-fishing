@@ -126,6 +126,24 @@ Tooltip.Hooks.RenderItemTooltip:Subscribe(function (ev)
     end
 end)
 
+-- Rename "Set Crab Form" from Return to Modernity skill;
+-- technically the skill reapplies the status, which itself has the "Toggle" property so that the status is removed.
+Tooltip.Hooks.RenderSkillTooltip:Subscribe(function (ev)
+    if ev.SkillID == "Shout_PIP_Fishing_ReturnToModernity" then
+        local skillProps = ev.Tooltip:GetFirstElement("SkillProperties")
+        if skillProps then
+            for _,prop in pairs(skillProps.Properties) do
+                local crabStatusName = Text.GetTranslatedString("PIP_Polymorphed_Crab_DisplayName")
+                local setPotionLabel = Text.FormatLarianTranslatedString(Skills.SET_PROPERTY_TSKHANDLE, crabStatusName, "", "")
+                if prop.Label == setPotionLabel then
+                    prop.Label = TSK.Label_RemoveStatus:Format(crabStatusName)
+                    break
+                end
+            end
+        end
+    end
+end)
+
 -- Set names for skillbook items.
 GameState.Events.ClientReady:Subscribe(function (_)
     for stringKey,skillID in pairs(Skills._SKILLBOOK_STRING_KEYS) do

@@ -42,6 +42,11 @@ local Skills = {
             Text = "Processes targets into sashimi.",
             ContextDescription = [[Tooltip for sashimi skill effect]],
         },
+        Label_RemoveStatus = {
+            Handle = "hcf89fa03gf704g41aeg8fd5gd13510200c7c",
+            Text = "Remove %s.",
+            ContextDescription = [[Label for skill tooltips that remove a status; param is status name]],
+        },
 
         Skill_BlueFireball_DisplayName = {
             Handle = "h63cc250fg2bfeg4c3cgb888gbd8d5beb1be4",
