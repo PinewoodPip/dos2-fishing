@@ -24,6 +24,13 @@ Skills._SKILLBOOK_STRING_KEYS = {
     ["PIP_Fishing_Skillbook_DeployFishnets"] = "Projectile_PIP_Fishing_DeployFishnets",
 }
 
+---@type set<skill>
+Skills.SKILLS_WITH_TIERED_STATUSES = {
+    ["Target_PIP_Fishing_ReelIn"] = true,
+    ["Shout_PIP_Fishing_ReturnToCrab"] = true,
+    ["Target_PIP_Fishing_CrabPinch"] = true,
+}
+
 ---------------------------------------------
 -- EVENTS LISTENERS
 ---------------------------------------------
@@ -90,9 +97,21 @@ Tooltip.Hooks.RenderSkillTooltip:Subscribe(function (ev)
             }))
         end
 
-        skillDescription.Label = skillDescription.Label .. "<br><br>" .. table.concat(lines, "<br>")
+        skillDescription.Label = skillDescription.Label .. "<br><br>" .. table.concat(lines, "<br>") .. "<br> " -- Extra line break is necessary to add spacing between the text and skill properties. Trailing space is required for the empty line to show up.
     end
 end, {EnabledFunctor = EpicEncounters.IsEnabled})
+
+-- Add tiered statuses journal hint to skills that apply them.
+Tooltip.Hooks.RenderSkillTooltip:Subscribe(function (ev)
+    _D(ev.Tooltip)
+    if Skills.SKILLS_WITH_TIERED_STATUSES[ev.SkillID] then
+        local skillDescription = ev.Tooltip:GetFirstElement("SkillDescription")
+        skillDescription.Label = skillDescription.Label .. "<br>" .. TSK.Label_TieredStatusHint:Format({
+            FontType = Text.FONTS.ITALIC,
+            Size = 18,
+        })
+    end
+end)
 
 -- Replace "Set Potion" labels with descriptions of the scripted status effects.
 ---@param tooltip TooltipLib_FormattedTooltip

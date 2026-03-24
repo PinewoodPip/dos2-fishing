@@ -20,6 +20,11 @@ TSK.Status_Seaburn_Description_EE = Skills:RegisterTranslatedString({
     ContextDescription = [[Status tooltip for "Seaburn" in EE]],
     StringKey = "PIP_FISHING_SEABURN_Description_EE",
 })
+TSK.Label_TieredStatusHint = Skills:RegisterTranslatedString({
+    Handle = "hc4d47eddgb7d5g4d38g8736gdae013b8e8ef",
+    Text = [[Tiered statuses apply up to tier 3 and reduce resistances; see your journal for a full description.]],
+    ContextDescription = [[Tooltip for skills that apply tiered statuses]],
+})
 
 ---@type table<skill, TextLib_TranslatedString[]>
 local SourceInfusionTSKs = {
