@@ -1,6 +1,6 @@
 
----@class Features.Fishing.Skills
-local Skills = GetFeature("Features.Fishing.Skills")
+---@class Fishing.Skills
+local Skills = GetFeature("Fishing.Skills")
 
 Skills.SEABURN_TUNING = {
     PROJECTILE_SKILL = "Projectile_PIP_Fishing_Seaburn_ScriptedDamage",

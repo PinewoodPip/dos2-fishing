@@ -1,8 +1,8 @@
 
-local Fishing = GetFeature("Features.Fishing")
+local Fishing = GetFeature("Fishing")
 
----@class Features.Fishing.Skills
-local Skills = GetFeature("Features.Fishing.Skills")
+---@class Fishing.Skills
+local Skills = GetFeature("Fishing.Skills")
 
 ---@type GUID.ItemTemplate[]
 Skills.SASHIMI_TEMPLATES = {

@@ -1,9 +1,9 @@
 
-local Fishing = GetFeature("Features.Fishing")
+local Fishing = GetFeature("Fishing")
 local Tooltip = Client.Tooltip
 
----@class Features.Fishing.Skills
-local Skills = GetFeature("Features.Fishing.Skills")
+---@class Fishing.Skills
+local Skills = GetFeature("Fishing.Skills")
 local TSK = Skills.TranslatedStrings
 
 Skills.POTION_TSKHANDLE = "hae185f7aga216g43afg82b3gaf96a75a7890" -- "Potion"

@@ -2,12 +2,12 @@
 local Tooltip = Client.Tooltip
 local Input = Client.Input
 
----@class Features.Fishing
-local Fishing = GetFeature("Features.Fishing")
+---@class Fishing
+local Fishing = GetFeature("Fishing")
 local TSK = Fishing.TranslatedStrings
-Fishing._CharacterTasks = {} ---@type table<CharacterHandle, Features.Fishing.CharacterTask>
+Fishing._CharacterTasks = {} ---@type table<CharacterHandle, Fishing.CharacterTask>
 
----@class Features.Fishing.CharacterTask : UserspaceCharacterTaskCallbacks
+---@class Fishing.CharacterTask : UserspaceCharacterTaskCallbacks
 local _Task = {
     RESTART_COOLDOWN = 400, -- Cooldown between stopping fishing and being able to fish again, in milliseconds.
     IsPreviewing = false,
@@ -23,7 +23,7 @@ Fishing._CharacterTaskClass = _Task
 ---------------------------------------------
 
 ---@param char EclCharacter
----@return Features.Fishing.CharacterTask
+---@return Fishing.CharacterTask
 function _Task.Create(char)
     local tbl = {CharacterHandle = char and char.Handle}
     Inherit(tbl, _Task)

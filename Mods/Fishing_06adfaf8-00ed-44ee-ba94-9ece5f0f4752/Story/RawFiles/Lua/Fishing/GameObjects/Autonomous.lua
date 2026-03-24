@@ -3,12 +3,12 @@
 -- Base class for a game object that uses a state machine for its movement.
 ---------------------------------------------
 
-local Fishing = GetFeature("Features.Fishing")
-local _Capturable = Fishing:GetClass("Features.Fishing.Minigame.GameObjects.Capturable")
-local UI = Fishing.UI ---@class Features.Fishing.UI
+local Fishing = GetFeature("Fishing")
+local _Capturable = Fishing:GetClass("Fishing.Minigame.GameObjects.Capturable")
+local UI = Fishing.UI ---@class Fishing.UI
 
----@class Features.Fishing.Minigame.GameObjects.Autonomous : Features.Fishing.Minigame.GameObjects.Capturable
----@field MovementState Features.Fishing.GameObject.MovementState
+---@class Fishing.Minigame.GameObjects.Autonomous : Fishing.Minigame.GameObjects.Capturable
+---@field MovementState Fishing.GameObject.MovementState
 local _Autonomous = {
     BASE_CYCLE_TIME = 2,
     ACCELERATION = 40,
@@ -16,7 +16,7 @@ local _Autonomous = {
     MAX_VELOCITY = 70,
     STATE_CHANGE_COOLDOWN_RANDOM_FACTOR = 0.4, -- Random deviation for state duration, as a fraction of `BASE_CYCLE_TIME`.
 }
-Fishing:RegisterClass("Features.Fishing.Minigame.GameObjects.Autonomous", _Autonomous, {"Features.Fishing.Minigame.GameObjects.Capturable"})
+Fishing:RegisterClass("Fishing.Minigame.GameObjects.Autonomous", _Autonomous, {"Fishing.Minigame.GameObjects.Capturable"})
 
 ---------------------------------------------
 -- METHODS
@@ -25,10 +25,10 @@ Fishing:RegisterClass("Features.Fishing.Minigame.GameObjects.Autonomous", _Auton
 ---Base constructor.
 ---@param elementID string
 ---@param size Vector2
----@param state Features.Fishing.GameObject.State
----@return Features.Fishing.Minigame.GameObjects.Autonomous
+---@param state Fishing.GameObject.State
+---@return Fishing.Minigame.GameObjects.Autonomous
 function _Autonomous:Create(elementID, size, state)
-    local instance = _Capturable.Create(self, elementID, size, state) ---@cast instance Features.Fishing.Minigame.GameObjects.Autonomous
+    local instance = _Capturable.Create(self, elementID, size, state) ---@cast instance Fishing.Minigame.GameObjects.Autonomous
     return instance
 end
 
@@ -49,7 +49,7 @@ function _Autonomous:__RandomStateDuration()
 end
 
 ---Sets the movement state.
----@param state Features.Fishing.GameObject.MovementState
+---@param state Fishing.GameObject.MovementState
 function _Autonomous:SetState(state)
     self.MovementState = state
     self.MovementState:SetOwner(self)

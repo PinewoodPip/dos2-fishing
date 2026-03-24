@@ -1,7 +1,7 @@
 
-local Fishing = GetFeature("Features.Fishing")
+local Fishing = GetFeature("Fishing")
 
----@class Features.Fishing.UI
+---@class Fishing.UI
 local UI = Fishing.UI
 
 ---------------------------------------------
@@ -9,49 +9,49 @@ local UI = Fishing.UI
 ---------------------------------------------
 
 ---Holds the physics state of a GameObject.
----@class Features.Fishing.GameObject.State : Class
+---@class Fishing.GameObject.State : Class
 local _State = {
     Acceleration = 0,
     Velocity = 0,
     Position = 0,
 }
-Fishing:RegisterClass("Features.Fishing.GameObject.State", _State)
+Fishing:RegisterClass("Fishing.GameObject.State", _State)
 
 ---Base constructor.
----@return Features.Fishing.GameObject.State
+---@return Fishing.GameObject.State
 function _State:Create()
-    ---@type Features.Fishing.GameObject.State
+    ---@type Fishing.GameObject.State
     local tbl = {
         Acceleration = 0,
         Position = 0,
     }
-    return self:__Create(tbl) ---@type Features.Fishing.GameObject.State
+    return self:__Create(tbl) ---@type Fishing.GameObject.State
 end
 
 ---------------------------------------------
 -- GAME OBJECT
 ---------------------------------------------
 
----@class Features.Fishing.GameObject : Class
----@field State Features.Fishing.GameObject.State
+---@class Fishing.GameObject : Class
+---@field State Fishing.GameObject.State
 ---@field Size Vector2
 ---@field ElementID string
 local _GameObject = {}
-Fishing:RegisterClass("Features.Fishing.GameObject", _GameObject)
+Fishing:RegisterClass("Fishing.GameObject", _GameObject)
 
 ---Base constructor.
 ---@param elementID string
 ---@param size Vector2
----@param state Features.Fishing.GameObject.State
----@return Features.Fishing.GameObject
+---@param state Fishing.GameObject.State
+---@return Fishing.GameObject
 function _GameObject:Create(elementID, size, state)
-    ---@type Features.Fishing.GameObject
+    ---@type Fishing.GameObject
     local tbl = {
         State = state,
         ElementID = elementID,
         Size = size,
     }
-    return self:__Create(tbl) ---@type Features.Fishing.GameObject
+    return self:__Create(tbl) ---@type Fishing.GameObject
 end
 
 ---Called every tick, before collision callbacks.
@@ -67,7 +67,7 @@ function _GameObject:Update(deltaTime) error("Not implemented") end
 function _GameObject:LateUpdate(deltaTime) end
 
 ---Returns whether the object is intersecting with another one.
----@param otherObject Features.Fishing.GameObject
+---@param otherObject Fishing.GameObject
 ---@return boolean
 function _GameObject:IsCollidingWith(otherObject)
     local myState = self:GetState()
@@ -81,13 +81,13 @@ end
 
 ---Called when the object starts intersecting with another one.
 ---@diagnostic disable: unused-local
----@param otherObject Features.Fishing.GameObject
+---@param otherObject Fishing.GameObject
 ---@param deltaTime number In milliseconds.
 function _GameObject:OnCollideWith(otherObject, deltaTime) end
 ---@diagnostic enable: unused-local
 
 ---Returns the physics state of the object.
----@return Features.Fishing.GameObject.State
+---@return Fishing.GameObject.State
 function _GameObject:GetState()
     return self.State
 end

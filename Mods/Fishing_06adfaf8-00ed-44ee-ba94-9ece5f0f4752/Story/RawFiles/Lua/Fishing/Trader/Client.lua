@@ -1,10 +1,10 @@
 
-local CollectionLog = GetFeature("Features.Fishing.CollectionLog")
+local CollectionLog = GetFeature("Fishing.CollectionLog")
 local Notification = Client.UI.Notification
 local Input = Client.Input
 
----@class Features.Fishing.Trader
-local Trader = GetFeature("Features.Fishing.Trader")
+---@class Fishing.Trader
+local Trader = GetFeature("Fishing.Trader")
 
 ---------------------------------------------
 -- EVENT LISTENERS

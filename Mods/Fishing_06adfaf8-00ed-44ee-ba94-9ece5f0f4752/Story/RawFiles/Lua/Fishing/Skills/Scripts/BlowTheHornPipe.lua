@@ -1,8 +1,8 @@
 
-local Fishing = GetFeature("Features.Fishing")
+local Fishing = GetFeature("Fishing")
 
----@class Features.Fishing.Skills
-local Skills = GetFeature("Features.Fishing.Skills")
+---@class Fishing.Skills
+local Skills = GetFeature("Fishing.Skills")
 
 Skills.HORNPIPE_TUNING = {
     SEABURN_EXTRA_DURATION = 6.0, -- In seconds.

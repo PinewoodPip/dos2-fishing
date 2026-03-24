@@ -1,8 +1,8 @@
 
 local V = Vector.Create
 
----@class Features.Fishing
-local Fishing = GetFeature("Features.Fishing")
+---@class Fishing
+local Fishing = GetFeature("Fishing")
 local TSK = Fishing.TranslatedStrings
 
 ---@type table<CharacterHandle, {TargetPosition: Vector3, ReelingIn: boolean}>
@@ -20,7 +20,7 @@ Fishing.FISH_SPLASH_EFFECT = "PIP_FX_LargeSplash"
 
 ---Grants the fish item to char and increments statistics.
 ---@param char EsvCharacter
----@param fish Features.Fishing.Fish
+---@param fish Fishing.Fish
 ---@param fromPos vec3? If set, the fish will tween from this position into the character; otherwise it will be added to the inventory immediately.
 ---@return GUID
 function Fishing.CatchFish(char, fish, fromPos)
@@ -68,7 +68,7 @@ function Fishing.CatchFish(char, fish, fromPos)
 end
 
 ---Marks a fish type as having been caught in this playthrough.
----@param fishID Features.Fishing.FishID
+---@param fishID Fishing.FishID
 function Fishing.MarkFishTypeAsCaught(fishID)
     local fishCaught, _ = Fishing.GetUniqueFishCaught()
     local wasCaught = fishCaught[fishID]
@@ -85,7 +85,7 @@ function Fishing.MarkFishTypeAsCaught(fishID)
 end
 
 ---Starts the fishing animation loop for char.
----@see Features.Fishing.ANIMATION_EVENT
+---@see Fishing.ANIMATION_EVENT
 ---@param char EsvCharacter
 function Fishing.PlayAnimation(char)
     local state = Fishing._CharacterStates[char.Handle]

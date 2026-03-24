@@ -6,8 +6,8 @@ local Tooltip = Client.Tooltip
 local Input = Client.Input
 local V = Vector.Create
 
----@class Features.Fishing
-local Fishing = GetFeature("Features.Fishing")
+---@class Fishing
+local Fishing = GetFeature("Fishing")
 local TSK = Fishing.TranslatedStrings
 Fishing.FISHING_ROD_RARITY_COLOR = Color.LARIAN.BLUE
 Fishing.SKILL_ABILITY_ICON = "PIP_Fishing_SkillAbility"
@@ -25,17 +25,17 @@ Fishing.SPLASH_EFFECT_INTERVAL = 1 -- Interval between small splash effects duri
 
 Fishing._MINIGAME_TIMER_INFIXES = {"BiteNotification", "BiteTimeout"}
 
-Fishing._States = {} ---@type table<CharacterHandle, Features.Fishing.GameState>
+Fishing._States = {} ---@type table<CharacterHandle, Fishing.GameState>
 
-Fishing.Hooks.CanStartFishing = Fishing:AddSubscribableHook("CanStartFishing") ---@type Event<Features.Fishing.Hook.CanStartFishing>
+Fishing.Hooks.CanStartFishing = Fishing:AddSubscribableHook("CanStartFishing") ---@type Event<Fishing.Hook.CanStartFishing>
 
 ---------------------------------------------
 -- EVENTS/HOOKS
 ---------------------------------------------
 
----@class Features.Fishing.Hook.CanStartFishing
+---@class Fishing.Hook.CanStartFishing
 ---@field Character EclCharacter
----@field Region Features.Fishing.Region
+---@field Region Fishing.Region
 ---@field CanStartFishing boolean Hookable. Defaults to true.
 ---@field FailureReason string? Will be shown in a notification toast if CanStartFishing is false.
 
@@ -43,21 +43,21 @@ Fishing.Hooks.CanStartFishing = Fishing:AddSubscribableHook("CanStartFishing") -
 -- CLASSES
 ---------------------------------------------
 
----@alias Features.Fishing.GameStateType "WaitingForBite" | "Fishing"
+---@alias Fishing.GameStateType "WaitingForBite" | "Fishing"
 
----@class Features.Fishing.GameState
----@field Type Features.Fishing.GameStateType
+---@class Fishing.GameState
+---@field Type Fishing.GameStateType
 ---@field CharacterHandle CharacterHandle
 ---@field TargetPosition Vector3
 
----@class Features.Fishing.GameStates.WaitingForBite : Features.Fishing.GameState
+---@class Fishing.GameStates.WaitingForBite : Fishing.GameState
 ---@field Type "WaitingForBite"
 ---@field BiteTime integer Monotonic time at which the fish will bite.
 
----@class Features.Fishing.GameStates.Fishing : Features.Fishing.GameState
+---@class Fishing.GameStates.Fishing : Fishing.GameState
 ---@field Type "Fishing"
----@field CurrentFish Features.Fishing.Fish
----@field SpawnedChest Features.Fishing.TreasureChest?
+---@field CurrentFish Fishing.Fish
+---@field SpawnedChest Fishing.TreasureChest?
 ---@field CaughtChest boolean
 
 ---------------------------------------------
@@ -85,7 +85,7 @@ end
 
 ---Returns char's fishing minigame state, if they're fishing.
 ---@param char EclCharacter
----@return Features.Fishing.GameState?
+---@return Fishing.GameState?
 function Fishing.GetState(char)
     return Fishing._States[char.Handle]
 end
@@ -186,7 +186,7 @@ end
 function Fishing.ReelIn(char)
     local state = Fishing.GetState(char)
     if state and state.Type ~= "WaitingForBite" then Fishing:__Error("ReelIn", "Character is not waiting for bite") return end
-    ---@cast state Features.Fishing.GameStates.WaitingForBite
+    ---@cast state Fishing.GameStates.WaitingForBite
 
     -- Transition to fishing state,
     -- or fail the minigame if reeling was mistimed.
@@ -222,7 +222,7 @@ function Fishing.IsNearWater(char, searchRadius, waterSurface)
 end
 
 ---Returns whether the cursor is near a fishable surface.
----@param region Features.Fishing.Region? If provided, the region's `FishableSurfaceType` will be used instead of "Deepwater".
+---@param region Fishing.Region? If provided, the region's `FishableSurfaceType` will be used instead of "Deepwater".
 function Fishing.IsCursorNearWater(region)
     local surface = region and region.FishableSurfaceType or nil
     local castingPos = Fishing.GetCastingPosition()
@@ -232,7 +232,7 @@ end
 ---Returns the fishing position of the cursor.
 ---This will use `WalkablePosition` if the height difference with the player character is not high,
 ---else will fallback to using a point on a plane underneath the character, ensuring the position is at a believable water level (rather than at the bottom of lakes, seas etc.)
----@see Features.Fishing.CURSOR_PLANE_FALLBACK_HEIGHT
+---@see Fishing.CURSOR_PLANE_FALLBACK_HEIGHT
 ---@return vec3
 function Fishing.GetCastingPosition()
     local char = Client.GetCharacter()
@@ -300,13 +300,13 @@ end
 
 ---Finishes the fishing minigame for char.
 ---@param char EclCharacter
----@param reason Features.Fishing.MinigameExitReason
+---@param reason Fishing.MinigameExitReason
 function Fishing.Stop(char, reason)
     local state = Fishing.GetState(char)
     if not state then Fishing:__Error("Stop", "Character is not fishing") return end
-    local fish = nil ---@type Features.Fishing.Fish
+    local fish = nil ---@type Fishing.Fish
     if state.Type == "Fishing" then
-        ---@cast state Features.Fishing.GameStates.Fishing
+        ---@cast state Fishing.GameStates.Fishing
         fish = state.CurrentFish
     end
 
@@ -371,7 +371,7 @@ Fishing.Events.CharacterStoppedFishing:Subscribe(function (ev)
 
         -- Show a hint on how to open the collection log the first time you catch each type of fish.
         if Fishing.GetFishCatchCount(char, ev.CaughtFish:GetID()) == 1 then
-            local CollectionLog = GetFeature("Features.Fishing.CollectionLog")
+            local CollectionLog = GetFeature("Fishing.CollectionLog")
             local keybinds = Input.GetActionBindings(CollectionLog.InputActions.OpenCollectionLog.ID)
             local keybind = keybinds[1]
             if keybind then
@@ -477,7 +477,7 @@ end)
 Tooltip.Hooks.RenderItemTooltip:Subscribe(function (ev)
     local fish = Fishing.GetFishByTemplate(ev.Item.RootTemplate.Id)
     if fish then
-        local Runes = GetFeature("Features.Fishing.Runes") -- TODO it's dirty that we have to fetch the feature here
+        local Runes = GetFeature("Fishing.Runes") -- TODO it's dirty that we have to fetch the feature here
         local tooltip = ev.Tooltip
         local runeTier = Runes.GetFishRuneTier(ev.Item)
 

@@ -1,13 +1,13 @@
 
-local Fishing = GetFeature("Features.Fishing")
+local Fishing = GetFeature("Fishing")
 
 ---@diagnostic disable-next-line: duplicate-doc-alias
----@alias Features.Fishing.Fish.BehaviourType "Chill"|"Aggressive"|"Sinker"|"Floater"|"Unpredictable"
+---@alias Fishing.Fish.BehaviourType "Chill"|"Aggressive"|"Sinker"|"Floater"|"Unpredictable"
 
 local STATES = {
-    FLOATING = "Features.Fishing.GameObject.MovementStates.Floating",
-    SINKING = "Features.Fishing.GameObject.MovementStates.Sinking",
-    TWEENING = "Features.Fishing.GameObject.MovementStates.Tweening",
+    FLOATING = "Fishing.GameObject.MovementStates.Floating",
+    SINKING = "Fishing.GameObject.MovementStates.Sinking",
+    TWEENING = "Fishing.GameObject.MovementStates.Tweening",
 }
 -- Aliases for transitions with weight 1.
 local BASE_TRANSITIONS = {
@@ -26,7 +26,7 @@ local BASE_TRANSITIONS = {
 }
 
 -- Register default behaviours.
----@type table<Features.Fishing.Fish.BehaviourType, Features.Fishing.Fish.Behaviour>
+---@type table<Fishing.Fish.BehaviourType, Fishing.Fish.Behaviour>
 local behaviours = {
     ["Chill"] = {
         InitialState = STATES.FLOATING,

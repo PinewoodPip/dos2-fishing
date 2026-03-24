@@ -1,12 +1,12 @@
 
-local Fishing = GetFeature("Features.Fishing")
+local Fishing = GetFeature("Fishing")
 
 ---Utility method to register translated strings for a fish.
 local T = function(tsk)
     return Fishing:RegisterTranslatedString(tsk).Handle
 end
 
----@type table<string, Features.Fishing.Fish>
+---@type table<string, Fishing.Fish>
 local fishes = {
     ["NormieShell"] = {
         NameHandle = T{

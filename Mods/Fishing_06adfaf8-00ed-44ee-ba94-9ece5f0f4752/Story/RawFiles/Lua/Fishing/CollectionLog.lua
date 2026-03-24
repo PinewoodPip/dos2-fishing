@@ -11,10 +11,10 @@ local HotbarSlot = Generic.GetPrefab("GenericUI_Prefab_HotbarSlot")
 local LabelPrefab = Generic.GetPrefab("GenericUI.Prefabs.FormLabel")
 local Icons = Epip.GetFeature("Feature_GenericUITextures").ICONS
 local CommonStrings = Text.CommonStrings
-local Fishing = GetFeature("Features.Fishing")
+local Fishing = GetFeature("Fishing")
 local V = Vector.Create
 
----@class Features.Fishing.CollectionLog : Feature
+---@class Fishing.CollectionLog : Feature
 local CollectionLog = {
     -- Order in which to display levels in the region source tooltips.
     -- Unspecified levels will be sorted alphabetically afterwards.
@@ -109,10 +109,10 @@ local CollectionLog = {
     USE_LEGACY_HOOKS = false,
 
     Hooks = {
-        IsFishVisible = {}, ---@type Hook<Features.Fishing.CollectionLog.Hooks.IsFishVisible>
+        IsFishVisible = {}, ---@type Hook<Fishing.CollectionLog.Hooks.IsFishVisible>
     }
 }
-RegisterFeature("Features.Fishing.CollectionLog", CollectionLog)
+RegisterFeature("Fishing.CollectionLog", CollectionLog)
 local TSK = CollectionLog.TranslatedStrings
 
 local InputActions = {
@@ -126,8 +126,8 @@ local InputActions = {
 -- EVENTS AND HOOKS
 ---------------------------------------------
 
----@class Features.Fishing.CollectionLog.Hooks.IsFishVisible
----@field Fish Features.Fishing.Fish
+---@class Fishing.CollectionLog.Hooks.IsFishVisible
+---@field Fish Fishing.Fish
 ---@field Valid boolean Hookable. Defaults to `true`.
 
 ---------------------------------------------
@@ -154,10 +154,10 @@ CollectionLog.Settings.ActFilter = CollectionLog:RegisterSetting("ActFilter", {
 ---------------------------------------------
 
 ---Returns a list of valid fishes to show.
----@see Features.Fishing.CollectionLog.Hooks.IsFishVisible
----@return Features.Fishing.Fish[]
+---@see Fishing.CollectionLog.Hooks.IsFishVisible
+---@return Fishing.Fish[]
 function CollectionLog.GetFishes()
-    local fishes = {} ---@type Features.Fishing.Fish[]
+    local fishes = {} ---@type Fishing.Fish[]
     for _,fish in pairs(Fishing.GetFishes()) do
         local hook = CollectionLog.Hooks.IsFishVisible:Throw({
             Fish = fish,
@@ -182,7 +182,7 @@ function CollectionLog.GetFishes()
 end
 
 ---Returns the complete tooltip for a fish.
----@param fishID Features.Fishing.FishID
+---@param fishID Fishing.FishID
 ---@return TooltipLib_FormattedTooltip
 function CollectionLog.GetFishTooltip(fishID)
     local fish = Fishing.GetFish(fishID)
@@ -291,7 +291,7 @@ end
 -- SECTION
 ---------------------------------------------
 
----@class Features.Fishing.CollectionLog.CodexSection : Features.Codex.Sections.Grid
+---@class Fishing.CollectionLog.CodexSection : Features.Codex.Sections.Grid
 local Section = {
     Name = TSK.Section_Name,
     Description = TSK.Section_Description,
@@ -300,7 +300,7 @@ local Section = {
         CollectionLog.Settings.ActFilter,
     },
 }
-Codex:RegisterClass("Features.Fishing.CollectionLog.CodexSection", Section, {"Features.Codex.Sections.Grid"})
+Codex:RegisterClass("Fishing.CollectionLog.CodexSection", Section, {"Features.Codex.Sections.Grid"})
 Codex.RegisterSection("Fish", Section)
 
 ---Decorates a string with leading & trailing em-dashes.
@@ -416,7 +416,7 @@ end
 ---@override
 ---@param _ integer
 ---@param slot GenericUI_Prefab_HotbarSlot
----@param fish Features.Fishing.Fish
+---@param fish Fishing.Fish
 function Section:__UpdateElement(_, slot, fish)
     local char = Client.GetCharacter()
     local wasCaught = Fishing.GetFishCatchCount(char, fish.ID) > 0

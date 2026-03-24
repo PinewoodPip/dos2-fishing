@@ -1,11 +1,11 @@
 
-local Fishing = GetFeature("Features.Fishing")
-local _Autonomous = Fishing:GetClass("Features.Fishing.Minigame.GameObjects.Autonomous")
-local UI = Fishing.UI ---@class Features.Fishing.UI
+local Fishing = GetFeature("Fishing")
+local _Autonomous = Fishing:GetClass("Fishing.Minigame.GameObjects.Autonomous")
+local UI = Fishing.UI ---@class Fishing.UI
 
----@class Features.Fishing.GameObject.Fish : Features.Fishing.Minigame.GameObjects.Autonomous
+---@class Fishing.GameObject.Fish : Fishing.Minigame.GameObjects.Autonomous
 ---@field GetElement fun(self):GenericUI_Element_IggyIcon
----@field Descriptor Features.Fishing.Fish
+---@field Descriptor Fishing.Fish
 ---@field _IsCollidingWithBobber boolean
 local _Fish = {
     Type = "Fish",
@@ -17,13 +17,13 @@ local _Fish = {
     STATE_CHANGE_COOLDOWN_RANDOM_FACTOR = 0.4,
     BASE_TWEEN_DURATION = 1.5, -- Base tween duration in seconds, scaled down by fish Difficulty; higher Difficulty results in shorter tween states.
 }
-Fishing:RegisterClass("Features.Fishing.GameObject.Fish", _Fish, {"Features.Fishing.Minigame.GameObjects.Autonomous"})
-UI.RegisterGameObject("Features.Fishing.GameObject.Fish", _Fish)
+Fishing:RegisterClass("Fishing.GameObject.Fish", _Fish, {"Fishing.Minigame.GameObjects.Autonomous"})
+UI.RegisterGameObject("Fishing.GameObject.Fish", _Fish)
 
 local MovementStates = {
-    Sinking = Fishing:GetClass("Features.Fishing.GameObject.MovementStates.Sinking"),
-    Floating = Fishing:GetClass("Features.Fishing.GameObject.MovementStates.Floating"),
-    Tweening = Fishing:GetClass("Features.Fishing.GameObject.MovementStates.Tweening")
+    Sinking = Fishing:GetClass("Fishing.GameObject.MovementStates.Sinking"),
+    Floating = Fishing:GetClass("Fishing.GameObject.MovementStates.Floating"),
+    Tweening = Fishing:GetClass("Fishing.GameObject.MovementStates.Tweening")
 }
 
 ---------------------------------------------
@@ -31,16 +31,16 @@ local MovementStates = {
 ---------------------------------------------
 
 ---Creates a Fish game object.
----@param descriptor Features.Fishing.Fish
+---@param descriptor Fishing.Fish
 ---@param elementID string
 ---@param size Vector2
----@param state Features.Fishing.GameObject.State
----@return Features.Fishing.GameObject.Fish
+---@param state Fishing.GameObject.State
+---@return Fishing.GameObject.Fish
 function _Fish:Create(descriptor, elementID, size, state)
-    local instance = _Autonomous.Create(self, elementID, size, state) ---@cast instance Features.Fishing.GameObject.Fish
+    local instance = _Autonomous.Create(self, elementID, size, state) ---@cast instance Fishing.GameObject.Fish
     instance.Descriptor = descriptor
     instance._IsCollidingWithBobber = false
-    instance:SetState(instance:CreateState("Features.Fishing.GameObject.MovementStates.Sinking"))
+    instance:SetState(instance:CreateState("Fishing.GameObject.MovementStates.Sinking"))
     return instance
 end
 
@@ -72,11 +72,11 @@ function _Fish:TransitionState()
 end
 
 ---Factory method for creating states with reasonable default parameters.
----@param stateClassName Features.Fishing.GameObject.MovementState.ClassName
----@return Features.Fishing.GameObject.MovementState
+---@param stateClassName Fishing.GameObject.MovementState.ClassName
+---@return Fishing.GameObject.MovementState
 function _Fish:CreateState(stateClassName)
     local class = Fishing:GetClass(stateClassName)
-    if stateClassName == "Features.Fishing.GameObject.MovementStates.Tweening" then
+    if stateClassName == "Fishing.GameObject.MovementStates.Tweening" then
         local easingFunc = self:_GetRandomTweenFunction()
         local targetPosition = math.random() * UI.GetBobberUpperBound()
         local duration = self.BASE_TWEEN_DURATION / self.Descriptor.Difficulty
@@ -92,8 +92,8 @@ function _Fish:UpdatePosition()
 end
 
 ---Picks a target state using weighted random selection over a list of transitions.
----@param transitions Features.Fishing.Fish.Behaviour.Transition[]
----@return Features.Fishing.GameObject.MovementState.ClassName
+---@param transitions Fishing.Fish.Behaviour.Transition[]
+---@return Fishing.GameObject.MovementState.ClassName
 function _Fish:_PickRandomTransition(transitions)
     local totalWeight = 0
     for _,transition in ipairs(transitions) do
@@ -111,7 +111,7 @@ function _Fish:_PickRandomTransition(transitions)
 end
 
 ---@override
----@param state Features.Fishing.GameObject.MovementState
+---@param state Fishing.GameObject.MovementState
 function _Fish:SetState(state)
     _Autonomous.SetState(self, state)
     UI:DebugLog("Fish changed state to", state:GetClassName())
@@ -123,7 +123,7 @@ function _Fish:OnCollideWith(otherObject, deltaTime)
 end
 
 ---Returns a random tweening function for the Tweening state.
----@return Features.Fishing.GameObject.MovementStates.Tweening.EasingFunction
+---@return Fishing.GameObject.MovementStates.Tweening.EasingFunction
 function _Fish:_GetRandomTweenFunction()
     local TweenState = MovementStates.Tweening
     local tweenTypes = {}

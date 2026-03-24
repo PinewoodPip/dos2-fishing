@@ -1,9 +1,9 @@
 
-local Fishing = GetFeature("Features.Fishing")
+local Fishing = GetFeature("Fishing")
 local V = Vector.Create
 
----@class Features.Fishing.Skills
-local Skills = GetFeature("Features.Fishing.Skills")
+---@class Fishing.Skills
+local Skills = GetFeature("Fishing.Skills")
 
 Skills.CANNON_BALL_TUNING = {
     IMPACT_SKILL = "Projectile_PIP_Fishing_CannonBall_ScriptedDamage",

@@ -1,5 +1,5 @@
 
----@class Features.Fishing.Trader : Feature
+---@class Fishing.Trader : Feature
 local Trader = {
     TRADER_ROOTTEMPLATE = "a093021b-46fc-4b6d-87dc-21ea6fa535b7",
     DIALOG_FLAGS = {
@@ -9,4 +9,4 @@ local Trader = {
     DIALOG_ID = "PIP_Pip_FortJoy",
     NETMSG_OPEN_CODEX = "Fishing.NetMsgs.Trader.OpenCodex",
 }
-RegisterFeature("Features.Fishing.Trader", Trader)
+RegisterFeature("Fishing.Trader", Trader)

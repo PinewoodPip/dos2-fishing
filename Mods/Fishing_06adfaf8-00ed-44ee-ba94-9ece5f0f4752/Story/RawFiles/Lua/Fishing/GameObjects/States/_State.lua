@@ -1,29 +1,29 @@
 
-local Fishing = GetFeature("Features.Fishing")
+local Fishing = GetFeature("Fishing")
 
----@class Features.Fishing.GameObject.MovementState : Class
----@field Owner Features.Fishing.Minigame.GameObjects.Autonomous
+---@class Fishing.GameObject.MovementState : Class
+---@field Owner Fishing.Minigame.GameObjects.Autonomous
 ---@field Duration number Total duration in seconds.
 ---@field TimeElapsed number Elapsed time in seconds.
 local State = {}
-Fishing:RegisterClass("Features.Fishing.GameObject.MovementState", State)
+Fishing:RegisterClass("Fishing.GameObject.MovementState", State)
 
----@alias Features.Fishing.GameObject.MovementState.ClassName "Features.Fishing.GameObject.MovementState"|"Features.Fishing.GameObject.MovementStates.Floating"|"Features.Fishing.GameObject.MovementStates.Sinking"|"Features.Fishing.GameObject.MovementStates.Tweening"
+---@alias Fishing.GameObject.MovementState.ClassName "Fishing.GameObject.MovementState"|"Fishing.GameObject.MovementStates.Floating"|"Fishing.GameObject.MovementStates.Sinking"|"Fishing.GameObject.MovementStates.Tweening"
 
 ---------------------------------------------
 -- METHODS
 ---------------------------------------------
 
 ---Base constructor.
----@param state table|Features.Fishing.GameObject.MovementState State data.
----@return Features.Fishing.GameObject.MovementState
+---@param state table|Fishing.GameObject.MovementState State data.
+---@return Fishing.GameObject.MovementState
 function State:Create(state)
-    state = self:__Create(state) ---@cast state Features.Fishing.GameObject.MovementState
+    state = self:__Create(state) ---@cast state Fishing.GameObject.MovementState
     state.TimeElapsed = 0
     return state
 end
 
----@param owner Features.Fishing.Minigame.GameObjects.Autonomous
+---@param owner Fishing.Minigame.GameObjects.Autonomous
 function State:SetOwner(owner)
     self.Owner = owner
 end

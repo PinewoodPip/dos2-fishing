@@ -3,7 +3,7 @@ local CharacterSheet = Client.UI.CharacterSheet
 local Examine = Client.UI.Examine
 local Tooltip = Client.Tooltip
 local TooltipUI = Client.UI.Tooltip
-local Fishing = GetFeature("Features.Fishing") ---@class Features.Fishing
+local Fishing = GetFeature("Fishing") ---@class Fishing
 local FishingTSK = Fishing.TranslatedStrings
 
 ---@type Feature
@@ -64,7 +64,7 @@ RegisterFeature("Fishing.Tooltips", Tooltips)
 local TSK = Tooltips.TranslatedStrings
 local isRenderingFishingAbilityTooltip = false
 
----@class Features.Fishing.Tooltips.AbilityBonusEntry
+---@class Fishing.Tooltips.AbilityBonusEntry
 ---@field Label TextLib_TranslatedString
 ---@field Getter fun(char:Character):number
 

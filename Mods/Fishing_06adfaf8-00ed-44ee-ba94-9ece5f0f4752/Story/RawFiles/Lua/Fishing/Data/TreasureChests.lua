@@ -1,7 +1,7 @@
 
----@class Features.Fishing
-local Fishing = GetFeature("Features.Fishing")
----@type table<string, Features.Fishing.TreasureChest>
+---@class Fishing
+local Fishing = GetFeature("Fishing")
+---@type table<string, Fishing.TreasureChest>
 Fishing.TREASURE_CHESTS = {
     ClassicChest = {
         Template = "0f1ec892-bb40-4ce0-a751-9105c0a62f62", -- Classic human treasure chest
@@ -56,15 +56,15 @@ end
 ---------------------------------------------
 
 ---Returns a treasure chet by ID.
----@param id Features.Fishing.TreasureChestID
----@return Features.Fishing.TreasureChest
+---@param id Fishing.TreasureChestID
+---@return Fishing.TreasureChest
 function Fishing.GetTreasureChest(id)
     return Fishing.TREASURE_CHESTS[id]
 end
 
 ---Returns a random treasure chest descriptor.
----@see Features.Fishing.TREASURE_CHESTS
----@return Features.Fishing.TreasureChest
+---@see Fishing.TREASURE_CHESTS
+---@return Fishing.TreasureChest
 function Fishing.GetRandomTreasureChest()
     local totalWeight = 0
     for _, chest in pairs(Fishing.TREASURE_CHESTS) do

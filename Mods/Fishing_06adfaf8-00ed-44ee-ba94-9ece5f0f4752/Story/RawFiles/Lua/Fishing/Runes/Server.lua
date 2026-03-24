@@ -1,5 +1,5 @@
 
-local Runes = GetFeature("Features.Fishing.Runes")
+local Runes = GetFeature("Fishing.Runes")
 
 ---------------------------------------------
 -- EVENT LISTENERS

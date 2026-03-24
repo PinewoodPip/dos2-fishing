@@ -1,8 +1,8 @@
-local Fishing = GetFeature("Features.Fishing")
-local _Autonomous = Fishing:GetClass("Features.Fishing.Minigame.GameObjects.Autonomous")
-local UI = Fishing.UI ---@class Features.Fishing.UI
+local Fishing = GetFeature("Fishing")
+local _Autonomous = Fishing:GetClass("Fishing.Minigame.GameObjects.Autonomous")
+local UI = Fishing.UI ---@class Fishing.UI
 
----@class Features.Fishing.GameObject.TreasureChest : Features.Fishing.Minigame.GameObjects.Autonomous
+---@class Fishing.GameObject.TreasureChest : Fishing.Minigame.GameObjects.Autonomous
 ---@field GetElement fun(self):GenericUI_Element_Color
 ---@field _IsCollidingWithBobber boolean
 local _TreasureChest = {
@@ -13,12 +13,12 @@ local _TreasureChest = {
     STATE_CHANGE_COOLDOWN_RANDOM_FACTOR = 0.25,
     DIFFICULTY = 0.7,
 }
-Fishing:RegisterClass("Features.Fishing.GameObject.TreasureChest", _TreasureChest, {"Features.Fishing.Minigame.GameObjects.Autonomous"})
-UI.RegisterGameObject("Features.Fishing.GameObject.TreasureChest", _TreasureChest)
+Fishing:RegisterClass("Fishing.GameObject.TreasureChest", _TreasureChest, {"Fishing.Minigame.GameObjects.Autonomous"})
+UI.RegisterGameObject("Fishing.GameObject.TreasureChest", _TreasureChest)
 
 local StateClassNames = {
-    FLOATING = "Features.Fishing.GameObject.MovementStates.Floating",
-    SINKING = "Features.Fishing.GameObject.MovementStates.Sinking",
+    FLOATING = "Fishing.GameObject.MovementStates.Floating",
+    SINKING = "Fishing.GameObject.MovementStates.Sinking",
 }
 
 ---------------------------------------------
@@ -27,10 +27,10 @@ local StateClassNames = {
 
 ---@param elementID string
 ---@param size Vector2
----@param state Features.Fishing.GameObject.State
----@return Features.Fishing.GameObject.TreasureChest
+---@param state Fishing.GameObject.State
+---@return Fishing.GameObject.TreasureChest
 function _TreasureChest:Create(elementID, size, state)
-    local instance = _Autonomous.Create(self, elementID, size, state) ---@cast instance Features.Fishing.GameObject.TreasureChest
+    local instance = _Autonomous.Create(self, elementID, size, state) ---@cast instance Fishing.GameObject.TreasureChest
     instance._IsCollidingWithBobber = false
     instance:SetState(instance:CreateState(StateClassNames.SINKING))
     return instance
@@ -64,8 +64,8 @@ function _TreasureChest:TransitionState()
     state.Acceleration = 0
 end
 
----@param stateClassName Features.Fishing.GameObject.MovementState.ClassName
----@return Features.Fishing.GameObject.MovementState
+---@param stateClassName Fishing.GameObject.MovementState.ClassName
+---@return Fishing.GameObject.MovementState
 function _TreasureChest:CreateState(stateClassName)
     local class = Fishing:GetClass(stateClassName)
     return class:Create(self:__RandomStateDuration())

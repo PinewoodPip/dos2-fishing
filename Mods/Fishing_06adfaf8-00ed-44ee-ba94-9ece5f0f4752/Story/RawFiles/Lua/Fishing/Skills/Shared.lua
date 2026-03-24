@@ -1,8 +1,8 @@
 
-local Fishing = GetFeature("Features.Fishing")
+local Fishing = GetFeature("Fishing")
 local CommonStrings = Text.CommonStrings
 
----@class Features.Fishing.Skills : Feature
+---@class Fishing.Skills : Feature
 local Skills = {
     ---Maps a Fishermancy skill to its associated other school.
     ---@type table<string, AbilityType>
@@ -356,7 +356,7 @@ local Skills = {
         },
     },
 }
-RegisterFeature("Features.Fishing.Skills", Skills)
+RegisterFeature("Fishing.Skills", Skills)
 local TSK = Skills.TranslatedStrings
 
 -- Maps skills to the TSK for their custom skill property.

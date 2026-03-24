@@ -21,7 +21,7 @@ local SupportWarning = {
     }
 }
 local TSK = SupportWarning.TranslatedStrings
-RegisterFeature("Features.Fishing.SupportWarning", SupportWarning)
+RegisterFeature("Fishing.SupportWarning", SupportWarning)
 
 ---------------------------------------------
 -- EVENT LISTENERS

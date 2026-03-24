@@ -1,9 +1,9 @@
 
-local Fishing = GetFeature("Features.Fishing")
+local Fishing = GetFeature("Fishing")
 local isEE = EpicEncounters.IsEnabled()
 
----@class Features.Fishing.Skills
-local Skills = GetFeature("Features.Fishing.Skills")
+---@class Fishing.Skills
+local Skills = GetFeature("Fishing.Skills")
 
 Skills.REEL_IN_TUNING = {
     DAMAGE_ON_MOVE_STATUS = "PIP_Fishing_ReelIn_ScriptedForceMoveDamage",

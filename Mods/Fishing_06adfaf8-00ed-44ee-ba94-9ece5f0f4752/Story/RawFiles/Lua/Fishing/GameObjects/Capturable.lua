@@ -3,19 +3,19 @@
 -- if the bobber intersects with it for long enough.
 ---------------------------------------------
 
-local Fishing = GetFeature("Features.Fishing")
+local Fishing = GetFeature("Fishing")
 
----@class Features.Fishing.UI
-local UI = GetFeature("Features.Fishing").UI
+---@class Fishing.UI
+local UI = GetFeature("Fishing").UI
 
----@class Features.Fishing.Minigame.GameObjects.Capturable : Features.Fishing.GameObject
+---@class Fishing.Minigame.GameObjects.Capturable : Fishing.GameObject
 ---@field Progress number
 ---@field _IsCollidingWithBobber boolean
 local _Capturable = {
     Progress = 0,
     _IsCollidingWithBobber = false,
 }
-Fishing:RegisterClass("Features.Fishing.Minigame.GameObjects.Capturable", _Capturable, {"Features.Fishing.GameObject"})
+Fishing:RegisterClass("Fishing.Minigame.GameObjects.Capturable", _Capturable, {"Fishing.GameObject"})
 
 ---------------------------------------------
 -- METHODS
@@ -59,7 +59,7 @@ end
 
 ---@override
 function _Capturable:OnCollideWith(otherObject, _)
-    if otherObject:GetClassName() == "Features.Fishing.GameObject.Bobber" then
+    if otherObject:GetClassName() == "Fishing.GameObject.Bobber" then
         self._IsCollidingWithBobber = true
     end
 end

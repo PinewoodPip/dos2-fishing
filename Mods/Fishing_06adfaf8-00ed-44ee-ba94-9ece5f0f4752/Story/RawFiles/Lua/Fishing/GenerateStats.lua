@@ -4,7 +4,7 @@
 -- If modding, there's no need to fiddle with this, instead overwrite the stats objects as usual.
 ---------------------------------------------
 
-local Fishing = GetFeature("Features.Fishing")
+local Fishing = GetFeature("Fishing")
 
 local MAX_RUNE_TIER = 3
 
@@ -1281,10 +1281,10 @@ local TIER_GOLD_VALUES = {
 
 ---Returns a list of fish descriptors sorted by ID.
 ---Used to avoid the stats entries from being reshuffled when regenerating them (causing annoying diffs)
----@return Features.Fishing.Fish[]
+---@return Fishing.Fish[]
 local function GetSortedFishes()
     local fishDescs = Fishing.GetFishes()
-    local orderedFishes = {} ---@type Features.Fishing.Fish[]
+    local orderedFishes = {} ---@type Fishing.Fish[]
     for _,fish in pairs(fishDescs) do
         table.insert(orderedFishes, fish)
     end

@@ -1,10 +1,10 @@
 
 ---@diagnostic disable-next-line: unused-local
-local Fishing = GetFeature("Features.Fishing")
+local Fishing = GetFeature("Fishing")
 local isEE = EpicEncounters.IsEnabled()
 
----@class Features.Fishing.Skills
-local Skills = GetFeature("Features.Fishing.Skills")
+---@class Fishing.Skills
+local Skills = GetFeature("Fishing.Skills")
 
 Skills.TURN_ON_THE_TIDES_TUNING = {
     BURST_PROJECTILE = "Projectile_PIP_Fishing_TurnOnTheTides_ScriptedDamage",

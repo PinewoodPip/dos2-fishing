@@ -1,8 +1,8 @@
 
-local Fishing = GetFeature("Features.Fishing")
+local Fishing = GetFeature("Fishing")
 
----@class Features.Fishing.Trader
-local Trader = GetFeature("Features.Fishing.Trader")
+---@class Fishing.Trader
+local Trader = GetFeature("Fishing.Trader")
 
 ---------------------------------------------
 -- EVENT LISTENERS

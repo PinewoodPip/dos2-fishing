@@ -1,7 +1,7 @@
 
 local V = Vector.Create
 
-local Fishing = GetFeature("Features.Fishing")
+local Fishing = GetFeature("Fishing")
 
 ---Utility method to register translated strings for a region.
 local T = function(tsk)
@@ -10,7 +10,7 @@ local T = function(tsk)
     return tskEntry.Handle
 end
 
----@type Features.Fishing.Region.FishEntry[]
+---@type Fishing.Region.FishEntry[]
 local SEWER_FISHES = {
     {
         ID = "Piranha",
@@ -34,7 +34,7 @@ local SEWER_FISHES = {
     },
 }
 
----@type Features.Fishing.Region[]
+---@type Fishing.Region[]
 local regions = {
     {
         ID = "Arx.SouthDeathfogRivers",

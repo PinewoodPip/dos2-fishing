@@ -1,24 +1,24 @@
 
-local Fishing = GetFeature("Features.Fishing")
-local UI = Fishing.UI ---@class Features.Fishing.UI
-local StateClass = Fishing:GetClass("Features.Fishing.GameObject.MovementState")
+local Fishing = GetFeature("Fishing")
+local UI = Fishing.UI ---@class Fishing.UI
+local StateClass = Fishing:GetClass("Fishing.GameObject.MovementState")
 
----@class Features.Fishing.GameObject.MovementStates.Floating : Features.Fishing.GameObject.MovementState
+---@class Fishing.GameObject.MovementStates.Floating : Fishing.GameObject.MovementState
 local _Floating = {
     Type = "Floating",
 }
-Fishing:RegisterClass("Features.Fishing.GameObject.MovementStates.Floating", _Floating, {"Features.Fishing.GameObject.MovementState"})
+Fishing:RegisterClass("Fishing.GameObject.MovementStates.Floating", _Floating, {"Fishing.GameObject.MovementState"})
 
 ---------------------------------------------
 -- METHODS
 ---------------------------------------------
 
 ---@param duration number Duration in seconds.
----@return Features.Fishing.GameObject.MovementStates.Floating
+---@return Fishing.GameObject.MovementStates.Floating
 function _Floating:Create(duration)
     local state = StateClass.Create(self, {
         Duration = duration,
-    }) ---@cast state Features.Fishing.GameObject.MovementStates.Floating
+    }) ---@cast state Fishing.GameObject.MovementStates.Floating
     return state
 end
 

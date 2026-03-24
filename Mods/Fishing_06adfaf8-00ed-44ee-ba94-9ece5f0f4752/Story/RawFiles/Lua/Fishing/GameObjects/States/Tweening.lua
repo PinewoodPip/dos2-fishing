@@ -1,20 +1,20 @@
 
-local Fishing = GetFeature("Features.Fishing")
-local UI = Fishing.UI ---@class Features.Fishing.UI
-local StateClass = Fishing:GetClass("Features.Fishing.GameObject.MovementState")
+local Fishing = GetFeature("Fishing")
+local UI = Fishing.UI ---@class Fishing.UI
+local StateClass = Fishing:GetClass("Fishing.GameObject.MovementState")
 
----@class Features.Fishing.GameObject.MovementStates.Tweening : Features.Fishing.GameObject.MovementState
+---@class Fishing.GameObject.MovementStates.Tweening : Fishing.GameObject.MovementState
 ---@field TargetPosition number Target position within minigame bounds.
----@field EasingFunction Features.Fishing.GameObject.MovementStates.Tweening.EasingFunction
+---@field EasingFunction Fishing.GameObject.MovementStates.Tweening.EasingFunction
 ---@field _StartPosition number
 local _Tweening = {
     Type = "Tweening",
 }
-Fishing:RegisterClass("Features.Fishing.GameObject.MovementStates.Tweening", _Tweening, {"Features.Fishing.GameObject.MovementState"})
+Fishing:RegisterClass("Fishing.GameObject.MovementStates.Tweening", _Tweening, {"Fishing.GameObject.MovementState"})
 
----@alias Features.Fishing.GameObject.MovementStates.Tweening.EasingFunction "Quadratic"|"Quartic"
+---@alias Fishing.GameObject.MovementStates.Tweening.EasingFunction "Quadratic"|"Quartic"
 
----@type table<Features.Fishing.GameObject.MovementStates.Tweening.EasingFunction, fun(t: number): number>
+---@type table<Fishing.GameObject.MovementStates.Tweening.EasingFunction, fun(t: number): number>
 _Tweening.EASING_FUNCTIONS = {
     ["Quadratic"] = function (t)
         if t < 0.5 then
@@ -36,16 +36,16 @@ _Tweening.EASING_FUNCTIONS = {
 -- METHODS
 ---------------------------------------------
 
----@param easingFunction Features.Fishing.GameObject.MovementStates.Tweening.EasingFunction
+---@param easingFunction Fishing.GameObject.MovementStates.Tweening.EasingFunction
 ---@param targetPosition number Position within minigame bounds.
 ---@param duration number Duration in seconds.
----@return Features.Fishing.GameObject.MovementStates.Tweening
+---@return Fishing.GameObject.MovementStates.Tweening
 function _Tweening:Create(easingFunction, targetPosition, duration)
     local state = StateClass.Create(self, {
         EasingFunction = easingFunction,
         TargetPosition = targetPosition,
         Duration = duration,
-    }) ---@cast state Features.Fishing.GameObject.MovementStates.Tweening
+    }) ---@cast state Fishing.GameObject.MovementStates.Tweening
     return state
 end
 

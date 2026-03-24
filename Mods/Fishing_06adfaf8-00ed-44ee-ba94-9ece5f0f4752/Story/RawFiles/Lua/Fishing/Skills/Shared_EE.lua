@@ -1,6 +1,6 @@
 
----@class Features.Fishing.Skills
-local Skills = GetFeature("Features.Fishing.Skills")
+---@class Fishing.Skills
+local Skills = GetFeature("Fishing.Skills")
 local TSK = Skills.TranslatedStrings
 
 -- Register TSKs

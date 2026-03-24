@@ -1,7 +1,7 @@
 
-local Fishing = GetFeature("Features.Fishing")
+local Fishing = GetFeature("Fishing")
 
----@class Features.Fishing.Runes : Feature
+---@class Fishing.Runes : Feature
 local Runes = {
     -- Slots that accept fish runes.
     ---@type set<ItemSlot>
@@ -68,7 +68,7 @@ end
 
 ---Returns the fish associated with a fish rune.
 ---@param rune Item|StatsLib_StatsEntry_Object
----@return Features.Fishing.Fish? --`nil` if the item is not a fish rune.
+---@return Fishing.Fish? --`nil` if the item is not a fish rune.
 function Runes.GetFish(rune)
     local templateID
     if IsItemObject(rune) then
@@ -113,7 +113,7 @@ end
 
 ---Returns the highest tier of a fish rune that is equipped by char, if any.
 ---@param char Character
----@param fish Features.Fishing.Fish|string
+---@param fish Fishing.Fish|string
 ---@return integer? -- `nil` if the fish rune is not equipped.
 function Runes.GetEquippedRuneTier(char, fish)
     fish = type(fish) == "string" and Fishing.GetFish(fish) or fish

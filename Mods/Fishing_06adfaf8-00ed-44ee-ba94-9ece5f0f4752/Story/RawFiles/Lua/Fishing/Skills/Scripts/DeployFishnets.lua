@@ -1,6 +1,6 @@
 
----@class Features.Fishing.Skills
-local Skills = GetFeature("Features.Fishing.Skills")
+---@class Fishing.Skills
+local Skills = GetFeature("Fishing.Skills")
 
 Skills.DEPLOY_FISHNETS_TUNING = {
     PROJECTILE_ID = "Projectile_PIP_Fishing_FishNet",

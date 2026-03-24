@@ -3,21 +3,21 @@ local DefaultTable = DataStructures.Get("DataStructures_DefaultTable")
 local Set = DataStructures.Get("DataStructures_Set")
 local V = Vector.Create
 
----@class Features.Fishing : Feature
+---@class Fishing : Feature
 local Fishing = {
-    _Fish = {}, ---@type table<Features.Fishing.FishID, Features.Fishing.Fish>
-    _FishBehaviours = {}, ---@type table<Features.Fishing.Fish.BehaviourType, Features.Fishing.Fish.Behaviour>
-    _RegionsByLevel = DefaultTable.Create({}), ---@type DataStructures_DefaultTable<string, Features.Fishing.Region[]>
-    _FishesByLevel = DefaultTable.Create({}), ---@type table<string, set<Features.Fishing.FishID>> Maps level ID to fish IDs that can be found in that level.
-    _FishToRegions = DefaultTable.Create({}), ---@type table<Features.Fishing.FishID, set<Features.Fishing.RegionID>> Maps fish ID to regions where it can be found.
-    _RootTemplateToFish = {}, ---@type table<GUID.ItemTemplate, Features.Fishing.FishID>
-    _RegionsByID = {}, ---@type table<Features.Fishing.RegionID, Features.Fishing.Region>
+    _Fish = {}, ---@type table<Fishing.FishID, Fishing.Fish>
+    _FishBehaviours = {}, ---@type table<Fishing.Fish.BehaviourType, Fishing.Fish.Behaviour>
+    _RegionsByLevel = DefaultTable.Create({}), ---@type DataStructures_DefaultTable<string, Fishing.Region[]>
+    _FishesByLevel = DefaultTable.Create({}), ---@type table<string, set<Fishing.FishID>> Maps level ID to fish IDs that can be found in that level.
+    _FishToRegions = DefaultTable.Create({}), ---@type table<Fishing.FishID, set<Fishing.RegionID>> Maps fish ID to regions where it can be found.
+    _RootTemplateToFish = {}, ---@type table<GUID.ItemTemplate, Fishing.FishID>
+    _RegionsByID = {}, ---@type table<Fishing.RegionID, Fishing.Region>
     _CharactersFishing = Set.Create(), -- Not synchronized across clients!
 
-    NETMSG_STARTED_FISHING = "Features.Fishing.NetMsgs.CharacterStartedFishing",
-    NETMSG_STOPPED_FISHING = "Features.Fishing.NetMsgs.CharacterStoppedFishing",
-    NETMSG_ENCOUNTERED_FISH = "Features.Fishing.NetMsgs.CharacterEncounteredFish",
-    NETMSG_FOUND_TREASURE_CHEST = "Features.Fishing.NetMsgs.CharacterFoundTreasureChest",
+    NETMSG_STARTED_FISHING = "Fishing.NetMsgs.CharacterStartedFishing",
+    NETMSG_STOPPED_FISHING = "Fishing.NetMsgs.CharacterStoppedFishing",
+    NETMSG_ENCOUNTERED_FISH = "Fishing.NetMsgs.CharacterEncounteredFish",
+    NETMSG_FOUND_TREASURE_CHEST = "Fishing.NetMsgs.CharacterFoundTreasureChest",
 
     MODVAR_UNIQUE_FISH_CAUGHT = "PlaythroughUniqueFishCaught",
     MODVAR_REGIONS_DISCOVERED = "RegionsDiscovered",
@@ -35,7 +35,7 @@ local Fishing = {
         ["483ecb63-b01a-4452-be65-904d9ff03554"] = true, -- Red/white bobber.
         ["5a14df6e-8e63-425c-9802-1916d630212e"] = true, -- Yellow bobber.
     },
-    ---@type table<GUID, Features.Fishing.BobberColor>
+    ---@type table<GUID, Fishing.BobberColor>
     VISUAL_TEMPLATE_TO_BOBBER_COLOR = {
         ["c7639619-4c44-44a3-af53-81275a80af15"] = {
             NormalColor = Color.CreateFromHex(Color.LARIAN.POISON_GREEN),
@@ -277,12 +277,12 @@ local Fishing = {
     },
 
     Events = {
-        CharacterStartedFishing = {}, ---@type Event<Features.Fishing.Events.CharacterStartedFishing>
-        CharacterStoppedFishing = {}, ---@type Event<Features.Fishing.Events.CharacterStoppedFishing>
-        FishDiscovered = {}, ---@type Event<Features.Fishing.Events.FishDiscovered> -- **Server-only.**
+        CharacterStartedFishing = {}, ---@type Event<Fishing.Events.CharacterStartedFishing>
+        CharacterStoppedFishing = {}, ---@type Event<Fishing.Events.CharacterStoppedFishing>
+        FishDiscovered = {}, ---@type Event<Fishing.Events.FishDiscovered> -- **Server-only.**
     },
     Hooks = {
-        IsFishingRod = {}, ---@type Event<Features.Fishing.Hooks.IsFishingRod>
+        IsFishingRod = {}, ---@type Event<Fishing.Hooks.IsFishingRod>
     },
 }
 RegisterFeature("Fishing", Fishing)
@@ -337,78 +337,78 @@ Fishing.LEVEL_NAME_TSKHANDLES = {
 -- EVENTS
 ---------------------------------------------
 
----@class Features.Fishing.Hooks.IsFishingRod
+---@class Fishing.Hooks.IsFishingRod
 ---@field Character Character
 ---@field Item Item
 ---@field IsFishingRod boolean Hookable. Defaults to false.
 
----@class Features.Fishing.Events.CharacterStartedFishing
+---@class Fishing.Events.CharacterStartedFishing
 ---@field Character Character
----@field Region Features.Fishing.Region
+---@field Region Fishing.Region
 ---@field TargetPosition vec3
 
----@class Features.Fishing.Events.CharacterStoppedFishing
+---@class Fishing.Events.CharacterStoppedFishing
 ---@field Character Character
----@field Reason Features.Fishing.MinigameExitReason
----@field CaughtFish Features.Fishing.Fish? The fish caught, if any.
----@field CaughtChest Features.Fishing.TreasureChest? The chest caught, if any.
+---@field Reason Fishing.MinigameExitReason
+---@field CaughtFish Fishing.Fish? The fish caught, if any.
+---@field CaughtChest Fishing.TreasureChest? The chest caught, if any.
 
----@class Features.Fishing.Events.FishDiscovered
----@field Fish Features.Fishing.Fish
+---@class Fishing.Events.FishDiscovered
+---@field Fish Fishing.Fish
 
 ---------------------------------------------
 -- NET MESSAGES
 ---------------------------------------------
 
----@class Features.Fishing.NetMsgs.CharacterStartedFishing : NetLib_Message_Character
----@field RegionID Features.Fishing.RegionID
----@field FishID Features.Fishing.FishID
+---@class Fishing.NetMsgs.CharacterStartedFishing : NetLib_Message_Character
+---@field RegionID Fishing.RegionID
+---@field FishID Fishing.FishID
 ---@field TargetPosition vec3
 
----@class Features.Fishing.NetMsgs.CharacterStoppedFishing : NetLib_Message_Character
----@field Reason Features.Fishing.MinigameExitReason
----@field CaughtFishID Features.Fishing.FishID? `nil` unless the minigame was won.
----@field CaughtChestID Features.Fishing.TreasureChestID? `nil` unless a treasure chest was caught.
+---@class Fishing.NetMsgs.CharacterStoppedFishing : NetLib_Message_Character
+---@field Reason Fishing.MinigameExitReason
+---@field CaughtFishID Fishing.FishID? `nil` unless the minigame was won.
+---@field CaughtChestID Fishing.TreasureChestID? `nil` unless a treasure chest was caught.
 
----@class Features.Fishing.NetMsgs.CharacterEncounteredFish : NetLib_Message_Character
----@field FishID Features.Fishing.FishID
+---@class Fishing.NetMsgs.CharacterEncounteredFish : NetLib_Message_Character
+---@field FishID Fishing.FishID
 
----@class Features.Fishing.NetMsgs.CharacterFoundTreasureChest : NetLib_Message_Character
----@field TreasureChestID Features.Fishing.TreasureChestID
+---@class Fishing.NetMsgs.CharacterFoundTreasureChest : NetLib_Message_Character
+---@field TreasureChestID Fishing.TreasureChestID
 
 ---------------------------------------------
 -- CLASSES
 ---------------------------------------------
 
----@alias Features.Fishing.FishID string
----@alias Features.Fishing.RegionID string
----@alias Features.Fishing.TreasureChestID string
+---@alias Fishing.FishID string
+---@alias Fishing.RegionID string
+---@alias Fishing.TreasureChestID string
 
----@alias Features.Fishing.MinigameExitReason "Success"|"Failure"|"Cancelled"|"ReeledInTooEarly"
+---@alias Fishing.MinigameExitReason "Success"|"Failure"|"Cancelled"|"ReeledInTooEarly"
 
 ---@diagnostic disable-next-line: duplicate-doc-alias
----@alias Features.Fishing.Fish.BehaviourType string
+---@alias Fishing.Fish.BehaviourType string
 
----@class Features.Fishing.BobberColor
+---@class Fishing.BobberColor
 ---@field NormalColor RGBColor
 ---@field HighlightColor RGBColor
 
----@class Features.Fishing.Fish.Behaviour.Transition
----@field TargetState Features.Fishing.GameObject.MovementState.ClassName
+---@class Fishing.Fish.Behaviour.Transition
+---@field TargetState Fishing.GameObject.MovementState.ClassName
 ---@field Weight number Relative chance for this transition to be picked.
 
----@class Features.Fishing.Fish.Behaviour
----@field Type Features.Fishing.Fish.BehaviourType
----@field InitialState Features.Fishing.GameObject.MovementState.ClassName
----@field Transitions table<Features.Fishing.GameObject.MovementState.ClassName, Features.Fishing.Fish.Behaviour.Transition[]> Maps current state to possible transitions.
+---@class Fishing.Fish.Behaviour
+---@field Type Fishing.Fish.BehaviourType
+---@field InitialState Fishing.GameObject.MovementState.ClassName
+---@field Transitions table<Fishing.GameObject.MovementState.ClassName, Fishing.Fish.Behaviour.Transition[]> Maps current state to possible transitions.
 
----@class Features.Fishing.TreasureChest
----@field ID Features.Fishing.TreasureChestID?
+---@class Fishing.TreasureChest
+---@field ID Fishing.TreasureChestID?
 ---@field Template GUID.ItemTemplate
 ---@field TreasureTable string
 ---@field SpawnWeight number? Defaults to 1.
 
----@class Features.Fishing.Fish : I_Identifiable, I_Describable
+---@class Fishing.Fish : I_Identifiable, I_Describable
 ---@field Icon icon? Override for the fish's icon, used instead of the template's.
 ---@field UndiscoveredIcon icon?
 ---@field Rarity ItemLib_Rarity
@@ -416,7 +416,7 @@ Fishing.LEVEL_NAME_TSKHANDLES = {
 ---@field RootTemplates table<integer, GUID.ItemTemplate> Maps fish rune tier to the corresponding template.
 ---@field Difficulty number Affects the "intensity" of the fish's AI. Higher values are expected to translate to faster movement or shorter intervals between movement states.
 ---@field Endurance number Multiplier for how much progress the player needs to accumulate to catch the fish.
----@field Behaviour Features.Fishing.Fish.BehaviourType
+---@field Behaviour Fishing.Fish.BehaviourType
 local _Fish = {
     Difficulty = 1,
     Endurance = 1,
@@ -486,11 +486,11 @@ function _Fish:GetRarityTooltip()
     }
 end
 
----@class Features.Fishing.Region : I_Identifiable
+---@class Fishing.Region : I_Identifiable
 ---@field LevelID string
 ---@field NameHandle TranslatedStringHandle
 ---@field Bounds Vector4 X, Y, width, height bounds of the area where fishing will be possible when near deepwater surfaces.
----@field Fish Features.Fishing.Region.FishEntry[]
+---@field Fish Fishing.Region.FishEntry[]
 ---@field Priority integer? Defaults to 0.
 ---@field FishingAreas Vector4[]? Bounds of areas where fishing is possible even without deepwater surfaces.
 ---@field FishableSurfaceType SurfaceType? Override for the surface type that is considered fishable by default within the region.
@@ -498,15 +498,15 @@ local _Region = {
     Priority = 0,
 }
 
----@class Features.Fishing.Region.FishEntry
----@field ID Features.Fishing.FishID ID of the fish.
+---@class Fishing.Region.FishEntry
+---@field ID Fishing.FishID ID of the fish.
 ---@field Weight number Relative chance for the fish to be picked.
 
 ---------------------------------------------
 -- METHODS
 ---------------------------------------------
 
----@param data Features.Fishing.Fish
+---@param data Fishing.Fish
 function Fishing.RegisterFish(data)
     if not data.ID then Fishing:__Error("RegisterFish", "Data must include ID.") end
     Inherit(data, _Fish)
@@ -521,7 +521,7 @@ function Fishing.RegisterFish(data)
 end
 
 ---Registers a fishing region.
----@param data Features.Fishing.Region
+---@param data Fishing.Region
 function Fishing.RegisterRegion(data)
     if not data.ID then Fishing:__Error("RegisterRegion", "Data must include ID.") end
     if #data.Fish == 0 then Fishing:__Error("RegisterRegion", "Regions must have at least one fish entry.") end
@@ -542,7 +542,7 @@ function Fishing.RegisterRegion(data)
 end
 
 ---Returns whether a fish can be caught in the given level.
----@param fishID Features.Fishing.FishID
+---@param fishID Fishing.FishID
 ---@param levelID string
 ---@return boolean
 function Fishing.IsFishAvailable(fishID, levelID)
@@ -550,11 +550,11 @@ function Fishing.IsFishAvailable(fishID, levelID)
 end
 
 ---Returns the regions that a fish can be caught in.
----@param fishID Features.Fishing.FishID
----@return table<Features.Fishing.RegionID, Features.Fishing.Region>
+---@param fishID Fishing.FishID
+---@return table<Fishing.RegionID, Fishing.Region>
 function Fishing.GetFishRegions(fishID)
     local regionIDs = Fishing._FishToRegions[fishID]
-    local regions = {} ---@type table<Features.Fishing.RegionID, Features.Fishing.Region>
+    local regions = {} ---@type table<Fishing.RegionID, Fishing.Region>
     for regionID,_ in pairs(regionIDs) do
         regions[regionID] = Fishing.GetRegion(regionID)
     end
@@ -562,33 +562,33 @@ function Fishing.GetFishRegions(fishID)
 end
 
 ---Registers a fish behaviour.
----@param behaviour Features.Fishing.Fish.Behaviour
+---@param behaviour Fishing.Fish.Behaviour
 function Fishing.RegisterFishBehaviour(behaviour)
     if not behaviour.Type then Fishing:__Error("RegisterFishBehaviour", "Missing Type field") end
     Fishing._FishBehaviours[behaviour.Type] = behaviour
 end
 
 ---Returns a fish behaviour by ID.
----@param type Features.Fishing.Fish.BehaviourType
----@return Features.Fishing.Fish.Behaviour
+---@param type Fishing.Fish.BehaviourType
+---@return Fishing.Fish.Behaviour
 function Fishing.GetBehaviour(type)
     return Fishing._FishBehaviours[type]
 end
 
 ---@param levelID string
----@return Features.Fishing.Region[]
+---@return Fishing.Region[]
 function Fishing.GetRegions(levelID)
     return Fishing._RegionsByLevel[levelID]
 end
 
----@param id Features.Fishing.RegionID
----@return Features.Fishing.Region?
+---@param id Fishing.RegionID
+---@return Fishing.Region?
 function Fishing.GetRegion(id)
     return Fishing._RegionsByID[id]
 end
 
 ---Returns the name of a region.
----@param region Features.Fishing.Region
+---@param region Fishing.Region
 ---@param appendLevel boolean? Whether to suffix the name with the level name. Defaults to `false`.
 ---@return string
 function Fishing.GetRegionName(region, appendLevel)
@@ -691,9 +691,9 @@ function Fishing.IsFishing(char)
 end
 
 ---Returns the amount of each fish that char has caught.
----@overload fun(char: Character, fishID: Features.Fishing.FishID): integer
+---@overload fun(char: Character, fishID: Fishing.FishID): integer
 ---@param char Character
----@return table<Features.Fishing.FishID, integer> -- Maps fish ID to catch count.
+---@return table<Fishing.FishID, integer> -- Maps fish ID to catch count.
 function Fishing.GetFishCatchCount(char, fishID)
     local fishCounts = Fishing:GetUserVariable(char, Fishing.USERVAR_FISH_CAUGHT) or {}
     if fishID then -- ID overload.
@@ -716,14 +716,14 @@ function Fishing.GetTotalFishCaught(char)
 end
 
 ---Returns the total amount of times each fish has been encountered.
----@return table<Features.Fishing.FishID, integer?> -- Maps fish ID to times encountered (`nil` if unencountered).
+---@return table<Fishing.FishID, integer?> -- Maps fish ID to times encountered (`nil` if unencountered).
 function Fishing.GetTotalFishEncounters()
     return Fishing:GetModVariable(Mod.GUIDS.FISHING, Fishing.MODVAR_FISHES_ENCOUNTERED) or {}
 end
 
 ---Increments the amount of fish caught by char.
 ---@param char Character
----@param fishID Features.Fishing.FishID
+---@param fishID Fishing.FishID
 ---@param count integer? Defaults to 1.
 function Fishing.AddFishCatchCount(char, fishID, count)
     count = count or 1
@@ -734,7 +734,7 @@ function Fishing.AddFishCatchCount(char, fishID, count)
 end
 
 ---Increments the encounter counter for a fish.
----@param fishID Features.Fishing.FishID
+---@param fishID Fishing.FishID
 function Fishing.AddFishEncounter(fishID)
     local encounters = Fishing.GetTotalFishEncounters()
     encounters[fishID] = (encounters[fishID] or 0) + 1
@@ -742,7 +742,7 @@ function Fishing.AddFishEncounter(fishID)
 end
 
 ---Returns the fish types that were caught in this playthrough.
----@return set<Features.Fishing.FishID>, integer -- Fish IDs and count.
+---@return set<Fishing.FishID>, integer -- Fish IDs and count.
 function Fishing.GetUniqueFishCaught()
     local uniqueFishCaught = Fishing:GetModVariable(Mod.GUIDS.FISHING, Fishing.MODVAR_UNIQUE_FISH_CAUGHT) or {}
     local count = 0
@@ -753,7 +753,7 @@ function Fishing.GetUniqueFishCaught()
 end
 
 ---Returns whether a fish has been ever caught by the party.
----@param fishID Features.Fishing.FishID
+---@param fishID Fishing.FishID
 ---@return boolean
 function Fishing.IsFishDiscovered(fishID)
     local uniqueFishCaught = Fishing:GetModVariable(Mod.GUIDS.FISHING, Fishing.MODVAR_UNIQUE_FISH_CAUGHT)
@@ -761,7 +761,7 @@ function Fishing.IsFishDiscovered(fishID)
 end
 
 ---Returns whether a fishing region has been used at least once.
----@param regionID Features.Fishing.RegionID
+---@param regionID Fishing.RegionID
 ---@return boolean
 function Fishing.IsRegionDiscovered(regionID)
     local discoveredRegions = Fishing:GetModVariable(Mod.GUIDS.FISHING, Fishing.MODVAR_REGIONS_DISCOVERED)
@@ -769,7 +769,7 @@ function Fishing.IsRegionDiscovered(regionID)
 end
 
 ---Marks a fishing region as being known to the party.
----@param regionID Features.Fishing.RegionID
+---@param regionID Fishing.RegionID
 function Fishing.MarkRegionAsDiscovered(regionID)
     local discoveredRegions = Fishing:GetModVariable(Mod.GUIDS.FISHING, Fishing.MODVAR_REGIONS_DISCOVERED)
     discoveredRegions[regionID] = true
@@ -821,31 +821,31 @@ function Fishing.GetAbilityRequirements(level)
     return requirements
 end
 
----@param id Features.Fishing.FishID
----@return Features.Fishing.Fish?
+---@param id Fishing.FishID
+---@return Fishing.Fish?
 function Fishing.GetFish(id)
     return Fishing._Fish[id]
 end
 
 ---Returns a fish by its root template.
 ---@param templateID GUID.ItemTemplate
----@return Features.Fishing.Fish?
+---@return Fishing.Fish?
 function Fishing.GetFishByTemplate(templateID)
     local fishID = Fishing._RootTemplateToFish[templateID]
     return Fishing.GetFish(fishID)
 end
 
----@return table<Features.Fishing.FishID, Features.Fishing.Fish>
+---@return table<Fishing.FishID, Fishing.Fish>
 function Fishing.GetFishes()
     return Fishing._Fish
 end
 
 ---@param pos Vector3D
----@return Features.Fishing.Region?
+---@return Fishing.Region?
 function Fishing.GetRegionAt(pos)
     local levelID = Entity.GetLevel().LevelDesc.LevelName
     local regions = Fishing.GetRegions(levelID)
-    local region = nil ---@type Features.Fishing.Region
+    local region = nil ---@type Fishing.Region
     for _,levelRegion in ipairs(regions) do
         local bounds = levelRegion.Bounds
         -- Boundaries go from north-west to south-east.
@@ -859,8 +859,8 @@ function Fishing.GetRegionAt(pos)
     return region
 end
 
----@param region Features.Fishing.Region
----@return Features.Fishing.Fish
+---@param region Fishing.Region
+---@return Fishing.Fish
 function Fishing.GetRandomFish(region)
     local totalWeight = 0
     local fishID
@@ -885,7 +885,7 @@ function Fishing.GetRandomFish(region)
 end
 
 ---Returns whether an item is usable as a fishing rod.
----@see Features.Fishing.Hooks.IsFishingRod
+---@see Fishing.Hooks.IsFishingRod
 ---@param item Item
 ---@return boolean
 function Fishing.IsFishingRod(item)
@@ -907,9 +907,9 @@ function Fishing.HasFishingRodEquipped(char)
 end
 
 ---Returns the bobber colors of char, if they have a fishing rod equipped.
----@see Features.Fishing.VISUAL_TEMPLATE_TO_BOBBER_COLOR
+---@see Fishing.VISUAL_TEMPLATE_TO_BOBBER_COLOR
 ---@param char Character
----@return Features.Fishing.BobberColor? -- `nil` if the character has no fishing rod.
+---@return Fishing.BobberColor? -- `nil` if the character has no fishing rod.
 function Fishing.GetBobberColor(char)
     local rod = Item.GetEquippedItem(char, "Weapon")
     if not rod or not Fishing.IsFishingRod(rod) then return nil end

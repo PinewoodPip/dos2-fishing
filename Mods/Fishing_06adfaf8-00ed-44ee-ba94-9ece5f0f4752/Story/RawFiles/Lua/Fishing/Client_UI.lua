@@ -5,10 +5,10 @@ local PlayerInfo = Client.UI.PlayerInfo
 local Minimap = Client.UI.Minimap
 local V = Vector.Create
 
----@class Features.Fishing
-local Fishing = GetFeature("Features.Fishing")
+---@class Fishing
+local Fishing = GetFeature("Fishing")
 local TSK = Fishing.TranslatedStrings
-local UI = Generic.Create("Features.Fishing") ---@class Features.Fishing.UI : GenericUI_Instance
+local UI = Generic.Create("Fishing") ---@class Fishing.UI : GenericUI_Instance
 Fishing.UI = UI
 UI:Hide()
 
@@ -39,16 +39,16 @@ UI.OVERFLOW_MARGINS = {
 UI.Elements = {} -- Holds references to various important elements of the UI.
 
 UI._CharacterHandle = nil ---@type CharacterHandle The owner of this instance.
-UI._GameObjects = {} ---@type Features.Fishing.GameObject[]
-UI._GameObjectClass = nil ---@type Features.Fishing.GameObject
-UI._GameObjectClasses = {} ---@type table<string, Features.Fishing.GameObject>
-UI._GameObjectStateClass = nil ---@type Features.Fishing.GameObject.State
+UI._GameObjects = {} ---@type Fishing.GameObject[]
+UI._GameObjectClass = nil ---@type Fishing.GameObject
+UI._GameObjectClasses = {} ---@type table<string, Fishing.GameObject>
+UI._GameObjectStateClass = nil ---@type Fishing.GameObject.State
 UI._TreasureChestSpawnTimerID = nil ---@type string?
-UI._TreasureChestGameObject = nil ---@type Features.Fishing.GameObject.TreasureChest?
-UI._BobberGameObject = nil ---@type Features.Fishing.GameObject.Bobber?
+UI._TreasureChestGameObject = nil ---@type Fishing.GameObject.TreasureChest?
+UI._BobberGameObject = nil ---@type Fishing.GameObject.Bobber?
 
 UI.USE_LEGACY_HOOKS = false
-UI.Hooks.GetProgressDrain = UI:AddSubscribableHook("GetProgressDrain") ---@type Event<Features.Fishing.UI.Hooks.GetProgressDrain>
+UI.Hooks.GetProgressDrain = UI:AddSubscribableHook("GetProgressDrain") ---@type Event<Fishing.UI.Hooks.GetProgressDrain>
 
 ---------------------------------------------
 -- CONSTANTS
@@ -82,11 +82,11 @@ UI.TREASURE_CHEST_EARLY_SPAWN_PROGRESS_THRESHOLD = 0.8 -- Progress threshold pas
 -- EVENTS/HOOKS
 ---------------------------------------------
 
----@class Features.Fishing.UI.Hooks.GetProgressDrain
+---@class Fishing.UI.Hooks.GetProgressDrain
 ---@field Drain integer Hookable.
----@field GameState Features.Fishing.GameState
+---@field GameState Fishing.GameState
 ---@field Character EclCharacter
----@field Fish Features.Fishing.Fish
+---@field Fish Fishing.Fish
 
 ---------------------------------------------
 -- METHODS
@@ -128,16 +128,16 @@ function UI.Start(char)
 
     UI:Show()
 
-    GameState.Events.RunningTick:Subscribe(UI._OnTick, nil, "Features.Fishing.UI.Tick")
+    GameState.Events.RunningTick:Subscribe(UI._OnTick, nil, "Fishing.UI.Tick")
 end
 
 ---Returns the minigame state model.
----@return Features.Fishing.GameStates.Fishing?
+---@return Fishing.GameStates.Fishing?
 function UI.GetGameState()
     if not UI._CharacterHandle then return nil end
     local char = Character.Get(UI._CharacterHandle)
     if not char then return nil end
-    local state = Fishing.GetState(char) ---@cast state Features.Fishing.GameStates.Fishing
+    local state = Fishing.GetState(char) ---@cast state Fishing.GameStates.Fishing
     return state
 end
 
@@ -149,7 +149,7 @@ function UI.GetCharacter()
 end
 
 ---Returns how much progress should drain per second.
----@see Features.Fishing.UI.Hooks.GetProgressDrain
+---@see Fishing.UI.Hooks.GetProgressDrain
 ---@return number
 function UI.GetProgressDrain()
     local char = UI.GetCharacter()
@@ -191,19 +191,19 @@ function UI.AddProgress(progress)
 end
 
 ---Returns the gameobject of the fish being caught.
----@return Features.Fishing.GameObject.Fish
+---@return Fishing.GameObject.Fish
 function UI.GetFishGameObject()
     return UI._FishGameObject
 end
 
 ---Returns the gameobject of the treasure chest, if any.
----@return Features.Fishing.GameObject.TreasureChest?
+---@return Fishing.GameObject.TreasureChest?
 function UI.GetTreasureChestGameObject()
     return UI._TreasureChestGameObject
 end
 
 ---Returns the gameobject of the bobber.
----@return Features.Fishing.GameObject.Bobber?
+---@return Fishing.GameObject.Bobber?
 function UI.GetBobberGameObject()
     return UI._BobberGameObject
 end
@@ -249,14 +249,14 @@ function UI.CaptureTreasureChest()
 end
 
 ---Returns how much progress is required to catch a game object.
----@param capturable Features.Fishing.Minigame.GameObjects.Capturable? Defaults to the current fish.
+---@param capturable Fishing.Minigame.GameObjects.Capturable? Defaults to the current fish.
 ---@returns number
 function UI.GetRequiredProgress(capturable)
     capturable = capturable or UI.GetFishGameObject()
     return capturable:GetRequiredProgress()
 end
 
----@param reason Features.Fishing.MinigameExitReason
+---@param reason Fishing.MinigameExitReason
 function UI.Cleanup(reason)
     local state = UI.GetGameState()
 
@@ -267,14 +267,14 @@ function UI.Cleanup(reason)
     UI._ClearTreasureChest()
     UI._GameObjects = {}
 
-    GameState.Events.RunningTick:Unsubscribe("Features.Fishing.UI.Tick")
+    GameState.Events.RunningTick:Unsubscribe("Fishing.UI.Tick")
 
     UI:Hide()
 
     Fishing.Stop(Character.Get(state.CharacterHandle), reason)
 end
 
----@return Features.Fishing.GameObject[]
+---@return Fishing.GameObject[]
 function UI.GetGameObjects()
     return UI._GameObjects
 end
@@ -362,13 +362,13 @@ function UI.GetBobberUpperBound()
 end
 
 ---@param className string
----@param class Features.Fishing.GameObject
+---@param class Fishing.GameObject
 function UI.RegisterGameObject(className, class)
     UI._GameObjectClasses[className] = class
 end
 
 ---Adds a game object to the minigame.
----@param gameObject Features.Fishing.GameObject
+---@param gameObject Fishing.GameObject
 function UI.AddGameObject(gameObject)
     table.insert(UI._GameObjects, gameObject)
     gameObject:UpdatePosition()
@@ -376,7 +376,7 @@ function UI.AddGameObject(gameObject)
 end
 
 ---Removes a game object from the minigame.
----@param gameObject Features.Fishing.GameObject
+---@param gameObject Fishing.GameObject
 function UI.RemoveGameObject(gameObject)
     for i,otherObj in ipairs(UI._GameObjects) do
         if otherObj == gameObject then
@@ -467,7 +467,7 @@ end
 Client.Input.Events.MouseButtonPressed:Subscribe(function (ev)
     if ev.InputID == "left2" then
         for _,gameObject in ipairs(UI.GetGameObjects()) do
-            if gameObject:GetClassName() == "Features.Fishing.GameObject.Bobber" then
+            if gameObject:GetClassName() == "Fishing.GameObject.Bobber" then
                 local state = gameObject:GetState()
                 state.Acceleration = state.Acceleration + UI.CLICK_ACCELERATION_BOOST
             end
@@ -530,9 +530,9 @@ end)
 function Fishing:__Setup()
     -- Cache classes
     UI.GAME_OBJECT_CLASSES = {
-        BOBBER = Fishing:GetClass("Features.Fishing.GameObject.Bobber"),
-        FISH = Fishing:GetClass("Features.Fishing.GameObject.Fish"),
-        TREASURE_CHEST = Fishing:GetClass("Features.Fishing.GameObject.TreasureChest"),
+        BOBBER = Fishing:GetClass("Fishing.GameObject.Bobber"),
+        FISH = Fishing:GetClass("Fishing.GameObject.Fish"),
+        TREASURE_CHEST = Fishing:GetClass("Fishing.GameObject.TreasureChest"),
     }
 
     local panel = UI:CreateElement("Root", "GenericUI_Element_TiledBackground")
