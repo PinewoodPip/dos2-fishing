@@ -147,6 +147,11 @@ local Fishing = {
             Text = "Legendary Fish",
             ContextDescription = [[Rarity tooltip for fishes]],
         },
+        Level_TheHold = {
+            Handle = "h91a4e65bg2030g4a9eg82b8g5f165c27e92b",
+            Text = "The Merryweather",
+            ContextDescription = [[Map name; refers to the tutorial ship]],
+        },
         Notification_RegionDiscovered = {
             Handle = "h9b68207cg7fb6g4860g89d4g8b04d1bd289f",
             Text = "Fishing spot discovered: %s",
@@ -326,6 +331,7 @@ Fishing.RUNE_TIER_PREFIXES = {
 -- We cannot fetch anything but the current level,
 -- thus this extra table is necessary.
 Fishing.LEVEL_NAME_TSKHANDLES = {
+    ["TUT_Tutorial_A"] = TSK.Level_TheHold.Handle, -- Uses a custom TSK as the ingame name is misleading ("The Hold")
     ["FJ_FortJoy_Main"] = "h0d7789e0g8140g4391g8511gc41a2ad8a476", -- "Fort Joy"
     ["LV_HoE_Main"] = "hde585bf1gd58ag49a9g88dagbab9b9b94ab1", -- "The Lady Vengeance"
     ["RC_Main"] = "he5f965fdg9423g4699g87d0g4af1b2e155b6", -- "Reaper's Coast"
@@ -501,6 +507,7 @@ end
 ---@field Priority integer? Defaults to 0.
 ---@field FishingAreas Vector4[]? Bounds of areas where fishing is possible even without deepwater surfaces.
 ---@field FishableSurfaceType SurfaceType? Override for the surface type that is considered fishable by default within the region.
+---@field IsSecret boolean? If set, the region won't be displayed in the collection log. Defaults to `false`.
 local _Region = {
     Priority = 0,
 }

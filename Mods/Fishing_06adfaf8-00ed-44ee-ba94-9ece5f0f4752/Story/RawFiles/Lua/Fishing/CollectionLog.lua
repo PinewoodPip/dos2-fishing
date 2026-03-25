@@ -164,7 +164,9 @@ function CollectionLog.GetHabitatTooltip(fishID)
         end
         local levelEntry = regionsByLevel[levelID]
         local isDiscovered = Fishing.IsRegionDiscovered(region.ID)
-        table.insert(levelEntry.Regions, isDiscovered and Fishing.GetRegionName(region) or "???")
+        if isDiscovered or not region.IsSecret then
+            table.insert(levelEntry.Regions, isDiscovered and Fishing.GetRegionName(region) or "???")
+        end
     end
 
     -- Sort by level
