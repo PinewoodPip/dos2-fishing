@@ -354,6 +354,16 @@ local Skills = {
             ContextDescription = [[Status tooltip for "Slashimi"]],
             StringKey = "PIP_FISHING_SLASHIMI_Description",
         },
+        ClassPreset_Name = {
+            Handle = "h082ad727g1518g4aaag8159gd16e9d8bdbfe",
+            Text = "Fishermancer",
+            ContextDescription = [[Class preset name]],
+        },
+        ClassPreset_Description = {
+            Handle = "heca6613ag314cg4763g9b09g718ea48d128e",
+            Text = "Conqueror of the seas and expert in fishy combat techniques.",
+            ContextDescription = [[Class preset description]],
+        },
     },
 }
 RegisterFeature("Fishing.Skills", Skills)

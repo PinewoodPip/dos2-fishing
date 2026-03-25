@@ -10,3 +10,8 @@ add skill "Target_EnemyTerrifyingCruelty"
 add skill "Target_EnemyFatality"
 add skill "Projectile_EnemyDustBlast"
 add skill "Shout_PIP_Fishing_SwashbucklingAura"
+
+new skillset "Class_PIP_Fishermancer"
+add skill "Target_PIP_Fishing_ReelIn"
+add skill "Shout_PIP_Fishing_Hornpipe"
+add skill "Target_WinterBlast"

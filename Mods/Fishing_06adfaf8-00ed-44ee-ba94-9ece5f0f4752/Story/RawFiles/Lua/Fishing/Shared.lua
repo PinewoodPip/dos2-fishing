@@ -802,6 +802,14 @@ function Fishing.GetAbilityScore(char)
         score = score + 1
         requirements = Fishing.GetAbilityRequirements(score + 1)
     end
+
+    -- Starting with the Fishermancer class preset boosts the level to 1.
+    -- This makes the starting skills be immediately usable.
+    local hasFishermancyPreset = char:HasTag("PIP_Fishing_Fishermancer")
+    if hasFishermancyPreset then
+        score = math.max(score, 1)
+    end
+
     return score
 end
 

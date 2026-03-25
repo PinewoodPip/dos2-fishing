@@ -87,7 +87,7 @@ data "PrepareEffect" "RS3_FX_Skills_Polymorph_Soul_TurnInto_Prepare_Root_01;RS3_
 data "CastAnimation" "skill_cast_self_soul_01_cast"
 data "CastTextEvent" "cast"
 data "CastEffect" "PIP_FX_Skills_Hornpipe_Cast,Detach:root:cast;RS3_FX_Skills_Polymorph_Soul_TurnInto_Cast_Overlay_01;RS3_FX_Skills_Polymorph_Soul_TurnInto_Human_Cast_Root_01,Detach:root"
-data "MemorizationRequirements" "WaterSpecialist 2;PIP_Fishermancy 1"
+data "MemorizationRequirements" "WaterSpecialist 1;PIP_Fishermancy 1"
 data "Memory Cost" "1"
 data "Magic Cost" "0"
 data "CanTargetCharacters" "Yes"

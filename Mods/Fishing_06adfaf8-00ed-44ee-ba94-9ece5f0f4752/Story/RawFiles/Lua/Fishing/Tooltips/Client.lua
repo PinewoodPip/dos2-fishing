@@ -184,8 +184,6 @@ end)
 
 -- Hijack tooltip rendering when hovering over the ability in the Examine UI.
 Examine:RegisterCallListener("showTooltip", function (ev)
-    -- _DS(ev.Function)
-    _D(ev.Args)
     local statID = ev.Args[2]
     if statID == Tooltips._FISHING_STAT_ID then
         -- Hijack the next tooltip render.

@@ -1,0 +1,29 @@
+new equipment "Class_PIP_Fishermancer_Start"
+add equipmentgroup
+add equipment entry "ARM_Purge_UpperBody"
+add equipmentgroup
+add equipment entry "ARM_Purge_LowerBody"
+add equipmentgroup
+add equipment entry "TOOL_FishingRod_A"
+add equipmentgroup
+add equipment entry "POTION_Minor_Healing_Potion"
+add equipmentgroup
+add equipment entry "SCROLL_Resurrect"
+add equipmentgroup
+add equipment entry "GRN_Grenade_WaterBlessedBalloon_A"
+add equipmentgroup
+add equipment entry "CONT_Backpack_A_SourceHunter"
+
+new equipment "Class_PIP_Fishermancer_CharacterCreation"
+add equipmentgroup
+add equipment entry "ARM_Wayfarer_Helmet"
+add equipmentgroup
+add equipment entry "ARM_Wayfarer_UpperBody"
+add equipmentgroup
+add equipment entry "ARM_Wayfarer_LowerBody"
+add equipmentgroup
+add equipment entry "ARM_Wayfarer_Gloves"
+add equipmentgroup
+add equipment entry "ARM_Wayfarer_Boots"
+add equipmentgroup
+add equipment entry "TOOL_FishingRod_A"
