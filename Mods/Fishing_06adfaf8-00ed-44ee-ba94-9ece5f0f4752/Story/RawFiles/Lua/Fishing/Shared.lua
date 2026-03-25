@@ -983,4 +983,5 @@ Ext.RegisterConsoleCommand("fishavailability", function (_)
 
     Fishing:__Log("Fish availability across regions:")
     Ext.Dump(availability)
+    IO.SaveFile("Fishing/FishAvailability.txt", availability)
 end)

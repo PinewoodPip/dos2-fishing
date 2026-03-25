@@ -208,6 +208,33 @@ local regions = {
         },
     },
     {
+        ID = "RC.Peacemaker",
+        NameHandle = T{
+            Handle = "hdfec195bg1791g4508ga82cg5d76747c934c",
+            Text = "Wreck of The Peacemaker",
+        },
+        LevelID = "RC_Main",
+        Bounds = V(216, 548, 247, 527),
+        Fish = {
+            {
+                ID = "Moss",
+                Weight = 1,
+            },
+            {
+                ID = "DarkConch",
+                Weight = 0.8,
+            },
+            {
+                ID = "Nightfarer",
+                Weight = 0.6,
+            },
+            {
+                ID = "LetterOfWill",
+                Weight = 0.1,
+            },
+        },
+    },
+    {
         ID = "RC.SouthWest",
         NameHandle = T{
             Handle = "h28abfc31g3773g4a4cga0b4g9fa1f5e76e41",
