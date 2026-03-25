@@ -56,14 +56,9 @@ local CollectionLog = {
             Text = "——— Habitats ———",
             ContextDescription = [[Header in fish tooltip]],
         },
-        Label_UnknownRegions = {
-            Handle = "h7f0018a1g7b0dg4312g93c7gb8cb445331cc",
-            Text = "Habitats unknown.<br>Discover more fishing spots in Rivellon for a chance to encounter this fish.",
-            ContextDescription = [[Codex tooltip for fish in regions that have not been found by the party]],
-        },
         Label_UncaughtFish = {
             Handle = "hf433845bg662bg4cdegbbd5g002d2abb4743",
-            Text = "You haven't caught this fish yet.",
+            Text = "You haven't caught this fish yet. Discover more fishing spots in Rivellon for a chance to encounter this fish.",
             ContextDescription = "Tooltip for fish not registered in collection log",
             LocalKey = "CollectionLog_UncaughtFish",
         },
@@ -153,42 +148,10 @@ CollectionLog.Settings.ActFilter = CollectionLog:RegisterSetting("ActFilter", {
 -- METHODS
 ---------------------------------------------
 
----Returns a list of valid fishes to show.
----@see Fishing.CollectionLog.Hooks.IsFishVisible
----@return Fishing.Fish[]
-function CollectionLog.GetFishes()
-    local fishes = {} ---@type Fishing.Fish[]
-    for _,fish in pairs(Fishing.GetFishes()) do
-        local hook = CollectionLog.Hooks.IsFishVisible:Throw({
-            Fish = fish,
-            Valid = true
-        })
-
-        if hook.Valid then
-            table.insert(fishes, fish)
-        end
-    end
-
-    -- Sort by rarity ascending, then name
-    local rarityOrder = Item.RARITY_ORDER_MAP
-    table.sort(fishes, function (a, b)
-        if a.Rarity == b.Rarity then
-            return a:GetName() < b:GetName()
-        end
-        return rarityOrder[a.Rarity] < rarityOrder[b.Rarity]
-    end)
-
-    return fishes
-end
-
----Returns the complete tooltip for a fish.
+---Builds region display lines for a fish's habitat tooltip section.
 ---@param fishID Fishing.FishID
----@return TooltipLib_FormattedTooltip
-function CollectionLog.GetFishTooltip(fishID)
-    local fish = Fishing.GetFish(fishID)
-    local tooltip = table.shallowCopy(fish:GetTooltip())
-
-    -- Group fish regions by level and gather discovered region names
+---@return string[] levelLines
+function CollectionLog.GetHabitatTooltip(fishID)
     local regions = Fishing.GetFishRegions(fishID)
     local regionsByLevel = {} ---@type table<string, {LevelName: string, Regions: string[]}>
     for _,region in pairs(regions) do
@@ -239,51 +202,78 @@ function CollectionLog.GetFishTooltip(fishID)
         }))
     end
 
-    -- Build tooltip element
+    return levelLines
+end
+
+---------------------------------------------
+-- METHODS
+---------------------------------------------
+
+---Returns a list of valid fishes to show.
+---@see Fishing.CollectionLog.Hooks.IsFishVisible
+---@return Fishing.Fish[]
+function CollectionLog.GetFishes()
+    local fishes = {} ---@type Fishing.Fish[]
+    for _,fish in pairs(Fishing.GetFishes()) do
+        local hook = CollectionLog.Hooks.IsFishVisible:Throw({
+            Fish = fish,
+            Valid = true
+        })
+        if hook.Valid then
+            table.insert(fishes, fish)
+        end
+    end
+
+    -- Sort by rarity ascending, then name
+    local rarityOrder = Item.RARITY_ORDER_MAP
+    table.sort(fishes, function (a, b)
+        if a.Rarity == b.Rarity then
+            return a:GetName() < b:GetName()
+        end
+        return rarityOrder[a.Rarity] < rarityOrder[b.Rarity]
+    end)
+
+    return fishes
+end
+
+---Returns the complete tooltip for a fish.
+---For undiscovered fish, the name and rarity are masked with "???" and only
+---habitat regions that have already been discovered are shown.
+---@param fishID Fishing.FishID
+---@return TooltipLib_FormattedTooltip
+function CollectionLog.GetFishTooltip(fishID)
+    local fish = Fishing.GetFish(fishID)
+    local isDiscovered = Fishing.IsFishDiscovered(fishID)
+    local levelLines = CollectionLog.GetHabitatTooltip(fishID)
+    local tooltip = fish:GetTooltip()
+
+    -- Hide names and descriptions of undiscovered fish.
+    if not isDiscovered then
+        for _,element in ipairs(tooltip.Elements) do
+            if element.Type == "ItemName" then
+                local rarityColor = fish:GetRarityColor()
+                element.Label = Text.Format("???", {Color = rarityColor})
+            elseif element.Type == "SkillDescription" and element._IsDescription then
+                element.Label = TSK.Label_UncaughtFish:Format({
+                    FontType = Text.FONTS.ITALIC,
+                })
+            end
+        end
+    end
+
+    -- Add habitat list
     local linesString = table.concat(levelLines, "<br>")
-    local habitatHeader = TSK.Label_RegionsHint:Format({
+    if linesString ~= "" then
+        local habitatHeader = TSK.Label_RegionsHint:Format({
             Color = Color.LARIAN.GREEN,
             Align = "Center",
         })
-    if linesString ~= "" then
-        -- Note: manual line break is not necessary as it's inserted by the center-align.
-        local regionElement = {
+        table.insert(tooltip.Elements, {
             Type = "SkillDescription",
             Label = habitatHeader .. linesString,
-        }
-        table.insert(tooltip.Elements, regionElement)
-    else -- Habitats completely unknown
-        local regionElement = {
-            Type = "SkillDescription",
-            Label = habitatHeader .. TSK.Label_UnknownRegions:Format({
-                FontType = Text.FONTS.ITALIC,
-            }),
-        }
-        table.insert(tooltip.Elements, regionElement)
+        })
     end
 
-    return tooltip
-end
-
----Returns the tooltip to show for fish the player party has not caught yet.
----@return TooltipLib_FormattedTooltip
-function CollectionLog.GetUncaughtFishTooltip()
-    local tooltip = {
-        Elements = {
-            {
-                Type = "ItemName",
-                Label = "???",
-            },
-            {
-                Type = "SkillDescription",
-                Label = TSK.Label_UncaughtFish:GetString(),
-            },
-            {
-                Type = "ItemRarity",
-                Label = "???",
-            },
-        }
-    }
     return tooltip
 end
 
@@ -421,7 +411,7 @@ function Section:__UpdateElement(_, slot, fish)
     local char = Client.GetCharacter()
     local wasCaught = Fishing.GetFishCatchCount(char, fish.ID) > 0
     local icon = wasCaught and fish:GetIcon() or fish.UndiscoveredIcon
-    local tooltip = wasCaught and CollectionLog.GetFishTooltip(fish.ID) or CollectionLog.GetUncaughtFishTooltip()
+    local tooltip = CollectionLog.GetFishTooltip(fish.ID)
 
     slot:SetIcon(icon)
     slot:SetCanDragDrop(false)

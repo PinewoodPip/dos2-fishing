@@ -428,6 +428,7 @@ function _Fish:GetIcon()
     return self.Icon or itemTemplate.Icon
 end
 
+---Returns the fish's tooltip, with catch statistics.
 ---@return TooltipLib_FormattedTooltip
 function _Fish:GetTooltip()
     local char = Client.GetCharacter()
@@ -446,12 +447,12 @@ function _Fish:GetTooltip()
                         TSK.Label_Fish_TotalCaught:Format(timesCaught),
                         TSK.Label_Fish_TotalEncounters:Format(timesEncountered),
                     },
-                    Color = Color.LARIAN.GREEN,
                 })
             },
             {
                 Type = "SkillDescription",
                 Label = self:GetDescription(),
+                _IsDescription = true, -- Flag for other scripts to be able to distinguish the description element easily.
             },
             self:GetRarityTooltip(),
         }
@@ -468,7 +469,7 @@ function _Fish:GetNameTooltip(runeTier)
     if tierPrefix then
         name = tierPrefix:Format(name)
     end
-    local rarityColor = Color.ITEM_RARITIES[self.Rarity] or Color.WHITE
+    local rarityColor = self:GetRarityColor()
     return {
         Type = "ItemName",
         Label = Text.Format(name, {Color = rarityColor}),
@@ -479,11 +480,17 @@ end
 ---@return TooltipLib_Element
 function _Fish:GetRarityTooltip()
     local rarityString = Fishing.RARITY_TO_LABEL[self.Rarity] or TSK.Label_Fish
-    local rarityColor = Color.ITEM_RARITIES[self.Rarity] or Color.WHITE
+    local rarityColor = self:GetRarityColor()
     return {
         Type = "ItemRarity",
         Label = rarityString:Format({Color = rarityColor}),
     }
+end
+
+---Returns the fish's rarity color.
+---@return htmlcolor
+function _Fish:GetRarityColor()
+    return Color.ITEM_RARITIES[self.Rarity] or Color.WHITE
 end
 
 ---@class Fishing.Region : I_Identifiable
