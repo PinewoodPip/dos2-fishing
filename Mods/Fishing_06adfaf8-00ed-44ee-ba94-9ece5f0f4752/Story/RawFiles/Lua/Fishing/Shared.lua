@@ -78,6 +78,8 @@ local Fishing = {
         TREASURE_CHEST_SPAWN_DELAY_RANGE = {3.0, 5.0}, -- Time delay range before a chest spawns, in seconds.
         TREASURE_CHEST_BASE_SPAWN_CHANCE = 0.01,
         TREASURE_CHEST_CHANCE_PER_ABILITY = 0.03,
+
+        FISH_DEPLETION_REDUCTION_PER_SNEAKING = 0.05,
     },
 
     ABILITY_SCHOOL_COLOR = "86A4F7", ---@type htmlcolor
@@ -736,6 +738,14 @@ function Fishing.GetStartingProgress(char)
     local leadership = char.Stats.Leadership
     local bonus = Fishing.TUNING.STARTING_PROGRESS_PER_LEADERSHIP * leadership
     return Fishing.TUNING.BASE_STARTING_PROGRESS + bonus
+end
+
+---Returns the chance for a fish not to be deducted from the region when char starts fishing, based on Sneaking.
+---@param char Character
+---@return number -- In range [0, 1].
+function Fishing.GetFishDepletionReductionChance(char)
+    local sneaking = char.Stats.Sneaking
+    return math.min(1, Fishing.TUNING.FISH_DEPLETION_REDUCTION_PER_SNEAKING * sneaking)
 end
 
 ---Returns char's bobber collider size.

@@ -127,8 +127,11 @@ Fishing.Events.CharacterStartedFishing:Subscribe(function (ev)
     -- it's technically possible to underflow the amount,
     -- but the timing window for this is so small it's not worth covering;
     -- consider it a secret technique.
-    local remainingFish = Fishing.GetRemainingFish(ev.Region.ID)
-    Fishing.SetRemainingFish(ev.Region.ID, remainingFish - 1)
+    local depletionReductionChance = Fishing.GetFishDepletionReductionChance(ev.Character)
+    if math.random() >= depletionReductionChance then
+        local remainingFish = Fishing.GetRemainingFish(ev.Region.ID)
+        Fishing.SetRemainingFish(ev.Region.ID, remainingFish - 1)
+    end
 end)
 
 -- Loop animation if the character is still fishing.
