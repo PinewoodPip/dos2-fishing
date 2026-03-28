@@ -407,6 +407,12 @@ Fishing.Hooks.CanStartFishing:Subscribe(function (ev)
         reason = TSK.Notification_CantFish_RodSheathed:GetString()
     end
 
+    -- Check if the region has fish left
+    local remainingFish = Fishing.GetRemainingFish(ev.Region.ID)
+    if remainingFish <= 0 then
+        reason = TSK.Notification_CantFish_RegionDepleted:GetString()
+    end
+
     -- Check if the player and cursor are near water
     local charNearWater = Fishing.IsNearWater(char, Fishing.WATER_MAX_DISTANCE, ev.Region.FishableSurfaceType)
     local canFish = charNearWater and Fishing.IsCursorNearWater(ev.Region)

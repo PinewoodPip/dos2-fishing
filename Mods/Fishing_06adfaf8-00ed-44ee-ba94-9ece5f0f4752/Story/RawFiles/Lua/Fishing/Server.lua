@@ -5,7 +5,7 @@ local V = Vector.Create
 local Fishing = GetFeature("Fishing")
 local TSK = Fishing.TranslatedStrings
 
----@type table<CharacterHandle, {TargetPosition: Vector3, ReelingIn: boolean}>
+---@type table<CharacterHandle, {TargetPosition: Vector3, ReelingIn: boolean, RegionID: Fishing.RegionID}>
 Fishing._CharacterStates = {}
 
 Fishing.MINIGAME_ANIMATION = "skill_prepare_weapon_01_loop"
@@ -121,6 +121,14 @@ Fishing.Events.CharacterStartedFishing:Subscribe(function (ev)
     Fishing.PlayAnimation(char) -- Should be done after facing the target, as characters cannot turn during an animation.
 
     Fishing.MarkRegionAsDiscovered(ev.Region.ID)
+
+    -- Update remaining fish
+    -- Note: if multiple players start fishing at the same time before the amount resyncs,
+    -- it's technically possible to underflow the amount,
+    -- but the timing window for this is so small it's not worth covering;
+    -- consider it a secret technique.
+    local remainingFish = Fishing.GetRemainingFish(ev.Region.ID)
+    Fishing.SetRemainingFish(ev.Region.ID, remainingFish - 1)
 end)
 
 -- Loop animation if the character is still fishing.
@@ -176,6 +184,15 @@ Fishing.Events.CharacterStoppedFishing:Subscribe(function (ev)
     elseif ev.Reason == "Failure" then
         Osiris.PlayAnimation(char, Fishing.FAILURE_ANIMATION, "")
     end
+
+    -- Show feedback for the fish in the region being exhausted
+    if Fishing.GetRemainingFish(state.RegionID) <= 0 then
+        local charGUID = char.MyGuid
+        Timer.Start(1, function (_)
+            Osi.CharacterStatusText(charGUID, TSK.Notification_Minigame_Depleted:GetString())
+            Osi.CharacterStatusText(charGUID, TSK.Notification_Minigame_Depleted_2:GetString()) -- Shown as a separate line, as otherwise it would not be centered.
+        end)
+    end
 end)
 
 -- Listen for clients starting to fish and forward the event.
@@ -184,6 +201,7 @@ Net.RegisterListener(Fishing.NETMSG_STARTED_FISHING, function (payload)
     local char = payload:GetCharacter()
     Fishing._CharacterStates[char.Handle] = {
         TargetPosition = V(payload.TargetPosition),
+        RegionID = region.ID,
         ReelingIn = false,
     }
     Fishing.Events.CharacterStartedFishing:Throw({
@@ -212,6 +230,26 @@ Net.RegisterListener(Fishing.NETMSG_ENCOUNTERED_FISH, function (payload)
     local state = Fishing._CharacterStates[char.Handle]
     state.ReelingIn = true
     Osi.PlayEffectAtPosition(Fishing.FISH_SPLASH_EFFECT, table.unpack(state.TargetPosition + Fishing.TARGET_POS_EFFECT_OFFSET))
+end)
+
+-- Initialize remaining fish in all regions & refresh cooldowns when the game starts.
+GameState.Events.RegionStarted:Subscribe(function (ev)
+    local remainingFishMap = Fishing:GetModVariable(Mod.GUIDS.FISHING, Fishing.MODVAR_FISHES_REMAINING)
+    local cooldownMap = Fishing:GetModVariable(Mod.GUIDS.FISHING, Fishing.MODVAR_REGION_RESPAWN_COOLDOWN)
+    for _,region in ipairs(Fishing.GetRegions(ev.LevelID)) do
+        local regionID = region.ID
+        if remainingFishMap[regionID] == nil then
+            Fishing.RespawnFishes(regionID)
+        end
+        if cooldownMap[regionID] == nil then
+            Fishing.SetRegionRespawnCooldown(regionID, Fishing.GetBaseRespawnCooldown(regionID))
+        end
+    end
+end)
+
+-- Refresh available fish in regions as time passes.
+Osiris.RegisterSymbolListener("NewHour", 1, "after", function (_)
+    Fishing.TickRespawnCooldowns()
 end)
 
 -- Cheat to add all fish items.
@@ -260,5 +298,17 @@ Ext.RegisterConsoleCommand("fishaddrods", function (_)
     local charGUID = Osi.CharacterGetHostCharacter()
     for rodTemplate in Fishing.FISHING_ROD_TEMPLATES:Iterator() do
         Osi.ItemTemplateAddTo(rodTemplate, charGUID, 1, 1)
+    end
+end)
+
+-- Cheats to manipulate remaining fish in regions.
+Ext.RegisterConsoleCommand("fishrefreshregions", function (_)
+    for _,region in ipairs(Fishing.GetRegions(Entity.GetLevel().LevelDesc.LevelName)) do
+        Fishing.RespawnFishes(region.ID)
+    end
+end)
+Ext.RegisterConsoleCommand("fishdepleteregions", function (_)
+    for _,region in ipairs(Fishing.GetRegions(Entity.GetLevel().LevelDesc.LevelName)) do
+        Fishing.SetRemainingFish(region.ID, 0)
     end
 end)

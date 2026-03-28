@@ -14,6 +14,9 @@ local Fishing = {
     _RegionsByID = {}, ---@type table<Fishing.RegionID, Fishing.Region>
     _CharactersFishing = Set.Create(), -- Not synchronized across clients!
 
+    DEFAULT_REGION_REFRESH_COOLDOWN = 3, -- In in-game hours (1 hour = 5 minutes real time).
+    DEFAULT_FISH_PER_REGION = {7, 10}, -- Range of amount of fish that can be found in a region during a spawn cycle.
+
     NETMSG_STARTED_FISHING = "Fishing.NetMsgs.CharacterStartedFishing",
     NETMSG_STOPPED_FISHING = "Fishing.NetMsgs.CharacterStoppedFishing",
     NETMSG_ENCOUNTERED_FISH = "Fishing.NetMsgs.CharacterEncounteredFish",
@@ -22,6 +25,8 @@ local Fishing = {
     MODVAR_UNIQUE_FISH_CAUGHT = "PlaythroughUniqueFishCaught",
     MODVAR_REGIONS_DISCOVERED = "RegionsDiscovered",
     MODVAR_FISHES_ENCOUNTERED = "PlaythroughFishesEncountered",
+    MODVAR_FISHES_REMAINING = "RegionFishRemaining",
+    MODVAR_REGION_RESPAWN_COOLDOWN = "RegionRefreshCooldown",
     USERVAR_FISH_CAUGHT = "CharacterFishCaught",
 
     FISHING_ROD_TEMPLATES = Set.Create({
@@ -167,6 +172,16 @@ local Fishing = {
             Text = "Got it!",
             ContextDescription = [[Overhead dialog when winning the minigame]],
         },
+        Notification_Minigame_Depleted = {
+            Handle = "hdaa64d88ge66eg45e3gbedag84d777e29d81",
+            Text = "I can't see any more fish around here...",
+            ContextDescription = [[Overhead dialog when exhausting the fish in a region]],
+        },
+        Notification_Minigame_Depleted_2 = {
+            Handle = "hcfff1d4dgef32g4ba7ga52cg6dea0fa8f4d6",
+            Text = "I should check back later.",
+            ContextDescription = [[Overhead dialog when exhausting the fish in a region]],
+        },
         Notification_NoFishNearby = {
             Handle = "hede969bbg1756g4bf7gaefdga9c289918025",
             Text = "There don't seem to be any fish here...",
@@ -201,6 +216,11 @@ local Fishing = {
             Handle = "ha875440cgfcb2g4231g8747gca7fe6c661d9",
             Text = "I can't cast my rod that far!",
             ContextDescription = [[Notification when trying to fish too far from the character]],
+        },
+        Notification_CantFish_RegionDepleted = {
+            Handle = "h5b6ec6a2gff7eg447dg8620g98f8320ea368",
+            Text = "I can't see any fish left here...<br>I should come back later.",
+            ContextDescription = [[Notification when trying to fish in a region that has no more fish available]],
         },
         Notification_CantFish_NoRod = {
             Handle = "h55b1d5a2g90b8g4bbfga67egb3350374edb4",
@@ -309,6 +329,14 @@ Fishing:RegisterUserVariable(Fishing.USERVAR_FISH_CAUGHT, {
     Persistent = true,
     DefaultValue = {},
 })
+Fishing:RegisterModVariable(Mod.GUIDS.FISHING, Fishing.MODVAR_FISHES_REMAINING, {
+    Persistent = false,
+    DefaultValue = {},
+})
+Fishing:RegisterModVariable(Mod.GUIDS.FISHING, Fishing.MODVAR_REGION_RESPAWN_COOLDOWN, {
+    Persistent = false,
+    DefaultValue = {},
+})
 
 ---@type table<ItemLib_Rarity, TextLib_TranslatedString>
 Fishing.RARITY_TO_LABEL = {
@@ -389,6 +417,7 @@ Fishing.LEVEL_NAME_TSKHANDLES = {
 ---@alias Fishing.FishID string
 ---@alias Fishing.RegionID string
 ---@alias Fishing.TreasureChestID string
+---@alias Fishing.GameHours integer -- In-game hours, where 1 hour = 5 minutes real time.
 
 ---@alias Fishing.MinigameExitReason "Success"|"Failure"|"Cancelled"|"ReeledInTooEarly"
 
@@ -589,9 +618,11 @@ function Fishing.GetBehaviour(type)
     return Fishing._FishBehaviours[type]
 end
 
----@param levelID string
+---Returns the regions in the level.
+---@param levelID string? Defaults to current level.
 ---@return Fishing.Region[]
 function Fishing.GetRegions(levelID)
+    levelID = levelID or Entity.GetLevel().LevelDesc.LevelName
     return Fishing._RegionsByLevel[levelID]
 end
 
@@ -788,6 +819,73 @@ function Fishing.MarkRegionAsDiscovered(regionID)
     local discoveredRegions = Fishing:GetModVariable(Mod.GUIDS.FISHING, Fishing.MODVAR_REGIONS_DISCOVERED)
     discoveredRegions[regionID] = true
     Fishing:SetModVariable(Mod.GUIDS.FISHING, Fishing.MODVAR_REGIONS_DISCOVERED, discoveredRegions)
+end
+
+---Returns the amount of fish remaining in the region.
+---@param regionID Fishing.RegionID
+---@return integer
+function Fishing.GetRemainingFish(regionID)
+    local remainingFishMap = Fishing:GetModVariable(Mod.GUIDS.FISHING, Fishing.MODVAR_FISHES_REMAINING)
+    return remainingFishMap[regionID] or 0
+end
+
+---Refreshes the amount of fish available in the region.
+---@param regionID Fishing.RegionID
+function Fishing.RespawnFishes(regionID)
+    local FISH_PER_REGION = Fishing.DEFAULT_FISH_PER_REGION
+    local remainingFish = math.random(FISH_PER_REGION[1], FISH_PER_REGION[2])
+    Fishing.SetRemainingFish(regionID, remainingFish)
+end
+
+---Sets the amount of fish remaining in the region.
+---@param regionID Fishing.RegionID
+---@param amount integer
+function Fishing.SetRemainingFish(regionID, amount)
+    local remainingFishMap = Fishing:GetModVariable(Mod.GUIDS.FISHING, Fishing.MODVAR_FISHES_REMAINING)
+    remainingFishMap[regionID] = amount
+    Fishing:SetModVariable(Mod.GUIDS.FISHING, Fishing.MODVAR_FISHES_REMAINING, remainingFishMap)
+end
+
+---Returns the cooldown until the region's fish refresh.
+---@param regionID Fishing.RegionID
+---@return Fishing.GameHours
+function Fishing.GetRegionRespawnCooldown(regionID)
+    local cooldownMap = Fishing:GetModVariable(Mod.GUIDS.FISHING, Fishing.MODVAR_REGION_RESPAWN_COOLDOWN) or {}
+    return cooldownMap[regionID]
+end
+
+---Sets the cooldown until the region's fish refresh.
+---@param regionID Fishing.RegionID
+---@param hours Fishing.GameHours
+function Fishing.SetRegionRespawnCooldown(regionID, hours)
+    local cooldownMap = Fishing:GetModVariable(Mod.GUIDS.FISHING, Fishing.MODVAR_REGION_RESPAWN_COOLDOWN) or {}
+    cooldownMap[regionID] = hours
+    Fishing:SetModVariable(Mod.GUIDS.FISHING, Fishing.MODVAR_REGION_RESPAWN_COOLDOWN, cooldownMap)
+end
+
+---Decrements fish respawn cooldowns for the map's regions,
+---and respawns fish if need be.
+function Fishing.TickRespawnCooldowns()
+    local cooldownMap = Fishing:GetModVariable(Mod.GUIDS.FISHING, Fishing.MODVAR_REGION_RESPAWN_COOLDOWN) or {}
+    local regions = Fishing.GetRegions()
+    for _,region in ipairs(regions) do
+        local regionID = region.ID
+        local hours = cooldownMap[regionID] or 0
+        cooldownMap[regionID] = hours - 1
+        if cooldownMap[regionID] <= 0 then
+            Fishing.RespawnFishes(regionID)
+            cooldownMap[regionID] = Fishing.GetBaseRespawnCooldown(regionID)
+        end
+    end
+    Fishing:SetModVariable(Mod.GUIDS.FISHING, Fishing.MODVAR_REGION_RESPAWN_COOLDOWN, cooldownMap)
+end
+
+---Returns the time interval for fish respawns in a region.
+---@param regionID Fishing.RegionID
+---@return Fishing.GameHours
+---@diagnostic disable-next-line: unused-local
+function Fishing.GetBaseRespawnCooldown(regionID)
+    return Fishing.DEFAULT_REGION_REFRESH_COOLDOWN
 end
 
 ---Returns the fishermancy ability score of char.
