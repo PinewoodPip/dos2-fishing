@@ -36,7 +36,7 @@ local Tooltips = {
         },
         Label_AbilityBonus_LuckyCharm = {
             Handle = "ha41eebdbg24b8g4d5cg9fb6gc6c454027260",
-            Text = "Increases the chance to encounter treasure while fishing by %s%% per point.",
+            Text = "Increases the chance to encounter treasure while fishing by %s%% per point.<br>This bonus is shared across the party.",
             ContextDescription = [[Tooltip for Lucky Charm bonus; param is amount per point]],
         },
         Label_AbilityBonus_Leadership = {
@@ -56,7 +56,7 @@ local Tooltips = {
         },
         Label_AbilityBonus_Thievery_DerpysTweaks = {
             Handle = "h9e825113ged7dg4f0dg88ceg90e26cf396dd",
-            Text = "Increases the chance to encounter treasure while fishing by %s%% per point and decreases capture progress drain while reeling in treasure by %s%% per point.",
+            Text = "Increases the chance to encounter treasure while fishing by %s%% per point and decreases capture progress drain while reeling in treasure by %s%% per point.<br>Treasure chance bonus is shared across the party.",
             ContextDescription = [[Tooltip for Thievery bonus with Derpy's Tweaks; first param is chance increase per point, second param is drain reduction per point]],
         },
         Label_AbilityBonus_Sneaking = {
@@ -66,7 +66,7 @@ local Tooltips = {
         },
         Label_AbilityBonus_Retribution = {
             Handle = "h3f9a2c17g8b4dg4e1cga73eg9c1d5e8f2a06",
-            Text = "Grants +%s%% capture progress per point whenever the fish escapes the bobber area. This effect can trigger once every %s seconds.",
+            Text = "Grants +%s%% capture progress per point whenever the fish escapes the bobber area.<br>This effect can trigger once every %s seconds.",
             ContextDescription = [[Tooltip for Retribution bonus; params are progress percentage per point and cooldown in seconds]],
         },
         Label_AbilityBonus_Loremaster = {

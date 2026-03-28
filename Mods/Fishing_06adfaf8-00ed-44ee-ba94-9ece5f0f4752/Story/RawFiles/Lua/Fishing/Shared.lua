@@ -773,7 +773,8 @@ end
 ---@param char Character
 ---@return number
 function Fishing.GetTreasureChestChance(char)
-    local abilityScore = Mod.IsLoaded(Mod.GUIDS.EE_DERPY) and char.Stats.Thievery or char.Stats.Luck -- Lucky Charm is removed in Derpy, thus we need to shift the effect to a different ability.
+    local ability = Mod.IsLoaded(Mod.GUIDS.EE_DERPY) and "Thievery" or "Luck" -- Lucky Charm is removed in Derpy, thus we need to shift the effect to a different ability.
+    local abilityScore = Character.GetHighestPartyAbility(char, ability)
     local luck = math.max(0, abilityScore or 0)
     local chance = Fishing.TUNING.TREASURE_CHEST_BASE_SPAWN_CHANCE + luck * Fishing.TUNING.TREASURE_CHEST_CHANCE_PER_ABILITY
     return chance
