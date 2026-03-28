@@ -80,6 +80,9 @@ local Fishing = {
         TREASURE_CHEST_CHANCE_PER_ABILITY = 0.03,
 
         FISH_DEPLETION_REDUCTION_PER_SNEAKING = 0.05,
+
+        RETRIBUTION_PROGRESS_PER_ESCAPE = 0.005,
+        RETRIBUTION_COOLDOWN = 2, -- In seconds.
     },
 
     ABILITY_SCHOOL_COLOR = "86A4F7", ---@type htmlcolor
@@ -738,6 +741,14 @@ function Fishing.GetStartingProgress(char)
     local leadership = char.Stats.Leadership
     local bonus = Fishing.TUNING.STARTING_PROGRESS_PER_LEADERSHIP * leadership
     return Fishing.TUNING.BASE_STARTING_PROGRESS + bonus
+end
+
+---Returns the capture progress bonus granted when the fish exits the bobber zone, based on Retribution.
+---@param char Character
+---@return number
+function Fishing.GetRetributionProgressBonus(char)
+    local retribution = char.Stats.PainReflection
+    return Fishing.TUNING.RETRIBUTION_PROGRESS_PER_ESCAPE * retribution
 end
 
 ---Returns the chance for a fish not to be deducted from the region when char starts fishing, based on Sneaking.

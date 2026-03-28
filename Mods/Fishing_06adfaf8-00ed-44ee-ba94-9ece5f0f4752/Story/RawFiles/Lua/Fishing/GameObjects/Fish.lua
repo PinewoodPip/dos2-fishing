@@ -7,6 +7,8 @@ local UI = Fishing.UI ---@class Fishing.UI
 ---@field GetElement fun(self):GenericUI_Element_IggyIcon
 ---@field Descriptor Fishing.Fish
 ---@field _IsCollidingWithBobber boolean
+---@field _WasCollidingWithBobber boolean
+---@field _LastRetributionTime number Monotonic timestamp of the last time the Retribution bonus was triggered.
 local _Fish = {
     Type = "Fish",
 
@@ -40,6 +42,8 @@ function _Fish:Create(descriptor, elementID, size, state)
     local instance = _Autonomous.Create(self, elementID, size, state) ---@cast instance Fishing.GameObject.Fish
     instance.Descriptor = descriptor
     instance._IsCollidingWithBobber = false
+    instance._WasCollidingWithBobber = false
+    instance._LastRetributionTime = 0
     instance:SetState(instance:CreateState("Fishing.GameObject.MovementStates.Sinking"))
     return instance
 end
@@ -89,6 +93,29 @@ end
 function _Fish:UpdatePosition()
     local element = self:GetElement()
     element:SetPosition(UI.BOBBER_AREA_SIZE[1] / 2, UI.BOBBER_AREA_SIZE[2] - self.State.Position - element:GetSize()[2] / 2)
+end
+
+---@override
+---@param deltaTime number In milliseconds.
+function _Fish:LateUpdate(deltaTime)
+    local wasColliding = self._WasCollidingWithBobber
+    _Autonomous.LateUpdate(self, deltaTime)
+
+    -- Retribution bonus: when the fish exits the bobber zone, grant a small progress boost.
+    if wasColliding and not self._IsCollidingWithBobber then
+        local char = UI.GetCharacter()
+        local bonus = Fishing.GetRetributionProgressBonus(char)
+        if bonus > 0 then
+            local now = Ext.Utils.MonotonicTime()
+            if now - self._LastRetributionTime >= Fishing.TUNING.RETRIBUTION_COOLDOWN * 1000 then
+                self._LastRetributionTime = now
+                UI.AddProgress(bonus)
+                UI:PlaySound("UI_Lobby_GainMember")
+            end
+        end
+    end
+
+    self._WasCollidingWithBobber = self._IsCollidingWithBobber
 end
 
 ---Picks a target state using weighted random selection over a list of transitions.

@@ -64,6 +64,11 @@ local Tooltips = {
             Text = "Grants +%s%% chance per point to avoid depleting the region's fish supply when casting.",
             ContextDescription = [[Tooltip for Sneaking bonus; param is amount per point]],
         },
+        Label_AbilityBonus_Retribution = {
+            Handle = "h3f9a2c17g8b4dg4e1cga73eg9c1d5e8f2a06",
+            Text = "Grants +%s%% capture progress per point whenever the fish escapes the bobber area. This effect can trigger once every %s seconds.",
+            ContextDescription = [[Tooltip for Retribution bonus; params are progress percentage per point and cooldown in seconds]],
+        },
         Label_AbilityBonus_Loremaster = {
             Handle = "hdf4b10cdg6c3cg450dg9617g3037ce251de5",
             Text = "Allows you to identify the effects of higher-rarity fish essences.",
@@ -128,6 +133,11 @@ Tooltips.ABILITY_BONUSES = {
         local value = Fishing.TUNING.FISH_DEPLETION_REDUCTION_PER_SNEAKING * 100
         value = Text.RemoveTrailingZeros(value)
         return TSK.Label_AbilityBonus_Sneaking:Format(value)
+    end,
+    [Tooltip.ABILITY_IDS.RETRIBUTION] = function (_)
+        local value = Fishing.TUNING.RETRIBUTION_PROGRESS_PER_ESCAPE * 100
+        value = Text.RemoveTrailingZeros(value)
+        return TSK.Label_AbilityBonus_Retribution:Format(value, Fishing.TUNING.RETRIBUTION_COOLDOWN)
     end,
     [Tooltip.ABILITY_IDS.LOREMASTER] = function (_)
         return TSK.Label_AbilityBonus_Loremaster:GetString()
