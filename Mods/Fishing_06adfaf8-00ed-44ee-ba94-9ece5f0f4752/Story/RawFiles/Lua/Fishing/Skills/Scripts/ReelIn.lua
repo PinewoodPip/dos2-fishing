@@ -10,6 +10,7 @@ Skills.REEL_IN_TUNING = {
     BASE_DAMAGE_DISTANCE_THRESHOLD = 5, -- Base travel distance interval for hits while reeling, in meters.
     DAMAGE_DISTANCE_REDUCTION_PER_FISHERMANCY = 0.2, -- Damage distance reduction per Fishermancy point, in meters.
     VALID_POSITION_RADIUS = 4, -- Radius around the caster within which the target can be reeled to.
+    PULL_SPREAD_RADIUS = 1.5, -- Random offset radius to pull position, in meters.
 }
 local TUNING = Skills.REEL_IN_TUNING
 
@@ -23,7 +24,11 @@ local TUNING = Skills.REEL_IN_TUNING
 ---@param target EsvCharacter
 function Skills.ReelIn(char, target)
     -- Find position to pull to
+    -- Adds a random offset so that multiple simultaneous targets don't stack on the same spot
     local sourceX, sourceY, sourceZ = Osi.GetPosition(char.MyGuid)
+    local spread = TUNING.PULL_SPREAD_RADIUS
+    sourceX = sourceX + (math.random() * 2 - 1) * spread
+    sourceZ = sourceZ + (math.random() * 2 - 1) * spread
     local x, y, z = Osi.FindValidPosition(sourceX, sourceY, sourceZ, TUNING.VALID_POSITION_RADIUS, target.MyGuid)
     if not x then return end -- Do nothing if target couldn't be moved to a valid AI grid pos.
 
