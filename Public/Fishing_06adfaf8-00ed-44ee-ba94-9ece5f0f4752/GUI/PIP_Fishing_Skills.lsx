@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<save>
+    <header version="2" />
+    <version major="3" minor="6" revision="6" build="0" />
+    <region id="IconUVList">
+        <node id="root">
+            <children>
+                <node id="IconUV">
+                    <attribute id="MapKey" value="PIP_Fishing_Skill_BlueFireBall" type="22" />
+                    <attribute id="U1" value="0.000976563" type="6" />
+                    <attribute id="U2" value="0.124023" type="6" />
+                    <attribute id="V1" value="0.000976563" type="6" />
+                    <attribute id="V2" value="0.124023" type="6" />
+                </node>
+                <node id="IconUV">
+                    <attribute id="MapKey" value="PIP_Fishing_Skill_BreathOfFreshSeaAir" type="22" />
+                    <attribute id="U1" value="0.500977" type="6" />
+                    <attribute id="U2" value="0.624023" type="6" />
+                    <attribute id="V1" value="0.125977" type="6" />
+                    <attribute id="V2" value="0.249023" type="6" />
+                </node>
+                <node id="IconUV">
+                    <attribute id="MapKey" value="PIP_Fishing_Skill_CrabDance" type="22" />
+                    <attribute id="U1" value="0.125977" type="6" />
+                    <attribute id="U2" value="0.249023" type="6" />
+                    <attribute id="V1" value="0.000976563" type="6" />
+                    <attribute id="V2" value="0.124023" type="6" />
+                </node>
+                <node id="IconUV">
+                    <attribute id="MapKey" value="PIP_Fishing_Skill_DeployFishnets" type="22" />
+                    <attribute id="U1" value="0.250977" type="6" />
+                    <attribute id="U2" value="0.374023" type="6" />
+                    <attribute id="V1" value="0.000976563" type="6" />
+                    <attribute id="V2" value="0.124023" type="6" />
+                </node>
+                <node id="IconUV">
+                    <attribute id="MapKey" value="PIP_Fishing_Skill_FireCannonball" type="22" />
+                    <attribute id="U1" value="0.375977" type="6" />
+                    <attribute id="U2" value="0.499023" type="6" />
+                    <attribute id="V1" value="0.000976563" type="6" />
+                    <attribute id="V2" value="0.124023" type="6" />
+                </node>
+                <node id="IconUV">
+                    <attribute id="MapKey" value="PIP_Fishing_Skill_Hornpipe" type="22" />
+                    <attribute id="U1" value="0.500977" type="6" />
+                    <attribute id="U2" value="0.624023" type="6" />
+                    <attribute id="V1" value="0.000976563" type="6" />
+                    <attribute id="V2" value="0.124023" type="6" />
+                </node>
+                <node id="IconUV">
+                    <attribute id="MapKey" value="PIP_Fishing_Skill_PrepareSashimi" type="22" />
+                    <attribute id="U1" value="0.625977" type="6" />
+                    <attribute id="U2" value="0.749023" type="6" />
+                    <attribute id="V1" value="0.000976563" type="6" />
+                    <attribute id="V2" value="0.124023" type="6" />
+                </node>
+                <node id="IconUV">
+                    <attribute id="MapKey" value="PIP_Fishing_Skill_ReelIn" type="22" />
+                    <attribute id="U1" value="0.750977" type="6" />
+                    <attribute id="U2" value="0.874023" type="6" />
+                    <attribute id="V1" value="0.000976563" type="6" />
+                    <attribute id="V2" value="0.124023" type="6" />
+                </node>
+                <node id="IconUV">
+                    <attribute id="MapKey" value="PIP_Fishing_Skill_ReturnToCrab" type="22" />
+                    <attribute id="U1" value="0.875977" type="6" />
+                    <attribute id="U2" value="0.999023" type="6" />
+                    <attribute id="V1" value="0.000976563" type="6" />
+                    <attribute id="V2" value="0.124023" type="6" />
+                </node>
+                <node id="IconUV">
+                    <attribute id="MapKey" value="PIP_Fishing_Skill_SummonSwashbuckler" type="22" />
+                    <attribute id="U1" value="0.000976563" type="6" />
+                    <attribute id="U2" value="0.124023" type="6" />
+                    <attribute id="V1" value="0.125977" type="6" />
+                    <attribute id="V2" value="0.249023" type="6" />
+                </node>
+                <node id="IconUV">
+                    <attribute id="MapKey" value="PIP_Fishing_Skill_SwashbucklingSpirit" type="22" />
+                    <attribute id="U1" value="0.125977" type="6" />
+                    <attribute id="U2" value="0.249023" type="6" />
+                    <attribute id="V1" value="0.125977" type="6" />
+                    <attribute id="V2" value="0.249023" type="6" />
+                </node>
+                <node id="IconUV">
+                    <attribute id="MapKey" value="PIP_Fishing_Skill_TurnOnTheTides" type="22" />
+                    <attribute id="U1" value="0.250977" type="6" />
+                    <attribute id="U2" value="0.374023" type="6" />
+                    <attribute id="V1" value="0.125977" type="6" />
+                    <attribute id="V2" value="0.249023" type="6" />
+                </node>
+                <node id="IconUV">
+                    <attribute id="MapKey" value="PIP_Fishing_Skill_WithTheCurrent" type="22" />
+                    <attribute id="U1" value="0.375977" type="6" />
+                    <attribute id="U2" value="0.499023" type="6" />
+                    <attribute id="V1" value="0.125977" type="6" />
+                    <attribute id="V2" value="0.249023" type="6" />
+                </node>
+            </children>
+        </node>
+    </region>
+    <region id="TextureAtlasInfo">
+        <node id="root">
+            <children>
+                <node id="TextureAtlasIconSize">
+                    <attribute id="Height" value="64" type="4" />
+                    <attribute id="Width" value="64" type="4" />
+                </node>
+                <node id="TextureAtlasPath">
+                    <attribute id="Path" value="Assets/Textures/Icons/PIP_Fishing_Skills.dds" type="20" />
+                    <attribute id="UUID" value="6106f747-e110-4944-88d6-cbc1fb87ec00" type="22" />
+                </node>
+                <node id="TextureAtlasTextureSize">
+                    <attribute id="Height" value="512" type="4" />
+                    <attribute id="Width" value="512" type="4" />
+                </node>
+            </children>
+        </node>
+    </region>
+</save>
