@@ -93,7 +93,8 @@ function _Task:CanPreview()
     local char = self:GetCharacter()
     local hasRod = Fishing.HasFishingRodEquipped(char) and Character.IsUnsheathed(char)
     local skillState = Character.GetCurrentSkill(char)
-    return not skillState and hasRod and self:IsValidCursorPos() or false
+    local isInCombat = Character.IsInCombat(char)
+    return not isInCombat and not skillState and hasRod and self:IsValidCursorPos() or false
 end
 
 ---Returns whether the cursor is over a valid position to fish (in region & in water)
