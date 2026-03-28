@@ -16,7 +16,8 @@ Osiris.RegisterSymbolListener("CharacterUsedItem", 2, "after", function (charGUI
         local region = Fishing.GetRegionAt(char.WorldPos)
         if region and Fishing.IsPositionFishable(char.WorldPos, Regions.BAIT_WATER_SEARCH_RADIUS) then -- Spawn more fish
             local remainingFish = Fishing.GetRemainingFish(charGUID)
-            local newFish = math.max(1, remainingFish + 1) -- Sanity check in case region was underflowed (technically possible in multiplayer with VERY specific timing)
+            local fishAdded = Regions.FISH_PER_BAIT
+            local newFish = math.max(fishAdded, remainingFish + fishAdded) -- Sanity check in case region was underflowed (technically possible in multiplayer with VERY specific timing)
             Fishing.SetRemainingFish(charGUID, newFish)
             Osi.CharacterStatusText(charGUID, TSK.Notification_Bait_Used:GetString())
             Osi.ItemTemplateRemoveFromParty(item.CurrentTemplate.Id, charGUID, 1)
