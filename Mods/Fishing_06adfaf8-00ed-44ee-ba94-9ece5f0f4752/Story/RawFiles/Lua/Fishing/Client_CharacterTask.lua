@@ -47,9 +47,9 @@ function _Task:Attached() end
 function _Task:SetCursor()
     local cc = Ext.UI.GetCursorControl()
     if self.IsPreviewing then
-        local isTooFar = self:TargetPosIsTooFar()
-        local cursorText = isTooFar and TSK.Notification_CantFish_TooFar:GetString() or TSK.Tooltip_ClickToFish:GetString()
-        cc.MouseCursor = isTooFar and "CursorWand_Warning" or "CursorWand_Ground"
+        local canFish, cursorText = Fishing.CanFish(self:GetCharacter())
+        cursorText = cursorText or TSK.Tooltip_ClickToFish:GetString()
+        cc.MouseCursor = canFish and "CursorWand_Ground" or "CursorWand_Warning"
         Tooltip.ShowMouseTextTooltip(cursorText, Vector.Create(30, 20))
     end
 end
@@ -92,9 +92,16 @@ end
 function _Task:CanPreview()
     local char = self:GetCharacter()
     local hasRod = Fishing.HasFishingRodEquipped(char) and Character.IsUnsheathed(char)
-    local region = Fishing.GetRegionAt(char.WorldPos)
     local skillState = Character.GetCurrentSkill(char)
-    return not skillState and hasRod and region and Fishing.IsCursorNearWater(region) or false
+    return not skillState and hasRod and self:IsValidCursorPos() or false
+end
+
+---Returns whether the cursor is over a valid position to fish (in region & in water)
+---@return boolean
+function _Task:IsValidCursorPos()
+    local char = self:GetCharacter()
+    local region = Fishing.GetRegionAt(char.WorldPos)
+    return region and Fishing.IsCursorNearWater(region) or false
 end
 
 function _Task:GetPriority(previousPriority)
@@ -112,7 +119,7 @@ end
 function _Task:HasValidTargetPos()
     local char = Character.Get(self.CharacterHandle)
     local region = Fishing.GetRegionAt(char.WorldPos)
-    return region ~= nil and (Fishing.CanFish(char))
+    return region ~= nil and self:IsValidCursorPos()
 end
 
 ---Returns whether the target position is fishable but out of the character's casting range.

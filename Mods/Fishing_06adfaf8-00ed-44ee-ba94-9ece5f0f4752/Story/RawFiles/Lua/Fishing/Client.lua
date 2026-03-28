@@ -173,8 +173,10 @@ function Fishing.Start(char)
                 RegionID = region.ID,
                 TargetPosition = targetPos,
             })
-        else -- Otherwise show failure reason (if provided)
-            if reason then
+        elseif reason then -- Otherwise show failure reason (if provided)
+            if reason:find("<br>", nil, true) then
+                NotificationUI.ShowWarning(reason) -- Show reasons with line breaks as warnings instead, as the default notification UI does not fit multiple lines.
+            else
                 NotificationUI.ShowNotification(reason)
             end
         end
