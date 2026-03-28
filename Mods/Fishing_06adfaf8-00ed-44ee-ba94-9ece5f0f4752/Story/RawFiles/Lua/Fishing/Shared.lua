@@ -805,7 +805,7 @@ function Fishing.GetAbilityScore(char)
 
     -- Starting with the Fishermancer class preset boosts the level to 1.
     -- This makes the starting skills be immediately usable.
-    local hasFishermancyPreset = char:HasTag("PIP_Fishing_Fishermancer")
+    local hasFishermancyPreset = Fishing.HasFishermancerPreset(char)
     if hasFishermancyPreset then
         score = math.max(score, 1)
     end
@@ -926,6 +926,17 @@ function Fishing.HasFishingRodEquipped(char)
         hasRod = Fishing.IsFishingRod(item)
     end
     return hasRod
+end
+
+---Returns whether char picked (or is picking) the Fishermancer class preset during character creation.
+---@param char Character
+---@return boolean
+function Fishing.HasFishermancerPreset(char)
+    -- Tag is applied post-character creation;
+    -- the ClassType check only works during CC,
+    -- as the game never repopulates it afterwards;
+    -- it resets to the value of the root template of the origin/custom template.
+    return char:HasTag("PIP_Fishing_Fishermancer") or char.PlayerCustomData.ClassType == "PIP_Fishermancer"
 end
 
 ---Returns the bobber colors of char, if they have a fishing rod equipped.

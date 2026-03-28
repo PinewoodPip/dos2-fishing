@@ -1,5 +1,6 @@
 
 local CharacterSheet = Client.UI.CharacterSheet
+local CharacterCreation = Client.UI.CharacterCreation
 local Examine = Client.UI.Examine
 local Tooltip = Client.Tooltip
 local TooltipUI = Client.UI.Tooltip
@@ -9,7 +10,7 @@ local FishingTSK = Fishing.TranslatedStrings
 ---@type Feature
 local Tooltips = {
     TSKHANDLE_BASE_VALUE_LABEL = "hbb9884d7g3b9ag43dfga88egdcc32db8bd74", -- "Base: [1]"
-    _FISHING_STAT_ID = -98,
+    _FISHING_STAT_ID = 1338, -- Needs to be a positive number, as the Character Creation UI casts IDs to uint.
     _DUMMY_STAT_ID = 19, -- Polymorph ID. Used as a workaround to have the engine render the tooltip, as invalid IDs do not result in the tooltip invokes being called.
 
     TranslatedStrings = {
@@ -169,6 +170,52 @@ Examine.Hooks.GetUpdateData:Subscribe(function (ev)
     })
 end)
 
+-- Show Fishermancy ability in Character Creation UI.
+CharacterCreation.Hooks.UpdateAbilities:Subscribe(function (ev)
+    local stats = ev.Abilities
+    local fishermancyAmount = Fishing.GetAbilityScore(ev.Character)
+    local GROUP_ID = 2 -- Skill abilities group.
+
+    -- Get the gorup label from an existing stat
+    -- TODO find the TSK the game uses for this
+    local groupLabel ---@type string
+    for _,stat in ipairs(stats) do
+        if stat.GroupID == GROUP_ID then
+            groupLabel = stat.GroupLabel
+            break
+        end
+    end
+
+    -- Add Fishermancy stat
+    table.insert(stats, {
+        GroupID = GROUP_ID, -- Skills group.
+        GroupLabel = groupLabel,
+        StatID = Tooltips._FISHING_STAT_ID,
+        Label = FishingTSK.Label_SchoolName:GetString(),
+        ValueLabel = fishermancyAmount,
+        Delta = 0, -- We must not set this, as it determines whether the "-" button is visible.
+        IsCivil = false,
+    })
+end)
+CharacterCreation:RegisterInvokeListener("updateAbilities", function (ev)
+    local root = ev.UI:GetRoot()
+    local abilitiesMC = root.CCPanel_mc.abilities_mc
+    local abilityGroups = abilitiesMC.abilityGroupList
+
+    -- Hide the "-" button in the Fishermancy stat, as it cannot be invested into.
+    for i=0,abilityGroups.content_array.length-1,1 do
+        local abilityGroup = abilityGroups.content_array[i]
+        for j=0,abilityGroup.abilities.content_array.length-1,1 do
+            local statEntry = abilityGroup.abilities.content_array[j]
+            if statEntry.abilityID == Tooltips._FISHING_STAT_ID then
+                statEntry.plus_mc.visible = false
+                statEntry.plus_mc.bg_mc.visible = false -- Something causes the button itself to be re-enabled a tick after this listener; we need to hide the child element to prevent that from being visible.
+                return
+            end
+        end
+    end
+end, "After")
+
 -- Hijack tooltip rendering when hovering over the ability in the character sheet.
 CharacterSheet:RegisterCallListener("showAbilityTooltip", function (ev)
     local statID = ev.Args[1]
@@ -185,6 +232,19 @@ end)
 -- Hijack tooltip rendering when hovering over the ability in the Examine UI.
 Examine:RegisterCallListener("showTooltip", function (ev)
     local statID = ev.Args[2]
+    if statID == Tooltips._FISHING_STAT_ID then
+        -- Hijack the next tooltip render.
+        isRenderingFishingAbilityTooltip = true
+        ev.Args[2] = Tooltips._DUMMY_STAT_ID
+    else
+        -- Clear the previous icon override
+        TooltipUI:GetUI():ClearCustomIcon("tt_ability_" .. Tooltips._DUMMY_STAT_ID)
+    end
+end)
+
+-- Hijack tooltip rendering when hovering over the ability in the Character Creation UI.
+CharacterCreation:RegisterCallListener("showAbilityTooltip", function (ev)
+    local statID = ev.Args[2] -- Character Creation UI has character handle as first param, stat ID as second.
     if statID == Tooltips._FISHING_STAT_ID then
         -- Hijack the next tooltip render.
         isRenderingFishingAbilityTooltip = true
