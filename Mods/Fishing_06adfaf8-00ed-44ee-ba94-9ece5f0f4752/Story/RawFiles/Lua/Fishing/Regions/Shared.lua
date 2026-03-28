@@ -1,10 +1,12 @@
 
+local Fishing = GetFeature("Fishing")
+
 ---@class Fishing.Regions : Feature
 local Regions = {
     BAIT_TEMPLATE_ID = "e7a7ba01-5789-4470-881e-54b858192ca9",
 
     BAIT_WATER_SEARCH_RADIUS = 5, -- Search radius for fishable surfaces when using bait, in meters. Should be more generous than the cursor search radius, as the bait check is performed from the character's position.
-    FISH_BAIT_RARITY_COLOR = Color.ITEM_RARITIES["Rare"],
+    FISH_BAIT_RARITY_COLOR = Fishing.ABILITY_SCHOOL_COLOR,
 
     TranslatedStrings = {
         Label_Bait = {

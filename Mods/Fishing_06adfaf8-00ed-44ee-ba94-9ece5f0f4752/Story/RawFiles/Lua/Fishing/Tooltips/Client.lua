@@ -124,7 +124,7 @@ Tooltips.ABILITY_BONUSES = {
 local function FormatTooltipBonus(str)
     local prefix = TSK.Label_AbilityBonus:GetString() .. "<br><img src='Icon_BulletPoint'> "
     return Text.Format(prefix .. str, {
-        Color = Color.LARIAN.LIGHT_BLUE,
+        Color = Fishing.ABILITY_SCHOOL_COLOR,
     })
 end
 Tooltip.Hooks.RenderAbilityTooltip:Subscribe(function (ev)
@@ -288,7 +288,7 @@ Tooltip.Hooks.RenderAbilityTooltip:Subscribe(function (ev)
         tooltipUI:SetCustomIcon("tt_ability_" .. Tooltips._DUMMY_STAT_ID, Fishing.SKILL_ABILITY_ICON, 128, 128)
 
         -- Add minigame hint
-        local minigameHint = FishingTSK.Label_FishingRodHint:Format({Color = Color.LARIAN.GREEN})
+        local minigameHint = FishingTSK.Label_FishingRodHint:Format({Color = Fishing.ABILITY_SCHOOL_COLOR})
         description.Description = description.Description .. "\n" .. minigameHint
 
         -- Add leveling hint

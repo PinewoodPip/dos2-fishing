@@ -9,7 +9,7 @@ local V = Vector.Create
 ---@class Fishing
 local Fishing = GetFeature("Fishing")
 local TSK = Fishing.TranslatedStrings
-Fishing.FISHING_ROD_RARITY_COLOR = Color.LARIAN.BLUE
+Fishing.FISHING_ROD_RARITY_COLOR = Fishing.ABILITY_SCHOOL_COLOR
 Fishing.SKILL_ABILITY_ICON = "PIP_Fishing_SkillAbility"
 
 Fishing.CURSOR_PLANE_FALLBACK_HEIGHT = 2 -- Picker height difference with the character past which the casting position logic will fallback to raycasting onto a plane below the character. See `GetCastingPosition()`.
@@ -434,7 +434,7 @@ Tooltip.Hooks.RenderItemTooltip:Subscribe(function (ev)
         tooltip:InsertElement({
             Type = "Engraving",
             Label = TSK.Label_FishingRodHint:Format({
-                Color = Color.LARIAN.GREEN,
+                Color = Fishing.ABILITY_SCHOOL_COLOR,
             }),
         })
 

@@ -45,7 +45,7 @@ function Fishing.CatchFish(char, fish, fromPos)
     if math.random() <= extraCatchChance then
         Osi.ItemTemplateAddTo(fish.TemplateID, charGUID, 1, 1)
         Osi.CharacterStatusText(char.MyGuid, TSK.Notification_ExtraCatch:Format({
-            Color = Color.LARIAN.LIGHT_BLUE,
+            Color = Fishing.ABILITY_SCHOOL_COLOR,
         })) -- TODO play some kaching sound fx too
     end
     local oldFishermancy = Fishing.GetAbilityScore(char)
@@ -60,7 +60,7 @@ function Fishing.CatchFish(char, fish, fromPos)
         Osi.CharacterPlayHUDSound(charGUID, "UI_Game_LevelUp")
         Osi.PlayEffect(charGUID, "RS3_FX_GP_Status_LevelUp_01")
         Osi.CharacterStatusText(charGUID, TSK.Notification_FishermancyLevelUp:Format({
-            Color = Color.LARIAN.GOLD,
+            Color = Fishing.ABILITY_SCHOOL_COLOR,
         }))
     end
 

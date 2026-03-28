@@ -267,7 +267,7 @@ function CollectionLog.GetFishTooltip(fishID)
     local linesString = table.concat(levelLines, "<br>")
     if linesString ~= "" then
         local habitatHeader = TSK.Label_RegionsHint:Format({
-            Color = Color.LARIAN.GREEN,
+            Color = Fishing.ABILITY_SCHOOL_COLOR,
             Align = "Center",
         })
         table.insert(tooltip.Elements, {

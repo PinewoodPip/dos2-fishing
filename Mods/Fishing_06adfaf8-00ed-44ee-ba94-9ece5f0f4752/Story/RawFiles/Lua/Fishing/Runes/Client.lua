@@ -98,7 +98,7 @@ Tooltip.Hooks.RenderItemTooltip:Subscribe(function (ev)
         if runeTier == #fish.RootTemplates then
             local descElement = ev.Tooltip:GetFirstElement("ItemDescription")
             descElement.Label = descElement.Label .. "<br><br>" .. TSK.Label_Descended:Format({
-                Color = Color.LARIAN.GREEN,
+                Color = Fishing.ABILITY_SCHOOL_COLOR,
             })
         end
     end

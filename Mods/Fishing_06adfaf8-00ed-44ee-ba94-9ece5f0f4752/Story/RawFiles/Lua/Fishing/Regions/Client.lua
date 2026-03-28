@@ -1,5 +1,6 @@
 
 local Tooltip = Client.Tooltip
+local Fishing = GetFeature("Fishing")
 
 local Regions = GetFeature("Fishing.Regions")
 local TSK = Regions.TranslatedStrings
@@ -17,7 +18,7 @@ Tooltip.Hooks.RenderItemTooltip:Subscribe(function (ev)
         -- Add hint on how to use bait
         local itemDescription = tooltip:GetFirstElement("ItemDescription")
         local hintLabel = TSK.Label_BaitHint:Format({
-            Color = Color.LARIAN.GREEN,
+            Color = Fishing.ABILITY_SCHOOL_COLOR,
         })
         itemDescription.Label = hintLabel .. "\n\n" .. itemDescription.Label
 
