@@ -53,6 +53,7 @@ local scripts = {
     {ScriptSet = "Fishing/Skills"},
     {Script = "Fishing/Skills/Shared_EE.lua", RequiresEE = true},
     {ScriptSet = "Fishing/Trader"},
+    {ScriptSet = "Fishing/Regions"},
     "Fishing/Tooltips/Client.lua",
     "Fishing/ControllerSupportWarning/Client.lua",
 }

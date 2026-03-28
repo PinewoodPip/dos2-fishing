@@ -272,34 +272,6 @@ function Fishing.GetCastingPosition()
     end
 end
 
----Returns whether a position is near a Deepwater surface.
----@param position Vector3D
----@param searchRadius number? Defaults to WATER_SEARCH_RADIUS.
----@param waterSurface SurfaceType? Defaults to "Deepwater".
----@return boolean
-function Fishing.IsPositionNearWater(position, searchRadius, waterSurface)
-    local grid = Ext.Entity.GetAiGrid()
-    local surfaceFlags = Ext.Enums.ESurfaceFlag[waterSurface or "Deepwater"]
-    local foundCell = grid:SearchForCell(position[1], position[3], searchRadius or Fishing.WATER_SEARCH_RADIUS, surfaceFlags.__Value, 0)
-    return foundCell
-end
-
----Returns whether the position is within a region and a fishable area.
----@param pos vec3
----@return boolean
-function Fishing.IsPositionInFishableArea(pos)
-    local region = Fishing.GetRegionAt(pos)
-    if not region then return false end
-    local posX, posZ = pos[1], pos[3]
-    for _,bounds in ipairs(region.FishingAreas or EMPTY) do
-        local boundsX, boundsY, boundsW, boundsH = table.unpack(bounds)
-        if posX >= boundsX and posX <= boundsX + boundsW and posZ >= boundsY and posZ <= boundsY + boundsH then
-            return true
-        end
-    end
-    return false
-end
-
 ---Finishes the fishing minigame for char.
 ---@param char EclCharacter
 ---@param reason Fishing.MinigameExitReason

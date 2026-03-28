@@ -38,6 +38,7 @@ local scripts = {
     },
     {Script = "Fishing/Skills/Shared_EE.lua", RequiresEE = true},
     {ScriptSet = "Fishing/Trader"},
+    {ScriptSet = "Fishing/Regions"},
 }
 for _,script in ipairs(scripts) do
     RequestScriptLoad(script)
