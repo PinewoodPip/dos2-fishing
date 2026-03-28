@@ -59,6 +59,11 @@ local Tooltips = {
             Text = "Increases the chance to encounter treasure while fishing by %s%% per point and decreases capture progress drain while reeling in treasure by %s%% per point.",
             ContextDescription = [[Tooltip for Thievery bonus with Derpy's Tweaks; first param is chance increase per point, second param is drain reduction per point]],
         },
+        Label_AbilityBonus_Loremaster = {
+            Handle = "hdf4b10cdg6c3cg450dg9617g3037ce251de5",
+            Text = "Allows you to identify the effects of higher-rarity fish essences.",
+            ContextDescription = [[Tooltip for Loremaster bonus]],
+        },
     },
 }
 RegisterFeature("Fishing.Tooltips", Tooltips)
@@ -113,6 +118,9 @@ Tooltips.ABILITY_BONUSES = {
             value = Text.RemoveTrailingZeros(value)
             return TSK.Label_AbilityBonus_Thievery:Format(value)
         end
+    end,
+    [Tooltip.ABILITY_IDS.LOREMASTER] = function (_)
+        return TSK.Label_AbilityBonus_Loremaster:GetString()
     end,
 }
 

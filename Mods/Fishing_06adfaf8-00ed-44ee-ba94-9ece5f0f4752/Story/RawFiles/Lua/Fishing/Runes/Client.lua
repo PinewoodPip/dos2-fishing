@@ -77,7 +77,7 @@ Tooltip.Hooks.RenderItemTooltip:Subscribe(function (ev)
                 runeElement["Rune" .. i] = TSK.Label_CannotEquip:Format({Size = 18})
             else
                 -- Add extra labels
-                if fish then
+                if Runes.IsIdentified(Client.GetCharacter(), item) then
                     local extraLabels = Runes.RUNE_EXTRA_LABELS[fish.ID]
                     if extraLabels then
                         local label = extraLabels[runeTier]
@@ -90,6 +90,12 @@ Tooltip.Hooks.RenderItemTooltip:Subscribe(function (ev)
                             })
                         end
                     end
+                else -- Show warning for unidentified runes
+                    runeElement["Rune" .. i] = TSK.Label_Unidentified:Format({
+                        FormatArgs = {Runes.GetIdentificationRequirement(item)},
+                        Color = Fishing.ABILITY_SCHOOL_COLOR,
+                        Size = 18,
+                    })
                 end
             end
         end

@@ -14,6 +14,14 @@ local Runes = {
         ["Gloves"] = true,
     },
 
+    -- Maps fish rarity to Loremaster required to identify its effects.
+    ---@type table<ItemLib_Rarity, integer>
+    LOREMASTER_REQUIREMENTS = {
+        ["Rare"] = 1,
+        ["Epic"] = 2,
+        ["Legendary"] = 3,
+    },
+
     TranslatedStrings = {
         Label_FishRune = {
             Handle = "h51d68a3cg1f4cg4ed2gb01ag1ce7c50a811b",
@@ -24,6 +32,11 @@ local Runes = {
             Handle = "h699aa192g51efg46acgadb7g69da8828850b",
             Text = "Cannot equip.",
             ContextDescription = [[Tooltip for invalid rune slots for fish runes]],
+        },
+        Label_Unidentified = {
+            Handle = "h03b7c934g86d9g4c8fg97a2gc84d1de4744e",
+            Text = "Unidentified fish essence.<br>Requires Loremaster %d to identify.",
+            ContextDescription = [[Tooltip for fish runes that the player does not have enough Loremaster for; param is Loremaster requirement]],
         },
         MsgBox_WrongRuneSlot_Body = {
             Handle = "ha7b764eegee70g4dc4g8409g12a4b25dc6bc",
@@ -79,6 +92,30 @@ function Runes.GetFish(rune)
         templateID = rune.RootTemplate
     end
     return Fishing.GetFishByTemplate(templateID)
+end
+
+---Returns whether char's party has enough Loremaster to identify the fish rune.
+---@param char Character
+---@param rune Item
+---@return boolean
+function Runes.IsIdentified(char, rune)
+    local loremaster = Character.GetHighestPartyAbility(char, "Loremaster")
+    return loremaster >= Runes.GetIdentificationRequirement(rune)
+end
+
+---Returns the Loremaster requirement to identify a fish rune.
+---@param rune Item
+---@return integer? -- `nil` if the item is not a fish rune.
+function Runes.GetIdentificationRequirement(rune)
+    if not Runes.IsFishRune(rune) then return nil end
+    local fish = Runes.GetFish(rune)
+    local requirement =  Runes.LOREMASTER_REQUIREMENTS[fish.Rarity] or 0
+
+    -- Increase requirement for higher-tier runes
+    local runeTier = Runes.GetFishRuneTier(rune)
+    requirement = requirement + (runeTier - 1)
+
+    return math.min(requirement, 5) -- Cap at Loremaster 5 to prevent higher-tier runes from becoming annoying to identify, if another mod adds them.
 end
 
 ---Returns whether an item is valid for inserting fish runes.
