@@ -38,7 +38,21 @@ Skills.SKILL_DESCRIPTION_OVERRIDES = {
         ContextDescription = [[Skill tooltip for "Deploy Fishnets" in EE]],
         StringKey = "Projectile_PIP_Fishing_DeployFishnets_Description_EE",
     }),
+    ["Shout_PIP_Fishing_CrabDance"] = Skills:RegisterTranslatedString({
+        Handle = "ha5f616abgc232g4211g9e8bg364d63b44327",
+        Text = [[Perform a crabistic ritual dance, inspiring allies in a [3] radius around you and reminding them of what truly matters, granting +[1] Constitution and +[2] Finesse, Power, and Strength.]],
+        ContextDescription = [[Skill tooltip for "Crab Dance" in EE]],
+        StringKey = "Shout_PIP_Fishing_CrabDance_Description_EE",
+    }),
+    ["Target_PIP_Fishing_CrabPinch"] = Skills:RegisterTranslatedString({
+        Handle = "h85812b18g86c1g4113gad4fg98261c820be7",
+        Text = [[Employ both of your pincers to pinch and punch the target, dealing [1] in a [2] radius and applying up to Weakened III.]],
+        ContextDescription = [[Skill tooltip for "Crab Pinch & Punch in EE"]],
+        StringKey = "Target_PIP_Fishing_CrabPinch_Description_EE",
+    }),
 }
+-- Also apply skill description overrides to Empowered variants.
+Skills.SKILL_DESCRIPTION_OVERRIDES["Shout_PIP_Fishing_CrabDance_Empowered"] = Skills.SKILL_DESCRIPTION_OVERRIDES["Shout_PIP_Fishing_CrabDance"]
 
 Skills.SEASICK_SHORT_DESCRIPTION_TSK = TSK.Seasick_ShortDescription_EE
 

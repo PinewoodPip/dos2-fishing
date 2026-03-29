@@ -180,6 +180,7 @@ data "DisplayName" "Shout_PIP_Fishing_CrabDance_DisplayName"
 data "DisplayNameRef" "|Crab Dance|"
 data "Description" "Shout_PIP_Fishing_CrabDance_Description"
 data "DescriptionRef" "|:crab: JAGEX IS POWERLESS AGAINST PVP CLANS :crab:|"
+data "StatsDescriptionParams" "Potion:SKILLBOOST_InspireStart:Constitution;Potion:SKILLBOOST_InspireStart:Strength;AreaRadius"
 data "Icon" "PIP_Fishing_Skill_CrabDance"
 data "CastEffect" "PIPFX_Skills_ReturnToCrab_Cast:Dummy_Root:cast"
 

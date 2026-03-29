@@ -155,7 +155,7 @@ local Skills = {
         },
         Skill_CrabPinch_Description = {
             Handle = "h224e8ff6gedb4g4110ga774g536978cd239b",
-            Text = "Employ both your pincers to pinch and punch the target, dealing [1] in a [2] radius.",
+            Text = "Employ both of your pincers to pinch and punch the target, dealing [1] in a [2] radius and applying Weakened.",
             ContextDescription = [[Skill tooltip for "Crab Pinch & Punch"]],
             StringKey = "Target_PIP_Fishing_CrabPinch_Description",
         },
@@ -179,7 +179,7 @@ local Skills = {
         },
         Skill_CrabDance_Description = {
             Handle = "h91b81eb2gdb9ag4a19g8492g7529fe95d83b",
-            Text = "Perform a crabistic ritual dance, inspiring allies and reminding them of what truly matters.",
+            Text = "Perform a crabistic ritual dance, inspiring allies in a [3] radius around you and reminding them of what truly matters, granting +[1] Constitution and +[2] Finesse, Intelligence, and Strength.",
             ContextDescription = [[Skill tooltip for "Crab Dance"]],
             StringKey = "Shout_PIP_Fishing_CrabDance_Description",
         },
