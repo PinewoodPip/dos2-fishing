@@ -19,6 +19,14 @@ local Skills = {
         ["Shout_PIP_Fishing_TurnOnTheTides"] = "Summoning",
     },
 
+    -- Skills that involve the Seasick status.
+    ---@type set<skill>
+    SKILLS_WITH_SEASICK = {
+        ["Projectile_PIP_Fishing_BlueFireball"] = true,
+        ["Shout_PIP_Fishing_WithTheCurrents"] = true,
+        ["Cone_PIP_Fishing_BreathOfFreshSeaAir"] = true,
+    },
+
     SOURCE_INFUSION_COLOR = "46B195",
 
     TranslatedStrings = {
@@ -353,6 +361,11 @@ local Skills = {
             Text = "Once per turn per target, your basic attack applies Seasick for 1 turn.",
             ContextDescription = [[Status tooltip for "Slashimi"]],
             StringKey = "PIP_FISHING_SLASHIMI_Description",
+        },
+        Seasick_ShortDescription = {
+            Handle = "h081624e4g4f78g4736g81a1g01da3309561d",
+            Text = "Seasick reduces water and air resistance and causes targets to suffer Magic Armor damage when hit by water damage, consuming a turn of the status.",
+            ContextDescription = [[Tooltip hint for skills that involve Seasick status]],
         },
         ClassPreset_Name = {
             Handle = "h082ad727g1518g4aaag8159gd16e9d8bdbfe",

@@ -63,6 +63,14 @@ Tooltip.Hooks.RenderItemTooltip:Subscribe(function (ev)
     end
 end)
 
+-- Show hint on Seasick on skills that involve it.
+Tooltip.Hooks.RenderSkillTooltip:Subscribe(function (ev)
+    if Skills.SKILLS_WITH_SEASICK[ev.SkillID] then
+        local skillDescription = ev.Tooltip:GetFirstElement("SkillDescription")
+        skillDescription.Label = skillDescription.Label .. "<br><br>" .. TSK.Seasick_ShortDescription:GetString()
+    end
+end)
+
 -- Reduce skill tooltip font size in EE, for consistency with other skills.
 Tooltip.Hooks.RenderSkillTooltip:Subscribe(function (ev)
     local skillID = ev.SkillID
