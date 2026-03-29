@@ -191,14 +191,14 @@ local Skills = {
         },
         Skill_CannonBall_DisplayName = {
             Handle = "hcf883158g721eg4daeg98beg0d979e8f86c2",
-            Text = "Shoot Canon Ball",
+            Text = "Blast Canon Ball",
             ContextDescription = [[Skill name]],
             StringKey = "Projectile_PIP_Fishing_CannonBall_DisplayName",
         },
         Skill_CannonBall_Description = {
             Handle = "h4a09fa59gc72dg4e2dgb935gb91783945e69",
-            Text = "Shoot the canonical cannon ball, dealing [1] along its way and pushing away targets hit by 7m (+1m per Fishermancy).<br><br>Targets pushed into walls or obstacles cause [2] to characters within [3] of their impact.<br>Strangely, the ball is prone to bouncing.",
-            ContextDescription = [[Skill tooltip for "Shoot Canon Ball"]],
+            Text = "Blast away the canonical cannon ball, dealing [1] along its way and pushing away targets hit by 7m (+1m per Fishermancy).<br><br>Targets pushed into walls or obstacles cause [2] to characters within [3] of their impact.<br>Strangely, the ball is prone to bouncing.",
+            ContextDescription = [[Skill tooltip for "Blast Canon Ball"]],
             StringKey = "Projectile_PIP_Fishing_CannonBall_Description",
         },
         Skill_SwashbucklingAura_DisplayName = {

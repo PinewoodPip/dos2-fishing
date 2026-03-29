@@ -83,7 +83,7 @@ local SourceInfusionTSKs = {
         },
         {
             Handle = "h65c6c5b5g2745g4442ga70bg5b9db0322037",
-            Text = "Allies within 13m, who have at least 1 Geomancer try to cast Shoot Canon Ball as a free ritual reaction at all visible enemies within 13m of them. <font color='c80030'>Pay 3 more AP:</font> Cast again on all visible enemies within 13m.",
+            Text = "Allies within 13m, who have at least 1 Geomancer try to cast Blast Canon Ball as a free ritual reaction at all visible enemies within 13m of them. <font color='c80030'>Pay 3 more AP:</font> Cast again on all visible enemies within 13m.",
         },
     },
     ["Target_PIP_Fishing_ReelIn"] = {
