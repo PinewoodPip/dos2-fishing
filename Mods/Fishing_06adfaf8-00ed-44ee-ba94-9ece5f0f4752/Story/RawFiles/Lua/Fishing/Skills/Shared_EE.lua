@@ -198,6 +198,7 @@ Skills.EE_STATS_OVERRIDES = {
     ["Projectile_PIP_Fishing_DeployFishnets"] = {
         ActionPoints = 4,
         AmountOfTargets = 4, -- Reduced since the skill has 0SP base cost in EE.
+        ["Magic Cost"] = 0,
     },
     ["Projectile_PIP_Fishing_FishNet"] = {
         SkillPropertyRemap = {

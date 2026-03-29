@@ -253,7 +253,7 @@ data "CastEffect" "RS3_FX_Skills_Totem_Cast_Throw_Line_Hand_01:Dummy_L_HandFX;RS
 data "PreviewEffect" "RS3_FX_UI_Targeter_03_Owner"
 data "MemorizationRequirements" "RangerLore 2; PIP_Fishermancy 1"
 data "Memory Cost" "2"
-data "Magic Cost" "0"
+data "Magic Cost" "1"
 data "ProjectileTerrainOffset" "Yes"
 data "OverrideMinAP" "No"
 data "SpawnObject" "252bf693-3a76-42ea-b4cc-cefaa3d4d5c2"
