@@ -2,6 +2,8 @@
 local V = Vector.Create
 
 local Fishing = GetFeature("Fishing")
+local Regions = GetFeature("Fishing.Regions")
+local CAPACITY = Regions.REGION_CAPACITIES
 
 ---Utility method to register translated strings for a region.
 local T = function(tsk)
@@ -136,6 +138,7 @@ local regions = {
         },
         LevelID = "ARX_Main",
         Bounds = V(419, 177, 530, 74),
+        Capacity = CAPACITY.HIGH,
         Fish = {
             {
                 ID = "Bream",
@@ -170,6 +173,7 @@ local regions = {
         FishingAreas = {
             V(467, 730, 478, 736),
         },
+        Capacity = CAPACITY.LOW,
         Fish = {
             {
                 ID = "Anglerfish",
@@ -232,6 +236,7 @@ local regions = {
         },
         LevelID = "ARX_Main",
         Bounds = V(353, 443, 500, 196),
+        Capacity = CAPACITY.HIGH,
         Fish = {
             {
                 ID = "Piranha",
@@ -279,6 +284,7 @@ local regions = {
         FishingAreas = {
             V(427, 242, 430, 246),
         },
+        Capacity = CAPACITY.LOW,
         Fish = {
             {
                 ID = "Scarf",
@@ -310,6 +316,7 @@ local regions = {
         FishingAreas = {
             V(388, 297, 392, 301),
         },
+        Capacity = CAPACITY.LOW,
         Fish = {
             {
                 ID = "Handkerchief",
@@ -341,6 +348,7 @@ local regions = {
         },
         LevelID = "ARX_Main",
         Bounds = V(185, 375, 378, 172),
+        Capacity = CAPACITY.HIGH,
         Fish = {
             {
                 ID = "Sardine",
@@ -427,6 +435,7 @@ local regions = {
         FishingAreas = {
             V(173, 237, 178, 242),
         },
+        Capacity = CAPACITY.LOW,
         Fish = {
             {
                 ID = "Moss",
@@ -451,6 +460,7 @@ local regions = {
         },
         LevelID = "ARX_Main",
         Bounds = V(185, 428, 216, 392),
+        Capacity = CAPACITY.LOW,
         FishingAreas = {
             -- Main fountain
             V(195, 405, 204, 415),
@@ -603,6 +613,7 @@ local regions = {
             V(283, 648, 294, 659),
             V(303, 648, 337, 662),
         },
+        Capacity = CAPACITY.MIDDLING,
         Fish = {
             {
                 ID = "Sludge",
@@ -634,6 +645,7 @@ local regions = {
         },
         LevelID = "ARX_Main",
         Bounds = V(281, 493, 321, 436),
+        Capacity = CAPACITY.LOW,
         Fish = {
             {
                 ID = "Petri",

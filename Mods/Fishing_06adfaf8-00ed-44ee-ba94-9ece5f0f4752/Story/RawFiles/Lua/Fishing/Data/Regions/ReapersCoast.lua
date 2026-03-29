@@ -2,6 +2,8 @@
 local V = Vector.Create
 
 local Fishing = GetFeature("Fishing")
+local Regions = GetFeature("Fishing.Regions")
+local CAPACITY = Regions.REGION_CAPACITIES
 
 ---Utility method to register translated strings for a region.
 local T = function(tsk)
@@ -34,6 +36,7 @@ local regions = {
             V(479, 22, 499, 38),
             V(494, 17, 512, 24),
         },
+        Capacity = CAPACITY.HIGH,
         Fish = {
             {
                 ID = "Pomfret",
@@ -68,6 +71,7 @@ local regions = {
         FishingAreas = {
             V(123, 647, 128, 652), -- Middle of the water running from the waterfall; not flagged as Deepwater for some reason
         },
+        Capacity = CAPACITY.LOW,
         Fish = {
             {
                 ID = "Porgy",
@@ -106,6 +110,7 @@ local regions = {
             V(284, 179, 334, 186),
             V(332, 176, 350, 179),
         },
+        Capacity = CAPACITY.HIGH,
         Fish = {
             {
                 ID = "Pomfret",
@@ -155,6 +160,7 @@ local regions = {
         Priority = 99, -- Needs to be higher than starting beach.
         Bounds = V(196, 582, 222, 556),
         FishingAreas = {},
+        Capacity = CAPACITY.LOW,
         Fish = {
             {
                 ID = "PremoldedCheese",
@@ -188,6 +194,7 @@ local regions = {
             -- Waterfall near entrance (puddle to the east of it is deepwater)
             V(413, 746, 420, 753),
         },
+        Capacity = CAPACITY.LOW,
         Fish = {
             {
                 ID = "GilledMushroom",
@@ -215,6 +222,7 @@ local regions = {
         },
         LevelID = "RC_Main",
         Bounds = V(216, 548, 247, 527),
+        Capacity = CAPACITY.LOW,
         Fish = {
             {
                 ID = "Moss",
@@ -243,6 +251,7 @@ local regions = {
         LevelID = "RC_Main",
         Bounds = V(42, 210, 241, 29),
         FishingAreas = {},
+        Capacity = CAPACITY.HIGH,
         Fish = {
             {
                 ID = "Bream",
@@ -450,6 +459,7 @@ local regions = {
         Priority = 99, -- Needs to be higher than the main cloisterwood region.
         Bounds = V(194, 262, 203, 253),
         FishingAreas = {},
+        Capacity = CAPACITY.LOW,
         Fish = {
             {
                 ID = "Moss",
@@ -602,6 +612,7 @@ local regions = {
             V(550, 482, 555, 488),
             V(547, 487, 553, 492),
         },
+        Capacity = CAPACITY.MIDDLING,
         Fish = {
             {
                 ID = "Porgy",
@@ -680,6 +691,7 @@ local regions = {
             V(599, 404, 623, 414),
             V(621, 375, 650, 383),
         },
+        Capacity = CAPACITY.LOW,
         Fish = {
             {
                 ID = "FishBone",
@@ -759,6 +771,7 @@ local regions = {
         },
         LevelID = "RC_Main",
         Bounds = V(278, 680, 491, 541),
+        Capacity = CAPACITY.MIDDLING,
         FishingAreas = {
             -- Minecart area
             V(338, 562, 365, 609),
@@ -815,6 +828,7 @@ local regions = {
         LevelID = "RC_Main",
         Bounds = V(81, 745, 125, 702),
         FishingAreas = {},
+        Capacity = CAPACITY.MIDDLING,
         Fish = {
             {
                 ID = "Hurchin",
@@ -853,6 +867,7 @@ local regions = {
         FishingAreas = {
             V(145, 693, 147, 697),
         },
+        Capacity = CAPACITY.LOW,
         Fish = {
             {
                 ID = "SourceStarFish",

@@ -2,6 +2,8 @@
 local V = Vector.Create
 
 local Fishing = GetFeature("Fishing")
+local Regions = GetFeature("Fishing.Regions")
+local CAPACITIES = Regions.REGION_CAPACITIES
 
 ---Utility method to register translated strings for a region.
 local T = function(tsk)
@@ -10,6 +12,8 @@ local T = function(tsk)
     return tskEntry.Handle
 end
 
+-- Note: starting regions have more fish so the player doesn't hit a "wall" quickly when starting out (also, bait is not easily available at that point)
+
 ---@type Fishing.Region[]
 local regions = {
     {
@@ -17,6 +21,7 @@ local regions = {
         NameHandle = "h5ad7c407g7364g4a4dg9ca4g07ee2b7d9e5e", -- "Fort Joy Beach"
         LevelID = "FJ_FortJoy_Main",
         Bounds = Vector.Create(128, 410, 228, 189),
+        Capacity = CAPACITIES.HIGH,
         Fish = {
             -- TODO add more
             {
@@ -34,6 +39,7 @@ local regions = {
         NameHandle = "h5905ab33g01d7g41f4g81a3ge0a71e0c3e71", -- "Fort Joy Ghetto"
         LevelID = "FJ_FortJoy_Main",
         Bounds = V(83, 257, 291, 52),
+        Capacity = CAPACITIES.HIGH,
         Fish = {
             -- TODO add more
             {
@@ -58,6 +64,7 @@ local regions = {
         },
         LevelID = "FJ_FortJoy_Main",
         Bounds = V(218, 416, 324, 341),
+        Capacity = CAPACITIES.MIDDLING,
         Fish = {
             -- TODO add more
             {
@@ -86,6 +93,7 @@ local regions = {
         },
         LevelID = "FJ_FortJoy_Main",
         Bounds = V(299, 341, 664, 220),
+        Capacity = CAPACITIES.HIGH,
         Fish = {
             -- TODO add more
             {
@@ -136,6 +144,7 @@ local regions = {
         LevelID = "FJ_FortJoy_Main",
         Bounds = V(419, 41, 434, 12),
         Priority = 99,
+        Capacity = CAPACITIES.LOW,
         Fish = {
             {
                 ID = "Pearl",
@@ -163,6 +172,7 @@ local regions = {
         },
         LevelID = "FJ_FortJoy_Main",
         Bounds = V(533, 209, 608, 86),
+        Capacity = CAPACITIES.MIDDLING,
         Fish = {
             {
                 ID = "CrystalCoral",
@@ -186,6 +196,7 @@ local regions = {
         },
         LevelID = "FJ_FortJoy_Main",
         Bounds = V(308, 597, 327, 567),
+        Capacity = CAPACITIES.LOW,
         Fish = {
             {
                 ID = "FishBone",
@@ -224,6 +235,7 @@ local regions = {
         FishingAreas = {
             V(703, 601, 710, 634), -- River to the left when entering Radeka's area (the other side of the river is unreachable)
         },
+        Capacity = CAPACITIES.LOW,
         Fish = {
             {
                 ID = "FloodRose",
@@ -255,6 +267,7 @@ local regions = {
         },
         LevelID = "FJ_FortJoy_Main",
         Bounds = V(474, 580, 550, 471),
+        Capacity = CAPACITIES.MIDDLING,
         FishingAreas = {
             V(479, 522, 495, 540), -- Near large pillar towards the NPCs
             V(500, 512, 531, 518), -- North shipwreck
@@ -299,6 +312,7 @@ local regions = {
             V(499, 637, 507, 654), -- East of chest
             V(490, 627, 506, 637), -- South
         },
+        Capacity = CAPACITIES.MIDDLING,
         Fish = {
             {
                 ID = "Seaweed",
@@ -392,6 +406,7 @@ local regions = {
             V(322, 170, 337, 201), -- Drawbridge area
             V(328, 201, 338, 207), -- North of drawbridge, near the workshop
         },
+        Capacity = CAPACITIES.LOW,
         Fish = {
             {
                 ID = "Seaweed",
@@ -420,6 +435,7 @@ local regions = {
         LevelID = "FJ_FortJoy_Main",
         Bounds = V(156, 505, 195, 486),
         RequiresWater = true,
+        Capacity = CAPACITIES.LOW, -- This is mostly a joke region, we don't want players to feel the need to spend much time here
         Fish = {
             {
                 ID = "GoldenShell",
@@ -479,6 +495,7 @@ local regions = {
         FishingAreas = {
             V(634, 645, 639, 650),
         },
+        Capacity = CAPACITIES.MIDDLING, -- Perhaps I'm being too generous with this one...
         Fish = {
             {
                 ID = "Bucket",
@@ -523,6 +540,7 @@ local regions = {
             V(685, 539, 697, 556), -- South of waterfall
             V(676, 533, 680, 545), -- South, near exit
         },
+        Capacity = CAPACITIES.MIDDLING,
         Fish = {
             {
                 ID = "Handkerchief",
@@ -572,6 +590,7 @@ local regions = {
             V(428, 458, 449, 473), -- Southeast
             V(437, 475, 448, 497), -- Northeast
         },
+        Capacity = CAPACITIES.LOW,
         Fish = {
             {
                 ID = "Salt",
@@ -599,6 +618,7 @@ local regions = {
         FishingAreas = {
             V(331, 478, 335, 482),
         },
+        Capacity = CAPACITIES.LOW,
         Fish = {
             {
                 ID = "Salt",

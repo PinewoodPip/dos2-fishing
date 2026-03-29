@@ -2,6 +2,8 @@
 local V = Vector.Create
 
 local Fishing = GetFeature("Fishing")
+local Regions = GetFeature("Fishing.Regions")
+local CAPACITY = Regions.REGION_CAPACITIES
 
 ---Utility method to register translated strings for a region.
 local T = function(tsk)
@@ -20,6 +22,7 @@ local regions = {
         },
         LevelID = "CoS_Main",
         Bounds = V(55, 1005, 349, 929),
+        Capacity = CAPACITY.HIGH,
         Fish = {
             {
                 ID = "Riftling",
@@ -199,6 +202,7 @@ local regions = {
             V(292, 470, 316, 485),
             V(304, 487, 314, 504),
         },
+        Capacity = CAPACITY.MIDDLING,
         Fish = {
             {
                 ID = "LilyPad",
@@ -231,6 +235,7 @@ local regions = {
             V(563, 725, 572, 734), -- Source pool in the final area
         },
         Bounds = V(553, 739, 660, 584),
+        Capacity = CAPACITY.LOW,
         Fish = {
             {
                 ID = "SourceStarFish",
@@ -261,6 +266,7 @@ local regions = {
             V(590, 280, 602, 287), -- North waterfall
             V(596, 228, 606, 236), -- Southwest puddle, very awkward spot
         },
+        Capacity = CAPACITY.LOW,
         Fish = {
             {
                 ID = "Hurchin",
@@ -329,6 +335,7 @@ local regions = {
             V(503, 196, 524, 203),
             V(509, 200, 516, 210),
         },
+        Capacity = CAPACITY.LOW,
         Fish = {
             {
                 ID = "FishBone",

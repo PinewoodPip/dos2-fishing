@@ -14,6 +14,7 @@ end
 local regions = {
     {
         ID = "TUT.TheHold",
+        IsSecret = true,
         NameHandle = T({
             Handle = "h5b69eddbg13bag4ecaga2d8g67a510ce7d08",
             Text = "The Stormy Seas",

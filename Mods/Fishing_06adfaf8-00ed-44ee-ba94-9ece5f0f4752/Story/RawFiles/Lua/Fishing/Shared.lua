@@ -15,7 +15,6 @@ local Fishing = {
     _CharactersFishing = Set.Create(), -- Not synchronized across clients!
 
     DEFAULT_REGION_REFRESH_COOLDOWN = 3, -- In in-game hours (1 hour = 5 minutes real time).
-    DEFAULT_FISH_PER_REGION = {7, 10}, -- Range of amount of fish that can be found in a region during a spawn cycle.
 
     NETMSG_STARTED_FISHING = "Fishing.NetMsgs.CharacterStartedFishing",
     NETMSG_STOPPED_FISHING = "Fishing.NetMsgs.CharacterStoppedFishing",
@@ -557,6 +556,7 @@ end
 ---@field LevelID string
 ---@field NameHandle TranslatedStringHandle
 ---@field Bounds Vector4 X, Y, width, height bounds of the area where fishing will be possible when near deepwater surfaces.
+---@field Capacity vec2 Minimum and maximum amount of fish that can spawn in the region during a cycle.
 ---@field Fish Fishing.Region.FishEntry[]
 ---@field Priority integer? Defaults to 0.
 ---@field FishingAreas Vector4[]? Bounds of areas where fishing is possible even without deepwater surfaces.
@@ -910,8 +910,10 @@ end
 ---Refreshes the amount of fish available in the region.
 ---@param regionID Fishing.RegionID
 function Fishing.RespawnFishes(regionID)
-    local FISH_PER_REGION = Fishing.DEFAULT_FISH_PER_REGION
-    local remainingFish = math.random(FISH_PER_REGION[1], FISH_PER_REGION[2])
+    local Regions = GetFeature("Fishing.Regions") -- TODO move this & other region methods to that feature
+    local region = Fishing.GetRegion(regionID)
+    local capacity = region.Capacity or Regions.REGION_CAPACITIES.DEFAULT
+    local remainingFish = math.random(capacity[1], capacity[2])
     Fishing.SetRemainingFish(regionID, remainingFish)
 end
 

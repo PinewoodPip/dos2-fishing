@@ -9,6 +9,14 @@ local Regions = {
     BAIT_WATER_SEARCH_RADIUS = 5, -- Search radius for fishable surfaces when using bait, in meters. Should be more generous than the cursor search radius, as the bait check is performed from the character's position.
     FISH_BAIT_RARITY_COLOR = Fishing.ABILITY_SCHOOL_COLOR,
 
+    -- Ranges for the amount of fish that can be found in a region during a spawn cycle.
+    REGION_CAPACITIES = {
+        LOW = {4, 7},
+        MIDDLING = {6, 8},
+        DEFAULT = {7, 11},
+        HIGH = {13, 17},
+    },
+
     TranslatedStrings = {
         Label_Bait = {
             Handle = "h3cd9d5e1g99fdg4a38g86b7g420dc92c4252",

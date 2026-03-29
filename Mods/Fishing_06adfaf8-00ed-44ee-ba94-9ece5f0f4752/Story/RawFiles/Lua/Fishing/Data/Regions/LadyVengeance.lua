@@ -2,6 +2,8 @@
 local V = Vector.Create
 
 local Fishing = GetFeature("Fishing")
+local Regions = GetFeature("Fishing.Regions")
+local CAPACITY = Regions.REGION_CAPACITIES
 
 ---Utility method to register translated strings for a region.
 local T = function(tsk)
@@ -14,6 +16,7 @@ end
 local regions = {
     {
         ID = "LV.Act1ToAct2",
+        IsSecret = true,
         NameHandle = T{
             Handle = "h17a1e689g9c54g493ega0c9g7c1a457fbf97",
             Text = "Reaper's Eye High Seas",
@@ -26,6 +29,7 @@ local regions = {
             -- South
             V(531, 500, 653, 522),
         },
+        Capacity = CAPACITY.HIGH,
         Fish = {
             {
                 ID = "Piranha",
