@@ -450,6 +450,22 @@ Tooltip.Hooks.RenderItemTooltip:Subscribe(function (ev)
         rarityElement.Label = TSK.Label_FishingRod:Format({
             Color = Fishing.FISHING_ROD_RARITY_COLOR,
         })
+
+        -- Change description
+        local descriptionElement = tooltip:GetFirstElement("ItemDescription")
+        local visualTemplate = ev.Item.CurrentTemplate.VisualTemplate
+        local descriptionTSK = Fishing.VISUAL_TEMPLATE_TO_DESCRIPTION[visualTemplate]
+        if descriptionTSK then
+            local description = descriptionTSK:GetString()
+            if descriptionElement then
+                descriptionElement.Label = description
+            else
+                tooltip:InsertElement({
+                    Type = "ItemDescription",
+                    Label = description,
+                })
+            end
+        end
     end
 end)
 

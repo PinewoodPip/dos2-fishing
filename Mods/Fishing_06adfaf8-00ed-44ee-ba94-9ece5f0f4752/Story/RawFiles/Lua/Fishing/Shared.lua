@@ -372,6 +372,26 @@ Fishing.LEVEL_NAME_TSKHANDLES = {
     ["ARX_Main"] = "hd8971510g1ba0g4b01gad48g6aa3600195e4", -- "Arx"
 }
 
+-- Maps fishing rod visual templates to their description to show in their tooltip, replacing the vanilla description.
+---@type table<GUID, TextLib_TranslatedString>
+Fishing.VISUAL_TEMPLATE_TO_DESCRIPTION = {
+    ["c7639619-4c44-44a3-af53-81275a80af15"] = Fishing:RegisterTranslatedString({
+        Handle = "h490fd03dgf302g4026g801dg14b1aa82c408",
+        Text = [[A fishing rod with a eye-catching, bright green rubber fish robber. This one's sure to attract bites quickly.]],
+        ContextDescription = [[Tooltip for fishing rod item]],
+    }),
+    ["483ecb63-b01a-4452-be65-904d9ff03554"] = Fishing:RegisterTranslatedString({
+        Handle = "hbec4e294ga39eg4df6gae68gfc63162179c7",
+        Text = [[A standard-issue fishing rod with a classic white and red bobber. Goes to show some things never go out of style.]],
+        ContextDescription = [[Tooltip for fishing rod item]],
+    }),
+    ["5a14df6e-8e63-425c-9802-1916d630212e"] = Fishing:RegisterTranslatedString({
+        Handle = "he22e5c9fg9455g4689gb139gcb97e9364698",
+        Text = [[A fishing rod with a yellow bobber. It's got a nice sheen when held in the light.]],
+        ContextDescription = [[Tooltip for fishing rod item]],
+    }),
+}
+
 ---------------------------------------------
 -- EVENTS
 ---------------------------------------------
