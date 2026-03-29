@@ -16,7 +16,7 @@ PROC_AMER_TempStat_ExtendedStat_Add(_Char, "Status_AddDuration", "PIP_Fishing_Ho
 
 // Source Infusion 2
 
-// Grant magic armor restoration when proccing Seaburn.
+// Grant magic armor restoration when proccing Seasick.
 QRY QRY_AMER_Source_Infusion_SkillPreCast((CHARACTERGUID)_Char, "Shout_PIP_Fishing_Hornpipe", (INTEGER)_InfusCount)
 AND
 _InfusCount > 1
@@ -27,17 +27,17 @@ Real(_Hydrosophist, _HydrosophistReal)
 AND
 RealSum(7.0, _HydrosophistReal, _ArmorRestoration)
 THEN
-PROC_AMER_TempStat_StatusMod_AddExtendedStat(_Char, "PIP_Fishing_Hornpipe", "PIP_ArmorRestorationOnSeaburnProc", "MagicArmor", "", "", _ArmorRestoration, "Hornpipe_Infus2", 0, 2000, "SkillCast");
+PROC_AMER_TempStat_StatusMod_AddExtendedStat(_Char, "PIP_Fishing_Hornpipe", "PIP_ArmorRestorationOnSeasickProc", "MagicArmor", "", "", _ArmorRestoration, "Hornpipe_Infus2", 0, 2000, "SkillCast");
 
 // Source Infusion 3
 
-// Grant critical chance and reduce Hydrosophist cooldowns when proccing Seaburn with crits.
+// Grant critical chance and reduce Hydrosophist cooldowns when proccing Seasick with crits.
 QRY QRY_AMER_Source_Infusion_SkillPreCast((CHARACTERGUID)_Char, "Shout_PIP_Fishing_Hornpipe", (INTEGER)_InfusCount)
 AND
 _InfusCount > 2
 THEN
 PROC_AMER_TempStat_StatusMod_AddFlexStat_Scaling(_Char, "PIP_Fishing_Hornpipe", "Stat", "CRITICALCHANCE", "Hornpipe_Infus3", 0, "Ability", "WaterSpecialist", 10.0, 1.0, 2000, "SkillCast");
-PROC_AMER_TempStat_StatusMod_AddExtendedStat(_Char, "PIP_Fishing_Hornpipe", "PIP_ReduceCooldownOnSeaburnProc", "WaterSpecialist", "", "", 6.0, "Hornpipe_Infus3", 0, 2000, "SkillCast");
+PROC_AMER_TempStat_StatusMod_AddExtendedStat(_Char, "PIP_Fishing_Hornpipe", "PIP_ReduceCooldownOnSeasickProc", "WaterSpecialist", "", "", 6.0, "Hornpipe_Infus3", 0, 2000, "SkillCast");
 
 EXITSECTION
 

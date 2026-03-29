@@ -14,11 +14,11 @@ TSK.Label_SourceInfusionRequirement = Skills:RegisterTranslatedString({
     Text = "(requires %d %s)",
     ContextDescription = [[Tooltip for Source Infusions; params are ability score and ability type]],
 })
-TSK.Status_Seaburn_Description_EE = Skills:RegisterTranslatedString({
+TSK.Status_Seasick_Description_EE = Skills:RegisterTranslatedString({
     Handle = "hc0ae3818gca63g4763g934bg8e3a6afed390",
     Text = "When hit by water damage, Character receives 1 Harried stack and loses 1 turn of this status.<br>Duration cannot be refreshed.",
-    ContextDescription = [[Status tooltip for "Seaburn" in EE]],
-    StringKey = "PIP_FISHING_SEABURN_Description_EE",
+    ContextDescription = [[Status tooltip for "Seasick" in EE]],
+    StringKey = "PIP_FISHING_SEASICK_Description_EE",
 })
 TSK.Label_TieredStatusHint = Skills:RegisterTranslatedString({
     Handle = "hc4d47eddgb7d5g4d38g8736gdae013b8e8ef",
@@ -77,11 +77,11 @@ local SourceInfusionTSKs = {
         },
         {
             Handle = "h3ca36071gd8abg4296g806cg04c68e54126b",
-            Text = "With the Currents now also activates on turn start and grants +1 turn duration to Seaburn applied.",
+            Text = "With the Currents now also activates on turn start and grants +1 turn duration to Seasick applied.",
         },
         {
             Handle = "h983dde22gc37bg4386g94b4gee4b87209d9f",
-            Text = "With the Currents grants +1 turn duration to Seaburn applied. Recover 1SP.",
+            Text = "With the Currents grants +1 turn duration to Seasick applied. Recover 1SP.",
         },
     },
     ["Shout_PIP_Fishing_TurnOnTheTides"] = {
@@ -109,7 +109,7 @@ local SourceInfusionTSKs = {
         },
         {
             Handle = "h6c669bd1g956eg4598g84a4g35d3c1966e46",
-            Text = "Once per turn, Swashbuckler can now emulate Throw Knives as a free reaction against enemies it can see on which Seaburn detonates.",
+            Text = "Once per turn, Swashbuckler can now emulate Throw Knives as a free reaction against enemies it can see on which Seasick detonates.",
         },
     },
     ["Shout_PIP_Fishing_ReturnToCrab"] = {
@@ -151,7 +151,7 @@ local SourceInfusionTSKs = {
         },
         {
             Handle = "hb3001d98g2552g48bdgbcebg0948583ca05d",
-            Text = "Attempt to sneak after casting. If your target dies while casting this skill, gain Slashimi for 3 turns: once per turn per target, your basic attack applies Seaburn for 1 turn.",
+            Text = "Attempt to sneak after casting. If your target dies while casting this skill, gain Slashimi for 3 turns: once per turn per target, your basic attack applies Seasick for 1 turn.",
         },
     },
     ["Shout_PIP_Fishing_Hornpipe"] = {
@@ -161,11 +161,11 @@ local SourceInfusionTSKs = {
         },
         {
             Handle = "h6538ee15gdf35g4a81gadaeg4cdef5ba1a54",
-            Text = "Horned Pipe Spirit restores 7% (+1% per Hydrosophist) missing Magic Armor upon activating Seaburn.",
+            Text = "Horned Pipe Spirit restores 7% (+1% per Hydrosophist) missing Magic Armor upon activating Seasick."
         },
         {
             Handle = "hfdab024dge097g48b7gb48ag374b8451e257",
-            Text = "Horned Pipe Spirit grants +10% critical chance (+1% per Hydrosophist). While Horned Pipe Spirit is active, once per turn, activating Seaburn with critical hits reduces the cooldown of Hydrosophist skills by 1 turn.",
+            Text = "Horned Pipe Spirit grants +10% critical chance (+1% per Hydrosophist). While Horned Pipe Spirit is active, once per turn, activating Seasick with critical hits reduces the cooldown of Hydrosophist skills by 1 turn.",
         },
     },
 }
@@ -286,13 +286,13 @@ Ext.Events.StatsLoaded:Subscribe(function (_)
             end
         end
 
-        -- Remove armor damage from Seaburn.
-        local seaburnSkill = Stats.Get("StatsLib_StatsEntry_SkillData", "Projectile_PIP_Fishing_Seaburn_ScriptedDamage")
-        seaburnSkill["Damage Multiplier"] = 0
-        seaburnSkill["Damage Range"] = 0
+        -- Remove armor damage from Seasick.
+        local seasickSkill = Stats.Get("StatsLib_StatsEntry_SkillData", "Projectile_PIP_Fishing_Seasick_ScriptedDamage")
+        seasickSkill["Damage Multiplier"] = 0
+        seasickSkill["Damage Range"] = 0
 
-        -- Replace Seaburn description.
-        local seaburnStatus = Stats.Get("StatsLib_StatsEntry_StatusData", "PIP_FISHING_SEABURN")
-        seaburnStatus.Description = TSK.Status_Seaburn_Description_EE.StringKey
+        -- Replace Seasick description.
+        local seasickStatus = Stats.Get("StatsLib_StatsEntry_StatusData", "PIP_FISHING_SEASICK")
+        seasickStatus.Description = TSK.Status_Seasick_Description_EE.StringKey
     end
 end, {StringID = "Fishing.Skills.EE_Overrides"})

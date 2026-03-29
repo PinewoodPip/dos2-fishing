@@ -5,7 +5,7 @@ local Fishing = GetFeature("Fishing")
 local Skills = GetFeature("Fishing.Skills")
 
 Skills.HORNPIPE_TUNING = {
-    SEABURN_EXTRA_DURATION = 6.0, -- In seconds.
+    SEASICK_EXTRA_DURATION = 6.0, -- In seconds.
 }
 local TUNING = Skills.HORNPIPE_TUNING
 
@@ -13,7 +13,7 @@ local TUNING = Skills.HORNPIPE_TUNING
 -- EVENT LISTENERS
 ---------------------------------------------
 
--- Hornpipe status: crits against Wet or Seaburn'd enemies restore Vitality and Magic Armor to the attacker.
+-- Hornpipe status: crits against Wet or Seasick'd enemies restore Vitality and Magic Armor to the attacker.
 -- TODO limit to once per turn?
 Ext.Events.StatusHitEnter:Subscribe(function (ev)
     local context = ev.Context
@@ -35,7 +35,7 @@ Ext.Events.StatusHitEnter:Subscribe(function (ev)
     end
 end)
 
--- SI3 effect: reduce cooldowns of Hydrosophist skills when proccing Seaburn with crits.
+-- SI3 effect: reduce cooldowns of Hydrosophist skills when proccing Seasick with crits.
 Osiris.RegisterSymbolListener("PROC_PIP_ReduceCooldowns", 3, "before", function (charGUID, skillAbility, lifetime)
     local char = Character.Get(charGUID)
     local skillManager = char.SkillManager
@@ -49,16 +49,16 @@ Osiris.RegisterSymbolListener("PROC_PIP_ReduceCooldowns", 3, "before", function 
     end
 end)
 
--- Increase duration of Seaburn applied by characters with Hornpipe.
+-- Increase duration of Seasick applied by characters with Hornpipe.
 Ext.Events.BeforeStatusApply:Subscribe(function (ev)
     local status = ev.Status
-    if status.StatusId == "PIP_FISHING_SEABURN" then
+    if status.StatusId == "PIP_FISHING_SEASICK" then
         local sourceHandle = status.StatusSourceHandle
         if Ext.Utils.GetHandleType(sourceHandle) ~= "ServerCharacter" then return end
         local source = Character.Get(sourceHandle)
         if not source:GetStatus("PIP_Fishing_Hornpipe") then return end
-        status.LifeTime = status.LifeTime + TUNING.SEABURN_EXTRA_DURATION
-        status.CurrentLifeTime = status.CurrentLifeTime + TUNING.SEABURN_EXTRA_DURATION
+        status.LifeTime = status.LifeTime + TUNING.SEASICK_EXTRA_DURATION
+        status.CurrentLifeTime = status.CurrentLifeTime + TUNING.SEASICK_EXTRA_DURATION
         status.RequestClientSync = true
         status.RequestClientSync2 = true
     end

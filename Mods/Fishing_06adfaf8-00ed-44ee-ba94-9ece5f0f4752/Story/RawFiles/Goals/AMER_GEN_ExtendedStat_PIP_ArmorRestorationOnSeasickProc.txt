@@ -4,10 +4,10 @@ INITSECTION
 
 KBSECTION
 
-// Restore armor when proccing Seaburn.
-PROC PROC_PIP_Seaburn_Detonate((CHARACTERGUID)_Target, (CHARACTERGUID)_StatusSource, (CHARACTERGUID)_Attacker)
+// Restore armor when proccing Seasick.
+PROC PROC_PIP_Seasick_Detonate((CHARACTERGUID)_Target, (CHARACTERGUID)_StatusSource, (CHARACTERGUID)_Attacker)
 AND
-DB_AMER_ExtendedStat_AddedStat(_Attacker, "PIP_ArmorRestorationOnSeaburnProc", _ArmorType, _Extraprop2, _Extraprop3, _HealPercentage)
+DB_AMER_ExtendedStat_AddedStat(_Attacker, "PIP_ArmorRestorationOnSeasickProc", _ArmorType, _Extraprop2, _Extraprop3, _HealPercentage)
 THEN
 PROC_AMER_GEN_Heal_Percentage(_Attacker, _HealPercentage, _ArmorType, _Attacker, 1);
 PlayEffect(_Attacker, "RS3_FX_Skills_Water_Divine_Impact_01");

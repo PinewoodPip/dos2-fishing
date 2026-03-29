@@ -1,4 +1,4 @@
-new entry "Stats_PIP_Fishing_Seaburn"
+new entry "Stats_PIP_Fishing_Seasick"
 type "Potion"
 data "Act" "1"
 data "Act part" "0"

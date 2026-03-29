@@ -4,9 +4,9 @@ INITSECTION
 
 KBSECTION
 
-// Apply Harried when proccing Seaburn.
-// Hook into this to perform effects when Seaburn detonates.
-PROC PROC_PIP_Seaburn_Detonate((CHARACTERGUID)_Target, (CHARACTERGUID)_StatusSource, (CHARACTERGUID)_Attacker)
+// Apply Harried when proccing Seasick.
+// Hook into this to perform effects when Seasick detonates.
+PROC PROC_PIP_Seasick_Detonate((CHARACTERGUID)_Target, (CHARACTERGUID)_StatusSource, (CHARACTERGUID)_Attacker)
 THEN
 PROC_AMER_BatteredHarried_DirectManip(_Target, 1, 1, _Attacker);
 
@@ -25,7 +25,7 @@ AND
 RealProduct(_Amount, 6.0, _Duration)
 THEN
 ApplyStatus(_Source, "PIP_FISHING_SLASHIMI", _Duration, 0, _Source);
-PROC_AMER_TempStat_StatusMod_AddExtendedStat(_Source, "PIP_FISHING_SLASHIMI", "PIP_SeaburnOnHit", "", "", "", 1.0, "PIP_Fishing_PrepareSashimi_Infus3", 1); // Should be called after applying the status (since we're not using SkillCast timer).
+PROC_AMER_TempStat_StatusMod_AddExtendedStat(_Source, "PIP_FISHING_SLASHIMI", "PIP_SeasickOnHit", "", "", "", 1.0, "PIP_Fishing_PrepareSashimi_Infus3", 1); // Should be called after applying the status (since we're not using SkillCast timer).
 
 // Apply floating status to crab form.
 IF CharacterStatusApplied(_Char, "PIP_Polymorphed_Crab", (CHARACTERGUID)_Source)

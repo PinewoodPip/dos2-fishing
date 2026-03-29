@@ -24,7 +24,7 @@ _InfusCount > 1
 THEN
 PROC_AMER_TempStat_StatusMod_AddExtendedStat(_Char, "PIP_FISHING_WITH_THE_CURRENT_INFUS1", "Shoot_OnTurn", "Explosion", "Projectile_PIP_Fishing_WithTheCurrents_ActiveDefense_Script_Aura", "PIP_WithTheCurrents", 1.0, "PIP_Fishing_WithTheCurrents_Infus2", 1, 2000, "SkillCast"); //_SelfBool param is 1 because stat's property of SELF: status application applies with source as NULL. Must be applied to the SI1 status variant.
 
-// Add +turn duration to Seaburn applications
+// Add +turn duration to Seasick applications
 PROC PROC_AMER_Spells_SkillPreCast((CHARACTERGUID)_Char, "Shout_PIP_Fishing_WithTheCurrents", (INTEGER)_InfusCount, (STRING)_Type, (STRING)_Element)
 AND
 _InfusCount > 1
@@ -33,7 +33,7 @@ IntegerSubtract(_InfusCount, 1, _ExtraTurns) // +1 for SI2, +2 for SI3.
 AND
 Real(_ExtraTurns, _ExtraTurnsReal)
 THEN
-PROC_AMER_TempStat_StatusMod_AddExtendedStat(_Char, "PIP_FISHING_WITH_THE_CURRENT_INFUS1", "Status_AddDuration", "PIP_FISHING_SEABURN", "", "", _ExtraTurnsReal, "PIP_Fishing_WithTheCurrents_Infus3", 1, 2000, "SkillCast"); // Must be applied to the SI status variant.
+PROC_AMER_TempStat_StatusMod_AddExtendedStat(_Char, "PIP_FISHING_WITH_THE_CURRENT_INFUS1", "Status_AddDuration", "PIP_FISHING_SEASICK", "", "", _ExtraTurnsReal, "PIP_Fishing_WithTheCurrents_Infus3", 1, 2000, "SkillCast"); // Must be applied to the SI status variant.
 
 // Source Infusion 3
 

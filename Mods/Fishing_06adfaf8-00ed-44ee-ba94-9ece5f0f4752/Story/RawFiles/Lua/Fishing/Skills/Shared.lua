@@ -56,7 +56,7 @@ local Skills = {
         },
         Skill_BlueFireball_Description = {
             Handle = "had5aae6cg5f8cg4ee5gafccg253ff5269b76",
-            Text = "Launch a volatile ball of blue fire at target point, dealing [1] and creating cursed water in a [2] radius.<br><br>Seaburn decreases water and air resistance.",
+            Text = "Launch a volatile ball of blue fire at target point, dealing [1] and creating cursed water in a [2] radius.<br><br>Seasick decreases water and air resistance.",
             ContextDescription = [[Skill tooltip for "Blue Fireball"]],
             StringKey = "Projectile_PIP_Fishing_BlueFireball_Description",
         },
@@ -68,7 +68,7 @@ local Skills = {
         },
         Skill_Hornpipe_Description = {
             Handle = "h3a713104g80b4g426ag8ed7ga2747320e096",
-            Text = "Get the voyage started on the right foot by blowing the hornpipe, applying Horned Pipe Spirit to allies within [1].<br>Horned Pipe Spirit grants [2]% water resistance and increases the duration of Seaburn aplied by 1 turn.",
+            Text = "Get the voyage started on the right foot by blowing the hornpipe, applying Horned Pipe Spirit to allies within [1].<br>Horned Pipe Spirit grants [2]% water resistance and increases the duration of Seasick aplied by 1 turn.",
             ContextDescription = [[Skill tooltip for "Blow the Hornpipe"]],
             StringKey = "Shout_PIP_Fishing_Hornpipe_Description",
         },
@@ -80,7 +80,7 @@ local Skills = {
         },
         Skill_Sashimi_Description = {
             Handle = "h48590371g58b1g4d5bga23dgfc37d526e44c",
-            Text = "Attempt to process the target into sashimi, dealing [1]. If a non-boss target has Seaburn and less than 20% (+1% per Fishermancy) Vitality, it dies and becomes sashimi.",
+            Text = "Attempt to process the target into sashimi, dealing [1]. If a non-boss target has Seasick and less than 20% (+1% per Fishermancy) Vitality, it dies and becomes sashimi.",
             ContextDescription = [[Skill tooltip for "Prepare Sashimi"]],
             StringKey = "Target_PIP_Fishing_Sashimi_Description",
         },
@@ -224,7 +224,7 @@ local Skills = {
         },
         Skill_WithTheCurrents_Description = {
             Handle = "hff2e328bg115eg4d46g9c1fge2fc231a8c31",
-            Text = "Create a cursed water surface and apply With the Currents to yourself, summoning a ring of fish around you that will bite enemies that move or are moved within [1] of you, dealing [2], applying Seaburn and creating a cursed water surface.",
+            Text = "Create a cursed water surface and apply With the Currents to yourself, summoning a ring of fish around you that will bite enemies that move or are moved within [1] of you, dealing [2], applying Seasick and creating a cursed water surface.",
             ContextDescription = [[Skill tooltip for "With the Currents"]],
             StringKey = "Shout_PIP_Fishing_WithTheCurrents_Description",
         },
@@ -288,17 +288,17 @@ local Skills = {
             ContextDescription = [[Status tooltip for "Crab Form"]],
             StringKey = "PIP_Polymorphed_Crab_Description",
         },
-        Status_Seaburn_DisplayName = {
+        Status_Seasick_DisplayName = {
             Handle = "hbe276f31gd6c5g475dgb83bg1690ee01327f",
-            Text = "Seaburn",
+            Text = "Seasick",
             ContextDescription = [[Status name]],
-            StringKey = "PIP_FISHING_SEABURN_DisplayName",
+            StringKey = "PIP_FISHING_SEASICK_DisplayName",
         },
-        Status_Seaburn_Description = {
+        Status_Seasick_Description = {
             Handle = "h828e84d7g9080g4345g94e3gecbb1ac24bab",
             Text = "When hit by water damage, Character takes Magic Armor damage and loses 1 turn of this status.<br>Duration cannot be refreshed.",
-            ContextDescription = [[Status tooltip for "Seaburn"]],
-            StringKey = "PIP_FISHING_SEABURN_Description",
+            ContextDescription = [[Status tooltip for "Seasick"]],
+            StringKey = "PIP_FISHING_SEASICK_Description",
         },
         Status_WaterCoating_DisplayName = {
             Handle = "h080ffb54g3995g4253gb58ag8189c9f6bc7f",
@@ -350,7 +350,7 @@ local Skills = {
         },
         Status_Slashimi_Description = {
             Handle = "hd5f37fd8gce04g4e74gb8a0gc4c0030bb876",
-            Text = "Once per turn per target, your basic attack applies Seaburn for 1 turn.",
+            Text = "Once per turn per target, your basic attack applies Seasick for 1 turn.",
             ContextDescription = [[Status tooltip for "Slashimi"]],
             StringKey = "PIP_FISHING_SLASHIMI_Description",
         },

@@ -13,10 +13,10 @@ Skills.SASHIMI_TEMPLATES = {
 -- EVENT LISTENERS
 ---------------------------------------------
 
--- Cast effect: attempt to execute non-boss targets that have Seaburn.
+-- Cast effect: attempt to execute non-boss targets that have Seasick.
 Osiris.RegisterSymbolListener("CharacterStatusApplied", 3, "after", function (targetGUID, statusID, causeeGUID)
     if statusID ~= "PIP_FISHING_TRY_SASHIMI" then return end
-    if Osi.HasActiveStatus(targetGUID, "PIP_FISHING_SEABURN") == 0 or Osi.IsBoss(targetGUID) == 1 then return end
+    if Osi.HasActiveStatus(targetGUID, "PIP_FISHING_SEASICK") == 0 or Osi.IsBoss(targetGUID) == 1 then return end
 
     -- Execute target
     local ownerFishermancy = Fishing.GetAbilityScore(Character.Get(causeeGUID))

@@ -1,0 +1,29 @@
+Version 1
+SubGoalCombiner SGC_AND
+INITSECTION
+
+KBSECTION
+
+// Apply Seasick to targets hit by basic attacks.
+PROC PROC_AMER_GEN_BasicAttackObjectStarted((GUIDSTRING)_Defender, (REAL)_X, (REAL)_Y, (REAL)_Z, (CHARACTERGUID)_Owner, (CHARACTERGUID)_Attacker, (STRING)_AttackID)
+AND
+DB_AMER_ExtendedStat_AddedStat(_Char, "PIP_SeasickOnHit", _Extraprop1, _Extraprop2, _Extraprop3, _Count)
+THEN
+PROC_AMER_TempStat_HitStatus_ThrowProc(_Attacker, "PIP_SeasickOnHit", 2000, "");
+
+PROC PROC_AMER_HitStatus_Event((CHARACTERGUID)_Defender, (CHARACTERGUID)_Attacker, "PIP_SeasickOnHit")
+AND
+QRY_AMER_GEN_OncePerTurn(_Defender, "PIP_SeasickOnHit") // Kind of a hack; we store this check for _Target to emulate "once per turn per target" condition. TODO this will not work properly if multiple characters have the stat at the same time, if "basic-attack-like" reactions also fire this event (do they?)
+AND
+CharacterCanSee(_Attacker, _Defender, 1)
+AND
+CharacterIsEnemy(_Attacker, _Defender, 1)
+THEN
+ApplyStatus(_Defender, "PIP_FISHING_SEASICK", 6.0, 0, _Attacker);
+PROC_AMER_GEN_OncePerTurn_Store(_Defender, "PIP_SeasickOnHit");
+PROC_AMER_TempStat_HitStatus_ThrowProc_Clear(_Attacker, "PIP_SeasickOnHit");
+
+EXITSECTION
+
+ENDEXITSECTION
+ParentTargetEdge "AMER_GEN_Stats_ExtendedStats"
