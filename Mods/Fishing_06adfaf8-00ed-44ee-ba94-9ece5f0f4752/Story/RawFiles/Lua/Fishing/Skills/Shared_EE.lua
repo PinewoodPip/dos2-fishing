@@ -29,7 +29,7 @@ TSK.Label_TieredStatusHint = Skills:RegisterTranslatedString({
 Skills.SKILL_DESCRIPTION_OVERRIDES = {
     ["Projectile_PIP_Fishing_DeployFishnets"] = Skills:RegisterTranslatedString({
         Handle = "hda273868g9d52g458fgb43cg276e5c395c9a",
-        Text = "Reach for your trawling equipment and deploy [1] fishnets at target positions.<br>Each fishnet takes 1 turn to arm; once armed, enemies approaching within [2] of the trap will trigger the fishnet, dealing [3] damage to enemies within [4], applying up to Slowed II for 2 turns and creating a web surface.",
+        Text = "Reach for your trawling equipment and deploy [1] fishnets at target positions.<br><br>Each fishnet takes 1 turn to arm; once armed, enemies approaching within [2] of the trap will trigger the fishnet, dealing [3] damage to enemies within [4], applying up to Slowed II for 2 turns and creating a web surface.",
         ContextDescription = [[Skill tooltip for "Deploy Fishnets" in EE]],
         StringKey = "Projectile_PIP_Fishing_DeployFishnets_Description_EE",
     }),
@@ -166,15 +166,15 @@ local SourceInfusionTSKs = {
     ["Shout_PIP_Fishing_Hornpipe"] = {
         {
             Handle = "hee2435ebgceabg4e2dg85c2gcfb0ba89747e",
-            Text = "Horned Pipe Spirit grants +10% water resistance (+1% per Hydrosophist). +1 turn duration.",
+            Text = "Horned Pipe Hype grants +10% water resistance (+1% per Hydrosophist). +1 turn duration.",
         },
         {
             Handle = "h6538ee15gdf35g4a81gadaeg4cdef5ba1a54",
-            Text = "Horned Pipe Spirit restores 7% (+1% per Hydrosophist) missing Magic Armor upon activating Seasick."
+            Text = "Horned Pipe Hype restores 7% (+1% per Hydrosophist) missing Magic Armor upon activating Seasick."
         },
         {
             Handle = "hfdab024dge097g48b7gb48ag374b8451e257",
-            Text = "Horned Pipe Spirit grants +10% critical chance (+1% per Hydrosophist). While Horned Pipe Spirit is active, once per turn, activating Seasick with critical hits reduces the cooldown of Hydrosophist skills by 1 turn.",
+            Text = "Horned Pipe Hype grants +10% critical chance (+1% per Hydrosophist). While Horned Pipe Hype is active, once per turn, activating Seasick with critical hits reduces the cooldown of Hydrosophist skills by 1 turn.",
         },
     },
 }

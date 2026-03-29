@@ -64,7 +64,7 @@ local Skills = {
         },
         Skill_BlueFireball_Description = {
             Handle = "had5aae6cg5f8cg4ee5gafccg253ff5269b76",
-            Text = "Launch a volatile ball of blue fire at target point, dealing [1] and creating cursed water in a [2] radius.<br><br>Seasick decreases water and air resistance.",
+            Text = "Launch a volatile ball of blue fire at target point, dealing [1], applying Seasick and creating cursed water in a [2] radius.",
             ContextDescription = [[Skill tooltip for "Blue Fireball"]],
             StringKey = "Projectile_PIP_Fishing_BlueFireball_Description",
         },
@@ -76,7 +76,7 @@ local Skills = {
         },
         Skill_Hornpipe_Description = {
             Handle = "h3a713104g80b4g426ag8ed7ga2747320e096",
-            Text = "Get the voyage started on the right foot by blowing the hornpipe, applying Horned Pipe Spirit to allies within [1].<br>Horned Pipe Spirit grants [2]% water resistance and increases the duration of Seasick aplied by 1 turn.",
+            Text = "Get the voyage started on the right foot by blowing the hornpipe, applying Horned Pipe Hype to allies within [1].<br><br>Horned Pipe Hype grants [2]% water resistance and increases the duration of Seasick aplied by 1 turn.",
             ContextDescription = [[Skill tooltip for "Blow the Hornpipe"]],
             StringKey = "Shout_PIP_Fishing_Hornpipe_Description",
         },
@@ -100,7 +100,7 @@ local Skills = {
         },
         Skill_ReelIn_Description = {
             Handle = "h0999dbacgde3eg430ag8071gee3d46d1aeab",
-            Text = "Reel in a big catch, dealing [1] and pulling targets towards your position.<br>Targets receive piercing damage every 5m travelled (-0.2m per Fishermancy) while being reeled in.",
+            Text = "Reel in a big catch, dealing [1] and pulling targets towards your position.<br><br>Targets receive piercing damage every 5m travelled (-0.2m per Fishermancy) while being reeled in.",
             ContextDescription = [[Skill tooltip for "Reel In"]],
             StringKey = "Target_PIP_Fishing_ReelIn_Description",
         },
@@ -112,7 +112,7 @@ local Skills = {
         },
         Skill_ReturnToCrab_Description = {
             Handle = "ha744eb2cg180eg4594g9fffg7e613e0a21b6",
-            Text = "Abandon modernity and return to your primordial origin, becoming crab.<br>Crab form is immune to surfaces and clouds and knows Crab Pinch & Punch, Breath of Fresh Sea Air, Burrow, Crab Dance, and can devolve back into your former form.",
+            Text = "Abandon modernity and return to your primordial origin, becoming crab.<br><br>Crab form is immune to surfaces and knows Crab Pinch & Punch, Breath of Fresh Sea Air, Burrow, Crab Dance, and can devolve back into your former form.",
             ContextDescription = [[Skill tooltip for "Return to Crab"]],
             StringKey = "Shout_PIP_Fishing_ReturnToCrab_Description",
         },
@@ -136,7 +136,7 @@ local Skills = {
         },
         Skill_DeployFishnets_Description = {
             Handle = "h4b9d4d07g868eg49e0g8532g301e913d7012",
-            Text = "Reach for your trawling equipment and deploy [1] fishnets at target positions.<br>Each fishnet takes 1 turn to arm; once armed, enemies approaching within [2] of the trap will trigger the fishnet, dealing [3] damage to enemies within [4], applying Slowed for 2 turns and creating a web surface.",
+            Text = "Reach for your trawling equipment and deploy [1] fishnets at target positions.<br><br>Each fishnet takes 1 turn to arm; once armed, enemies approaching within [2] of the trap will trigger the fishnet, dealing [3] damage to enemies within [4], applying Slowed for 2 turns and creating a web surface.",
             ContextDescription = [[Skill tooltip for "Deploy Fishnets"]],
             StringKey = "Projectile_PIP_Fishing_DeployFishnets_Description",
         },
@@ -196,7 +196,7 @@ local Skills = {
         },
         Skill_CannonBall_Description = {
             Handle = "h4a09fa59gc72dg4e2dgb935gb91783945e69",
-            Text = "Shoot the canonical cannon ball, dealing [1] in a wonderfully straight line and pushing away targets hit by 7m (+1m per Fichermancy). Targets pushed into walls or obstacles cause [2] to characters within [3] of their impact.",
+            Text = "Shoot the canonical cannon ball, dealing [1] along its way and pushing away targets hit by 7m (+1m per Fishermancy).<br><br>Targets pushed into walls or obstacles cause [2] to characters within [3] of their impact.<br>Strangely, the ball is prone to bouncing.",
             ContextDescription = [[Skill tooltip for "Shoot Canon Ball"]],
             StringKey = "Projectile_PIP_Fishing_CannonBall_Description",
         },
@@ -220,7 +220,7 @@ local Skills = {
         },
         Skill_SummonSwashbuckler_Description = {
             Handle = "h30a9a1f0g0d04g4c62g9935g051dba84d38c",
-            Text = "Summon the trusty ol' crew, an undead swashbuckler who knows Ice Shard, Terrifying Cruelty, Vault, Corrosive Touch and Swashbuckling Spirit.<br><br>Swashbuckling Spirit grants water damage to weapon attacks to nearby allies while active.",
+            Text = "Summon the trusty ol' crew, an undead swashbuckler armed with a knife who knows Ice Shard, Terrifying Cruelty, Vault, Corrosive Touch and Swashbuckling Spirit.<br><br>Swashbuckling Spirit grants [1] to weapon attacks to nearby allies while active.",
             ContextDescription = [[Skill tooltip for "Summon Swashbuckler"]],
             StringKey = "Summon_PIP_Fishing_Swashbuckler_Description",
         },
@@ -244,7 +244,7 @@ local Skills = {
         },
         Skill_TurnOnTheTides_Description = {
             Handle = "ha3dd6e66g284fg4550ga6edgb98c7721f660",
-            Text = "Apply Turned On Tides to allied summons, causing them to splash a burst of water at the start of their turns, dealing [1] to enemies within [2].",
+            Text = "Wake the high seas, applying Turned On Tides to allied summons.<br><br>Turn On Tides cases characters to splash a burst of water at the start of their turns, dealing [1] to enemies within [2].",
             ContextDescription = [[Skill tooltip for "Turn on The Tides"]],
             StringKey = "Shout_PIP_Fishing_TurnOnTheTides_Description",
         },
@@ -328,14 +328,14 @@ local Skills = {
         },
         Status_Hornpipe_DisplayName = {
             Handle = "h8b39a27age17cg4527gbaaeg9963bbd7230d",
-            Text = "Horned Pipe Spirit",
+            Text = "Horned Pipe Hype",
             ContextDescription = [[Status name]],
             StringKey = "PIP_Fishing_Hornpipe_DisplayName",
         },
         Status_Hornpipe_Description = {
             Handle = "h088afc65gf93dg4220gabefg08d09791dbe2",
             Text = "Restores 1% Vitality and Magic Armor per point in the status owner's Fishermancy upon dealing a critical hit.",
-            ContextDescription = [[Status tooltip for "Horned Pipe Spirit"]],
+            ContextDescription = [[Status tooltip for "Horned Pipe Hype"]],
             StringKey = "PIP_Fishing_Hornpipe_Description",
         },
         Status_WithTheCurrent_DisplayName = {
