@@ -20,6 +20,11 @@ TSK.Status_Seasick_Description_EE = Skills:RegisterTranslatedString({
     ContextDescription = [[Status tooltip for "Seasick" in EE]],
     StringKey = "PIP_FISHING_SEASICK_Description_EE",
 })
+TSK.Seasick_ShortDescription_EE = Skills:RegisterTranslatedString({
+    Handle = "hb5dd9a85g3885g4d8aga24dg5816ec91faf8",
+    Text = [[Seasick reduces water and air resistance and causes targets to suffer 1 Harried stack when hit by water damage, consuming a turn of the status.]],
+    ContextDescription = [[Tooltip hint for skills that involve Seasick status in EE]],
+})
 TSK.Label_TieredStatusHint = Skills:RegisterTranslatedString({
     Handle = "hc4d47eddgb7d5g4d38g8736gdae013b8e8ef",
     Text = [[Tiered statuses apply up to tier 3 and reduce resistances; see your journal for a full description.]],
@@ -34,6 +39,8 @@ Skills.SKILL_DESCRIPTION_OVERRIDES = {
         StringKey = "Projectile_PIP_Fishing_DeployFishnets_Description_EE",
     }),
 }
+
+Skills.SEASICK_SHORT_DESCRIPTION_TSK = TSK.Seasick_ShortDescription_EE
 
 ---@type table<skill, TextLib_TranslatedString[]>
 local SourceInfusionTSKs = {

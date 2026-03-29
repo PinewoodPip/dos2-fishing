@@ -1,6 +1,7 @@
 
 local Fishing = GetFeature("Fishing")
 local Tooltip = Client.Tooltip
+local isEE = EpicEncounters.IsEnabled()
 
 ---@class Fishing.Skills
 local Skills = GetFeature("Fishing.Skills")
@@ -66,8 +67,54 @@ end)
 -- Show hint on Seasick on skills that involve it.
 Tooltip.Hooks.RenderSkillTooltip:Subscribe(function (ev)
     if Skills.SKILLS_WITH_SEASICK[ev.SkillID] then
+        local char = ev.Character
         local skillDescription = ev.Tooltip:GetFirstElement("SkillDescription")
-        skillDescription.Label = skillDescription.Label .. "<br><br>" .. TSK.Seasick_ShortDescription:GetString()
+        if isEE then
+            skillDescription.Label = skillDescription.Label .. "<br><br>" .. Skills.SEASICK_SHORT_DESCRIPTION_TSK:GetString()
+        else
+            -- Get skill damage to format the label
+            local skill = Stats.Get("StatsLib_StatsEntry_SkillData", Skills.SEASICK_PROJECTILE)
+            local weapon = char:GetItemObjectBySlot("Weapon")
+            local offhand = char:GetItemObjectBySlot("Shield")
+            local seasickDamage = GetSkillDamage(skill, char.Stats, false, Character.IsInStealth(char), char.WorldPos, char.WorldPos, char.Stats.Level, true, weapon and weapon.Stats or nil, offhand and offhand.Stats or nil)
+            local seasickDamageTable = seasickDamage:ToTable()
+
+            -- Build damage label
+            -- TODO replace this once this utility is added to Epip itself
+            local damageStr = ""
+            for i,d in pairs(seasickDamageTable) do
+                local damageRange = skill["Damage Range"] -- +/- 50% of the damage multiplier
+                local minDmg = d.Amount * (1 - ((damageRange/2) / 100))
+                local maxDmg = d.Amount * (1 + ((damageRange/2) / 100))
+
+                minDmg = math.max(minDmg, 1)
+                minDmg = math.floor(minDmg)
+
+                maxDmg = math.max(maxDmg, 1)
+                maxDmg = math.floor(maxDmg)
+
+                local color = ""
+                local dName = ""
+                local damageType = Damage.GetDamageTypeDefinition(d.DamageType)
+                if damageType then
+                    color = damageType.Color
+                    dName = Text.GetTranslatedString(damageType.NameHandle)
+                end
+
+                local dmgString = Text.Format("%s-%s %s", {
+                    FormatArgs = {
+                        minDmg, maxDmg, dName,
+                    },
+                    Color = color,
+                })
+
+                damageStr = damageStr .. dmgString
+                if i ~= #seasickDamageTable then
+                    damageStr = damageStr .. " + "
+                end
+            end
+            skillDescription.Label = skillDescription.Label .. "<br><br>" .. Text.ReplaceLarianPlaceholders(Skills.SEASICK_SHORT_DESCRIPTION_TSK:GetString(), damageStr)
+        end
     end
 end)
 

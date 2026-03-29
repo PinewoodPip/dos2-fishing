@@ -26,6 +26,7 @@ local Skills = {
         ["Shout_PIP_Fishing_WithTheCurrents"] = true,
         ["Cone_PIP_Fishing_BreathOfFreshSeaAir"] = true,
     },
+    SEASICK_PROJECTILE = "Projectile_PIP_Fishing_Seasick_ScriptedDamage",
 
     SOURCE_INFUSION_COLOR = "46B195",
 
@@ -364,7 +365,7 @@ local Skills = {
         },
         Seasick_ShortDescription = {
             Handle = "h081624e4g4f78g4736g81a1g01da3309561d",
-            Text = "Seasick reduces water and air resistance and causes targets to suffer Magic Armor damage when hit by water damage, consuming a turn of the status.",
+            Text = "Seasick reduces water and air resistance and causes targets to suffer [1] when hit by water damage, consuming a turn of the status.",
             ContextDescription = [[Tooltip hint for skills that involve Seasick status]],
         },
         ClassPreset_Name = {
@@ -403,6 +404,8 @@ Skills.ABILITY_TO_NAME_TSK = {
     ["Polymorph"] = CommonStrings.Polymorph,
     ["Death"] = CommonStrings.Necromancer,
 }
+
+Skills.SEASICK_SHORT_DESCRIPTION_TSK = TSK.Seasick_ShortDescription
 
 ---------------------------------------------
 -- CUSTOM REQUIREMENTS

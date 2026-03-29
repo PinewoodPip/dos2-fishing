@@ -2,11 +2,6 @@
 ---@class Fishing.Skills
 local Skills = GetFeature("Fishing.Skills")
 
-Skills.SEASICK_TUNING = {
-    PROJECTILE_SKILL = "Projectile_PIP_Fishing_Seasick_ScriptedDamage",
-}
-local TUNING = Skills.SEASICK_TUNING
-
 ---------------------------------------------
 -- EVENT LISTENERS
 ---------------------------------------------
@@ -25,7 +20,7 @@ Ext.Events.StatusHitEnter:Subscribe(function (ev)
         if hasWaterDamage then
             -- Throw hooks and deal scripted damage.
             local statusSource = Character.Get(seasickStatus.OwnerHandle)
-            Skills.ExplodeProjectile(attacker, TUNING.PROJECTILE_SKILL, defender)
+            Skills.ExplodeProjectile(attacker, Skills.SEASICK_PROJECTILE, defender)
             Osi.PROC_PIP_Seasick_Detonate(defender.MyGuid, statusSource.MyGuid, attacker.MyGuid)
             if ev.Hit.Hit.CriticalHit then
                 Osi.PROC_PIP_Seasick_Detonate_FromCrit(defender.MyGuid, statusSource.MyGuid, attacker.MyGuid)
