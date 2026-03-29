@@ -200,7 +200,7 @@ local Skills = {
         },
         Skill_SwashbucklingAura_Description = {
             Handle = "h0ee5e72agfda1g42c6gbfc9g40260ed83780",
-            Text = "Character is imbued with the swashbuckling spirit.",
+            Text = "Imbue allies within [1] with Swashbuckling Spirit, granting [2] to their weapons.",
             ContextDescription = [[Skill tooltip for "Swashbuckling Spirit" (necromancer summon)]],
             StringKey = "Shout_PIP_Fishing_SwashbucklingAura_Description",
         },
@@ -212,7 +212,7 @@ local Skills = {
         },
         Skill_SummonSwashbuckler_Description = {
             Handle = "h30a9a1f0g0d04g4c62g9935g051dba84d38c",
-            Text = "Summon the trusty ol' crew, an undead swashbuckler who knows Ice Shard, Terrifying Cruelty, Execute, Dust Blast and Swashbuckling Spirit.<br>Swashbuckling Spirit grants water-based weapon coating to nearby allies while active.",
+            Text = "Summon the trusty ol' crew, an undead swashbuckler who knows Ice Shard, Terrifying Cruelty, Vault, Corrosive Touch and Swashbuckling Spirit.<br><br>Swashbuckling Spirit grants water damage to weapon attacks to nearby allies while active.",
             ContextDescription = [[Skill tooltip for "Summon Swashbuckler"]],
             StringKey = "Summon_PIP_Fishing_Swashbuckler_Description",
         },
