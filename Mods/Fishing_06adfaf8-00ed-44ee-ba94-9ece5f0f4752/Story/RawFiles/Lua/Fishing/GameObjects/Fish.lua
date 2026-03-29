@@ -25,7 +25,8 @@ UI.RegisterGameObject("Fishing.GameObject.Fish", _Fish)
 local MovementStates = {
     Sinking = Fishing:GetClass("Fishing.GameObject.MovementStates.Sinking"),
     Floating = Fishing:GetClass("Fishing.GameObject.MovementStates.Floating"),
-    Tweening = Fishing:GetClass("Fishing.GameObject.MovementStates.Tweening")
+    Tweening = Fishing:GetClass("Fishing.GameObject.MovementStates.Tweening"),
+    Shaking = Fishing:GetClass("Fishing.GameObject.MovementStates.Shaking"),
 }
 
 ---------------------------------------------

@@ -8,7 +8,7 @@ local Fishing = GetFeature("Fishing")
 local State = {}
 Fishing:RegisterClass("Fishing.GameObject.MovementState", State)
 
----@alias Fishing.GameObject.MovementState.ClassName "Fishing.GameObject.MovementState"|"Fishing.GameObject.MovementStates.Floating"|"Fishing.GameObject.MovementStates.Sinking"|"Fishing.GameObject.MovementStates.Tweening"
+---@alias Fishing.GameObject.MovementState.ClassName "Fishing.GameObject.MovementState"|"Fishing.GameObject.MovementStates.Floating"|"Fishing.GameObject.MovementStates.Sinking"|"Fishing.GameObject.MovementStates.Tweening"|"Fishing.GameObject.MovementStates.Shaking"
 
 ---------------------------------------------
 -- METHODS
