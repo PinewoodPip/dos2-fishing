@@ -103,7 +103,6 @@ end, {EnabledFunctor = EpicEncounters.IsEnabled})
 
 -- Add tiered statuses journal hint to skills that apply them.
 Tooltip.Hooks.RenderSkillTooltip:Subscribe(function (ev)
-    _D(ev.Tooltip)
     if Skills.SKILLS_WITH_TIERED_STATUSES[ev.SkillID] then
         local skillDescription = ev.Tooltip:GetFirstElement("SkillDescription")
         skillDescription.Label = skillDescription.Label .. "<br>" .. TSK.Label_TieredStatusHint:Format({

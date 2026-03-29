@@ -26,6 +26,15 @@ TSK.Label_TieredStatusHint = Skills:RegisterTranslatedString({
     ContextDescription = [[Tooltip for skills that apply tiered statuses]],
 })
 
+Skills.SKILL_DESCRIPTION_OVERRIDES = {
+    ["Projectile_PIP_Fishing_DeployFishnets"] = Skills:RegisterTranslatedString({
+        Handle = "hda273868g9d52g458fgb43cg276e5c395c9a",
+        Text = "Reach for your trawling equipment and deploy [1] fishnets at target positions.<br>Each fishnet takes 1 turn to arm; once armed, enemies approaching within [2] of the trap will trigger the fishnet, dealing [3] damage to enemies within [4], applying up to Slowed II for 2 turns and creating a web surface.",
+        ContextDescription = [[Skill tooltip for "Deploy Fishnets" in EE]],
+        StringKey = "Projectile_PIP_Fishing_DeployFishnets_Description_EE",
+    }),
+}
+
 ---@type table<skill, TextLib_TranslatedString[]>
 local SourceInfusionTSKs = {
     ["Projectile_PIP_Fishing_BlueFireball"] = {
@@ -190,6 +199,11 @@ Skills.EE_STATS_OVERRIDES = {
         ActionPoints = 4,
         AmountOfTargets = 4, -- Reduced since the skill has 0SP base cost in EE.
     },
+    ["Projectile_PIP_Fishing_FishNet"] = {
+        SkillPropertyRemap = {
+            ["SLOWED"] = "AMER_SLOWED_2",
+        },
+    },
     ["Target_PIP_Fishing_Sashimi"] = {
         ActionPoints = 5,
         ["Magic Cost"] = 0,
@@ -284,6 +298,12 @@ Ext.Events.StatsLoaded:Subscribe(function (_)
                     skill[field] = value
                 end
             end
+        end
+
+        -- Replace skill descriptions.
+        for skill,tsk in pairs(Skills.SKILL_DESCRIPTION_OVERRIDES) do
+            local skillData = Stats.Get("StatsLib_StatsEntry_SkillData", skill)
+            skillData.Description = tsk.StringKey
         end
 
         -- Remove armor damage from Seasick.

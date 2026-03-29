@@ -128,7 +128,7 @@ local Skills = {
         },
         Skill_DeployFishnets_Description = {
             Handle = "h4b9d4d07g868eg49e0g8532g301e913d7012",
-            Text = "Reach for your trawling equipment and deploy [1] fishnets at target positions. Each fishnet takes 1 turn to arm. Once armed, enemies approaching will trigger the fishnet, dealing [2] damage to enemies within [3], applying Disarmed for 1 turn and creating a web surface.",
+            Text = "Reach for your trawling equipment and deploy [1] fishnets at target positions.<br>Each fishnet takes 1 turn to arm; once armed, enemies approaching within [2] of the trap will trigger the fishnet, dealing [3] damage to enemies within [4], applying Slowed for 2 turns and creating a web surface.",
             ContextDescription = [[Skill tooltip for "Deploy Fishnets"]],
             StringKey = "Projectile_PIP_Fishing_DeployFishnets_Description",
         },
