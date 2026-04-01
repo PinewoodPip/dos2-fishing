@@ -33,14 +33,14 @@
                             <attribute id="MD5" value="" type="23" />
                             <attribute id="Name" value="Epip" type="22" />
                             <attribute id="UUID" value="7d32cb52-1cfd-4526-9b84-db4867bf9356" type="22" />
-                            <attribute id="Version" value="268894212" type="4" />
+                            <attribute id="Version" value="268894213" type="4" />
                         </node>
                     </children>
                 </node>
                 <node id="ModuleInfo">
-                    <attribute id="Author" value="" type="30" />
+                    <attribute id="Author" value="Team Pinewood" type="30" />
                     <attribute id="CharacterCreationLevelName" value="" type="22" />
-                    <attribute id="Description" value="" type="30" />
+                    <attribute id="Description" value="Fishermancy Class Overhaul Ultimate adds a full-fledged Fishing mechanic with over 90 fish to catch throughout Rivellon, a whole new Fishermancy skill school, and new progression systems. Grab your previously-useless fishing rod and get fishing!" type="30" />
                     <attribute id="DescriptionName" value="" handle="ls::TranslatedStringRepository::s_HandleUnknown" type="28" />
                     <attribute id="DisplayName" value="" handle="ls::TranslatedStringRepository::s_HandleUnknown" type="28" />
                     <attribute id="Folder" value="Fishing_06adfaf8-00ed-44ee-ba94-9ece5f0f4752" type="30" />
@@ -48,14 +48,14 @@
                     <attribute id="LobbyLevelName" value="" type="22" />
                     <attribute id="MD5" value="" type="23" />
                     <attribute id="MenuLevelName" value="" type="22" />
-                    <attribute id="Name" value="Fishing" type="22" />
+                    <attribute id="Name" value="Fishermancy Class Overhaul Ultimate" type="22" />
                     <attribute id="NumPlayers" value="2" type="1" />
                     <attribute id="PhotoBooth" value="SYS_NPC_Portrait_A" type="22" />
                     <attribute id="StartupLevelName" value="" type="22" />
                     <attribute id="Tags" value="" type="30" />
                     <attribute id="Type" value="Add-on" type="22" />
                     <attribute id="UUID" value="06adfaf8-00ed-44ee-ba94-9ece5f0f4752" type="22" />
-                    <attribute id="Version" value="268435456" type="4" />
+                    <attribute id="Version" value="150994944" type="4" />
                     <children>
                         <node id="PublishVersion">
                             <attribute id="Version" value="909321303" type="4" />
