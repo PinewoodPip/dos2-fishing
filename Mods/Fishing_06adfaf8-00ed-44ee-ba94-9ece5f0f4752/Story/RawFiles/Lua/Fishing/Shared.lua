@@ -93,8 +93,8 @@ local Fishing = {
     },
 
     ABILITY_SCHOOL_COLOR = "86A4F7", ---@type htmlcolor
-    ABILITY_SCHOOL_FISH_PER_LEVEL = 15, -- Amount of fish that has to be caught per level in the Fishermancy ability.
-    ABILITY_SCHOOL_FISH_PER_LEVEL_GROWTH = 5, -- Extra amount of fish that need to be caught per level in the Fishermancy ability, for each level after the first.
+    ABILITY_SCHOOL_FISH_PER_LEVEL = 5, -- Amount of fish that has to be caught per level in the Fishermancy ability.
+    ABILITY_SCHOOL_FISH_PER_LEVEL_GROWTH = 6, -- Extra amount of fish that need to be caught per level in the Fishermancy ability, for each level after the first.
     ABILITY_SCHOOL_UNIQUE_FISH_PER_LEVEL = 5, -- Amount of unique fish that has to be caught per level in the Fishermancy ability.
 
     TARGET_POS_EFFECT_OFFSET = V(0, 1, 0),
