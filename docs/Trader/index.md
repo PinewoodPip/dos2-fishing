@@ -21,7 +21,7 @@ Pip offers multiple services:
 - Appraisal of your fish collection, complimenting you on your fishing journey.
 - Fishing-related supplies. His stock includes:
     - Fishing rods
-    - Fishing bait
+    - Fishing bait, which allows you to spawn more fish
     - Miscellaneous crafting ingredients
 
 <center markdown="1">![Pip dialog.](../img/trader_dialog.png)</center>

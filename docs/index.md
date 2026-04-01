@@ -9,10 +9,10 @@
 
 **Main features:**
 
-- A full-fledged [Fishing minigame](Fishing/index.md) with 90+ fish species to catch across 50+ fishing spots in all acts.
-- The new [Fishermancy](Fishermancy/index.md) skill school, with 10 hybrid skills and Epic Encounters support.
-- Improve your gear with [fish essences](FishEssences/index.md), slotting in your caught fish as runes for fishy bonuses.
-- Track your catches and get appraisals on your collection from the new [Fishing trader NPC](Trader/index.md).
+- A full-fledged [**Fishing minigame**](Fishing/index.md) with 90+ fish species to catch across 50+ fishing spots in all acts.
+- A new [**Fishermancy**](Fishermancy/index.md) skill school, with 10 hybrid skills and Epic Encounters support.
+- Improve your gear with [**fish essences**](FishEssences/index.md), slotting in your caught fish as runes for fishy bonuses.
+- Track your catches and get appraisals on your collection from the new [**Fishing trader NPC**](Trader/index.md).
 
 !!! info ""
     See the [Installation & Patchnotes](patchnotes.md) page for downloads, and browse the mod's main features below to get started!
