@@ -335,7 +335,7 @@ local Skills = {
         },
         Status_Hornpipe_Description = {
             Handle = "h088afc65gf93dg4220gabefg08d09791dbe2",
-            Text = "Restores 1% Vitality and Magic Armor per point in the status owner's Fishermancy upon dealing a critical hit.",
+            Text = "Increases duration of applied Seasick statuses by 1 turn.",
             ContextDescription = [[Status tooltip for "Horned Pipe Hype"]],
             StringKey = "PIP_Fishing_Hornpipe_Description",
         },
