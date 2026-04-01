@@ -265,6 +265,7 @@ data "SkillType" "Projectile"
 using "Projectile_PIP_Fishing_DeployFishnets"
 data "Cooldown" "1"
 data "ActionPoints" "2"
+data "Magic Cost" 0
 data "DisplayName" "Projectile_PIP_Fishing_DeployFishnets_Empowered_DisplayName"
 data "DisplayNameRef" "|Empowered Deploy Fishnets|"
 data "AmountOfTargets" "2"
@@ -273,6 +274,7 @@ new entry "Projectile_PIP_Fishing_DeployFishnets_Empowered_2"
 type "SkillData"
 data "SkillType" "Projectile"
 using "Projectile_PIP_Fishing_DeployFishnets_Empowered_1"
+data "Magic Cost" 0
 data "AmountOfTargets" "3"
 
 new entry "Projectile_PIP_Fishing_TurnOnTheTides_ScriptedDamage"

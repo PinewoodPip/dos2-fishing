@@ -47,7 +47,9 @@ ApplyStatus(_Char, "PIP_FISHING_DEPLOYFISHNETS_INFUS_1", 12.0, 0, _Char);
 // Source Infusion 2
 
 // Grant a better Empowered Deploy Fishnets, with longer duration
-QRY QRY_AMER_Source_Infusion_SkillCast((CHARACTERGUID)_Char, "Projectile_PIP_Fishing_DeployFishnets", 2)
+QRY QRY_AMER_Source_Infusion_SkillCast((CHARACTERGUID)_Char, "Projectile_PIP_Fishing_DeployFishnets", (INTEGER)_InfusCount)
+AND
+_InfusCount > 1
 THEN
 ApplyStatus(_Char, "PIP_FISHING_DEPLOYFISHNETS_INFUS_2", 18.0, 0, _Char);
 
