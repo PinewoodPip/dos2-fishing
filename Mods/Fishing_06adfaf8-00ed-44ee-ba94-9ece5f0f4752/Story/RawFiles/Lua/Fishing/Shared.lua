@@ -267,7 +267,7 @@ local Fishing = {
         },
         Label_SchoolDescription = {
             Handle = "hf8ea30dbg68a5g437dg9027gebc72244dab8",
-            Text = "Each point of Fishermancy unlocks fishy techniques based on your other school scores.",
+            Text = "The art of Fishing and being fishy. Each point of Fishermancy increases your bobber size while fishing, and unlocks fishy combat techniques which scale with it.",
             ContextDescription = [[Tooltip for Fishermancy ability in character sheet]],
         },
         Label_SchoolDescriptionLevelingHint = {
