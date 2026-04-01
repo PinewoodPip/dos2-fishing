@@ -13,6 +13,20 @@ add equipmentgroup
 add equipment entry "GRN_Grenade_WaterBlessedBalloon_A"
 add equipmentgroup
 add equipment entry "CONT_Backpack_A_SourceHunter"
+add equipmentgroup
+add equipment entry "PIP_Fishing_Bait"
+add equipmentgroup
+add equipment entry "PIP_Fishing_Bait"
+add equipmentgroup
+add equipment entry "PIP_Fishing_Bait"
+add equipmentgroup
+add equipment entry "PIP_Fishing_Bait"
+add equipmentgroup
+add equipment entry "PIP_Fishing_Bait"
+add equipmentgroup
+add equipment entry "PIP_Fishing_Bait"
+add equipmentgroup
+add equipment entry "PIP_Fishing_Bait"
 
 new equipment "Class_PIP_Fishermancer_CharacterCreation"
 add equipmentgroup

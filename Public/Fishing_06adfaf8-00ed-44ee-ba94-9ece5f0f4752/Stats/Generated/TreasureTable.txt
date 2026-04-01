@@ -27,7 +27,7 @@ MinLevel "-30"
 MaxLevel "0"
 new subtable "3,1;2,1"
 object category "I_PIP_Fishing_FishingRod",1,0,0,0,0,0,0,0
-new subtable "13,1;12,2;11,1"
+new subtable "18,1;17,2;16,1"
 object category "I_PIP_Fishing_Bait",1,0,0,0,0,0,0,0
 
 new treasuretable "PIP_Fishing_Treasure_Food"
