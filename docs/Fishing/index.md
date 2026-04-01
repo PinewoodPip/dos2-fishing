@@ -14,7 +14,7 @@ You'll have to wait for a fish to bite, indicated by a sound and exclamation mar
 
 Once a fish bites, a fishing minigame begins to reel in the fish, inspired by *Stardew Valley*. Your goal is to keep your bobber aligned with the fish until the progress bar fills to 100% to catch it, using ++m1++ to raise the bobber and letting go to let it fall.
 
-Different fish have different [behaviours](Fish Behaviors.md) that affect how they move - some are calm and predictable, others erratic or darting. Harder fish may also take longer to reel in.
+Different fish have different behaviours that affect how they move - some are calm and predictable, others erratic or darting. Harder fish may also take longer to reel in.
 
 The progress bar drains while the bobber is not by the fish; if it reaches 0%, the fish escapes.
 
@@ -26,7 +26,7 @@ Throughout Rivellon there are many fishing **regions** with different fish to ca
 
 **Regions have a limited number of fish at a time**, which respawn every ~15 minutes. Areas with more water unsurprisingly house more fish. Once a region is depleted, you won't be able to cast your rod there anymore until it replenishes.
 
-Aside from waiting for fish to respawn, you can use **bait** (sold by [the trader](../Pip.md)) to spawn more fish in the region.
+Aside from waiting for fish to respawn, you can use **bait** (sold by [the trader](/Trader/index.md)) to spawn more fish in the region.
 
 ## Collection Log
 
@@ -37,11 +37,11 @@ To help track your fishing journey, a new Fishing "Collection Log" section has b
 
 The Collection Log tracks your discovered fish and various statistics, such as the amount of times you've caught each species.
 
-Once you've discovered a species, you can use the Collection Log to check its habitats - making it easier to farm specific fish for their [fish essences](FishEssence.md).
+Once you've discovered a species, you can use the Collection Log to check its habitats - making it easier to farm specific fish for their [fish essences](/FishEssences/index.md).
 
 Likewise, discovering a region will give you hints on the fish that can be caught there to aid with catching 'em all!
 
-The [fishing trader, Pip](Trader/index.md), can show you how to use the collection log, and can appraise your collection as it grows.
+The [fishing trader, Pip](/Trader/index.md), can show you how to use the collection log, and can appraise your collection as it grows.
 
 Most fish species are available throughout at least 2 acts, so you need not obsess over fully exploring each act to complete your collection.
 
@@ -57,7 +57,7 @@ Several character stats provide bonuses in the fishing minigame. Make sure to bu
     - This bonus is shared across the party (ie. highest amount among all party members is used).
 - **Thievery**: Decreases capture progress drain while reeling in treasure.
 - **Sneaking**: Grants a chance to avoid depleting the region's fish supply when casting.
-- **Loremaster**: Allows you to identify the effects of higher-rarity [fish essences](../FishEssences.md).
+- **Loremaster**: Allows you to identify the effects of higher-rarity [fish essences](/FishEssences/index.md).
 - **Telekinesis**: Increases how far away you can cast your rod.
 
 ### Defensive ability bonuses

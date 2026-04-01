@@ -1,7 +1,7 @@
 # Installation & Patchnotes
 
 !!! info ""
-    [Download here](TODO).
+    [Download here](https://drive.google.com/file/d/1D6Pxq-3wtg3Ggxe0hhio5F8_Os6uOyc0/view?usp=drive_link).
     
     Place the `.pak` within `\Documents\Larian Studios\Divinity Original Sin 2 Definitive Edition\Mods` as with any other mod.
 
