@@ -2,8 +2,7 @@
 local V = Vector.Create
 
 local Fishing = GetFeature("Fishing")
-local Regions = GetFeature("Fishing.Regions")
-local CAPACITIES = Regions.REGION_CAPACITIES
+local CAPACITIES = Fishing.REGION_CAPACITIES
 
 ---Utility method to register translated strings for a region.
 local T = function(tsk)

@@ -58,6 +58,14 @@ local Fishing = {
     CURSOR_WATER_SEARCH_RADIUS = 0.5,
     WATER_MAX_DISTANCE = 7.5, -- Distance to water (or fishing areas) that a character must be within for fishing to be available.
 
+    -- Ranges for the amount of fish that can be found in a region during a spawn cycle.
+    REGION_CAPACITIES = {
+        LOW = {4, 7},
+        MIDDLING = {6, 8},
+        DEFAULT = {7, 11},
+        HIGH = {13, 17},
+    },
+
     TUNING = {
         BASE_CASTING_RANGE = 7.5,
         BASE_FISH_BITE_DELAY_RANGE = {3.2, 6.5},
@@ -910,9 +918,8 @@ end
 ---Refreshes the amount of fish available in the region.
 ---@param regionID Fishing.RegionID
 function Fishing.RespawnFishes(regionID)
-    local Regions = GetFeature("Fishing.Regions") -- TODO move this & other region methods to that feature
     local region = Fishing.GetRegion(regionID)
-    local capacity = region.Capacity or Regions.REGION_CAPACITIES.DEFAULT
+    local capacity = region.Capacity or Fishing.REGION_CAPACITIES.DEFAULT
     local remainingFish = math.random(capacity[1], capacity[2])
     Fishing.SetRemainingFish(regionID, remainingFish)
 end
