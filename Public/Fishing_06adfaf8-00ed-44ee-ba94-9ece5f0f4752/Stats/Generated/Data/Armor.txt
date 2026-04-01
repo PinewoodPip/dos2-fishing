@@ -4,20 +4,20 @@ type "Armor"
 new entry _Boost_PIP_Fish_Aldrovanda_1
 type "Armor"
 using "_Boosts_Runes_Armor_Upperbody"
-data "EarthSpecialist" "1"
 data "Perseverance" "1"
+data "EarthSpecialist" "1"
 
 new entry _Boost_PIP_Fish_Aldrovanda_2
 type "Armor"
 using "_Boosts_Runes_Armor_Upperbody"
-data "EarthSpecialist" "2"
 data "Perseverance" "2"
+data "EarthSpecialist" "2"
 
 new entry _Boost_PIP_Fish_Aldrovanda_3
 type "Armor"
 using "_Boosts_Runes_Armor_Upperbody"
-data "EarthSpecialist" "3"
 data "Perseverance" "3"
+data "EarthSpecialist" "3"
 
 new entry _Boost_PIP_Fish_Anglerfish_1
 type "Armor"
@@ -37,20 +37,20 @@ data "Ranged" "3"
 new entry _Boost_PIP_Fish_AxeHead_1
 type "Armor"
 using "_Boosts_Runes_Armor_Upperbody"
-data "StrengthBoost" "2"
 data "TwoHanded" "1"
+data "StrengthBoost" "2"
 
 new entry _Boost_PIP_Fish_AxeHead_2
 type "Armor"
 using "_Boosts_Runes_Armor_Upperbody"
-data "StrengthBoost" "4"
 data "TwoHanded" "2"
+data "StrengthBoost" "4"
 
 new entry _Boost_PIP_Fish_AxeHead_3
 type "Armor"
 using "_Boosts_Runes_Armor_Upperbody"
-data "StrengthBoost" "7"
 data "TwoHanded" "3"
+data "StrengthBoost" "7"
 
 new entry _Boost_PIP_Fish_BladeFish_1
 type "Armor"
@@ -109,20 +109,20 @@ data "WaterSpecialist" "3"
 new entry _Boost_PIP_Fish_BranchingCoral_1
 type "Armor"
 using "_Boosts_Runes_Armor_Upperbody"
-data "Water" "3"
 data "Summoning" "1"
+data "Water" "3"
 
 new entry _Boost_PIP_Fish_BranchingCoral_2
 type "Armor"
 using "_Boosts_Runes_Armor_Upperbody"
-data "Water" "7"
 data "Summoning" "2"
+data "Water" "7"
 
 new entry _Boost_PIP_Fish_BranchingCoral_3
 type "Armor"
 using "_Boosts_Runes_Armor_Upperbody"
-data "Water" "15"
 data "Summoning" "3"
+data "Water" "15"
 
 new entry _Boost_PIP_Fish_Bream_1
 type "Armor"
@@ -188,26 +188,26 @@ data "AccuracyBoost" "12"
 new entry _Boost_PIP_Fish_Corncomber_3
 type "Armor"
 using "_Boosts_Runes_Armor_Upperbody"
-data "Flags" "AcidImmunity"
 data "AccuracyBoost" "17"
+data "Flags" "AcidImmunity"
 
 new entry _Boost_PIP_Fish_CrabClaw_1
 type "Armor"
 using "_Boosts_Runes_Armor_Upperbody"
-data "StrengthBoost" "2"
 data "TwoHanded" "1"
+data "StrengthBoost" "2"
 
 new entry _Boost_PIP_Fish_CrabClaw_2
 type "Armor"
 using "_Boosts_Runes_Armor_Upperbody"
-data "StrengthBoost" "4"
 data "TwoHanded" "2"
+data "StrengthBoost" "4"
 
 new entry _Boost_PIP_Fish_CrabClaw_3
 type "Armor"
 using "_Boosts_Runes_Armor_Upperbody"
-data "StrengthBoost" "7"
 data "TwoHanded" "3"
+data "StrengthBoost" "7"
 
 new entry _Boost_PIP_Fish_CrystalCoral_1
 type "Armor"
@@ -230,20 +230,20 @@ data "MagicArmorBoost" "40"
 new entry _Boost_PIP_Fish_Dandelion_1
 type "Armor"
 using "_Boosts_Runes_Armor_Upperbody"
-data "Movement" "10"
 data "AirSpecialist" "1"
+data "Movement" "10"
 
 new entry _Boost_PIP_Fish_Dandelion_2
 type "Armor"
 using "_Boosts_Runes_Armor_Upperbody"
-data "Movement" "20"
 data "AirSpecialist" "2"
+data "Movement" "20"
 
 new entry _Boost_PIP_Fish_Dandelion_3
 type "Armor"
 using "_Boosts_Runes_Armor_Upperbody"
-data "Movement" "30"
 data "AirSpecialist" "3"
+data "Movement" "30"
 
 new entry _Boost_PIP_Fish_DarkConch_1
 type "Armor"
@@ -266,113 +266,110 @@ data "Sneaking" "3"
 new entry _Boost_PIP_Fish_DescentKey_1
 type "Armor"
 using "_Boosts_Runes_Armor_Upperbody"
-data "Leadership" "1"
 data "Initiative" "5"
+data "Leadership" "1"
 data "Sourcery" "1"
 
 new entry _Boost_PIP_Fish_DescentKey_2
 type "Armor"
 using "_Boosts_Runes_Armor_Upperbody"
-data "Leadership" "2"
 data "Initiative" "10"
+data "Leadership" "2"
 data "Sourcery" "2"
 
 new entry _Boost_PIP_Fish_DescentKey_3
 type "Armor"
 using "_Boosts_Runes_Armor_Upperbody"
-data "Leadership" "3"
 data "Initiative" "15"
+data "Leadership" "3"
 data "Sourcery" "3"
 
 new entry _Boost_PIP_Fish_Eel_1
 type "Armor"
 using "_Boosts_Runes_Armor_Upperbody"
-data "FinesseBoost" "1"
 data "AirSpecialist" "1"
+data "FinesseBoost" "1"
 
 new entry _Boost_PIP_Fish_Eel_2
 type "Armor"
 using "_Boosts_Runes_Armor_Upperbody"
-data "FinesseBoost" "2"
 data "AirSpecialist" "2"
+data "FinesseBoost" "2"
 
 new entry _Boost_PIP_Fish_Eel_3
 type "Armor"
 using "_Boosts_Runes_Armor_Upperbody"
-data "FinesseBoost" "3"
 data "AirSpecialist" "3"
+data "FinesseBoost" "3"
 
 new entry _Boost_PIP_Fish_Epipe_1
 type "Armor"
 using "_Boosts_Runes_Armor_Upperbody"
-data "Repair" "1"
 data "MemoryBoost" "3"
+data "Repair" "1"
 
 new entry _Boost_PIP_Fish_Epipe_2
 type "Armor"
 using "_Boosts_Runes_Armor_Upperbody"
-data "Repair" "2"
 data "MemoryBoost" "6"
+data "Repair" "2"
 
 new entry _Boost_PIP_Fish_Epipe_3
 type "Armor"
 using "_Boosts_Runes_Armor_Upperbody"
-data "Repair" "3"
-data "MemoryBoost" "9"
 data "ExtraProperties" "SELF:ONEQUIP:CLEAR_MINDED"
+data "MemoryBoost" "9"
+data "Repair" "3"
 
 new entry _Boost_PIP_Fish_Fetish_1
 type "Armor"
 using "_Boosts_Runes_Armor_Upperbody"
-data "CriticalChance" "3"
 data "Summoning" "1"
+data "CriticalChance" "3"
 
 new entry _Boost_PIP_Fish_Fetish_2
 type "Armor"
 using "_Boosts_Runes_Armor_Upperbody"
-data "CriticalChance" "7"
 data "Summoning" "2"
+data "CriticalChance" "7"
 
 new entry _Boost_PIP_Fish_Fetish_3
 type "Armor"
 using "_Boosts_Runes_Armor_Upperbody"
-data "CriticalChance" "12"
 data "Summoning" "3"
+data "CriticalChance" "12"
 
 new entry _Boost_PIP_Fish_FidgetSpinner_1
 type "Armor"
 using "_Boosts_Runes_Armor_Upperbody"
-data "RogueLore" "1"
 data "FinesseBoost" "3"
+data "RogueLore" "1"
 
 new entry _Boost_PIP_Fish_FidgetSpinner_2
 type "Armor"
 using "_Boosts_Runes_Armor_Upperbody"
-data "RogueLore" "2"
 data "FinesseBoost" "6"
+data "RogueLore" "2"
 
 new entry _Boost_PIP_Fish_FidgetSpinner_3
 type "Armor"
 using "_Boosts_Runes_Armor_Upperbody"
-data "RogueLore" "3"
 data "FinesseBoost" "9"
+data "RogueLore" "3"
 
 new entry _Boost_PIP_Fish_FishBone_1
 type "Armor"
 using "_Boosts_Runes_Armor_Upperbody"
-data "VitalityBoost" "5"
 data "Necromancy" "1"
 
 new entry _Boost_PIP_Fish_FishBone_2
 type "Armor"
 using "_Boosts_Runes_Armor_Upperbody"
-data "VitalityBoost" "10"
 data "Necromancy" "2"
 
 new entry _Boost_PIP_Fish_FishBone_3
 type "Armor"
 using "_Boosts_Runes_Armor_Upperbody"
-data "VitalityBoost" "15"
 data "Necromancy" "3"
 
 new entry _Boost_PIP_Fish_FloodRose_1
@@ -396,20 +393,20 @@ data "WaterSpecialist" "3"
 new entry _Boost_PIP_Fish_Frog_1
 type "Armor"
 using "_Boosts_Runes_Armor_Upperbody"
-data "Water" "4"
 data "Earth" "4"
+data "Water" "4"
 
 new entry _Boost_PIP_Fish_Frog_2
 type "Armor"
 using "_Boosts_Runes_Armor_Upperbody"
-data "Water" "8"
 data "Earth" "8"
+data "Water" "8"
 
 new entry _Boost_PIP_Fish_Frog_3
 type "Armor"
 using "_Boosts_Runes_Armor_Upperbody"
-data "Water" "12"
 data "Earth" "12"
+data "Water" "12"
 
 new entry _Boost_PIP_Fish_GenericVoidwoken_1
 type "Armor"
@@ -429,20 +426,20 @@ data "Perseverance" "3"
 new entry _Boost_PIP_Fish_GilledMushroom_1
 type "Armor"
 using "_Boosts_Runes_Armor_Upperbody"
-data "EarthSpecialist" "1"
 data "Poison" "5"
+data "EarthSpecialist" "1"
 
 new entry _Boost_PIP_Fish_GilledMushroom_2
 type "Armor"
 using "_Boosts_Runes_Armor_Upperbody"
-data "EarthSpecialist" "2"
 data "Poison" "10"
+data "EarthSpecialist" "2"
 
 new entry _Boost_PIP_Fish_GilledMushroom_3
 type "Armor"
 using "_Boosts_Runes_Armor_Upperbody"
-data "EarthSpecialist" "3"
 data "Poison" "15"
+data "EarthSpecialist" "3"
 
 new entry _Boost_PIP_Fish_GoldenShell_1
 type "Armor"
@@ -459,45 +456,45 @@ data "Fire" "14"
 new entry _Boost_PIP_Fish_GoldenShell_3
 type "Armor"
 using "_Boosts_Runes_Armor_Upperbody"
-data "Flags" "BurnImmunity"
 data "FireSpecialist" "3"
+data "Flags" "BurnImmunity"
 data "Fire" "19"
 
 new entry _Boost_PIP_Fish_Gooseberry_1
 type "Armor"
 using "_Boosts_Runes_Armor_Upperbody"
-data "Poison" "6"
 data "APMaximum" "1"
+data "Poison" "6"
 
 new entry _Boost_PIP_Fish_Gooseberry_2
 type "Armor"
 using "_Boosts_Runes_Armor_Upperbody"
-data "Poison" "12"
 data "APMaximum" "2"
+data "Poison" "12"
 
 new entry _Boost_PIP_Fish_Gooseberry_3
 type "Armor"
 using "_Boosts_Runes_Armor_Upperbody"
-data "Poison" "19"
 data "APMaximum" "3"
+data "Poison" "19"
 
 new entry _Boost_PIP_Fish_GripSlipper_1
 type "Armor"
 using "_Boosts_Runes_Armor_Upperbody"
-data "Sneaking" "1"
 data "Movement" "17"
+data "Sneaking" "1"
 
 new entry _Boost_PIP_Fish_GripSlipper_2
 type "Armor"
 using "_Boosts_Runes_Armor_Upperbody"
-data "Sneaking" "2"
 data "Movement" "34"
+data "Sneaking" "2"
 
 new entry _Boost_PIP_Fish_GripSlipper_3
 type "Armor"
 using "_Boosts_Runes_Armor_Upperbody"
-data "Sneaking" "3"
 data "Movement" "60"
+data "Sneaking" "3"
 
 new entry _Boost_PIP_Fish_Handkerchief_1
 type "Armor"
@@ -520,21 +517,21 @@ data "Movement" "24"
 new entry _Boost_PIP_Fish_Head_1
 type "Armor"
 using "_Boosts_Runes_Armor_Upperbody"
-data "VitalityBoost" "-10"
 data "Necromancy" "2"
+data "ConstitutionBoost" "-10"
 
 new entry _Boost_PIP_Fish_Head_2
 type "Armor"
 using "_Boosts_Runes_Armor_Upperbody"
-data "VitalityBoost" "-24"
 data "Necromancy" "4"
+data "ConstitutionBoost" "-24"
 
 new entry _Boost_PIP_Fish_Head_3
 type "Armor"
 using "_Boosts_Runes_Armor_Upperbody"
-data "Flags" "MadnessImmunity"
+data "ConstitutionBoost" "-45"
 data "Necromancy" "6"
-data "VitalityBoost" "-45"
+data "Flags" "MadnessImmunity"
 
 new entry _Boost_PIP_Fish_HotShell_1
 type "Armor"
@@ -557,38 +554,38 @@ data "Fire" "15"
 new entry _Boost_PIP_Fish_Hurchin_1
 type "Armor"
 using "_Boosts_Runes_Armor_Upperbody"
-data "Piercing" "5"
 data "PainReflection" "2"
+data "Piercing" "5"
 
 new entry _Boost_PIP_Fish_Hurchin_2
 type "Armor"
 using "_Boosts_Runes_Armor_Upperbody"
-data "Piercing" "10"
 data "PainReflection" "4"
+data "Piercing" "10"
 
 new entry _Boost_PIP_Fish_Hurchin_3
 type "Armor"
 using "_Boosts_Runes_Armor_Upperbody"
-data "Piercing" "15"
 data "PainReflection" "6"
+data "Piercing" "15"
 
 new entry _Boost_PIP_Fish_Jackpot_1
 type "Armor"
 using "_Boosts_Runes_Armor_Upperbody"
-data "Water" "4"
 data "Thievery" "1"
+data "Water" "4"
 
 new entry _Boost_PIP_Fish_Jackpot_2
 type "Armor"
 using "_Boosts_Runes_Armor_Upperbody"
-data "Water" "8"
 data "Thievery" "2"
+data "Water" "8"
 
 new entry _Boost_PIP_Fish_Jackpot_3
 type "Armor"
 using "_Boosts_Runes_Armor_Upperbody"
-data "Water" "12"
 data "Thievery" "3"
+data "Water" "12"
 
 new entry _Boost_PIP_Fish_LavoodooDoll_1
 type "Armor"
@@ -608,75 +605,75 @@ data "DualWielding" "3"
 new entry _Boost_PIP_Fish_LetterOfWill_1
 type "Armor"
 using "_Boosts_Runes_Armor_Upperbody"
-data "Persuasion" "1"
 data "MemoryBoost" "3"
+data "Persuasion" "1"
 
 new entry _Boost_PIP_Fish_LetterOfWill_2
 type "Armor"
 using "_Boosts_Runes_Armor_Upperbody"
-data "Persuasion" "2"
 data "MemoryBoost" "6"
+data "Persuasion" "2"
 
 new entry _Boost_PIP_Fish_LetterOfWill_3
 type "Armor"
 using "_Boosts_Runes_Armor_Upperbody"
-data "Persuasion" "3"
 data "MemoryBoost" "9"
+data "Persuasion" "3"
 
 new entry _Boost_PIP_Fish_LightAtTheEnd_1
 type "Armor"
 using "_Boosts_Runes_Armor_Upperbody"
-data "DodgeBoost" "4"
 data "AirSpecialist" "1"
+data "DodgeBoost" "4"
 
 new entry _Boost_PIP_Fish_LightAtTheEnd_2
 type "Armor"
 using "_Boosts_Runes_Armor_Upperbody"
-data "DodgeBoost" "7"
 data "AirSpecialist" "2"
+data "DodgeBoost" "7"
 
 new entry _Boost_PIP_Fish_LightAtTheEnd_3
 type "Armor"
 using "_Boosts_Runes_Armor_Upperbody"
-data "DodgeBoost" "12"
 data "AirSpecialist" "3"
+data "DodgeBoost" "12"
 
 new entry _Boost_PIP_Fish_LilyPad_1
 type "Armor"
 using "_Boosts_Runes_Armor_Upperbody"
-data "Movement" "8"
 data "AccuracyBoost" "4"
+data "Movement" "8"
 
 new entry _Boost_PIP_Fish_LilyPad_2
 type "Armor"
 using "_Boosts_Runes_Armor_Upperbody"
-data "Movement" "16"
 data "AccuracyBoost" "7"
+data "Movement" "16"
 
 new entry _Boost_PIP_Fish_LilyPad_3
 type "Armor"
 using "_Boosts_Runes_Armor_Upperbody"
-data "Flags" "DiseasedImmunity"
 data "Movement" "25"
 data "AccuracyBoost" "15"
+data "Flags" "DiseasedImmunity"
 
 new entry _Boost_PIP_Fish_MessagelessBottle_1
 type "Armor"
 using "_Boosts_Runes_Armor_Upperbody"
-data "WitsBoost" "3"
 data "MemoryBoost" "3"
+data "WitsBoost" "3"
 
 new entry _Boost_PIP_Fish_MessagelessBottle_2
 type "Armor"
 using "_Boosts_Runes_Armor_Upperbody"
-data "WitsBoost" "6"
 data "MemoryBoost" "6"
+data "WitsBoost" "6"
 
 new entry _Boost_PIP_Fish_MessagelessBottle_3
 type "Armor"
 using "_Boosts_Runes_Armor_Upperbody"
-data "WitsBoost" "9"
 data "MemoryBoost" "9"
+data "WitsBoost" "9"
 
 new entry _Boost_PIP_Fish_Mindflayer_1
 type "Armor"
@@ -715,74 +712,74 @@ data "Initiative" "12"
 new entry _Boost_PIP_Fish_ModSettingsMenu_1
 type "Armor"
 using "_Boosts_Runes_Armor_Upperbody"
-data "Earth" "5"
 data "MemoryBoost" "1"
+data "Earth" "5"
 
 new entry _Boost_PIP_Fish_ModSettingsMenu_2
 type "Armor"
 using "_Boosts_Runes_Armor_Upperbody"
-data "Earth" "10"
 data "MemoryBoost" "2"
+data "Earth" "10"
 
 new entry _Boost_PIP_Fish_ModSettingsMenu_3
 type "Armor"
 using "_Boosts_Runes_Armor_Upperbody"
-data "Earth" "15"
 data "MemoryBoost" "3"
+data "Earth" "15"
 
 new entry _Boost_PIP_Fish_MoonJelly_1
 type "Armor"
 using "_Boosts_Runes_Armor_Upperbody"
-data "Flags" "PoisonContact"
 data "MemoryBoost" "3"
+data "Flags" "PoisonContact"
 
 new entry _Boost_PIP_Fish_MoonJelly_2
 type "Armor"
 using "_Boosts_Runes_Armor_Upperbody"
-data "Flags" "PoisonContact"
 data "MemoryBoost" "5"
+data "Flags" "PoisonContact"
 
 new entry _Boost_PIP_Fish_MoonJelly_3
 type "Armor"
 using "_Boosts_Runes_Armor_Upperbody"
-data "Flags" "PoisonContact"
 data "MemoryBoost" "10"
+data "Flags" "PoisonContact"
 
 new entry _Boost_PIP_Fish_Moss_1
 type "Armor"
 using "_Boosts_Runes_Armor_Upperbody"
-data "EarthSpecialist" "1"
 data "Sneaking" "1"
+data "EarthSpecialist" "1"
 
 new entry _Boost_PIP_Fish_Moss_2
 type "Armor"
 using "_Boosts_Runes_Armor_Upperbody"
-data "EarthSpecialist" "2"
 data "Sneaking" "2"
+data "EarthSpecialist" "2"
 
 new entry _Boost_PIP_Fish_Moss_3
 type "Armor"
 using "_Boosts_Runes_Armor_Upperbody"
-data "EarthSpecialist" "3"
 data "Sneaking" "3"
+data "EarthSpecialist" "3"
 
 new entry _Boost_PIP_Fish_Nightfarer_1
 type "Armor"
 using "_Boosts_Runes_Armor_Upperbody"
-data "RogueLore" "1"
 data "Sneaking" "1"
+data "RogueLore" "1"
 
 new entry _Boost_PIP_Fish_Nightfarer_2
 type "Armor"
 using "_Boosts_Runes_Armor_Upperbody"
-data "RogueLore" "2"
 data "Sneaking" "2"
+data "RogueLore" "2"
 
 new entry _Boost_PIP_Fish_Nightfarer_3
 type "Armor"
 using "_Boosts_Runes_Armor_Upperbody"
-data "RogueLore" "3"
 data "Sneaking" "3"
+data "RogueLore" "3"
 
 new entry _Boost_PIP_Fish_NonFineChina_1
 type "Armor"
@@ -799,60 +796,60 @@ data "Thievery" "2"
 new entry _Boost_PIP_Fish_NonFineChina_3
 type "Armor"
 using "_Boosts_Runes_Armor_Upperbody"
-data "Perseverance" "3"
 data "Thievery" "3"
 data "Flags" "Unrepairable"
+data "Perseverance" "3"
 
 new entry _Boost_PIP_Fish_NormieShell_1
 type "Armor"
 using "_Boosts_Runes_Armor_Upperbody"
-data "VitalityBoost" "4"
+data "ConstitutionBoost" "1"
 
 new entry _Boost_PIP_Fish_NormieShell_2
 type "Armor"
 using "_Boosts_Runes_Armor_Upperbody"
-data "VitalityBoost" "9"
+data "ConstitutionBoost" "2"
 
 new entry _Boost_PIP_Fish_NormieShell_3
 type "Armor"
 using "_Boosts_Runes_Armor_Upperbody"
-data "VitalityBoost" "17"
+data "ConstitutionBoost" "3"
 
 new entry _Boost_PIP_Fish_Painting_1
 type "Armor"
 using "_Boosts_Runes_Armor_Upperbody"
-data "Persuasion" "1"
 data "Barter" "1"
+data "Persuasion" "1"
 
 new entry _Boost_PIP_Fish_Painting_2
 type "Armor"
 using "_Boosts_Runes_Armor_Upperbody"
-data "Persuasion" "2"
 data "Barter" "2"
+data "Persuasion" "2"
 
 new entry _Boost_PIP_Fish_Painting_3
 type "Armor"
 using "_Boosts_Runes_Armor_Upperbody"
-data "Persuasion" "3"
 data "Barter" "3"
+data "Persuasion" "3"
 
 new entry _Boost_PIP_Fish_Pearl_1
 type "Armor"
 using "_Boosts_Runes_Armor_Upperbody"
-data "WitsBoost" "1"
 data "Barter" "1"
+data "WitsBoost" "1"
 
 new entry _Boost_PIP_Fish_Pearl_2
 type "Armor"
 using "_Boosts_Runes_Armor_Upperbody"
-data "WitsBoost" "2"
 data "Barter" "2"
+data "WitsBoost" "2"
 
 new entry _Boost_PIP_Fish_Pearl_3
 type "Armor"
 using "_Boosts_Runes_Armor_Upperbody"
-data "WitsBoost" "3"
 data "Barter" "3"
+data "WitsBoost" "3"
 
 new entry _Boost_PIP_Fish_PearlClam_1
 type "Armor"
@@ -862,14 +859,14 @@ data "Barter" "1"
 new entry _Boost_PIP_Fish_PearlClam_2
 type "Armor"
 using "_Boosts_Runes_Armor_Upperbody"
-data "Luck" "1"
 data "Barter" "2"
+data "Luck" "1"
 
 new entry _Boost_PIP_Fish_PearlClam_3
 type "Armor"
 using "_Boosts_Runes_Armor_Upperbody"
-data "Luck" "2"
 data "Barter" "3"
+data "Luck" "2"
 
 new entry _Boost_PIP_Fish_Petri_1
 type "Armor"
@@ -940,35 +937,35 @@ data "Polymorph" "3"
 new entry _Boost_PIP_Fish_Pomfret_1
 type "Armor"
 using "_Boosts_Runes_Armor_Upperbody"
-data "Water" "4"
 data "FinesseBoost" "1"
+data "Water" "4"
 
 new entry _Boost_PIP_Fish_Pomfret_2
 type "Armor"
 using "_Boosts_Runes_Armor_Upperbody"
-data "Water" "7"
 data "FinesseBoost" "2"
+data "Water" "7"
 
 new entry _Boost_PIP_Fish_Pomfret_3
 type "Armor"
 using "_Boosts_Runes_Armor_Upperbody"
-data "Water" "10"
 data "FinesseBoost" "3"
+data "Water" "10"
 
 new entry _Boost_PIP_Fish_Porgy_1
 type "Armor"
 using "_Boosts_Runes_Armor_Upperbody"
-data "VitalityBoost" "4"
+data "DodgeBoost" "4"
 
 new entry _Boost_PIP_Fish_Porgy_2
 type "Armor"
 using "_Boosts_Runes_Armor_Upperbody"
-data "VitalityBoost" "6"
+data "DodgeBoost" "6"
 
 new entry _Boost_PIP_Fish_Porgy_3
 type "Armor"
 using "_Boosts_Runes_Armor_Upperbody"
-data "VitalityBoost" "12"
+data "DodgeBoost" "9"
 
 new entry _Boost_PIP_Fish_PotLid_1
 type "Armor"
@@ -983,8 +980,8 @@ data "ArmorBoost" "25"
 new entry _Boost_PIP_Fish_PotLid_3
 type "Armor"
 using "_Boosts_Runes_Armor_Upperbody"
-data "ArmorBoost" "50"
 data "Flags" "DisarmedImmunity"
+data "ArmorBoost" "50"
 
 new entry _Boost_PIP_Fish_PremoldedCheese_1
 type "Armor"
@@ -1124,38 +1121,38 @@ data "Summoning" "3"
 new entry _Boost_PIP_Fish_Rockfish_1
 type "Armor"
 using "_Boosts_Runes_Armor_Upperbody"
-data "EarthSpecialist" "1"
 data "ConstitutionBoost" "3"
+data "EarthSpecialist" "1"
 
 new entry _Boost_PIP_Fish_Rockfish_2
 type "Armor"
 using "_Boosts_Runes_Armor_Upperbody"
-data "EarthSpecialist" "2"
 data "ConstitutionBoost" "6"
+data "EarthSpecialist" "2"
 
 new entry _Boost_PIP_Fish_Rockfish_3
 type "Armor"
 using "_Boosts_Runes_Armor_Upperbody"
-data "EarthSpecialist" "3"
 data "ConstitutionBoost" "10"
+data "EarthSpecialist" "3"
 
 new entry _Boost_PIP_Fish_Salt_1
 type "Armor"
 using "_Boosts_Runes_Armor_Upperbody"
-data "Piercing" "3"
 data "Physical" "3"
+data "Piercing" "3"
 
 new entry _Boost_PIP_Fish_Salt_2
 type "Armor"
 using "_Boosts_Runes_Armor_Upperbody"
-data "Piercing" "6"
 data "Physical" "6"
+data "Piercing" "6"
 
 new entry _Boost_PIP_Fish_Salt_3
 type "Armor"
 using "_Boosts_Runes_Armor_Upperbody"
-data "Piercing" "9"
 data "Physical" "9"
+data "Piercing" "9"
 
 new entry _Boost_PIP_Fish_Sardine_1
 type "Armor"
@@ -1211,20 +1208,20 @@ data "Sneaking" "4"
 new entry _Boost_PIP_Fish_SeaPickle_1
 type "Armor"
 using "_Boosts_Runes_Armor_Upperbody"
-data "Water" "4"
 data "Poison" "6"
+data "Water" "4"
 
 new entry _Boost_PIP_Fish_SeaPickle_2
 type "Armor"
 using "_Boosts_Runes_Armor_Upperbody"
-data "Water" "8"
 data "Poison" "14"
+data "Water" "8"
 
 new entry _Boost_PIP_Fish_SeaPickle_3
 type "Armor"
 using "_Boosts_Runes_Armor_Upperbody"
-data "Water" "12"
 data "Poison" "20"
+data "Water" "12"
 
 new entry _Boost_PIP_Fish_SeaPork_1
 type "Armor"
@@ -1247,17 +1244,17 @@ data "Earth" "13"
 new entry _Boost_PIP_Fish_SeabedRoll_1
 type "Armor"
 using "_Boosts_Runes_Armor_Upperbody"
-data "ConstitutionBoost" "1"
+data "ConstitutionBoost" "2"
 
 new entry _Boost_PIP_Fish_SeabedRoll_2
 type "Armor"
 using "_Boosts_Runes_Armor_Upperbody"
-data "ConstitutionBoost" "2"
+data "ConstitutionBoost" "3"
 
 new entry _Boost_PIP_Fish_SeabedRoll_3
 type "Armor"
 using "_Boosts_Runes_Armor_Upperbody"
-data "ConstitutionBoost" "3"
+data "ConstitutionBoost" "5"
 data "Flags" "SleepingImmunity"
 
 new entry _Boost_PIP_Fish_Seaweed_1
@@ -1279,56 +1276,56 @@ data "APStart" "3"
 new entry _Boost_PIP_Fish_SharkTooth_1
 type "Armor"
 using "_Boosts_Runes_Armor_Upperbody"
-data "SingleHanded" "1"
 data "StrengthBoost" "3"
+data "SingleHanded" "1"
 
 new entry _Boost_PIP_Fish_SharkTooth_2
 type "Armor"
 using "_Boosts_Runes_Armor_Upperbody"
-data "SingleHanded" "2"
 data "StrengthBoost" "6"
+data "SingleHanded" "2"
 
 new entry _Boost_PIP_Fish_SharkTooth_3
 type "Armor"
 using "_Boosts_Runes_Armor_Upperbody"
-data "SingleHanded" "3"
 data "StrengthBoost" "9"
+data "SingleHanded" "3"
 
 new entry _Boost_PIP_Fish_Sludge_1
 type "Armor"
 using "_Boosts_Runes_Armor_Upperbody"
-data "Poison" "3"
 data "ConstitutionBoost" "1"
+data "Poison" "3"
 
 new entry _Boost_PIP_Fish_Sludge_2
 type "Armor"
 using "_Boosts_Runes_Armor_Upperbody"
-data "Poison" "6"
 data "ConstitutionBoost" "2"
+data "Poison" "6"
 
 new entry _Boost_PIP_Fish_Sludge_3
 type "Armor"
 using "_Boosts_Runes_Armor_Upperbody"
-data "Poison" "9"
 data "ConstitutionBoost" "3"
+data "Poison" "9"
 
 new entry _Boost_PIP_Fish_SmallShip_1
 type "Armor"
 using "_Boosts_Runes_Armor_Upperbody"
-data "FinesseBoost" "2"
 data "Movement" "8"
+data "FinesseBoost" "2"
 
 new entry _Boost_PIP_Fish_SmallShip_2
 type "Armor"
 using "_Boosts_Runes_Armor_Upperbody"
-data "FinesseBoost" "4"
 data "Movement" "16"
+data "FinesseBoost" "4"
 
 new entry _Boost_PIP_Fish_SmallShip_3
 type "Armor"
 using "_Boosts_Runes_Armor_Upperbody"
-data "FinesseBoost" "6"
 data "Movement" "32"
+data "FinesseBoost" "6"
 
 new entry _Boost_PIP_Fish_Soap_1
 type "Armor"
@@ -1343,44 +1340,44 @@ data "Water" "9"
 new entry _Boost_PIP_Fish_Soap_3
 type "Armor"
 using "_Boosts_Runes_Armor_Upperbody"
-data "Water" "14"
 data "Flags" "PoisonImmunity"
+data "Water" "14"
 
 new entry _Boost_PIP_Fish_Socks_1
 type "Armor"
 using "_Boosts_Runes_Armor_Upperbody"
-data "EarthSpecialist" "1"
 data "Earth" "5"
+data "EarthSpecialist" "1"
 
 new entry _Boost_PIP_Fish_Socks_2
 type "Armor"
 using "_Boosts_Runes_Armor_Upperbody"
-data "EarthSpecialist" "2"
 data "Earth" "9"
+data "EarthSpecialist" "2"
 
 new entry _Boost_PIP_Fish_Socks_3
 type "Armor"
 using "_Boosts_Runes_Armor_Upperbody"
-data "EarthSpecialist" "3"
 data "Earth" "15"
+data "EarthSpecialist" "3"
 
 new entry _Boost_PIP_Fish_SoulJar_1
 type "Armor"
 using "_Boosts_Runes_Armor_Upperbody"
-data "MemoryBoost" "1"
 data "Necromancy" "1"
+data "MemoryBoost" "1"
 
 new entry _Boost_PIP_Fish_SoulJar_2
 type "Armor"
 using "_Boosts_Runes_Armor_Upperbody"
-data "MemoryBoost" "2"
 data "Necromancy" "2"
+data "MemoryBoost" "2"
 
 new entry _Boost_PIP_Fish_SoulJar_3
 type "Armor"
 using "_Boosts_Runes_Armor_Upperbody"
-data "MemoryBoost" "3"
 data "Necromancy" "3"
+data "MemoryBoost" "3"
 
 new entry _Boost_PIP_Fish_SourceStarFish_1
 type "Armor"
@@ -1439,37 +1436,37 @@ data "AirSpecialist" "3"
 new entry _Boost_PIP_Fish_SpikyConch_1
 type "Armor"
 using "_Boosts_Runes_Armor_Upperbody"
-data "Physical" "3"
 data "PainReflection" "1"
+data "Physical" "3"
 
 new entry _Boost_PIP_Fish_SpikyConch_2
 type "Armor"
 using "_Boosts_Runes_Armor_Upperbody"
-data "Physical" "6"
 data "PainReflection" "2"
+data "Physical" "6"
 
 new entry _Boost_PIP_Fish_SpikyConch_3
 type "Armor"
 using "_Boosts_Runes_Armor_Upperbody"
-data "Physical" "10"
 data "PainReflection" "4"
+data "Physical" "10"
 
 new entry _Boost_PIP_Fish_Starfish_1
 type "Armor"
 using "_Boosts_Runes_Armor_Upperbody"
-data "VitalityBoost" "2"
+data "ConstitutionBoost" "2"
 data "Perseverance" "1"
 
 new entry _Boost_PIP_Fish_Starfish_2
 type "Armor"
 using "_Boosts_Runes_Armor_Upperbody"
-data "VitalityBoost" "5"
+data "ConstitutionBoost" "5"
 data "Perseverance" "2"
 
 new entry _Boost_PIP_Fish_Starfish_3
 type "Armor"
 using "_Boosts_Runes_Armor_Upperbody"
-data "VitalityBoost" "10"
+data "ConstitutionBoost" "10"
 data "Perseverance" "3"
 
 new entry _Boost_PIP_Fish_Starstone_1
@@ -1508,74 +1505,74 @@ data "Ranged" "3"
 new entry _Boost_PIP_Fish_Swordine_1
 type "Armor"
 using "_Boosts_Runes_Armor_Upperbody"
-data "WarriorLore" "1"
 data "TwoHanded" "1"
+data "WarriorLore" "1"
 
 new entry _Boost_PIP_Fish_Swordine_2
 type "Armor"
 using "_Boosts_Runes_Armor_Upperbody"
-data "WarriorLore" "2"
 data "TwoHanded" "2"
+data "WarriorLore" "2"
 
 new entry _Boost_PIP_Fish_Swordine_3
 type "Armor"
 using "_Boosts_Runes_Armor_Upperbody"
-data "WarriorLore" "3"
 data "TwoHanded" "3"
+data "WarriorLore" "3"
 
 new entry _Boost_PIP_Fish_TemporalGear_1
 type "Armor"
 using "_Boosts_Runes_Armor_Upperbody"
-data "RogueLore" "1"
 data "WitsBoost" "3"
+data "RogueLore" "1"
 
 new entry _Boost_PIP_Fish_TemporalGear_2
 type "Armor"
 using "_Boosts_Runes_Armor_Upperbody"
-data "RogueLore" "2"
 data "WitsBoost" "6"
+data "RogueLore" "2"
 
 new entry _Boost_PIP_Fish_TemporalGear_3
 type "Armor"
 using "_Boosts_Runes_Armor_Upperbody"
-data "RogueLore" "3"
 data "WitsBoost" "9"
+data "RogueLore" "3"
 
 new entry _Boost_PIP_Fish_TorrentedSoul_1
 type "Armor"
 using "_Boosts_Runes_Armor_Upperbody"
-data "Perseverance" "1"
 data "Necromancy" "1"
+data "Perseverance" "1"
 
 new entry _Boost_PIP_Fish_TorrentedSoul_2
 type "Armor"
 using "_Boosts_Runes_Armor_Upperbody"
-data "Perseverance" "2"
 data "Necromancy" "2"
+data "Perseverance" "2"
 
 new entry _Boost_PIP_Fish_TorrentedSoul_3
 type "Armor"
 using "_Boosts_Runes_Armor_Upperbody"
-data "Perseverance" "3"
 data "Necromancy" "3"
+data "Perseverance" "3"
 
 new entry _Boost_PIP_Fish_WashedPanties_1
 type "Armor"
 using "_Boosts_Runes_Armor_Upperbody"
-data "SingleHanded" "1"
 data "Luck" "1"
+data "SingleHanded" "1"
 
 new entry _Boost_PIP_Fish_WashedPanties_2
 type "Armor"
 using "_Boosts_Runes_Armor_Upperbody"
-data "SingleHanded" "2"
 data "Luck" "1"
+data "SingleHanded" "2"
 
 new entry _Boost_PIP_Fish_WashedPanties_3
 type "Armor"
 using "_Boosts_Runes_Armor_Upperbody"
-data "SingleHanded" "4"
 data "Luck" "2"
+data "SingleHanded" "4"
 
 new entry _Boost_PIP_Fish_WaspNest_1
 type "Armor"
@@ -1628,6 +1625,6 @@ data "Telekinesis" "2"
 new entry _Boost_PIP_Fish_ZandalorTrunks_3
 type "Armor"
 using "_Boosts_Runes_Armor_Upperbody"
+data "IntelligenceBoost" "5"
 data "Flags" "ClairvoyantImmunity"
 data "Telekinesis" "3"
-data "IntelligenceBoost" "5"

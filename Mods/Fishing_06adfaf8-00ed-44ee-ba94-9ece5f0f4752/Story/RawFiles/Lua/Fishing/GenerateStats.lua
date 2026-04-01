@@ -13,13 +13,13 @@ local MAX_RUNE_TIER = 3
 local STAT_BOOSTS = {
     ["NormieShell"] = {
         [1] = {
-            ["VitalityBoost"] = 4,
+            ["ConstitutionBoost"] = 1,
         },
         [2] = {
-            ["VitalityBoost"] = 9,
+            ["ConstitutionBoost"] = 2,
         },
         [3] = {
-            ["VitalityBoost"] = 17,
+            ["ConstitutionBoost"] = 3,
         },
     },
     ["BlueShell"] = {
@@ -93,15 +93,15 @@ local STAT_BOOSTS = {
     },
     ["Starfish"] = {
         [1] = {
-            ["VitalityBoost"] = 2,
+            ["ConstitutionBoost"] = 2,
             ["Perseverance"] = 1,
         },
         [2] = {
-            ["VitalityBoost"] = 5,
+            ["ConstitutionBoost"] = 5,
             ["Perseverance"] = 2,
         },
         [3] = {
-            ["VitalityBoost"] = 10,
+            ["ConstitutionBoost"] = 10,
             ["Perseverance"] = 3,
         },
     },
@@ -150,15 +150,12 @@ local STAT_BOOSTS = {
     ["FishBone"] = {
         [1] = {
             ["Necromancy"] = 1,
-            ["VitalityBoost"] = 5,
         },
         [2] = {
             ["Necromancy"] = 2,
-            ["VitalityBoost"] = 10,
         },
         [3] = {
             ["Necromancy"] = 3,
-            ["VitalityBoost"] = 15,
         },
     },
     ["Socks"] = {
@@ -304,13 +301,13 @@ local STAT_BOOSTS = {
     },
     ["SeabedRoll"] = {
         [1] = {
-            ["ConstitutionBoost"] = 1,
-        },
-        [2] = {
             ["ConstitutionBoost"] = 2,
         },
-        [3] = {
+        [2] = {
             ["ConstitutionBoost"] = 3,
+        },
+        [3] = {
+            ["ConstitutionBoost"] = 5,
             ["Flags"] = "SleepingImmunity",
         },
     },
@@ -458,15 +455,15 @@ local STAT_BOOSTS = {
     ["Head"] = {
         [1] = {
             ["Necromancy"] = 2,
-            ["VitalityBoost"] = -10,
+            ["ConstitutionBoost"] = -10,
         },
         [2] = {
             ["Necromancy"] = 4,
-            ["VitalityBoost"] = -24,
+            ["ConstitutionBoost"] = -24,
         },
         [3] = {
             ["Necromancy"] = 6,
-            ["VitalityBoost"] = -45,
+            ["ConstitutionBoost"] = -45,
             ["Flags"] = "MadnessImmunity"
         },
     },
@@ -964,13 +961,13 @@ local STAT_BOOSTS = {
     },
     ["Porgy"] = {
         [1] = {
-            ["VitalityBoost"] = 4,
+            ["DodgeBoost"] = 4,
         },
         [2] = {
-            ["VitalityBoost"] = 6,
+            ["DodgeBoost"] = 6,
         },
         [3] = {
-            ["VitalityBoost"] = 12,
+            ["DodgeBoost"] = 9,
         },
     },
     ["Bream"] = {
@@ -1274,8 +1271,8 @@ local STAT_BOOSTS = {
 
 -- Rune gold values per tier
 local TIER_GOLD_VALUES = {
-    [1] = 150,
-    [2] = 300,
+    [1] = 20,
+    [2] = 100,
     [3] = 500,
 }
 
@@ -1434,7 +1431,7 @@ Ext.RegisterConsoleCommand("fishgeneratestats", function (_)
 
     -- Generate Object stats
     local objectContent = GenerateObjectStats()
-    local objectFilename = "FishingStats/Object.txt"
+    local objectFilename = "FishingStats/Object_Fish.txt"
     IO.SaveFile(objectFilename, objectContent, true)
     print(string.format("[Fishing] Generated object stats saved to %s", objectFilename))
 
