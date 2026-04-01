@@ -121,7 +121,7 @@ local SourceInfusionTSKs = {
         },
         {
             Handle = "hcf05c040g7901g4512ga643gc8952e18fb2f",
-            Text = "Also apply to allied heroes within 13m, including self. Turned On Tides grants +1 Hydrosophist to summons.",
+            Text = "Also apply to allied heroes within 13m, including self. Turned On Tides grants +3 Hydrosophist to summons.",
         },
         {
             Handle = "h95e991d4g1047g45bdg8d6dgb4b28dc1f01f",

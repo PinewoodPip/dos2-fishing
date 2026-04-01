@@ -31,12 +31,12 @@ PROC PROC_AMER_GEN_IterateCharsAroundObject_Iterated((INTEGER)_RequestID, "PIP_S
 THEN
 ApplyStatus(_Char, "PIP_Fishing_TurnOnTheTides_Hero", 18.0, 1, _SourceChar); // Must be a separate status to distinguish from applications on summons for the Hydrosophist SI bonus.
 
-// Grant +1 Hydrosophist to summons.
+// Grant +Hydrosophist to summons.
 QRY QRY_AMER_Source_Infusion_SkillPreCast((CHARACTERGUID)_Char, "Shout_PIP_Fishing_TurnOnTheTides", (INTEGER)_InfusCount)
 AND
 _InfusCount > 1
 THEN
-PROC_AMER_TempStat_StatusMod_AddFlexStat(_Char, "PIP_Fishing_TurnOnTheTides", "Ability", "WaterSpecialist", 1.0, "PIP_Fishing_TurnOnTheTides_Infus", 0);
+PROC_AMER_TempStat_StatusMod_AddFlexStat(_Char, "PIP_Fishing_TurnOnTheTides", "Ability", "WaterSpecialist", 3.0, "PIP_Fishing_TurnOnTheTides_Infus", 0); // +3 is enough to participate in all rituals of Hydrosophist skill SIs.
 
 // Source Infusion 3
 
