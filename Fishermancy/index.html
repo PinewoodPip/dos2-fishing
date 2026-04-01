@@ -1,0 +1,785 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Fishermancy is a new skill school, featuring 10 hybrid skills that grant fishy new combat options, focusing on a new Seasick status that synergizes with water damage.">
+      
+      
+      
+        <link rel="canonical" href="https://pinewood.team/dos2-fishing/Fishermancy/">
+      
+      
+        <link rel="prev" href="../Fishing/">
+      
+      
+        <link rel="next" href="../FishEssences/">
+      
+      
+      <link rel="icon" href="../img/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.29">
+    
+    
+      
+        <title>Fishermancy - Fishermancy Class Overhaul Ultimate</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.76a95c52.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../css/extra.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+  
+
+
+  
+  
+
+<script id="__analytics">function __md_analytics(){function n(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],n("js",new Date),n("config","G-MYBLME5L7N"),document.addEventListener("DOMContentLoaded",function(){document.forms.search&&document.forms.search.query.addEventListener("blur",function(){this.value&&n("event","search",{search_term:this.value})}),document$.subscribe(function(){var a=document.forms.feedback;if(void 0!==a)for(var e of a.querySelectorAll("[type=submit]"))e.addEventListener("click",function(e){e.preventDefault();var t=document.location.pathname,e=this.getAttribute("data-md-value");n("event","feedback",{page:t,data:e}),a.firstElementChild.disabled=!0;e=a.querySelector(".md-feedback__note [data-md-value='"+e+"']");e&&(e.hidden=!1)}),a.hidden=!1}),location$.subscribe(function(e){n("config","G-MYBLME5L7N",{page_path:e.pathname})})});var e=document.createElement("script");e.async=!0,e.src="https://www.googletagmanager.com/gtag/js?id=G-MYBLME5L7N",document.getElementById("__analytics").insertAdjacentElement("afterEnd",e)}</script>
+  
+    <script>"undefined"!=typeof __md_analytics&&__md_analytics()</script>
+  
+
+    
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#fishermancy" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="Fishermancy Class Overhaul Ultimate" class="md-header__button md-logo" aria-label="Fishermancy Class Overhaul Ultimate" data-md-component="logo">
+      
+  <img src="../img/favicon.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Fishermancy Class Overhaul Ultimate
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Fishermancy
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var media,input,key,value,palette=__md_get("__palette");if(palette&&palette.color){"(prefers-color-scheme)"===palette.color.media&&(media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']"),palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent"));for([key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/pinewoodpip/dos2-fishing/" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Fishermancy Class Overhaul Ultimate" class="md-nav__button md-logo" aria-label="Fishermancy Class Overhaul Ultimate" data-md-component="logo">
+      
+  <img src="../img/favicon.png" alt="logo">
+
+    </a>
+    Fishermancy Class Overhaul Ultimate
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/pinewoodpip/dos2-fishing/" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../patchnotes/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Installation & patchnotes
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Fishing/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Fishing
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Fishermancy
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    Fishermancy
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#skills" class="md-nav__link">
+    <span class="md-ellipsis">
+      Skills
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Skills">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#reel-in-warfare" class="md-nav__link">
+    <span class="md-ellipsis">
+      Reel In (Warfare)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#deploy-fishnets-huntsman" class="md-nav__link">
+    <span class="md-ellipsis">
+      Deploy Fishnets (Huntsman)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#blast-canon-ball-geomancer" class="md-nav__link">
+    <span class="md-ellipsis">
+      Blast Canon Ball (Geomancer)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#blue-fireball-pyrokinetic" class="md-nav__link">
+    <span class="md-ellipsis">
+      Blue Fireball (Pyrokinetic)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#blow-the-hornpipe-hydrosophist" class="md-nav__link">
+    <span class="md-ellipsis">
+      Blow the Hornpipe (Hydrosophist)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#with-the-currents-aerotheurge" class="md-nav__link">
+    <span class="md-ellipsis">
+      With the Currents (Aerotheurge)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#summon-swashbuckler-necromancy" class="md-nav__link">
+    <span class="md-ellipsis">
+      Summon Swashbuckler (Necromancy)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#return-to-crab-polymorph" class="md-nav__link">
+    <span class="md-ellipsis">
+      Return to Crab (Polymorph)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#turn-on-the-tides-summoning" class="md-nav__link">
+    <span class="md-ellipsis">
+      Turn on The Tides (Summoning)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#prepare-sashimi-scoundrel" class="md-nav__link">
+    <span class="md-ellipsis">
+      Prepare Sashimi (Scoundrel)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../FishEssences/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Fish Essences
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Trader/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Fishing Trader
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#skills" class="md-nav__link">
+    <span class="md-ellipsis">
+      Skills
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Skills">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#reel-in-warfare" class="md-nav__link">
+    <span class="md-ellipsis">
+      Reel In (Warfare)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#deploy-fishnets-huntsman" class="md-nav__link">
+    <span class="md-ellipsis">
+      Deploy Fishnets (Huntsman)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#blast-canon-ball-geomancer" class="md-nav__link">
+    <span class="md-ellipsis">
+      Blast Canon Ball (Geomancer)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#blue-fireball-pyrokinetic" class="md-nav__link">
+    <span class="md-ellipsis">
+      Blue Fireball (Pyrokinetic)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#blow-the-hornpipe-hydrosophist" class="md-nav__link">
+    <span class="md-ellipsis">
+      Blow the Hornpipe (Hydrosophist)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#with-the-currents-aerotheurge" class="md-nav__link">
+    <span class="md-ellipsis">
+      With the Currents (Aerotheurge)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#summon-swashbuckler-necromancy" class="md-nav__link">
+    <span class="md-ellipsis">
+      Summon Swashbuckler (Necromancy)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#return-to-crab-polymorph" class="md-nav__link">
+    <span class="md-ellipsis">
+      Return to Crab (Polymorph)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#turn-on-the-tides-summoning" class="md-nav__link">
+    <span class="md-ellipsis">
+      Turn on The Tides (Summoning)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#prepare-sashimi-scoundrel" class="md-nav__link">
+    <span class="md-ellipsis">
+      Prepare Sashimi (Scoundrel)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+  
+
+
+<div><h1 id="fishermancy">Fishermancy<a class="headerlink" href="#fishermancy" title="Permanent link">¶</a></h1>
+<p><strong>Fishermancy</strong> is a new skill school, featuring 10 hybrid skills that grant fishy new combat options, focusing on a new <strong><em>Seasick</em></strong> status that synergizes with water damage.</p>
+<center>
+<p><img alt="Fishermancer tooltip." src="img/fishermancy_tooltip.png"></p>
+</center>
+<center>
+<p><i>Fishermancy in the Character Sheet.</i></p>
+</center>
+<video autoplay muted loop playsinline><source src="img/intro.webm" type="video/webm"></source></video>
+
+<div class="admonition info">
+<p>Unlike normal skill abilities, you cannot invest points into Fishermancy.</p>
+<p>Instead, your Fishermancy levels up as you catch more fish and discover new species. You'll have to grow as an angler to unleash its full potential!</p>
+<p>Your bobber in the fishing minigame also grows larger as you level up Fishermancy.</p>
+</div>
+<h2 id="skills">Skills<a class="headerlink" href="#skills" title="Permanent link">¶</a></h2>
+<p>Fishermancy offers 10 new skills, each combining the power of fish &amp; the sea with one of the existing skill schools, giving Fishermancy unparalleled versatility - just about anyone can find something of interest in adding a pinch of Fishermancy to their arsenal!</p>
+<center>
+<p><img alt="Skill icons." src="img/fishermancy_main_skills.png"></p>
+</center>
+<center>
+<p><i>A whole school of fishy skills!</i></p>
+</center>
+<p>Each skill requires both Fishermancy and another school to learn &amp; memorize, imbuing that school's main themes with that of fishing!</p>
+<h3 id="reel-in-warfare">Reel In (Warfare)<a class="headerlink" href="#reel-in-warfare" title="Permanent link">¶</a></h3>
+<p>Hooks your enemies and pulls them towards you, dealing more piercing damage the further they fly! Use high ground range bonuses to pull off epic catches!</p>
+<center>
+<p><img alt="Reel In tooltip in EE." src="img/skills/reel_in.png"></p>
+</center>
+<h3 id="deploy-fishnets-huntsman">Deploy Fishnets (Huntsman)<a class="headerlink" href="#deploy-fishnets-huntsman" title="Permanent link">¶</a></h3>
+<p>Clutter the battlefield with fishnets, webbing any unsuspecting characters that come near them after arming. Careful, as the fishnets can catch both enemies &amp; allies!</p>
+<p>Source Infusion 3 grants the <em>Trawling Grindset</em>, allowing you to perform Predator reactions on the prey your fishnets catch.</p>
+<center>
+<p><img alt="Deploy Fishnets tooltip in EE." src="img/skills/deploy_fishnets.png"></p>
+</center>
+<h3 id="blast-canon-ball-geomancer">Blast Canon Ball (Geomancer)<a class="headerlink" href="#blast-canon-ball-geomancer" title="Permanent link">¶</a></h3>
+<p>Blast away enemies with the canonical canon ball, scattering them and dealing extra damage from collateral impact. Strangely, the ball is prone to bouncing...</p>
+<p>It's recommended not to try SI3 at home.</p>
+<center>
+<p><img alt="Blast Canon Ball tooltip in EE." src="img/skills/blast_canon_ball.png"></p>
+</center>
+<h3 id="blue-fireball-pyrokinetic">Blue Fireball (Pyrokinetic)<a class="headerlink" href="#blue-fireball-pyrokinetic" title="Permanent link">¶</a></h3>
+<p>You memed it, we made it - the Blue Fireball is a plain but reliable way of getting enemies Seasick.</p>
+<p>Source Infusions allow it to apply Seasick en-masse.</p>
+<center>
+<p><img alt="Blue Fireball tooltip in EE." src="img/skills/blue_fireball.png"></p>
+</center>
+<h3 id="blow-the-hornpipe-hydrosophist">Blow the Hornpipe (Hydrosophist)<a class="headerlink" href="#blow-the-hornpipe-hydrosophist" title="Permanent link">¶</a></h3>
+<p>Hype up your allies and hype down the enemies to make them more prone to Seasick!</p>
+<p>Source Infusions give it restorative benefits and can considerably decrease Hydrosophist skill cooldowns.</p>
+<center>
+<p><img alt="Blow the Hornpipe tooltip in EE." src="img/skills/blow_the_hornpipe.png"></p>
+</center>
+<h3 id="with-the-currents-aerotheurge">With the Currents (Aerotheurge)<a class="headerlink" href="#with-the-currents-aerotheurge" title="Permanent link">¶</a></h3>
+<p>Become one with the fishes, gaining personal bodyguards ready to bite incoming hostiles.</p>
+<p>Source Infusions allow it to additionally inflict Battered and considerably increase Seasick duration <strong>from all sources</strong>, letting you proc it more times.</p>
+<center>
+<p><img alt="With the Currents tooltip in EE." src="img/skills/with_the_currents.png"></p>
+</center>
+<h3 id="summon-swashbuckler-necromancy">Summon Swashbuckler (Necromancy)<a class="headerlink" href="#summon-swashbuckler-necromancy" title="Permanent link">¶</a></h3>
+<p>Call ye matey and get sailin'! The Swashbuckler grants a water weapon damage aura, making it easy to proc Seasick for nearby allies.</p>
+<p>Source Infusions give him a turret role, allowing him to emulate Throw Knives at enemies that Seasick procs on.</p>
+<center>
+<p><img alt="Summon Swashbuckler tooltip in EE." src="img/skills/summon_swashbuckler.png"></p>
+</center>
+<h3 id="return-to-crab-polymorph">Return to Crab (Polymorph)<a class="headerlink" href="#return-to-crab-polymorph" title="Permanent link">¶</a></h3>
+<p>Drop the burdens of your current body and return to the good ol' times. The Crab form can tip-toe around surfaces and has a custom arsenal of buffs, debuffs and pincers.</p>
+<p>Source Infusions allow the crab to party harder and draw out its innate spellcasting affinities. </p>
+<center>
+<p><img alt="Return to Crab tooltip in EE." src="img/skills/return_to_crab.png"></p>
+</center>
+<h3 id="turn-on-the-tides-summoning">Turn on The Tides (Summoning)<a class="headerlink" href="#turn-on-the-tides-summoning" title="Permanent link">¶</a></h3>
+<p>Bring on the waves, having your summons ripple at the start of their turns, turning them into another source of Seasick procs.</p>
+<p>Source Infusions allow regular allies to also proc the effect, as well as giving Hydrosophist to all summons - allowing any summon to participate in its ritual reactions.</p>
+<center>
+<p><img alt="Turn on The Tides tooltip in EE." src="img/skills/turn_on_the_tides.png"></p>
+</center>
+<h3 id="prepare-sashimi-scoundrel">Prepare Sashimi (Scoundrel)<a class="headerlink" href="#prepare-sashimi-scoundrel" title="Permanent link">¶</a></h3>
+<p>Turns enemies into sashimi, and make the remaining strugglers Seasick from the food poisoning on your knife, or something.</p>
+<div class="admonition warning">
+<p class="admonition-title">Work in progress</p>
+<p>This skill is currently lame and we're planning on reworking it entirely.</p>
+</div>
+<center>
+<p><img alt="Prepare Sashimi tooltip in EE." src="img/skills/prepare_slashimi.png"></p>
+</center></div>
+
+
+
+
+
+
+
+  
+  
+
+
+
+  
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.fe8b6f2b.min.js"></script>
+      
+        <script src="../js/extra.js"></script>
+      
+    
+  </body>
+</html>
