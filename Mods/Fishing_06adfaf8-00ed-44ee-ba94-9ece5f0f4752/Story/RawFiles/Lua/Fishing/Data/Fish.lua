@@ -1109,7 +1109,7 @@ local fishes = {
         Rarity = "Epic",
         Behaviour = "Aggressive",
         Difficulty = 1.8,
-        Endurance = 2,
+        Endurance = 1.5,
     },
     ["Epipe"] = {
         NameHandle = T{

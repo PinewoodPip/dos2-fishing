@@ -22,14 +22,25 @@ local regions = {
         Bounds = Vector.Create(128, 410, 228, 189),
         Capacity = CAPACITIES.HIGH,
         Fish = {
-            -- TODO add more
             {
-                ID = "NormieShell",
+                ID = "Porgy",
                 Weight = 1,
             },
             {
-                ID = "BlueShell",
-                Weight = 1,
+                ID = "Sardine",
+                Weight = 0.9,
+            },
+            {
+                ID = "NormieShell",
+                Weight = 0.8,
+            },
+            {
+                ID = "Starfish",
+                Weight = 0.7,
+            },
+            {
+                ID = "Seaweed",
+                Weight = 0.4,
             },
         },
     },
@@ -40,18 +51,29 @@ local regions = {
         Bounds = V(83, 257, 291, 52),
         Capacity = CAPACITIES.HIGH,
         Fish = {
-            -- TODO add more
             {
-                ID = "Scarf",
+                ID = "Porgy",
                 Weight = 1,
             },
             {
-                ID = "Seaweed",
-                Weight = 1,
+                ID = "Scarf",
+                Weight = 0.9,
+            },
+            {
+                ID = "SpikyConch",
+                Weight = 0.8,
+            },
+            {
+                ID = "Piranha",
+                Weight = 0.7,
+            },
+            {
+                ID = "Socks",
+                Weight = 0.5,
             },
             {
                 ID = "SeabedRoll",
-                Weight = 0.8,
+                Weight = 0.5,
             },
         },
     },
@@ -65,14 +87,17 @@ local regions = {
         Bounds = V(218, 416, 324, 341),
         Capacity = CAPACITIES.MIDDLING,
         Fish = {
-            -- TODO add more
             {
                 ID = "BlueShell",
                 Weight = 1,
             },
             {
-                ID = "BranchingCoral",
+                ID = "Piranha",
                 Weight = 0.8,
+            },
+            {
+                ID = "BranchingCoral",
+                Weight = 0.7,
             },
             {
                 ID = "PearlClam",
@@ -80,7 +105,7 @@ local regions = {
             },
             {
                 ID = "Seaweed",
-                Weight = 1,
+                Weight = 0.4,
             },
         },
     },
@@ -91,25 +116,29 @@ local regions = {
             Text = "Reaper's Eye North Coast",
         },
         LevelID = "FJ_FortJoy_Main",
-        Bounds = V(299, 341, 664, 220),
+        Priority = 2, -- Needs to be higher than starting beach.
+        Bounds = V(285, 341, 664, 220),
         Capacity = CAPACITIES.HIGH,
         Fish = {
-            -- TODO add more
             {
-                ID = "Scarf",
+                ID = "Piranha",
                 Weight = 1,
             },
             {
-                ID = "Starfish",
+                ID = "Dandelion",
+                Weight = 0.9,
+            },
+            {
+                ID = "SeaPickle",
                 Weight = 0.6,
             },
             {
-                ID = "NormieShell",
-                Weight = 1,
+                ID = "Pufferfish",
+                Weight = 0.6,
             },
             {
-                ID = "SpikyConch",
-                Weight = 0.8,
+                ID = "SharkTooth",
+                Weight = 0.4,
             },
         },
     },
@@ -122,18 +151,25 @@ local regions = {
         LevelID = "FJ_FortJoy_Main",
         Bounds = V(303, 120, 591, 5),
         Fish = {
-            -- TODO add more
-            {
-                ID = "Corncomber",
-                Weight = 0.7,
-            },
             {
                 ID = "SeaPickle",
                 Weight = 1,
             },
             {
+                ID = "Aldrovanda",
+                Weight = 0.8,
+            },
+            {
+                ID = "Corncomber",
+                Weight = 0.7,
+            },
+            {
+                ID = "GoldenShell",
+                Weight = 0.5,
+            },
+            {
                 ID = "Seaweed",
-                Weight = 1,
+                Weight = 0.4,
             },
         },
     },
@@ -146,16 +182,16 @@ local regions = {
         Capacity = CAPACITIES.LOW,
         Fish = {
             {
+                ID = "NonFineChina",
+                Weight = 1,
+            },
+            {
                 ID = "Pearl",
                 Weight = 0.5,
             },
             {
                 ID = "WashedPanties",
                 Weight = 0.3,
-            },
-            {
-                ID = "NonFineChina",
-                Weight = 1,
             },
             {
                 ID = "GoldenShell",
@@ -174,16 +210,20 @@ local regions = {
         Capacity = CAPACITIES.MIDDLING,
         Fish = {
             {
-                ID = "CrystalCoral",
-                Weight = 0.7,
+                ID = "Gooseberry",
+                Weight = 1,
+            },
+            {
+                ID = "Pomfret",
+                Weight = 0.8,
             },
             {
                 ID = "MoonJelly",
                 Weight = 0.8,
             },
             {
-                ID = "Gooseberry",
-                Weight = 1,
+                ID = "CrystalCoral",
+                Weight = 0.7,
             },
         },
     },
@@ -214,12 +254,12 @@ local regions = {
                 Weight = 0.6,
             },
             {
-                ID = "DescentKey",
-                Weight = 0.2,
-            },
-            {
                 ID = "TorrentedSoul",
                 Weight = 0.8,
+            },
+            {
+                ID = "DescentKey",
+                Weight = 0.15,
             },
         },
     },
@@ -280,20 +320,24 @@ local regions = {
         },
         Fish = {
             {
-                ID = "Seaweed",
+                ID = "Moss",
                 Weight = 1,
             },
             {
-                ID = "Moss",
-                Weight = 1,
+                ID = "Frog",
+                Weight = 0.9,
             },
             {
                 ID = "Handkerchief",
                 Weight = 0.8,
             },
             {
-                ID = "SharkTooth",
-                Weight = 0.4,
+                ID = "DarkConch",
+                Weight = 0.5,
+            },
+            {
+                ID = "FidgetSpinner",
+                Weight = 0.2,
             },
         },
     },
@@ -375,6 +419,10 @@ local regions = {
                 Weight = 1,
             },
             {
+                ID = "WaspNest",
+                Weight = 0.6,
+            },
+            {
                 ID = "LilyPad",
                 Weight = 0.5,
             },
@@ -385,10 +433,6 @@ local regions = {
             {
                 ID = "Mine",
                 Weight = 0.1,
-            },
-            {
-                ID = "WaspNest",
-                Weight = 0.6,
             },
         },
     },
@@ -408,7 +452,7 @@ local regions = {
         Capacity = CAPACITIES.LOW,
         Fish = {
             {
-                ID = "Seaweed",
+                ID = "Scarf",
                 Weight = 1,
             },
             {
@@ -416,11 +460,11 @@ local regions = {
                 Weight = 1,
             },
             {
-                ID = "Scarf",
-                Weight = 0.7,
+                ID = "Pitcher",
+                Weight = 0.4,
             },
             {
-                ID = "FishBone",
+                ID = "MessagelessBottle",
                 Weight = 0.3,
             },
         },
