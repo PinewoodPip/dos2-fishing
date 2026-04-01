@@ -14,6 +14,39 @@ end
 ---@type Fishing.Region[]
 local regions = {
     {
+        ID = "RC.LadyVengeance",
+        NameHandle = T{
+            Handle = "h4a5f3897g7038g489cg80e7g7ae4d4afcafc",
+            Text = "Lady Vengeance",
+        },
+        LevelID = "RC_Main",
+        Bounds = V(207, -14, 338, -80),
+        FishingAreas = {
+            -- North
+            V(215, -26, 342, -8),
+            -- South
+            V(223, -70, 330, -56),
+        },
+        Fish = {
+            {
+                ID = "Anglerfish",
+                Weight = 1,
+            },
+            {
+                ID = "Pufferfish",
+                Weight = 0.8,
+            },
+            {
+                ID = "CrabClaw",
+                Weight = 0.7,
+            },
+            {
+                ID = "BladeFish",
+                Weight = 0.4,
+            },
+        },
+    },
+    {
         ID = "RC.StartingBeach",
         NameHandle = T{
             Handle = "hc494529bg98feg4b23g9846g56b96a1a12cd",
