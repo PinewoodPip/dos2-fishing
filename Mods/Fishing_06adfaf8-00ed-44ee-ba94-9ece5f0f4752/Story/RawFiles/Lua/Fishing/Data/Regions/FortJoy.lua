@@ -471,6 +471,7 @@ local regions = {
     },
     {
         ID = "FJ.BrahmosDesert", -- No idea if this area is actually playable lmao, so don't put unique fish there
+        IsSecret = true,
         NameHandle = T{
             Handle = "h69c87adfg0526g4156g8576gb1eb82c20827",
             Text = "Brahmos's Dream",
@@ -485,7 +486,7 @@ local regions = {
                 Weight = 1,
             },
             {
-                ID = "NonFineChina",
+                ID = "PyrokineticSnapper",
                 Weight = 0.6,
             },
         },
@@ -642,6 +643,10 @@ local regions = {
             {
                 ID = "FishBone",
                 Weight = 1,
+            },
+            {
+                ID = "PyrokineticSnapper",
+                Weight = 0.7,
             },
             {
                 ID = "Mine",

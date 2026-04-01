@@ -121,7 +121,7 @@ local regions = {
         Bounds = V(88, 783, 316, 616),
         Fish = {
             {
-                ID = "Blobfish",
+                ID = "PyrokineticSnapper",
                 Weight = 1,
             },
             {

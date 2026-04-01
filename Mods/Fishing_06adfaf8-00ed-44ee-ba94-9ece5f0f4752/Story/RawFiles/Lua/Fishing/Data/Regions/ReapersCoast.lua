@@ -195,6 +195,10 @@ local regions = {
         Capacity = CAPACITY.LOW,
         Fish = {
             {
+                ID = "GenericVoidwoken",
+                Weight = 1,
+            },
+            {
                 ID = "PremoldedCheese",
                 Weight = 0.8,
             },
@@ -286,7 +290,7 @@ local regions = {
         Capacity = CAPACITY.HIGH,
         Fish = {
             {
-                ID = "Bream",
+                ID = "PyrokineticSnapper",
                 Weight = 1,
             },
             {
@@ -393,7 +397,7 @@ local regions = {
         },
         Fish = {
             {
-                ID = "Anglerfish",
+                ID = "GenericVoidwoken",
                 Weight = 1,
             },
             {
@@ -622,6 +626,10 @@ local regions = {
                 Weight = 0.2,
             },
             {
+                ID = "WaterRing",
+                Weight = 0.1,
+            },
+            {
                 ID = "ModSettingsMenu",
                 Weight = 0.05,
             },
@@ -730,7 +738,7 @@ local regions = {
                 Weight = 1,
             },
             {
-                ID = "DarkConch",
+                ID = "GenericVoidwoken",
                 Weight = 1,
             },
             {
@@ -907,6 +915,10 @@ local regions = {
             },
             {
                 ID = "LightAtTheEnd",
+                Weight = 0.15,
+            },
+            {
+                ID = "ZandalorTrunks",
                 Weight = 0.1,
             },
             {

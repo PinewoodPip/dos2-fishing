@@ -206,7 +206,7 @@ local regions = {
                 Weight = 1,
             },
             {
-                ID = "Anglerfish",
+                ID = "Stringfish",
                 Weight = 1,
             },
             {
@@ -373,6 +373,10 @@ local regions = {
                 ID = "Frog",
                 Weight = 0.5,
             },
+            {
+                ID = "ZandalorTrunks",
+                Weight = 0.2,
+            },
         },
     },
     {
@@ -419,6 +423,10 @@ local regions = {
             {
                 ID = "SpareLamp",
                 Weight = 0.4,
+            },
+            {
+                ID = "WaterRing",
+                Weight = 0.2,
             },
         },
     },
