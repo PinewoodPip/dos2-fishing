@@ -6,7 +6,7 @@ local Regions = {
     BAIT_TEMPLATE_ID = "e7a7ba01-5789-4470-881e-54b858192ca9",
 
     FISH_PER_BAIT = 3, -- Amount of fish that are added to the region's pool when bait is used on it.
-    BAIT_WATER_SEARCH_RADIUS = 5, -- Search radius for fishable surfaces when using bait, in meters. Should be more generous than the cursor search radius, as the bait check is performed from the character's position.
+    BAIT_WATER_SEARCH_RADIUS = 6, -- Search radius for fishable surfaces when using bait, in meters. Should be more generous than the cursor search radius, as the bait check is performed from the character's position.
     FISH_BAIT_RARITY_COLOR = Fishing.ABILITY_SCHOOL_COLOR,
 
     TranslatedStrings = {

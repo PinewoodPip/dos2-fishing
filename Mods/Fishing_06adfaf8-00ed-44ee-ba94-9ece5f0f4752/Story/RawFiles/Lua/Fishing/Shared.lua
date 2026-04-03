@@ -708,12 +708,34 @@ function Fishing.IsPositionInFishableArea(pos)
     return false
 end
 
+---Searches for a position with a fishing area around pos, if there is a fishing Region at pos.
+---@param pos vec3
+---@param radius number In meters.
+---@return vec2? -- `nil` if no fishing area is found or if pos is not within a Region. Otherwise, will be the closest position within a fishing area.
+function Fishing.SearchFishableArea(pos, radius)
+    local region = Fishing.GetRegionAt(pos)
+    if not region then return nil end
+    local posX, posZ = pos[1], pos[3]
+    for _,bounds in ipairs(region.FishingAreas or EMPTY) do
+        -- Get the closest edge of the region
+        local boundsX, boundsY, boundsW, boundsH = table.unpack(bounds)
+        local closestX = math.max(boundsX, math.min(posX, boundsX + boundsW))
+        local closestZ = math.max(boundsY, math.min(posZ, boundsY + boundsH))
+        local closestPos = V(closestX, closestZ)
+        local dir = closestPos - V(posX, posZ)
+        if Vector.GetLength(dir) <= radius then
+            return Vector.Create(closestX, closestZ)
+        end
+    end
+    return nil
+end
+
 ---Returns whether a position is valid for fishing (either near a fishable surface or fishing area)
 ---@param pos vec3
 ---@param searchRadius number? Search radius for water surfaces. Defaults to `WATER_SEARCH_RADIUS`.
 ---@return boolean
 function Fishing.IsPositionFishable(pos, searchRadius)
-    return Fishing.IsPositionNearWater(pos, searchRadius) or Fishing.IsPositionInFishableArea(pos)
+    return Fishing.IsPositionNearWater(pos, searchRadius) or (searchRadius and Fishing.SearchFishableArea(pos, searchRadius) ~= nil or Fishing.IsPositionInFishableArea(pos))
 end
 
 ---Returns the maximum rod casting distance for char.
