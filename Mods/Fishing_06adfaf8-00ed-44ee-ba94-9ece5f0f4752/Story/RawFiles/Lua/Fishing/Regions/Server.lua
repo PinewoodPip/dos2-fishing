@@ -18,11 +18,18 @@ Osiris.RegisterSymbolListener("CharacterUsedItem", 2, "after", function (charGUI
             local remainingFish = Fishing.GetRemainingFish(charGUID)
             local fishAdded = Regions.FISH_PER_BAIT
             local newFish = math.max(fishAdded, remainingFish + fishAdded) -- Sanity check in case region was underflowed (technically possible in multiplayer with VERY specific timing)
-            Fishing.SetRemainingFish(charGUID, newFish)
+            Fishing.SetRemainingFish(region.ID, newFish)
             Osi.CharacterStatusText(charGUID, TSK.Notification_Bait_Used:GetString())
             Osi.ItemTemplateRemoveFromParty(item.CurrentTemplate.Id, charGUID, 1)
         else -- Show hint for needing to be near water
             Osi.CharacterStatusText(charGUID, TSK.Notification_Bait_NotNearWater:GetString())
         end
     end
+end)
+
+-- Cheat to add bait.
+Ext.RegisterConsoleCommand("fishaddbait", function (_, amount)
+    amount = amount or 10
+    local charGUID = Osi.CharacterGetHostCharacter()
+    Osi.ItemTemplateAddTo(Regions.BAIT_TEMPLATE_ID, charGUID, amount, 0)
 end)
