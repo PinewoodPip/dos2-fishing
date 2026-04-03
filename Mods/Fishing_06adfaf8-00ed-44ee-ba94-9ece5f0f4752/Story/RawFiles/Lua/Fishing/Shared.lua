@@ -62,10 +62,10 @@ local Fishing = {
 
     -- Ranges for the amount of fish that can be found in a region during a spawn cycle.
     REGION_CAPACITIES = {
-        LOW = {4, 7},
-        MIDDLING = {6, 8},
-        DEFAULT = {7, 11},
-        HIGH = {13, 17},
+        LOW = {5, 8},
+        MIDDLING = {8, 11},
+        DEFAULT = {12, 15},
+        HIGH = {16, 19},
     },
 
     TUNING = {
