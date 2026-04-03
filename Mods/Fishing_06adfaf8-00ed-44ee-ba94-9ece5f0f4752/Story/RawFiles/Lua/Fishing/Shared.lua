@@ -30,32 +30,6 @@ local Fishing = {
 
     FISHERMANCER_SKILLSET = "Class_PIP_Fishermancer",
 
-    FISHING_ROD_TEMPLATES = Set.Create({
-        "81cbf17f-cc71-4e09-9ab3-ca2a5cb0cefc", -- HAR_FishingRod_A, green fish-shaped lure
-        "90cdb693-3564-415a-a8fa-4027b7f76f41", -- HAR_FishingRod_B, classic red/white bobber
-        "9fc3cb5f-894e-4783-9eef-fbceef0104b0", -- HAR_FishingRod_C, red/yellow lure
-    }),
-    ---@type set<GUID>
-    FISHING_ROD_VISUAL_TEMPLATES = {
-        ["c7639619-4c44-44a3-af53-81275a80af15"] = true, -- Green bobber.
-        ["483ecb63-b01a-4452-be65-904d9ff03554"] = true, -- Red/white bobber.
-        ["5a14df6e-8e63-425c-9802-1916d630212e"] = true, -- Yellow bobber.
-    },
-    ---@type table<GUID, Fishing.BobberColor>
-    VISUAL_TEMPLATE_TO_BOBBER_COLOR = {
-        ["c7639619-4c44-44a3-af53-81275a80af15"] = {
-            NormalColor = Color.CreateFromHex(Color.LARIAN.POISON_GREEN),
-            HighlightColor = Color.CreateFromHex(Color.LARIAN.GREEN),
-        },
-        ["483ecb63-b01a-4452-be65-904d9ff03554"] = {
-            NormalColor = Color.CreateFromHex("BFBFBF"),
-            HighlightColor = Color.CreateFromHex("D8D8D8"),
-        },
-        ["5a14df6e-8e63-425c-9802-1916d630212e"] = {
-            NormalColor = Color.CreateFromHex(Color.LARIAN.GOLD),
-            HighlightColor = Color.CreateFromHex(Color.LARIAN.YELLOW),
-        },
-    },
     WATER_SEARCH_RADIUS = 2.5,
     CURSOR_WATER_SEARCH_RADIUS = 0.5,
     WATER_MAX_DISTANCE = 7.5, -- Distance to water (or fishing areas) that a character must be within for fishing to be available.
@@ -381,32 +355,11 @@ Fishing.LEVEL_NAME_TSKHANDLES = {
     ["ARX_Main"] = "hd8971510g1ba0g4b01gad48g6aa3600195e4", -- "Arx"
 }
 
--- Maps fishing rod visual templates to their description to show in their tooltip, replacing the vanilla description.
----@type table<GUID, TextLib_TranslatedString>
-Fishing.VISUAL_TEMPLATE_TO_DESCRIPTION = {
-    ["c7639619-4c44-44a3-af53-81275a80af15"] = Fishing:RegisterTranslatedString({
-        Handle = "h490fd03dgf302g4026g801dg14b1aa82c408",
-        Text = [[A fishing rod with a eye-catching, bright green rubber fish robber. This one's sure to attract bites quickly.]],
-        ContextDescription = [[Tooltip for fishing rod item]],
-    }),
-    ["483ecb63-b01a-4452-be65-904d9ff03554"] = Fishing:RegisterTranslatedString({
-        Handle = "hbec4e294ga39eg4df6gae68gfc63162179c7",
-        Text = [[A standard-issue fishing rod with a classic white and red bobber. Goes to show some things never go out of style.]],
-        ContextDescription = [[Tooltip for fishing rod item]],
-    }),
-    ["5a14df6e-8e63-425c-9802-1916d630212e"] = Fishing:RegisterTranslatedString({
-        Handle = "he22e5c9fg9455g4689gb139gcb97e9364698",
-        Text = [[A fishing rod with a yellow bobber. It's got a nice sheen when held in the light.]],
-        ContextDescription = [[Tooltip for fishing rod item]],
-    }),
-}
-
 ---------------------------------------------
 -- EVENTS
 ---------------------------------------------
 
 ---@class Fishing.Hooks.IsFishingRod
----@field Character Character
 ---@field Item Item
 ---@field IsFishingRod boolean Hookable. Defaults to false.
 
@@ -1148,31 +1101,9 @@ function Fishing.HasFishermancerPreset(char)
     return char:HasTag("PIP_Fishing_Fishermancer") or char.PlayerCustomData.ClassType == "PIP_Fishermancer"
 end
 
----Returns the bobber colors of char, if they have a fishing rod equipped.
----@see Fishing.VISUAL_TEMPLATE_TO_BOBBER_COLOR
----@param char Character
----@return Fishing.BobberColor? -- `nil` if the character has no fishing rod.
-function Fishing.GetBobberColor(char)
-    local rod = Item.GetEquippedItem(char, "Weapon")
-    if not rod or not Fishing.IsFishingRod(rod) then return nil end
-    return Fishing.VISUAL_TEMPLATE_TO_BOBBER_COLOR[rod.CurrentTemplate.VisualTemplate] or {
-        NormalColor = Color.CreateFromHex(Color.LARIAN.POISON_GREEN),
-        HighlightColor = Color.CreateFromHex(Color.LARIAN.GREEN),
-    }
-end
-
 ---------------------------------------------
 -- EVENT LISTENERS
 ---------------------------------------------
-
--- Mark items with rod root/visual templates as fishing rods.
--- Visual template check covers various locally-placed rods in Origins levels (which were *not* created from the root templates).
-Fishing.Hooks.IsFishingRod:Subscribe(function (ev)
-    local template = ev.Item.RootTemplate
-    if Fishing.FISHING_ROD_TEMPLATES:Contains(template.Id) or Fishing.FISHING_ROD_VISUAL_TEMPLATES[template.VisualTemplate] then
-        ev.IsFishingRod = true
-    end
-end, {StringID = "DefaultImplementation"})
 
 -- Console command to print fish availability across the regions.
 -- Useful to analyze distributions of fish across the maps & regions.

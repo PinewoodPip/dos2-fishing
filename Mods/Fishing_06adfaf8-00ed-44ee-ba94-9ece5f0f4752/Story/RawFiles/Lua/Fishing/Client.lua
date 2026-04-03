@@ -427,48 +427,6 @@ Input.Events.KeyPressed:Subscribe(function (ev)
     end
 end, {EnabledFunctor = GameState.IsInRunningSession})
 
--- Add tooltip hints on how to use fishing rods.
-Tooltip.Hooks.RenderItemTooltip:Subscribe(function (ev)
-    if Fishing.IsFishingRod(ev.Item) then
-        local tooltip = ev.Tooltip
-        tooltip:InsertElement({
-            Type = "Engraving",
-            Label = TSK.Label_FishingRodHint:Format({
-                Color = Fishing.ABILITY_SCHOOL_COLOR,
-            }),
-        })
-
-        -- Recolor header
-        local itemNameElement = tooltip:GetFirstElement("ItemName")
-        local itemName = Text.StripFormatting(itemNameElement.Label)
-        itemNameElement.Label = Text.Format(itemName, {
-            Color = Fishing.FISHING_ROD_RARITY_COLOR,
-        })
-
-        -- Change rarity/footer to indicate the item is a rod
-        local rarityElement = tooltip:GetFirstElement("ItemRarity")
-        rarityElement.Label = TSK.Label_FishingRod:Format({
-            Color = Fishing.FISHING_ROD_RARITY_COLOR,
-        })
-
-        -- Change description
-        local descriptionElement = tooltip:GetFirstElement("ItemDescription")
-        local visualTemplate = ev.Item.CurrentTemplate.VisualTemplate
-        local descriptionTSK = Fishing.VISUAL_TEMPLATE_TO_DESCRIPTION[visualTemplate]
-        if descriptionTSK then
-            local description = descriptionTSK:GetString()
-            if descriptionElement then
-                descriptionElement.Label = description
-            else
-                tooltip:InsertElement({
-                    Type = "ItemDescription",
-                    Label = description,
-                })
-            end
-        end
-    end
-end)
-
 -- Format fish item names & rarity tooltips.
 Tooltip.Hooks.RenderItemTooltip:Subscribe(function (ev)
     local fish = Fishing.GetFishByTemplate(ev.Item.RootTemplate.Id)
@@ -501,14 +459,6 @@ Tooltip.Hooks.RenderItemTooltip:Subscribe(function (ev)
         else
             tooltip:InsertElement(fishRarityTooltip, 1) -- ItemRarity must be among the first elements or the flash element sorting function breaks (vanilla bug)
         end
-    end
-end)
-
--- Update fishing rod templates to have a world tooltip to make them easier to find.
-GameState.Events.ClientReady:Subscribe(function (_)
-    for guid in Fishing.FISHING_ROD_TEMPLATES:Iterator() do
-        local template = Ext.Template.GetTemplate(guid) ---@cast template ItemTemplate
-        template.Tooltip = 2
     end
 end)
 

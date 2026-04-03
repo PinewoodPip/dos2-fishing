@@ -22,6 +22,12 @@ local scripts = {
             "Fishing/Data/TreasureChests.lua",
         }
     },
+    {
+        ScriptSet = "Fishing/Rods",
+        Scripts = {
+            "Fishing/Data/Rods.lua",
+        },
+    },
     {ScriptSet = "Fishing/Runes"},
     {
         ScriptSet = "Fishing/Skills",

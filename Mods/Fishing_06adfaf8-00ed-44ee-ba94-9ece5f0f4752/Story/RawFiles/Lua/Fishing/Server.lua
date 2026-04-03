@@ -334,14 +334,6 @@ Ext.RegisterConsoleCommand("fishdiscoverall", function (_)
     end
 end)
 
--- Cheat to add all fishing rods.
-Ext.RegisterConsoleCommand("fishaddrods", function (_)
-    local charGUID = Osi.CharacterGetHostCharacter()
-    for rodTemplate in Fishing.FISHING_ROD_TEMPLATES:Iterator() do
-        Osi.ItemTemplateAddTo(rodTemplate, charGUID, 1, 1)
-    end
-end)
-
 -- Cheats to manipulate remaining fish in regions.
 Ext.RegisterConsoleCommand("fishrefreshregions", function (_)
     for _,region in ipairs(Fishing.GetRegions(Entity.GetLevel().LevelDesc.LevelName)) do
