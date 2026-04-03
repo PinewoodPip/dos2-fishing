@@ -250,6 +250,23 @@ GameState.Events.RegionStarted:Subscribe(function (ev)
     end
 end)
 
+-- Mark characters at the start of the game as having the Fishermancy preset if they chose it during CC.
+-- TODO this is an Origins-specific PROC, find a more general one
+Osiris.RegisterSymbolListener("PROC_TUT_LoseWeapons_LostWeapon", 3, "after", function (charGUID, _, itemGUID)
+    local item = Item.Get(itemGUID)
+    if Fishing.IsFishingRod(item) then
+        -- Mark the character as having the preset
+        Osi.SetTag(charGUID, "PIP_Fishing_Fishermancer")
+
+        -- Ensure the char has all the skills granted by the preset;
+        -- this is necessary to workaround a bug where skills that are in the preset AND granted by starting equipment are not added to the character themselves (ex. Reel In in this case)
+        local skills = Ext.Stats.SkillSet.GetLegacy(Fishing.FISHERMANCER_SKILLSET).Skills
+        for _,skill in ipairs(skills) do
+            Osi.CharacterAddSkill(charGUID, skill, 0)
+        end
+    end
+end)
+
 -- Refresh available fish in regions as time passes.
 Osiris.RegisterSymbolListener("NewHour", 1, "after", function (_)
     Fishing.TickRespawnCooldowns()

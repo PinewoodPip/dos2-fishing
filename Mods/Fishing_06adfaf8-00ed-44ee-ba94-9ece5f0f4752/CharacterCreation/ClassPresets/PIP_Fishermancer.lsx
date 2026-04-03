@@ -74,7 +74,7 @@
                             <attribute id="AmountIncreased" value="1" type="4" />
                         </node>
                         <node id="AbilityChange">
-                            <attribute id="Ability" value="Luck" type="23" />
+                            <attribute id="Ability" value="Sneaking" type="23" />
                             <attribute id="AmountIncreased" value="1" type="4" />
                         </node>
                     </children>

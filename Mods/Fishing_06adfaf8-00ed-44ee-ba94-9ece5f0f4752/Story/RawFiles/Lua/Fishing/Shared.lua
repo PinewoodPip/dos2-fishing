@@ -28,6 +28,8 @@ local Fishing = {
     MODVAR_REGION_RESPAWN_COOLDOWN = "RegionRefreshCooldown",
     USERVAR_FISH_CAUGHT = "CharacterFishCaught",
 
+    FISHERMANCER_SKILLSET = "Class_PIP_Fishermancer",
+
     FISHING_ROD_TEMPLATES = Set.Create({
         "81cbf17f-cc71-4e09-9ab3-ca2a5cb0cefc", -- HAR_FishingRod_A, green fish-shaped lure
         "90cdb693-3564-415a-a8fa-4027b7f76f41", -- HAR_FishingRod_B, classic red/white bobber
