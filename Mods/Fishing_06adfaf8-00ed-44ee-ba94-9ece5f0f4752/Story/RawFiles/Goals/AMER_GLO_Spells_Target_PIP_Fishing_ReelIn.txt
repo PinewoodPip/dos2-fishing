@@ -11,7 +11,7 @@ AND
 _InfusCount > 0
 THEN
 PROC_AMER_TempStat_FlexStat_Add_StatScaling(_Char, "Stat", "ACCURACYBOOST", "Ability", "WarriorLore", 5.0, 1.0, 2000, "SkillCast");
-ApplyStatus(_Target, "AMER_ATAXIA_APPLY", 12.0, 0, _Char);
+ApplyStatus(_Target, "AMER_SLOWED_APPLY", 12.0, 0, _Char);
 
 // Source Infusion 2
 
@@ -44,6 +44,7 @@ PROC PROC_AMER_GEN_IterateCharsAroundObject_Iterated((INTEGER)_RequestID, "PIP_S
 THEN
 // PROC_AMER_GEN_Shoot_Delayed("Explosion", _Char, _Target, "Projectile_PIP_SCRIPT_ReelIn", 100); // Freezes the server somehow.
 PROC_PIP_Fishing_ReelIn(_Char, _Target);
+ApplyStatus(_Target, "AMER_SLOWED_APPLY", 12.0, 0, _Char); // Apply Slowed III from SI1.
 
 PROC PROC_PIP_Fishing_ReelIn((CHARACTERGUID)_Source, (CHARACTERGUID)_Target)
 THEN
