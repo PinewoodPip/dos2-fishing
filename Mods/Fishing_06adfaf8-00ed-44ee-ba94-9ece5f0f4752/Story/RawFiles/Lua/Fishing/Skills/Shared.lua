@@ -19,6 +19,21 @@ local Skills = {
         ["Shout_PIP_Fishing_TurnOnTheTides"] = "Summoning",
     },
 
+    -- Maps Fishermancy skills to their skillbook stat ID.
+    ---@type table<skill, string>
+    SKILLBOOKS = {
+        ["Projectile_PIP_Fishing_BlueFireball"] = "PIP_Fishing_Skillbook_BlueFireBall",
+        ["Shout_PIP_Fishing_Hornpipe"] = "PIP_Fishing_Skillbook_Hornpipe",
+        ["Projectile_PIP_Fishing_DeployFishnets"] = "PIP_Fishing_Skillbook_DeployFishnets",
+        ["Target_PIP_Fishing_Sashimi"] = "PIP_Fishing_Skillbook_Sashimi",
+        ["Shout_PIP_Fishing_ReturnToCrab"] = "PIP_Fishing_Skillbook_ReturnToCrab",
+        ["Shout_PIP_Fishing_WithTheCurrents"] = "PIP_Fishing_Skillbook_WithTheCurrents",
+        ["Target_PIP_Fishing_ReelIn"] = "PIP_Fishing_Skillbook_ReelIn",
+        ["Projectile_PIP_Fishing_CannonBall"] = "PIP_Fishing_Skillbook_CannonBall",
+        ["Summon_PIP_Fishing_Swashbuckler"] = "PIP_Fishing_Skillbook_Swashbuckler",
+        ["Shout_PIP_Fishing_TurnOnTheTides"] = "PIP_Fishing_Skillbook_TurnOnTheTides",
+    },
+
     -- Skills that involve the Seasick status.
     ---@type set<skill>
     SKILLS_WITH_SEASICK = {

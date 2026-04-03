@@ -3,6 +3,8 @@
 local Skills = GetFeature("Fishing.Skills")
 local TSK = Skills.TranslatedStrings
 
+Skills.DERPY_SKILLBOOK_VALUE = 4 -- Skillbook stat gold value in Derpy's Tweaks.
+
 -- Register TSKs
 TSK.Label_SourceInfusions = Skills:RegisterTranslatedString({
     Handle = "h2e21d306gd493g49ddg99ecg23d0973d421b",
@@ -336,5 +338,13 @@ Ext.Events.StatsLoaded:Subscribe(function (_)
         -- Replace Seasick description.
         local seasickStatus = Stats.Get("StatsLib_StatsEntry_StatusData", "PIP_FISHING_SEASICK")
         seasickStatus.Description = TSK.Status_Seasick_Description_EE.StringKey
+
+        -- Reduce skillbooks costs if Derpy's is enabled.
+        if Mod.IsLoaded(Mod.GUIDS.EE_DERPY) then
+            for _,skillbookStatID in pairs(Skills.SKILLBOOKS) do
+                local stat = Stats.Get("StatsLib_StatsEntry_Object", skillbookStatID)
+                stat.Value = Skills.DERPY_SKILLBOOK_VALUE
+            end
+        end
     end
 end, {StringID = "Fishing.Skills.EE_Overrides"})
