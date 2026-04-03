@@ -11,6 +11,7 @@ Skills.REEL_IN_TUNING = {
     DAMAGE_DISTANCE_REDUCTION_PER_FISHERMANCY = 0.2, -- Damage distance reduction per Fishermancy point, in meters.
     VALID_POSITION_RADIUS = 4, -- Radius around the caster within which the target can be reeled to.
     PULL_SPREAD_RADIUS = 1.5, -- Random offset radius to pull position, in meters.
+    PULL_POSITION_ATTEMPTS = 4, -- Number of pull positions to try in a circle around the caster.
 }
 local TUNING = Skills.REEL_IN_TUNING
 
@@ -23,13 +24,21 @@ local TUNING = Skills.REEL_IN_TUNING
 ---@param char EsvCharacter
 ---@param target EsvCharacter
 function Skills.ReelIn(char, target)
-    -- Find position to pull to
-    -- Adds a random offset so that multiple simultaneous targets don't stack on the same spot
+    -- Find a random position around char to pull to,
+    -- to avoid multiple simultaneous targets stacking on the same spot.
     local sourceX, sourceY, sourceZ = Osi.GetPosition(char.MyGuid)
+    local posSearchAttempts = TUNING.PULL_POSITION_ATTEMPTS
     local spread = TUNING.PULL_SPREAD_RADIUS
-    sourceX = sourceX + (math.random() * 2 - 1) * spread
-    sourceZ = sourceZ + (math.random() * 2 - 1) * spread
-    local x, y, z = Osi.FindValidPosition(sourceX, sourceY, sourceZ, TUNING.VALID_POSITION_RADIUS, target.MyGuid)
+    local startAngle = math.random() * 2 * math.pi
+    local angleStep = 2 * math.pi / posSearchAttempts
+    local x, y, z = nil, nil, nil
+    for i=1,posSearchAttempts,1 do
+        local angle = startAngle + i * angleStep
+        local pullX = sourceX + math.cos(angle) * spread
+        local pullZ = sourceZ + math.sin(angle) * spread
+        x, y, z = Osi.FindValidPosition(pullX, sourceY, pullZ, TUNING.VALID_POSITION_RADIUS, target.MyGuid)
+        if x then break end
+    end
     if not x then return end -- Do nothing if target couldn't be moved to a valid AI grid pos.
 
     -- Pull target to caster
