@@ -1206,3 +1206,13 @@ Ext.RegisterConsoleCommand("fishavailability", function (_)
     Ext.Dump(availability)
     IO.SaveFile("Fishing/FishAvailability.txt", availability)
 end)
+
+-- Console command to print all region IDs, per level.
+Ext.RegisterConsoleCommand("fishlistregions", function (_)
+    for level,regions in pairs(Fishing._RegionsByLevel) do
+        print("Level", level)
+        for _,region in pairs(regions) do
+            print("- Region", region.ID)
+        end
+    end
+end)

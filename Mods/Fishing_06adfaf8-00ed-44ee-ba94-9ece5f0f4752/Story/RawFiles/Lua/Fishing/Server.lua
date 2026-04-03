@@ -284,6 +284,27 @@ Ext.RegisterConsoleCommand("fishaddall", function (_, amount)
     end
     Osi.CharacterFlushQueue(charGUID) -- Skip all catch animations, as they would've been queued otherwise.
 end)
+
+-- Cheat to add a specific fish.
+Ext.RegisterConsoleCommand("fishadd", function (_, id)
+    local charGUID = Osi.CharacterGetHostCharacter()
+    local fish = Fishing.GetFish(id)
+    if fish then
+        Fishing.CatchFish(Character.Get(charGUID), fish)
+    end
+end)
+
+-- Cheat to add all fishes of a rarity.
+Ext.RegisterConsoleCommand("fishaddrarity", function (_, rarity)
+    local charGUID = Osi.CharacterGetHostCharacter()
+    for _,fish in pairs(Fishing.GetFishes()) do
+        if fish.Rarity == rarity then
+            Fishing.CatchFish(Character.Get(charGUID), fish)
+        end
+    end
+end)
+
+-- Cheat to add all fish runes of all tiers.
 Ext.RegisterConsoleCommand("fishaddallrunes", function (_)
     local charGUID = Osi.CharacterGetHostCharacter()
     for _,fish in pairs(Fishing.GetFishes()) do
