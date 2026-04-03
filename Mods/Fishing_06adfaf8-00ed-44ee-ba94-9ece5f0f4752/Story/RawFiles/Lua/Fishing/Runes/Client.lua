@@ -6,7 +6,7 @@ local Runes = GetFeature("Fishing.Runes")
 local TSK = Runes.TranslatedStrings
 
 -- Maps fish ID to map of rune tiers to additional text to show within the rune power tooltip.
----@type table<string, table<integer, {TSK: TextLib_TranslatedString, FormatArgs: any[]}>>
+---@type table<string, table<integer, {TSK: TextLib_TranslatedString, FormatArgs: any[]?}>>
 Runes.RUNE_EXTRA_LABELS = {
     ["Epipe"] = {
         [1] = {
@@ -48,6 +48,17 @@ Runes.RUNE_EXTRA_LABELS = {
         [3] = {
             TSK = TSK.Effect_FidgetSpinner,
             FormatArgs = {25},
+        },
+    },
+    ["SourceStarFish"] = {
+        [1] = {
+            TSK = TSK.Effect_SourceStarFish,
+        },
+        [2] = {
+            TSK = TSK.Effect_SourceStarFish,
+        },
+        [3] = {
+            TSK = TSK.Effect_SourceStarFish,
         },
     },
 }

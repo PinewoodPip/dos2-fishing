@@ -64,6 +64,11 @@ local Runes = {
             Text = "-%s%% Attention span",
             ContextDescription = [[Easter egg tooltip for Fidget Spinner fish rune; param is amount as percentage]],
         },
+        Effect_SourceStarFish = {
+            Handle = "h96d9f729geed5g4030g9f31gb6ae6648d63c",
+            Text = "Set Potion.",
+            ContextDescription = [[Easter egg tooltip for Source Starfish fish rune]],
+        },
     }
 }
 RegisterFeature("Fishing.Runes", Runes)
