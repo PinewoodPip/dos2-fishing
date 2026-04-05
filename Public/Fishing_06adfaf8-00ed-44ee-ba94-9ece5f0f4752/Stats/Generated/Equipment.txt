@@ -41,3 +41,17 @@ add equipmentgroup
 add equipment entry "ARM_Wayfarer_Boots"
 add equipmentgroup
 add equipment entry "TOOL_FishingRod_A"
+
+new equipment "PIP_Fishing_Trader"
+add equipmentgroup
+add equipment entry "ARM_Wizard_Helmet"
+add equipmentgroup
+add equipment entry "ARM_Wizard_UpperBody"
+add equipmentgroup
+add equipment entry "ARM_Wizard_LowerBody"
+add equipmentgroup
+add equipment entry "ARM_Wizard_Gloves"
+add equipmentgroup
+add equipment entry "ARM_Wizard_Boots"
+add equipmentgroup
+add equipment entry "PIP_Fishing_Rod_Master"

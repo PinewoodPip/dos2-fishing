@@ -21,6 +21,11 @@ type "Weapon"
 using "TOOL_FishingRod_A"
 data "ItemGroup" "PIP_Fishing_FishingRods"
 
+new entry "PIP_Fishing_Rod_Master"
+type "Weapon"
+using "PIP_Fishing_FishingRod"
+data "ItemGroup" "PIP_Fishing_Rod_Master"
+
 new entry "Damage_PIP_Fishing_ReelIn_ScriptedDamage"
 type "Weapon"
 data "ModifierType" "Skill"
