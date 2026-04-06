@@ -10,7 +10,7 @@ local Fishing = GetFeature("Fishing")
 local TSK = Fishing.TranslatedStrings
 local UI = Generic.Create("Fishing") ---@class Fishing.UI : GenericUI_Instance
 Fishing.UI = UI
-UI:Hide()
+UI:TryHide()
 
 ---@type GenericUI_ElementTween
 UI.OPEN_TWEEN = {
