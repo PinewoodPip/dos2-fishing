@@ -36,7 +36,7 @@ TSK.Label_TieredStatusHint = Skills:RegisterTranslatedString({
 Skills.SKILL_DESCRIPTION_OVERRIDES = {
     ["Projectile_PIP_Fishing_DeployFishnets"] = Skills:RegisterTranslatedString({
         Handle = "hda273868g9d52g458fgb43cg276e5c395c9a",
-        Text = "Reach for your trawling equipment and deploy [1] fishnets at target positions.<br><br>Each fishnet takes 1 turn to arm; once armed, enemies approaching within [2] of the trap will trigger the fishnet, dealing [3] damage to enemies within [4], applying up to Slowed II for 2 turns and creating a web surface.",
+        Text = "Reach for your trawling equipment and deploy [1] fishnets at target positions.<br><br>Each fishnet takes 1 turn to arm; once armed, enemies approaching within [2] of the trap will trigger the fishnet, dealing [3] damage to enemies within [4], applying Seasick and up to Slowed II for 2 turns and creating a web surface.",
         ContextDescription = [[Skill tooltip for "Deploy Fishnets" in EE]],
         StringKey = "Projectile_PIP_Fishing_DeployFishnets_Description_EE",
     }),

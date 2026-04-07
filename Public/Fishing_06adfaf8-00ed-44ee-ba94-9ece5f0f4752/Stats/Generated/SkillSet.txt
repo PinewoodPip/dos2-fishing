@@ -5,7 +5,7 @@ add skill "Cone_PIP_Fishing_BreathOfFreshSeaAir"
 add skill "Shout_PIP_Fishing_CrabDance"
 
 new skillset "Summon_PIP_Fishing_Swashbuckler"
-add skill "Projectile_EnemyIceShard"
+add skill "Projectile_PIP_Fishing_Iceberg"
 add skill "Target_EnemyTerrifyingCruelty"
 add skill "MultiStrike_EnemyBlinkStrike"
 add skill "Target_EnemyCorrosiveTouch"

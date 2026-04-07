@@ -40,6 +40,7 @@ local Skills = {
         ["Projectile_PIP_Fishing_BlueFireball"] = true,
         ["Shout_PIP_Fishing_WithTheCurrents"] = true,
         ["Cone_PIP_Fishing_BreathOfFreshSeaAir"] = true,
+        ["Shout_PIP_Fishing_Hornpipe"] = true,
     },
     SEASICK_PROJECTILE = "Projectile_PIP_Fishing_Seasick_ScriptedDamage",
 
@@ -152,7 +153,7 @@ local Skills = {
         },
         Skill_DeployFishnets_Description = {
             Handle = "h4b9d4d07g868eg49e0g8532g301e913d7012",
-            Text = "Reach for your trawling equipment and deploy [1] fishnets at target positions.<br><br>Each fishnet takes 1 turn to arm; once armed, enemies approaching within [2] of the trap will trigger the fishnet, dealing [3] damage to enemies within [4], applying Slowed for 2 turns and creating a web surface.",
+            Text = "Reach for your trawling equipment and deploy [1] fishnets at target positions.<br><br>Each fishnet takes 1 turn to arm; once armed, enemies approaching within [2] of the trap will trigger the fishnet, dealing [3] damage to enemies within [4], applying Seasick and Slowed for 2 turns and creating a web surface.",
             ContextDescription = [[Skill tooltip for "Deploy Fishnets"]],
             StringKey = "Projectile_PIP_Fishing_DeployFishnets_Description",
         },
