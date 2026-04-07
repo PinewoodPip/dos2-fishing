@@ -8,10 +8,20 @@ local Rods = {
         HighlightColor = Color.CreateFromHex(Color.LARIAN.GREEN),
     },
 
+    ROD_REEL_IN_COOLDOWN_REDUCTION = 1, -- Cooldown reduction for Reel In with a rod equipped, in turns.
+
     ---@type table<string, Fishing.Rod>
     _Rods = {},
     _VisualTemplateToRodID = {}, ---@type table<GUID, Fishing.RodID>
     _RootTemplateToRodID = {}, ---@type table<GUID, Fishing.RodID>
+
+    TranslatedStrings = {
+        Perk_ReelInCooldownReduction = {
+            Handle = "h33f04487g232dg4fe5g8090ga699a730bc16",
+            Text = "-%d turn cooldown to Reel In",
+            ContextDescription = [[Tooltip for fishing rod bonus; param is cooldown reduction]],
+        },
+    },
 }
 RegisterFeature("Fishing.Rods", Rods)
 Fishing.Rods = Rods
@@ -38,7 +48,7 @@ Fishing.Rods = Rods
 ---@param char Character
 ---@return Fishing.Rod? -- `nil` if char has no fishing rod equipped.
 function Rods.GetEquippedRod(char)
-    local rodItem = char:GetItemObjectBySlot("Weapon") or char:GetItemObjectBySlot("Shield")
+    local rodItem = Item.GetEquippedItem(char, "Weapon") or Item.GetEquippedItem(char, "Shield")
     if not rodItem then return nil end
     local visualTemplate = rodItem.CurrentTemplate.VisualTemplate
     return Rods.GetByVisualTemplate(visualTemplate)

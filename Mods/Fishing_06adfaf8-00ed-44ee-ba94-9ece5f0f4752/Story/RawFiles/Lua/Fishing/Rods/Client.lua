@@ -5,6 +5,7 @@ local Tooltip = Client.Tooltip
 
 ---@class Fishing.Rods
 local Rods = GetFeature("Fishing.Rods")
+local TSK = Rods.TranslatedStrings
 
 ---------------------------------------------
 -- EVENT LISTENERS
@@ -57,6 +58,25 @@ Tooltip.Hooks.RenderItemTooltip:Subscribe(function (ev)
                     Label = description,
                 })
             end
+        end
+
+        -- Add labels for bonuses
+        local reelInBonus = {
+            Type = "ExtraProperties",
+            Label = TSK.Perk_ReelInCooldownReduction:Format(Rods.ROD_REEL_IN_COOLDOWN_REDUCTION),
+        }
+        tooltip:InsertElement(reelInBonus)
+    end
+end)
+
+-- Adjust Reel In cooldown to account for rod cooldown reduction bonuses.
+Tooltip.Hooks.RenderSkillTooltip:Subscribe(function (ev)
+    if ev.SkillID == "Target_PIP_Fishing_ReelIn" then
+        local tooltip = ev.Tooltip
+        local char = ev.Character
+        if Rods.GetEquippedRod(char) then
+            local cooldownElement = tooltip:GetFirstElement("SkillCooldown")
+            cooldownElement.Value = cooldownElement.Value - Rods.ROD_REEL_IN_COOLDOWN_REDUCTION
         end
     end
 end)
