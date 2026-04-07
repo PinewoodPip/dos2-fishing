@@ -93,7 +93,7 @@ local Skills = {
         },
         Skill_Hornpipe_Description = {
             Handle = "h3a713104g80b4g426ag8ed7ga2747320e096",
-            Text = "Get the voyage started on the right foot by blowing the hornpipe, applying Horned Pipe Hype to allies within [1].<br><br>Horned Pipe Hype grants [2]% water resistance and increases the duration of Seasick aplied by 1 turn.",
+            Text = "Get the voyage started on the right foot by blowing the hornpipe, applying Horned Pipe Hype to allies within [1].<br><br>Horned Pipe Hype causes Hydrosophist skills to apply Seasick for 2 turns on hit, grants [2]% water resistance and increases the duration of Seasick aplied by 1 turn.",
             ContextDescription = [[Skill tooltip for "Blow the Hornpipe"]],
             StringKey = "Shout_PIP_Fishing_Hornpipe_Description",
         },
@@ -351,7 +351,7 @@ local Skills = {
         },
         Status_Hornpipe_Description = {
             Handle = "h088afc65gf93dg4220gabefg08d09791dbe2",
-            Text = "Increases duration of applied Seasick statuses by 1 turn.",
+            Text = "Hydrosophist skills apply Seasick for 2 turns to targets hit.<br>Increases duration of applied Seasick statuses by 1 turn.",
             ContextDescription = [[Status tooltip for "Horned Pipe Hype"]],
             StringKey = "PIP_Fishing_Hornpipe_Description",
         },
