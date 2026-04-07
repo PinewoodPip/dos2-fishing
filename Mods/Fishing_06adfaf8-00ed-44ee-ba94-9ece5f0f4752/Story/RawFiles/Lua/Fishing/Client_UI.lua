@@ -58,6 +58,8 @@ UI.SIZE = V(50, 500)
 UI.FISH_SIZE = V(48, 48) -- Game object size.
 UI.FISH_ICON_SIZE = V(48, 48)
 UI.TREASURE_CHEST_SIZE = V(48, 48)
+UI.CAPTURABLE_PROGRESS_INDICATOR_SIZE = UI.FISH_SIZE + V(12, 12)
+UI.CAPTURABLE_PROGRESS_INDICATOR_WIDTH = 3
 UI.BOBBER_AREA_SIZE = V(40, 500)
 UI.BOBBER_WIDTH = 32
 UI.PROGRESS_BAR_COLOR_LOW = Color.CreateFromHex("1A3D5C")
@@ -387,6 +389,38 @@ function UI.RemoveGameObject(gameObject)
     end
 end
 
+---Updates the capture progress indicator widget for a capturable.
+---@param gameObject Fishing.Minigame.GameObjects.Capturable
+function UI.UpdateCaptureIndicator(gameObject)
+    -- Update capture progress indicator
+    local TOP_WEDGE_LENGTH = 1/8 -- 1/8 since the indicator starts at the middle of the top wedge
+    local SIDE_WEDGE_LENGTH = 1/4
+    local SIZE = UI.CAPTURABLE_PROGRESS_INDICATOR_SIZE
+    local graphics = gameObject:GetElement():GetMovieClip().graphics
+    local color = Color.CreateFromHex(Color.LARIAN.GREEN)
+    local progressLeft = gameObject.Progress
+
+    -- Draw wedges
+    -- Note: the ifs should *not* be removed as the progressLeft is decremented with each call - they are used to shortcircuit the drawing
+    graphics.clear()
+    local DrawWedge = UI._DrawCaptureIndicatorWedge
+    if progressLeft >= 0 then
+        progressLeft = DrawWedge(graphics, progressLeft, TOP_WEDGE_LENGTH, SIZE[1]/2, color, "TopRight")
+    end
+    if progressLeft >= 0 then
+        progressLeft = DrawWedge(graphics, progressLeft, SIDE_WEDGE_LENGTH, SIZE[2], color, "Right")
+    end
+    if progressLeft >= 0 then
+        progressLeft = DrawWedge(graphics, progressLeft, SIDE_WEDGE_LENGTH, SIZE[1], color, "Bottom")
+    end
+    if progressLeft >= 0 then
+        progressLeft = DrawWedge(graphics, progressLeft, SIDE_WEDGE_LENGTH, SIZE[2], color, "Left")
+    end
+    if progressLeft >= 0 then
+        progressLeft = DrawWedge(graphics, progressLeft, TOP_WEDGE_LENGTH, SIZE[1]/2, color, "TopLeft")
+    end
+end
+
 ---@param deltaTime number In milliseconds.
 function UI.UpdateGameObjects(deltaTime)
     -- Invoke Update
@@ -407,6 +441,14 @@ function UI.UpdateGameObjects(deltaTime)
     -- Invoke LateUpdate
     for _,gameObject in ipairs(UI._GameObjects) do
         gameObject:LateUpdate(deltaTime)
+    end
+
+    -- Update capture progress indicators for non-fish objects
+    for _,gameObject in ipairs(UI._GameObjects) do
+        if gameObject:ImplementsClass("Fishing.Minigame.GameObjects.Capturable") and not gameObject:ImplementsClass("Fishing.GameObject.Fish") then
+            ---@cast gameObject Fishing.Minigame.GameObjects.Capturable
+            UI.UpdateCaptureIndicator(gameObject)
+        end
     end
 
     -- Capture chests
@@ -451,6 +493,43 @@ function UI._ClearTreasureChest()
         UI.RemoveGameObject(UI._TreasureChestGameObject)
         UI._TreasureChestGameObject = nil
     end
+end
+
+---Draws a wedge of the capturable progress indicator.
+---Largely taken from the Status prefab in Epip.
+---@param graphics FlashGraphics
+---@param relativeDurationLeft number
+---@param relativeWedgeLength number
+---@param wedgeMaxLength number
+---@param color RGBColor
+---@param position "TopRight"|"Right"|"Bottom"|"Left"|"TopLeft"
+---@return number -- Progress left after drawing this wedge.
+function UI._DrawCaptureIndicatorWedge(graphics, relativeDurationLeft, relativeWedgeLength, wedgeMaxLength, color, position)
+    local SIZE = UI.CAPTURABLE_PROGRESS_INDICATOR_SIZE
+    local WIDTH = UI.CAPTURABLE_PROGRESS_INDICATOR_WIDTH
+    local wedgeLength = math.clamp(relativeDurationLeft / relativeWedgeLength, 0, 1) * wedgeMaxLength
+    wedgeLength = Ext.Round(wedgeLength)
+    local startX = -SIZE[1]/2 - 6
+    local startY = SIZE[2]/2 - 12
+
+    -- Draw the wedge
+    graphics.beginFill(color:ToDecimal(), 1)
+    if position == "TopRight" then
+        graphics.drawRect(SIZE[1]/2 + startX, startY, wedgeLength, WIDTH)
+    elseif position == "Right" then
+        graphics.drawRect(SIZE[1] - WIDTH + startX, startY, WIDTH, wedgeLength - 3)
+    elseif position == "Bottom" then
+        graphics.drawRect(SIZE[1] - wedgeLength + startX, SIZE[2] - WIDTH + startY, wedgeLength, WIDTH)
+    elseif position == "Left" then
+        graphics.drawRect(startX, SIZE[2] - wedgeLength + startY, WIDTH, wedgeLength)
+    elseif position == "TopLeft" then
+        graphics.drawRect(startX, startY, wedgeLength, WIDTH)
+    else
+        UI:__Error("_DrawCaptureIndicatorWedge", "Unknown position " .. position)
+    end
+    graphics.endFill()
+
+    return relativeDurationLeft - relativeWedgeLength
 end
 
 ---Returns the minigame UI instance.
