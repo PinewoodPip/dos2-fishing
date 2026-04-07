@@ -111,12 +111,21 @@ Tooltip.Hooks.RenderItemTooltip:Subscribe(function (ev)
             end
         end
 
-        -- Add label for max-tier runes
-        if runeTier == #fish.RootTemplates then
+        -- Add hint for upgrading runes
+        if runeTier < #fish.RootTemplates then
             local descElement = ev.Tooltip:GetFirstElement("ItemDescription")
-            descElement.Label = descElement.Label .. "<br><br>" .. TSK.Label_Descended:Format({
+            descElement.Label = descElement.Label .. "<br><br>" .. TSK.Label_UpgradeHint:Format({
+                FormatArgs = {Runes.COMBINE_REQUIREMENT},
                 Color = Fishing.ABILITY_SCHOOL_COLOR,
             })
+        else
+            -- Add label for max-tier runes
+            if runeTier == #fish.RootTemplates then
+                local descElement = ev.Tooltip:GetFirstElement("ItemDescription")
+                descElement.Label = descElement.Label .. "<br><br>" .. TSK.Label_Descended:Format({
+                    Color = Fishing.ABILITY_SCHOOL_COLOR,
+                })
+            end
         end
     end
 end)

@@ -22,6 +22,9 @@ local Runes = {
         ["Legendary"] = 3,
     },
 
+    -- Amount of fish of the same type needed to combine to the next tier.
+    COMBINE_REQUIREMENT = 4,
+
     TranslatedStrings = {
         Label_FishRune = {
             Handle = "h51d68a3cg1f4cg4ed2gb01ag1ce7c50a811b",
@@ -47,6 +50,11 @@ local Runes = {
             Handle = "h95783f9cgad6bg4e87g87f6g8aaab72b4f1e",
             Text = "This fish cannot descend any further.",
             ContextDescription = [[Label for max-tier fish runes]],
+        },
+        Label_UpgradeHint = {
+            Handle = "h9acc2534g019cg410fgb352g45b431999068",
+            Text = "Combine %d of this fish to condense their essence.",
+            ContextDescription = [[Hint on upgrading fish runes]],
         },
 
         Effect_Epipe = {
