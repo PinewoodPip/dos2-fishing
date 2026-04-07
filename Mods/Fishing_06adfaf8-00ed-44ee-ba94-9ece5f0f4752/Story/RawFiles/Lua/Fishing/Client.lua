@@ -139,6 +139,18 @@ function Fishing.Start(char)
                 local effectPos = V(char.WorldPos) + V(0, char.Height, 0)
                 Fishing._PlayEffect(effectPos, Fishing.BITE_ALERT_EFFECT)
 
+                -- Show cursor hint during the bite window
+                GameState.Events.Tick:Subscribe(function (_)
+                    char = Character.Get(charHandle)
+                    local currentState = Fishing.GetState(char)
+                    if currentState and currentState.Type == "WaitingForBite" then
+                        Tooltip.ShowMouseTextTooltip(TSK.Tooltip_ReelInHint:GetString(), Vector.Create(30, 20))
+                    else
+                        Tooltip.HideMouseTextTooltip()
+                        GameState.Events.Tick:Unsubscribe("Fishing.BiteControlsHint")
+                    end
+                end, {StringID = "Fishing.BiteControlsHint"})
+
                 splashTimer:Cancel()
             end)
 

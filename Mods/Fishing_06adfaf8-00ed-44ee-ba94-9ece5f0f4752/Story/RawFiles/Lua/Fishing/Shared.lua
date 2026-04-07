@@ -225,6 +225,11 @@ local Fishing = {
             Text = "Something's on the hook!",
             ContextDescription = [[Notification when a fish bites, during the 1st phase of the minigame]],
         },
+        Tooltip_ReelInHint = {
+            Handle = "h35351f09g82f7g43aeg8a0eg68fd50dc0f88",
+            Text = "Left-click to reel in!",
+            ContextDescription = [[Hint over the cursor during the fishing minigame, when fish bites]],
+        },
         Notification_TreasureChestSpawned = {
             Handle = "h2b584efbg7353g49c9g9f0bg25c1c3bdd843",
             Text = "Treasure has appeared!",
