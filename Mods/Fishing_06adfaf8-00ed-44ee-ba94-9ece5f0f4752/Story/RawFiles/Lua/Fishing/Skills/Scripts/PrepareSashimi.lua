@@ -4,6 +4,11 @@ local Fishing = GetFeature("Fishing")
 ---@class Fishing.Skills
 local Skills = GetFeature("Fishing.Skills")
 
+Skills.PREPARE_SASHIMI_TUNING = {
+    TRY_SASHIMI_STATUS_ID = "PIP_FISHING_TRY_SASHIMI",
+}
+local TUNING = Skills.PREPARE_SASHIMI_TUNING
+
 ---@type GUID.ItemTemplate[]
 Skills.SASHIMI_TEMPLATES = {
     "bcc3f515-9f52-4873-9d32-8f99524a3dd7", -- Jackpot fish; TODO replace
@@ -15,8 +20,8 @@ Skills.SASHIMI_TEMPLATES = {
 
 -- Cast effect: attempt to execute non-boss targets that have Seasick.
 Osiris.RegisterSymbolListener("CharacterStatusApplied", 3, "after", function (targetGUID, statusID, causeeGUID)
-    if statusID ~= "PIP_FISHING_TRY_SASHIMI" then return end
-    if Osi.HasActiveStatus(targetGUID, "PIP_FISHING_SEASICK") == 0 or Osi.IsBoss(targetGUID) == 1 then return end
+    if statusID ~= TUNING.TRY_SASHIMI_STATUS_ID then return end
+    if Osi.HasActiveStatus(targetGUID, Skills.SEASICK_ID) == 0 or Osi.IsBoss(targetGUID) == 1 then return end
 
     -- Execute target
     local ownerFishermancy = Fishing.GetAbilityScore(Character.Get(causeeGUID))

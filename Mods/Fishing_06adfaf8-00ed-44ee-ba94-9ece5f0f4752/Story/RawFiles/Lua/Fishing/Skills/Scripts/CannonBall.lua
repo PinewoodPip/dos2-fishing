@@ -7,6 +7,7 @@ local Skills = GetFeature("Fishing.Skills")
 
 Skills.CANNON_BALL_TUNING = {
     IMPACT_SKILL = "Projectile_PIP_Fishing_CannonBall_ScriptedDamage",
+    KNOCKBACK_STATUS_ID = "PIP_FISHING_CANNON_BALL_KNOCKBACK",
     BASE_KNOCKBACK_DISTANCE = 4, -- In meters.
     KNOCKBACK_DISTANCE_PER_FISHERMANCY = 1, -- In meters.
     VALID_POSITION_RADIUS = 4, -- Radius around the caster within which the target can be reeled to.
@@ -23,7 +24,7 @@ local TUNING = Skills.CANNON_BALL_TUNING
 -- Distance scales with Fishermancy and extra physical damage is dealt
 -- when pushing targets into a wall/obstacle.
 Osiris.RegisterSymbolListener("CharacterStatusApplied", 3, "after", function (targetGUID, statusID, causeeGUID)
-    if statusID ~= "PIP_FISHING_CANNON_BALL_KNOCKBACK" then return end
+    if statusID ~= TUNING.KNOCKBACK_STATUS_ID then return end
     local source = Character.Get(causeeGUID)
     local target = Character.Get(targetGUID)
     local sourcePos = V(source.WorldPos)

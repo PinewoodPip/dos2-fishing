@@ -3,6 +3,7 @@
 local Skills = GetFeature("Fishing.Skills")
 
 Skills.HORNPIPE_TUNING = {
+    HORNPIPE_STATUS_ID = "PIP_Fishing_Hornpipe",
     SEASICK_EXTRA_DURATION = 6.0, -- In seconds.
     HYDROSOPHIST_SEASICK_DURATION = 12.0, -- In seconds.
 }
@@ -25,7 +26,7 @@ Ext.Events.StatusHitEnter:Subscribe(function (ev)
     skill = skill:gsub("_%-1$", "") -- Remove level suffix.
     local skillStat = Stats.Get("StatsLib_StatsEntry_SkillData", skill)
     if skillStat.Ability == "Water" then
-        Osi.ApplyStatus(defender.MyGuid, "PIP_FISHING_SEASICK", TUNING.HYDROSOPHIST_SEASICK_DURATION, 0, attacker.MyGuid)
+        Osi.ApplyStatus(defender.MyGuid, Skills.SEASICK_ID, TUNING.HYDROSOPHIST_SEASICK_DURATION, 0, attacker.MyGuid)
     end
 end)
 
@@ -46,11 +47,11 @@ end)
 -- Increase duration of Seasick applied by characters with Hornpipe.
 Ext.Events.BeforeStatusApply:Subscribe(function (ev)
     local status = ev.Status
-    if status.StatusId == "PIP_FISHING_SEASICK" then
+    if status.StatusId == Skills.SEASICK_ID then
         local sourceHandle = status.StatusSourceHandle
         if Ext.Utils.GetHandleType(sourceHandle) ~= "ServerCharacter" then return end
         local source = Character.Get(sourceHandle)
-        if not source:GetStatus("PIP_Fishing_Hornpipe") then return end
+        if not source:GetStatus(TUNING.HORNPIPE_STATUS_ID) then return end
         status.LifeTime = status.LifeTime + TUNING.SEASICK_EXTRA_DURATION
         status.CurrentLifeTime = status.CurrentLifeTime + TUNING.SEASICK_EXTRA_DURATION
         status.RequestClientSync = true

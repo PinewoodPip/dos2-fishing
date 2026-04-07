@@ -13,7 +13,7 @@ Ext.Events.StatusHitEnter:Subscribe(function (ev)
     if Ext.Utils.GetHandleType(defenderHandle) ~= "ServerCharacter" or Ext.Utils.GetHandleType(attackerHandle) ~= "ServerCharacter" then return end
     local defender = Character.Get(defenderHandle)
     local attacker = Character.Get(attackerHandle)
-    local seasickStatus = defender:GetStatus("PIP_FISHING_SEASICK")
+    local seasickStatus = defender:GetStatus(Skills.SEASICK_ID)
     if not seasickStatus then return end
     if defender and ev.Hit.Hit.Hit then -- Love it when this naming shenanigan happens. Peak OOP moment
         local hasWaterDamage = ev.Hit.Hit.DamageList:GetByType("Water") > 0
@@ -32,13 +32,13 @@ Ext.Events.StatusHitEnter:Subscribe(function (ev)
             Ext.OnNextTick(function ()
                 defender = Character.Get(defenderHandle)
                 if not defender then return end
-                seasickStatus = defender:GetStatus("PIP_FISHING_SEASICK")
+                seasickStatus = defender:GetStatus(Skills.SEASICK_ID)
                 if not seasickStatus then return end
                 seasickStatus.CurrentLifeTime = math.max(0, seasickStatus.CurrentLifeTime - 6.0)
                 seasickStatus.RequestClientSync = true
                 seasickStatus.RequestClientSync2 = true
                 if seasickStatus.CurrentLifeTime <= 0 then
-                    Osi.RemoveStatus(defender.MyGuid, "PIP_FISHING_SEASICK")
+                    Osi.RemoveStatus(defender.MyGuid, Skills.SEASICK_ID)
                 end
             end)
         end
@@ -48,7 +48,7 @@ end)
 -- Prevent refreshing the duration of Seasick.
 Ext.Events.BeforeStatusApply:Subscribe(function (ev)
     local owner = ev.Owner ---@cast owner EsvCharacter|EsvItem
-    if ev.Status.StatusId == "PIP_FISHING_SEASICK" and Entity.IsCharacter(owner) and owner:GetStatus("PIP_FISHING_SEASICK") then
+    if ev.Status.StatusId == Skills.SEASICK_ID and Entity.IsCharacter(owner) and owner:GetStatus(Skills.SEASICK_ID) then
         ev.PreventStatusApply = true
     end
 end)

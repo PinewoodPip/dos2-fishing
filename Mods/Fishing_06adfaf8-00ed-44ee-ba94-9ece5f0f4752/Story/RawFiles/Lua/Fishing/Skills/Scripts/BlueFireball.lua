@@ -5,6 +5,11 @@ local isEE = EpicEncounters.IsEnabled()
 ---@class Fishing.Skills
 local Skills = GetFeature("Fishing.Skills")
 
+Skills.BLUE_FIREBALL_TUNING = {
+    ALLY_REACTION_PROJECTILE = "Projectile_PIP_Fishing_BlueFireball_AllyReaction",
+}
+local TUNING = Skills.BLUE_FIREBALL_TUNING
+
 ---------------------------------------------
 -- EVENT LISTENERS
 ---------------------------------------------
@@ -24,7 +29,7 @@ Osiris.RegisterSymbolListener("CharacterUsedSkillAtPosition", 7, "after", functi
         if #nearbyEnemies > 0 then
             -- for _=1,casterFishermancy,2 do -- TODO replace with damage bonus?
             local target = nearbyEnemies[math.random(1, #nearbyEnemies)]
-            Skills.CastProjectileAt(ally, "Projectile_PIP_Fishing_BlueFireball_AllyReaction", target)
+            Skills.CastProjectileAt(ally, TUNING.ALLY_REACTION_PROJECTILE, target)
             -- end
         end
     end

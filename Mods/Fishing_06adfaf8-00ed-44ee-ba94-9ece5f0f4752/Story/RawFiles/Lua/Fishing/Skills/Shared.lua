@@ -34,6 +34,8 @@ local Skills = {
         ["Shout_PIP_Fishing_TurnOnTheTides"] = "PIP_Fishing_Skillbook_TurnOnTheTides",
     },
 
+    SEASICK_ID = "PIP_FISHING_SEASICK",
+
     -- Skills that involve the Seasick status.
     ---@type set<skill>
     SKILLS_WITH_SEASICK = {
