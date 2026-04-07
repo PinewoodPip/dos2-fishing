@@ -1,0 +1,38 @@
+Version 1
+SubGoalCombiner SGC_AND
+INITSECTION
+
+// Trader NPC GUIDs.
+DB_PIP_Fishing_Trader("FJ_FortJoy_Main", CHARACTERGUID_a3aa789d-cf01-4c4c-87f3-c9791c1aa3a9);
+DB_PIP_Fishing_Trader("RC_Main", CHARACTERGUID_0f656fce-094b-4e47-9975-b4f2805568b5);
+DB_PIP_Fishing_Trader("CoS_Main", CHARACTERGUID_8c29a527-e647-4c47-9c64-56dde6cc3b52);
+DB_PIP_Fishing_Trader("ARX_Main", CHARACTERGUID_a093021b-46fc-4b6d-87dc-21ea6fa535b7);
+
+KBSECTION
+
+// Play barks when the trader is attacked by players.
+IF CharacterReceivedDamage((CHARACTERGUID)_Char, (INTEGER)_Percentage, (GUIDSTRING)_Source)
+AND
+IsTagged(_Char, "PIP_Fishing_Trader", 1)
+AND
+ObjectIsCharacter(_Source, 1)
+AND
+CharacterIsPlayer((CHARACTERGUID)_Source, 1)
+THEN
+PROC_PIP_Fishing_TraderAttacked(_Char, _Source);
+
+PROC PROC_PIP_Fishing_TraderAttacked((CHARACTERGUID)_Char, (CHARACTERGUID)_Attacker)
+THEN
+DB_NOOP(); // Implemented in Lua.
+
+// Make trader NPC immortal upon session load.
+IF GameStarted((STRING)_LevelName, (INTEGER)_IsEditor)
+AND
+DB_PIP_Fishing_Trader(_LevelName, _Trader)
+THEN
+CharacterSetImmortal((CHARACTERGUID)_Trader, 1);
+
+EXITSECTION
+
+ENDEXITSECTION
+ParentTargetEdge "__Start"

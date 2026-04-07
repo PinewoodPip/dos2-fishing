@@ -50,3 +50,20 @@ Osiris.RegisterSymbolListener("DialogStarted", 2, "after", function (dialogID, i
         Osi.PartySetFlag(charGUID, flag, instance)
     end
 end)
+
+-- Heal the trader and play barks when they are attacked by players.
+local lastBarkTime = 0
+Osiris.RegisterSymbolListener("PROC_PIP_Fishing_TraderAttacked", 2, "after", function (charGUID, _)
+    -- Apply a fancy heal on hit.
+    -- Not strictly necessary since the trader is immortal,
+    -- but it helps to suggest the player to not waste their time trying to kill them.
+    local x, y, z = Osi.GetPosition(charGUID)
+    Osi.CreateExplosionAtPosition(x, y, z, "Projectile_Grenade_BlessedIce", Osi.CharacterGetLevel(charGUID)) -- Note: CreateExplosion() (the GUID variant) is broken, does not work.
+
+    -- Play bark, with a cooldown
+    local now = Ext.Utils.MonotonicTime()
+    if now - lastBarkTime < Trader.BARK_COOLDOWN * 1000 then return end
+    local bark = Trader.ATTACKED_BARKS[math.random(1, #Trader.ATTACKED_BARKS)]
+    Osi.DisplayText(charGUID, bark:GetString())
+    lastBarkTime = now
+end)
