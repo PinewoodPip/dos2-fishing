@@ -2,6 +2,11 @@
 ---@class Fishing.Skills
 local Skills = GetFeature("Fishing.Skills")
 
+Skills.SEASICK_TUNING = {
+    TURNS_CONSUMED_PER_PROC = 2,
+}
+local TUNING = Skills.SEASICK_TUNING
+
 ---------------------------------------------
 -- EVENT LISTENERS
 ---------------------------------------------
@@ -34,7 +39,7 @@ Ext.Events.StatusHitEnter:Subscribe(function (ev)
                 if not defender then return end
                 seasickStatus = defender:GetStatus(Skills.SEASICK_ID)
                 if not seasickStatus then return end
-                seasickStatus.CurrentLifeTime = math.max(0, seasickStatus.CurrentLifeTime - 6.0)
+                seasickStatus.CurrentLifeTime = math.max(0, seasickStatus.CurrentLifeTime - (TUNING.TURNS_CONSUMED_PER_PROC * 6.0))
                 seasickStatus.RequestClientSync = true
                 seasickStatus.RequestClientSync2 = true
                 if seasickStatus.CurrentLifeTime <= 0 then
