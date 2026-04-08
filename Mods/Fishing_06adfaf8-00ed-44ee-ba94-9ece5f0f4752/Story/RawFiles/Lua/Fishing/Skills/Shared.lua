@@ -231,6 +231,18 @@ local Skills = {
             ContextDescription = [[Skill tooltip for "Swashbuckling Spirit" (necromancer summon)]],
             StringKey = "Shout_PIP_Fishing_SwashbucklingAura_Description",
         },
+        Skill_SurpriseIceberg_DisplayName = {
+            Handle = "hefa331cbg2323g4a4bgabc3g9acfd3999447",
+            Text = "Surprise Iceberg",
+            ContextDescription = [[Skill name (necromancer summon)]],
+            StringKey = "Projectile_PIP_Fishing_Iceberg_DisplayName",
+        },
+        Skill_SurpriseIceberg_Description = {
+            Handle = "h88b385e4g3f6dg4131g8a97g23ae10c310a1",
+            Text = "Launch a shard of ice carved to sink targets, dealing [1] and applying Seasick for 2 turns.",
+            ContextDescription = [[Skill tooltip for "Surprise Iceberg" (necromancer summon)]],
+            StringKey = "Projectile_PIP_Fishing_Iceberg_Description",
+        },
         Skill_SummonSwashbuckler_DisplayName = {
             Handle = "ha46a9cbcg01cdg4425g864eg0d85f385523c",
             Text = "Summon Swashbuckler",
