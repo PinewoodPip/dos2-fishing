@@ -1,7 +1,7 @@
 # Fishermancy Class Overhaul Ultimate
 
 !!! info ""
-    <center>🐟 ***The seas are silent. Fish bleed. New shenanigans stir.*** 🎣</center>
+    <center>🐟 ***The seas are silent. Fish breed. New shenanigans stir.*** 🎣</center>
 
 **Fishermancy Class Overhaul Ultimate** is a mod for *Divinity: Original Sin 2* that adds a full-fledged **fishing minigame**, a new **Fishermancy** skill school, and new fishing-related progression systems.
 
