@@ -30,7 +30,7 @@ Aside from waiting for fish to respawn, you can use **bait** (sold by [the trade
 
 ## Collection Log
 
-To help track your fishing journey, a new Fishing "Collection Log" section has been added to Epip's Codex, opened with ++shift+F++.
+To help track your fishing journey, a new Fishing "Collection Log" section has been added to Epip's Codex, opened with ++shift+f++.
 
 <center markdown="1">![Fishing collection log.](../img/collection_log.png)</center>
 <center markdown="1"><i>The Fishing Collection Log</i></center>

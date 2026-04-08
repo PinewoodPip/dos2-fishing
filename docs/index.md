@@ -9,17 +9,17 @@
 
 **Main features:**
 
-- A full-fledged [**Fishing minigame**](Fishing/index.md) with 90+ fish species to catch across 50+ fishing spots in all acts.
-- A new [**Fishermancy**](Fishermancy/index.md) skill school, with 10 hybrid skills and Epic Encounters support.
-- Improve your gear with [**fish essences**](FishEssences/index.md), slotting in your caught fish as runes for fishy bonuses.
-- Track your catches and get appraisals on your collection from the new [**Fishing trader NPC**](Trader/index.md).
+- A full-fledged [**Fishing minigame**](Fishing/index.md) with 90+ fish species to catch across 50+ fishing spots in all acts!
+- A new [**Fishermancy**](Fishermancy/index.md) skill school, with 10 hybrid skills and Epic Encounters support!
+- Improve your gear with [**fish essences**](FishEssences/index.md), slotting in your caught fish as runes for fishy bonuses!
+- Track your catches and get appraisals on your collection from the new [**Fishing trader NPC**](Trader/index.md)!
 
 !!! info ""
     **Downloads available soon ™** as we've decided to give it some more time to make it even more epic. Browse the mod's main features below in the mean time to start prepping!
 
 ## [Fishing](Fishing/index.md)
 
-Fishing is a new core mechanic in *Fishermancy Class Overhaul Ultimate*, featuring a minigame inspired by *Stardew Valley*'s fishing. Grab your previously-useless fishing rod and set out to catch over 90 fishes throughout 50+ fishing spots across Rivellon!
+Fishing is a new core mechanic in *Fishermancy Class Overhaul Ultimate*, featuring a minigame inspired by *Stardew Valley*'s fishing. Grab your previously-useless fishing rod and set out to catch **over 90 fishes throughout 50+ fishing spots** across Rivellon!
 
 <video autoplay muted loop playsinline><source src="img/fishing_hard.webm" type="video/webm"></video>
 
@@ -32,9 +32,9 @@ Fishing is a new core mechanic in *Fishermancy Class Overhaul Ultimate*, featuri
         - Hold ++m1++ to raise the bobber, or let go to have it fall.
     5. Keep the bobber aligned with the fish until the progress bar fills to catch it!
 
-There are over 50 fishing spots throughout Rivellon hosting over 90 fish species, with varying rarities and behaviours - some drift lazily, others will pose a greater challenge to catch them.
+There are over **50 fishing spots** throughout Rivellon hosting over **90 fish species**, with varying rarities and behaviours - some drift lazily, others will pose a great challenge to catch them!
 
-Your character's ability and civil points affect certain aspects of the minigame: fish bite faster for characters with high Persuasion, Lucky Charm lets you fish up treasures, Telekinesis lets you cast further, and more - be sure to build for fishing to match your playstyle! 
+Your character's ability and civil points affect certain aspects of the minigame: fish bite faster for characters with high *Persuasion*, *Lucky Charm* lets you fish up treasures, *Telekinesis* lets you cast further, and more - be sure to build for fishing to match your playstyle! 
 
 Catching fish increases your **Fishermancy** skill ability, which unlocks new skills as described below, and makes catching harder fish easier.
 
@@ -49,7 +49,7 @@ See the [Fishing](Fishing/index.md) section for full details.
 !!! info ""
     Unlike normal skill abilities, you cannot invest points into Fishermancy.
     
-    Instead, your Fishermancy levels up as you catch more fish and discover new species. You'll have to grow as an angler to unleash its full potential!
+    Instead, **your Fishermancy levels up as you catch more fish and discover new species**. You'll have to grow as an angler to unleash its full potential!
 
 Fishermancy skillbooks can be purchased from the [fishing trader](Trader/index.md).
 

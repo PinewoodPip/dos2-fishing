@@ -1,6 +1,6 @@
 # Fishing Trader
 
-A new trader NPC, Pip himself, has been added to handle all your fishing-related needs, by selling fishing supplies, appraising your collection, and teaching newcomers the art of fishing.
+**A new trader NPC**, Pip himself, has been added to handle all your fishing-related needs, by selling fishing supplies, appraising your collection, and teaching newcomers the art of fishing.
 
 In Fort Joy, you can find Pip by the waypoint in the starting beach, and he travels to the other acts as well.
 
@@ -9,9 +9,9 @@ In Fort Joy, you can find Pip by the waypoint in the starting beach, and he trav
 
 <details markdown="1">
 <summary>Pip Locations</summary>
-- Reaper's Coast: west of Driftwood Fields, by the Cloisterwood river.
-- Nameless Isle: northeast coast, near the Murky Cave.
-- Arx: in the Lizard Consulate gardens.
+- **Reaper's Coast**: west of Driftwood Fields, by the Cloisterwood river.
+- **Nameless Isle**: northeast coast, near the Murky Cave.
+- **Arx**: in the Lizard Consulate gardens (hmm. I wonder what he's up to there...).
 </details>
 
 Pip offers multiple services:
