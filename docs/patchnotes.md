@@ -1,14 +1,8 @@
 # Installation & Patchnotes
 
 !!! info ""
-    [Download here](https://drive.google.com/file/d/1D6Pxq-3wtg3Ggxe0hhio5F8_Os6uOyc0/view?usp=drive_link).
+    **Downloads available soon ™** as we've decided to give it some more time to make it even more epic. Browse the mod's main features below in the mean time to start prepping!
     
-    Place the `.pak` within `\Documents\Larian Studios\Divinity Original Sin 2 Definitive Edition\Mods` as with any other mod.
-
-    **[Requires Epip v1075 or newer.](https://www.pinewood.team/epip/)** 
-    
-    Load after Epic Encounters Core & Origins if you have it; load order does not matter otherwise.
-
 !!! example "Beta!!!"
     This is a beta release of the mod; everything on this site is implemented, but might have room for improvement (ex. balance or progression pace issues).
 
@@ -40,4 +34,4 @@
 
 ### v0.9.0.0 - 1/4/2026 - The beginning (of anything but the end)
 
-- Initial release for Epip's 5th anniversary, with the fishing minigame, Fishermancy skill school, fish collection system,fish essences, and trader.
+- Initial release for Epip's 5th anniversary showcase, with the fishing minigame, Fishermancy skill school, fish collection system,fish essences, and trader.

@@ -15,7 +15,7 @@
 - Track your catches and get appraisals on your collection from the new [**Fishing trader NPC**](Trader/index.md).
 
 !!! info ""
-    See the [Installation & Patchnotes](patchnotes.md) page for downloads, and browse the mod's main features below to get started!
+    **Downloads available soon ™** as we've decided to give it some more time to make it even more epic. Browse the mod's main features below in the mean time to start prepping!
 
 ## [Fishing](Fishing/index.md)
 
