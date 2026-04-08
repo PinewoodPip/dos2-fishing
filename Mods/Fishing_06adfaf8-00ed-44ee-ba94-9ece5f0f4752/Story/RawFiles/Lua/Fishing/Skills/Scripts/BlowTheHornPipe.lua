@@ -1,4 +1,6 @@
 
+local isEE = EpicEncounters.IsEnabled()
+
 ---@class Fishing.Skills
 local Skills = GetFeature("Fishing.Skills")
 
@@ -45,16 +47,19 @@ Osiris.RegisterSymbolListener("PROC_PIP_ReduceCooldowns", 3, "before", function 
 end)
 
 -- Increase duration of Seasick applied by characters with Hornpipe.
-Ext.Events.BeforeStatusApply:Subscribe(function (ev)
-    local status = ev.Status
-    if status.StatusId == Skills.SEASICK_ID then
-        local sourceHandle = status.StatusSourceHandle
-        if Ext.Utils.GetHandleType(sourceHandle) ~= "ServerCharacter" then return end
-        local source = Character.Get(sourceHandle)
-        if not source:GetStatus(TUNING.HORNPIPE_STATUS_ID) then return end
-        status.LifeTime = status.LifeTime + TUNING.SEASICK_EXTRA_DURATION
-        status.CurrentLifeTime = status.CurrentLifeTime + TUNING.SEASICK_EXTRA_DURATION
-        status.RequestClientSync = true
-        status.RequestClientSync2 = true
-    end
-end)
+if not isEE then -- This perk is moved to SI1 in EE.
+    Ext.Events.BeforeStatusApply:Subscribe(function (ev)
+        local status = ev.Status
+        if status.StatusId == Skills.SEASICK_ID then
+            local sourceHandle = status.StatusSourceHandle
+            if Ext.Utils.GetHandleType(sourceHandle) ~= "ServerCharacter" then return end
+            local source = Character.Get(sourceHandle)
+            if not source:GetStatus(TUNING.HORNPIPE_STATUS_ID) then return end
+            status.LifeTime = status.LifeTime + TUNING.SEASICK_EXTRA_DURATION
+            status.CurrentLifeTime = status.CurrentLifeTime + TUNING.SEASICK_EXTRA_DURATION
+            status.RequestClientSync = true
+            status.RequestClientSync2 = true
+        end
+    end)
+end
+

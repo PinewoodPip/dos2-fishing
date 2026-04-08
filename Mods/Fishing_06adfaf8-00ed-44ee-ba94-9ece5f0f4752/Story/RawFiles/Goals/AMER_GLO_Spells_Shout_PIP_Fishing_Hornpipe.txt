@@ -6,13 +6,14 @@ KBSECTION
 
 // Source Infusion 1
 
-// Increase duration and grant water resistance.
+// Increase duration, grant +1 turn to Seasick applied and grant water resistance.
 QRY QRY_AMER_Source_Infusion_SkillPreCast((CHARACTERGUID)_Char, "Shout_PIP_Fishing_Hornpipe", (INTEGER)_InfusCount)
 AND
 _InfusCount > 0
 THEN
 PROC_AMER_TempStat_StatusMod_AddFlexStat_Scaling(_Char, "PIP_Fishing_Hornpipe", "Stat", "WATERRESISTANCE", "Hornpipe_Infus1", 0, "Ability", "WaterSpecialist", 10.0, 1.0, 2000, "SkillCast");
 PROC_AMER_TempStat_ExtendedStat_Add(_Char, "Status_AddDuration", "PIP_Fishing_Hornpipe", "", "", 1.0, 2000, "SkillCast");
+PROC_AMER_TempStat_StatusMod_AddExtendedStat(_Char, "PIP_Fishing_Hornpipe", "Status_AddDuration", "PIP_FISHING_SEASICK", "", "", 1.0, "PIP_Fishing_Hornpipe_Infus1", 0, 2000, "SkillCast");
 
 // Source Infusion 2
 

@@ -27,6 +27,12 @@ TSK.Seasick_ShortDescription_EE = Skills:RegisterTranslatedString({
     Text = [[Seasick reduces water and air resistance and causes targets to suffer 1 Harried stack when hit by water damage, consuming a turn of the status.]],
     ContextDescription = [[Tooltip hint for skills that involve Seasick status in EE]],
 })
+TSK.Status_Hornpipe_Description_EE = Skills:RegisterTranslatedString({
+    Handle = "h3b48442eg1977g48e9gbc80ga9dfc6967da7",
+    Text = [[Hydrosophist skills apply Seasick for 2 turns to targets hit.]],
+    ContextDescription = [[Status tooltip for "Hornpipe" in EE]],
+    StringKey = "PIP_Fishing_Hornpipe_Description_EE",
+})
 TSK.Label_TieredStatusHint = Skills:RegisterTranslatedString({
     Handle = "hc4d47eddgb7d5g4d38g8736gdae013b8e8ef",
     Text = [[Tiered statuses apply up to tier 3 and reduce resistances; see your journal for a full description.]],
@@ -51,6 +57,12 @@ Skills.SKILL_DESCRIPTION_OVERRIDES = {
         Text = [[Employ both of your pincers to pinch and punch the target, dealing [1] in a [2] radius and applying up to Weakened III.]],
         ContextDescription = [[Skill tooltip for "Crab Pinch & Punch in EE"]],
         StringKey = "Target_PIP_Fishing_CrabPinch_Description_EE",
+    }),
+    ["Shout_PIP_Fishing_Hornpipe"] = Skills:RegisterTranslatedString({
+        Handle = "h015c165fg986dg418aga15eg8f31797da565",
+        Text = [[Get the voyage started on the right foot by blowing the hornpipe, applying Horned Pipe Hype to allies within [1].<br><br>Horned Pipe Hype causes Hydrosophist skills to apply Seasick for 2 turns on hit and grants [2]% water resistance.]],
+        ContextDescription = [[Skill tooltip for "Blow the Hornpipe" in EE]],
+        StringKey = "Shout_PIP_Fishing_Hornpipe_Description_EE",
     }),
 }
 -- Also apply skill description overrides to Empowered variants.
@@ -189,7 +201,7 @@ local SourceInfusionTSKs = {
     ["Shout_PIP_Fishing_Hornpipe"] = {
         {
             Handle = "hee2435ebgceabg4e2dg85c2gcfb0ba89747e",
-            Text = "Horned Pipe Hype grants +10% water resistance (+1% per Hydrosophist). +1 turn duration.",
+            Text = "Horned Pipe Hype increases duration of Seasick applied by 1 turn and grants +10% water resistance (+1% per Hydrosophist). +1 turn duration.",
         },
         {
             Handle = "h6538ee15gdf35g4a81gadaeg4cdef5ba1a54",
@@ -338,6 +350,10 @@ Ext.Events.StatsLoaded:Subscribe(function (_)
         -- Replace Seasick description.
         local seasickStatus = Stats.Get("StatsLib_StatsEntry_StatusData", "PIP_FISHING_SEASICK")
         seasickStatus.Description = TSK.Status_Seasick_Description_EE.StringKey
+
+        -- Replace Hornpipe status description.
+        local hornpipeStatus = Stats.Get("StatsLib_StatsEntry_StatusData", "PIP_Fishing_Hornpipe")
+        hornpipeStatus.Description = TSK.Status_Hornpipe_Description_EE.StringKey
 
         -- Reduce skillbooks costs if Derpy's is enabled.
         if Mod.IsLoaded(Mod.GUIDS.EE_DERPY) then
