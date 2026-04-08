@@ -1,10 +1,10 @@
 # Installation & Patchnotes
 
 !!! info ""
-    **Downloads available soon ™** as we've decided to give it some more time to make it even more epic. Browse the mod's main features below in the mean time to start prepping!
+    **Downloads available soon ™** as we've decided to give it some more time to make it even more epic. Browse the mod's main features in the site in the mean time to start prepping!
     
-!!! example "Beta!!!"
-    This is a beta release of the mod; everything on this site is implemented, but might have room for improvement (ex. balance or progression pace issues).
+??? example "Beta spoilers!!!"
+    The first release will be a beta; everything on this site is implemented, but might have room for improvement (ex. balance or progression pace issues).
 
     We're looking for ALL feedback you might have - we want the mod to be as epic as possible!
 
@@ -34,4 +34,4 @@
 
 ### v0.9.0.0 - 1/4/2026 - The beginning (of anything but the end)
 
-- Initial release for Epip's 5th anniversary showcase, with the fishing minigame, Fishermancy skill school, fish collection system,fish essences, and trader.
+- Initial release for Epip's 5th anniversary showcase, with the fishing minigame, Fishermancy skill school, fish collection system, fish essences, and trader.
