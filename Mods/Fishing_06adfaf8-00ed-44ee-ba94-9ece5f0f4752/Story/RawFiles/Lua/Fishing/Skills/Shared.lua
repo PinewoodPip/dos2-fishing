@@ -275,7 +275,7 @@ local Skills = {
         },
         Skill_TurnOnTheTides_Description = {
             Handle = "ha3dd6e66g284fg4550ga6edgb98c7721f660",
-            Text = "Wake the high seas, applying Turned On Tides to allied summons.<br><br>Turn On Tides cases characters to splash a burst of water at the start of their turns, dealing [1] to enemies within [2].",
+            Text = "Wake the high seas, applying Turned On Tides to allied summons.<br><br>Turn On Tides causes characters to splash a burst of water at the start of their turns, dealing [1] to enemies within [2].",
             ContextDescription = [[Skill tooltip for "Turn on The Tides"]],
             StringKey = "Shout_PIP_Fishing_TurnOnTheTides_Description",
         },
