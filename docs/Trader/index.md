@@ -17,8 +17,8 @@ In Fort Joy, you can find Pip by the waypoint in the starting beach, and he trav
 Pip offers multiple services:
 
 - Fishing tutorials
-- [Fishermancy](../Fishermancy/index.md) skillbooks and info
-- Appraisal of your fish collection, complimenting you on your fishing journey.
+- [Fishermancy](../Fishermancy/index.md) skillbooks and introduction to the skill school
+- [Appraisal of your fish collection](#collection-log-appraisals), complimenting you on your fishing journey and giving out rewards
 - Fishing-related supplies. His stock includes:
     - Fishing rods
     - Fishing bait, which allows you to spawn more fish
@@ -28,9 +28,9 @@ Pip offers multiple services:
 
 Since he's on vacation, he also has much banter and knowledge to share with you, so do stop by for a chat often!
 
-## Collection Log
+## Collection Log Appraisals
 
-Talking to Pip opens your **Collection Log** — a record of every fish species you've discovered and caught. Pip's dialogue reflects your overall completion, commenting on your progress in 10% increments.
+Among his many services, Pip offers to appraise your fishing [Collection Log](../Fishing/index.md#collection-log) as it grows, giving out rewards for reaching completion milestones, such as fishing supplies, rods, and new unique items!
 
-Use the Collection Log to track which species you're still missing and which regions you might not have explored yet.
-
+<center markdown="1">![Fishing collection log.](../img/collection_log.png)</center>
+<center markdown="1"><i>The Fishing Collection Log.</i></center>
