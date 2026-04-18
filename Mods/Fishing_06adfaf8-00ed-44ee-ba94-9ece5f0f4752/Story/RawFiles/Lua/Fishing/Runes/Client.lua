@@ -2,6 +2,7 @@
 local Tooltip = Client.Tooltip
 local Fishing = GetFeature("Fishing")
 
+---@class Fishing.Runes
 local Runes = GetFeature("Fishing.Runes")
 local TSK = Runes.TranslatedStrings
 
@@ -114,10 +115,13 @@ Tooltip.Hooks.RenderItemTooltip:Subscribe(function (ev)
         -- Add hint for upgrading runes
         if runeTier < #fish.RootTemplates then
             local descElement = ev.Tooltip:GetFirstElement("ItemDescription")
-            descElement.Label = descElement.Label .. "<br><br>" .. TSK.Label_UpgradeHint:Format({
-                FormatArgs = {Runes.COMBINE_REQUIREMENT},
-                Color = Fishing.ABILITY_SCHOOL_COLOR,
-            })
+            local combineRequirement = Runes.CRAFTING_REQUIREMENT_PER_RARITY[fish.Rarity]
+            if combineRequirement then
+                descElement.Label = descElement.Label .. "<br><br>" .. TSK.Label_UpgradeHint:Format({
+                    FormatArgs = {combineRequirement},
+                    Color = Fishing.ABILITY_SCHOOL_COLOR,
+                })
+            end
         else
             -- Add label for max-tier runes
             if runeTier == #fish.RootTemplates then

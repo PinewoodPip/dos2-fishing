@@ -23,7 +23,15 @@ local Runes = {
     },
 
     -- Amount of fish of the same type needed to combine to the next tier.
-    COMBINE_REQUIREMENT = 4,
+    ---Maps fish rarity to the amount of fish of the same type required to combine into next tier.
+    ---@type table<ItemLib_Rarity, integer>
+    CRAFTING_REQUIREMENT_PER_RARITY = {
+        ["Common"] = 5,
+        ["Uncommon"] = 5,
+        ["Rare"] = 4,
+        ["Epic"] = 4,
+        ["Legendary"] = 3,
+    },
 
     TranslatedStrings = {
         Label_FishRune = {

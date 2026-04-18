@@ -5,6 +5,7 @@
 ---------------------------------------------
 
 local Fishing = GetFeature("Fishing")
+local Runes = GetFeature("Fishing.Runes")
 
 local MAX_RUNE_TIER = 3
 
@@ -1366,56 +1367,41 @@ local function GenerateItemCombos()
     local output = {}
     local addLine = function(line, ...) table.insert(output, string.format(line, ...)) end
     local sortedFishes = GetSortedFishes()
-    for _, fish in ipairs(sortedFishes) do
+    for _,fish in ipairs(sortedFishes) do
         local fishID = fish.ID
+        local count = Runes.CRAFTING_REQUIREMENT_PER_RARITY[fish.Rarity] or 4
 
-        -- Recipe for Tier 1 -> Tier 2
-        local tier1ID = string.format("PIP_FishRune_%s_Tier1", fishID)
-        local tier2ID = string.format("PIP_FishRune_%s_Tier2", fishID)
-        local recipe1Name = string.format("%s_%s", tier1ID, tier1ID)
+        ---Appends a recipe stat to upgrade to a tier.
+        ---@param tier integer The tier being upgraded to.
+        local function addRecipe(tier)
+            local fromID = string.format("PIP_FishRune_%s_Tier%d", fishID, tier - 1)
+            local toID = string.format("PIP_FishRune_%s_Tier%d", fishID, tier)
+            local recipeName = string.format("%s_%s", fromID, fromID)
 
-        addLine([[new ItemCombination "%s"]], recipe1Name)
-        addLine([[data "RecipeCategory" "Runes"]])
-        addLine([[data "Type 1" "Object"]])
-        addLine([[data "Object 1" "%s"]], tier1ID)
-        addLine([[data "Transform 1" "Transform"]])
-        addLine([[data "Type 2" "Object"]])
-        addLine([[data "Object 2" "%s"]], tier1ID)
-        addLine([[data "Transform 2" "Consume"]])
-        addLine([[data "Type 3" "Object"]])
-        addLine([[data "Object 3" "%s"]], tier1ID)
-        addLine([[data "Transform 3" "Consume"]])
-        addLine([[data "Type 4" "Object"]])
-        addLine([[data "Object 4" "%s"]], tier1ID)
-        addLine([[data "Transform 4" "Consume"]])
-        addLine("")
+            addLine([[new ItemCombination "%s"]], recipeName)
+            addLine([[data "RecipeCategory" "Runes"]])
 
-        addLine([[new ItemCombinationResult "%s_1"]], recipe1Name)
-        addLine([[data "Result 1" "%s"]], tier2ID)
-        addLine([[data "PreviewStatsID" "%s"]], tier2ID)
-        addLine("")
+            -- Slot 1 is transformed into the new rune, others are consumed.
+            addLine([[data "Type 1" "Object"]])
+            addLine([[data "Object 1" "%s"]], fromID)
+            addLine([[data "Transform 1" "Transform"]])
+            for i=2,count do
+                addLine([[data "Type %d" "Object"]], i)
+                addLine([[data "Object %d" "%s"]], i, fromID)
+                addLine([[data "Transform %d" "Consume"]], i)
+            end
+            addLine("")
 
-        -- Recipe for Tier 2 -> Tier 3
-        local tier3ID = string.format("PIP_FishRune_%s_Tier3", fishID)
-        local recipe2Name = string.format("%s_%s", tier2ID, tier2ID)
+            addLine([[new ItemCombinationResult "%s_1"]], recipeName)
+            addLine([[data "Result 1" "%s"]], toID)
+            addLine([[data "PreviewStatsID" "%s"]], toID)
+            addLine("")
+        end
 
-        addLine([[new ItemCombination "%s"]], recipe2Name)
-        addLine([[data "RecipeCategory" "Runes"]])
-        addLine([[data "Type 1" "Object"]])
-        addLine([[data "Object 1" "%s"]], tier2ID)
-        addLine([[data "Transform 1" "Transform"]])
-        addLine([[data "Type 2" "Object"]])
-        addLine([[data "Object 2" "%s"]], tier2ID)
-        addLine([[data "Transform 2" "Consume"]])
-        addLine([[data "Type 3" "Object"]])
-        addLine([[data "Object 3" "%s"]], tier2ID)
-        addLine([[data "Transform 3" "Consume"]])
-        addLine("")
-
-        addLine([[new ItemCombinationResult "%s_1"]], recipe2Name)
-        addLine([[data "Result 1" "%s"]], tier3ID)
-        addLine([[data "PreviewStatsID" "%s"]], tier3ID)
-        addLine("")
+        -- Add upgrade recipes
+        for tier=2,MAX_RUNE_TIER,1 do
+            addRecipe(tier)
+        end
     end
 
     return table.concat(output, "\n")
